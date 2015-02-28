@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdk", "sdk\sdk.vcxproj", "{46298708-89AE-4EB1-8C1E-9080A6A6DAC1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyGame", "MyGame\MyGame.vcxproj", "{33BF65F3-F178-4EC5-B079-64420EAD3CA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{46298708-89AE-4EB1-8C1E-9080A6A6DAC1}.Debug|Win32.Build.0 = Debug|Win32
 		{46298708-89AE-4EB1-8C1E-9080A6A6DAC1}.Release|Win32.ActiveCfg = Release|Win32
 		{46298708-89AE-4EB1-8C1E-9080A6A6DAC1}.Release|Win32.Build.0 = Release|Win32
+		{33BF65F3-F178-4EC5-B079-64420EAD3CA1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{33BF65F3-F178-4EC5-B079-64420EAD3CA1}.Debug|Win32.Build.0 = Debug|Win32
+		{33BF65F3-F178-4EC5-B079-64420EAD3CA1}.Release|Win32.ActiveCfg = Release|Win32
+		{33BF65F3-F178-4EC5-B079-64420EAD3CA1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

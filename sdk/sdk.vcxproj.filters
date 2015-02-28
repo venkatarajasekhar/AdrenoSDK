@@ -14,4 +14,116 @@
       <UniqueIdentifier>{9e4d522b-7867-466b-bd2a-096666588674}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MyFramework\OpenGLES\MyBasicMesh.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyFileMesh1.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyInputLayout.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyMesh.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyShader.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh1.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh2.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MySpriteBatch.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyTexture.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyVertex.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\Win32\FrmApplication_Platform.cpp">
+      <Filter>MyFramework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\Win32\MyUtils_Platform.cpp">
+      <Filter>MyFramework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyCamera.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyCamera2D.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyMath.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyOrthoCamera.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyPerspectiveCamera.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyTimer.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyUtils.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyFileMesh1.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyInputLayout.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyMesh.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyShader.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh1.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh2.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MySpriteBatch.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyTexture.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyVertex.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyCamera.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyCamera2D.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyMath.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyOrthoCamera.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyPerspectiveCamera.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyTimer.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyUtils.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

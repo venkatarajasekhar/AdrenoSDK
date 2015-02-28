@@ -78,6 +78,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyFramework\MyCamera.cpp" />
+    <ClCompile Include="MyFramework\MyCamera2D.cpp" />
+    <ClCompile Include="MyFramework\MyMath.cpp" />
+    <ClCompile Include="MyFramework\MyOrthoCamera.cpp" />
+    <ClCompile Include="MyFramework\MyPerspectiveCamera.cpp" />
+    <ClCompile Include="MyFramework\MyTimer.cpp" />
+    <ClCompile Include="MyFramework\MyUtils.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyBasicMesh.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyFileMesh1.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyInputLayout.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyMesh.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyShader.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MySpriteBatch.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyTexture.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyVertex.cpp" />
+    <ClCompile Include="MyFramework\Win32\FrmApplication_Platform.cpp" />
+    <ClCompile Include="MyFramework\Win32\MyUtils_Platform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyFramework\MyCamera.h" />
+    <ClInclude Include="MyFramework\MyCamera2D.h" />
+    <ClInclude Include="MyFramework\MyMath.h" />
+    <ClInclude Include="MyFramework\MyOrthoCamera.h" />
+    <ClInclude Include="MyFramework\MyPerspectiveCamera.h" />
+    <ClInclude Include="MyFramework\MyTimer.h" />
+    <ClInclude Include="MyFramework\MyUtils.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyFileMesh1.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyInputLayout.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyMesh.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyShader.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh1.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh2.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MySpriteBatch.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyTexture.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyVertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

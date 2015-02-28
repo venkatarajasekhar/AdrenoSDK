@@ -78,6 +78,53 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\sdk\Framework\Framework\FrmApplication.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\FrmInput.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\FrmPackedResource.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\FrmUtils.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimation.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimationTrack.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmIndexBuffer.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmJoint.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmMaterial.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmMemoryBuffer.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmMeshSurfaceArray.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmModel.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmModelIO.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmModelMesh.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmNamedId.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmVertexBuffer.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmVertexFormat.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmVertexProperty.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmMesh.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmPackedResourceGLES.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmResourceGLES.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmShader.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmUtilsGLES.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmFile_Platform.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmNoise_Platform.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmPlatform.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmStdlib_Platform.cpp" />
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmUtils_Platform.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyCamera.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyCamera2D.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyMath.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyOrthoCamera.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyPerspectiveCamera.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyTimer.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBasicMesh.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFileMesh1.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyInputLayout.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyMesh.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyShader.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteBatch.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyTexture.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

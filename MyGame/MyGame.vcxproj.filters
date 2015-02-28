@@ -1,2 +1,172 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sdk">
+      <UniqueIdentifier>{22386dcb-ba0b-417e-976b-9824a3187fab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\Framework">
+      <UniqueIdentifier>{a5bb14a0-ed46-4205-afee-40305222e00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\MyFramework">
+      <UniqueIdentifier>{9ab98729-3677-4ddc-aa75-db82f85bf16b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\Framework\Model">
+      <UniqueIdentifier>{350efc6d-5aa0-4b7f-8966-26562bf55237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\Framework\OpenGLES">
+      <UniqueIdentifier>{2055e811-f44b-4073-bf0d-71b866dc9848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\Framework\Win32">
+      <UniqueIdentifier>{372a1f04-8f81-4358-adc4-b036ecf9318a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\MyFramework\OpenGLES">
+      <UniqueIdentifier>{097d80df-5483-4727-a523-d58dfef4014a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\MyFramework\Win32">
+      <UniqueIdentifier>{ee9afe6e-d3b5-46ca-bf97-cf20ac6e59b0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimation.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimationTrack.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmIndexBuffer.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmJoint.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmMaterial.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmMemoryBuffer.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmMeshSurfaceArray.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmModel.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmModelIO.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmModelMesh.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmNamedId.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmVertexBuffer.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmVertexFormat.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Model\FrmVertexProperty.cpp">
+      <Filter>sdk\Framework\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmFile_Platform.cpp">
+      <Filter>sdk\Framework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmNoise_Platform.cpp">
+      <Filter>sdk\Framework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmPlatform.cpp">
+      <Filter>sdk\Framework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmStdlib_Platform.cpp">
+      <Filter>sdk\Framework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmUtils_Platform.cpp">
+      <Filter>sdk\Framework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmMesh.cpp">
+      <Filter>sdk\Framework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmPackedResourceGLES.cpp">
+      <Filter>sdk\Framework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmResourceGLES.cpp">
+      <Filter>sdk\Framework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmShader.cpp">
+      <Filter>sdk\Framework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\OpenGLES\FrmUtilsGLES.cpp">
+      <Filter>sdk\Framework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\FrmApplication.cpp">
+      <Filter>sdk\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\FrmInput.cpp">
+      <Filter>sdk\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\FrmPackedResource.cpp">
+      <Filter>sdk\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\Framework\Framework\FrmUtils.cpp">
+      <Filter>sdk\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp">
+      <Filter>sdk\MyFramework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp">
+      <Filter>sdk\MyFramework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBasicMesh.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFileMesh1.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyInputLayout.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyMesh.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyShader.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh1.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh2.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteBatch.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyTexture.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyCamera.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyCamera2D.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyMath.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyOrthoCamera.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyPerspectiveCamera.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyTimer.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

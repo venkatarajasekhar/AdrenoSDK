@@ -129,6 +129,10 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
+    <ClCompile Include="MainGame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

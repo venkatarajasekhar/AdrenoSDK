@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="MyFramework">
+      <UniqueIdentifier>{eb26747a-1084-41e0-a553-90b8f8078d3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="MyFramework\Android">
+      <UniqueIdentifier>{31fd1b96-9c9f-47bd-9f5e-e3645b2b984e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="MyFramework\OpenGLES">
+      <UniqueIdentifier>{0dbb2525-263c-4f25-b402-b7721194f4ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyFramework\Win32">
+      <UniqueIdentifier>{9e4d522b-7867-466b-bd2a-096666588674}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

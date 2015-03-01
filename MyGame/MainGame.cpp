@@ -30,7 +30,8 @@ MyString resolveAssetsPath(const MyString& relativePath)
 {
 #ifdef WIN32
 	return "Assets/" + relativePath;
-//#elif defined __ANDROID__
+#elif defined __ANDROID__
+	return relativePath;
 #endif
 }
 

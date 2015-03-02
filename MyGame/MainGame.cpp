@@ -29,7 +29,7 @@ CFrmApplication* FrmCreateApplicationInstance()
 MyString resolveAssetsPath(const MyString& relativePath)
 {
 #ifdef WIN32
-	return "MyGame-Android/app/src/main/assets" + relativePath;
+	return "MyGame-Android/app/src/main/assets/" + relativePath;
 #elif defined __ANDROID__
 	return relativePath;
 #endif

@@ -5,6 +5,7 @@
 
 #include <MyPerspectiveCamera.h>
 #include <MySpriteBatch.h>
+#include <MyInput.h>
 #include <MyFileMesh1.h>
 
 class MainGame : public CFrmApplication
@@ -30,6 +31,7 @@ private:
 
 	// Core objects
 	Timer m_timer;
+	UserInput m_userInput;
 	SpriteBatch m_spriteBatch;
 	PerspectiveCamera m_camera_main;
 

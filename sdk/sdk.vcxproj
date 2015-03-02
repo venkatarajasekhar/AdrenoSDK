@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="MyFramework\MyCamera.cpp" />
     <ClCompile Include="MyFramework\MyCamera2D.cpp" />
+    <ClCompile Include="MyFramework\MyInput.cpp" />
     <ClCompile Include="MyFramework\MyMath.cpp" />
     <ClCompile Include="MyFramework\MyOrthoCamera.cpp" />
     <ClCompile Include="MyFramework\MyPerspectiveCamera.cpp" />
@@ -103,6 +104,7 @@
   <ItemGroup>
     <ClInclude Include="MyFramework\MyCamera.h" />
     <ClInclude Include="MyFramework\MyCamera2D.h" />
+    <ClInclude Include="MyFramework\MyInput.h" />
     <ClInclude Include="MyFramework\MyMath.h" />
     <ClInclude Include="MyFramework\MyOrthoCamera.h" />
     <ClInclude Include="MyFramework\MyPerspectiveCamera.h" />

@@ -84,6 +84,7 @@ BOOL MainGame::Initialize()
 		PosNorTexVertex::NumShaderAttribsDesc);
 
 	// Core objects
+	m_userInput.init(m_Input);
 	m_spriteBatch.init(m_shader_sprite);
 	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
 
@@ -153,6 +154,7 @@ BOOL MainGame::Resize()
 	// Resize here
 
 	// Core objects
+	m_userInput.resize(m_nWidth, m_nHeight);
 	m_spriteBatch.resize(m_nWidth, m_nHeight);
 	m_camera_main.resize(m_nWidth, m_nHeight);
 
@@ -182,6 +184,7 @@ VOID MainGame::Update()
 
 	// Core objects
 	m_timer.update();
+	m_userInput.update();
 	m_spriteBatch.update();
 	m_camera_main.update();
 

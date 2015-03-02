@@ -112,6 +112,7 @@
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmUtils_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera2D.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyInput.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyMath.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyOrthoCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyPerspectiveCamera.cpp" />

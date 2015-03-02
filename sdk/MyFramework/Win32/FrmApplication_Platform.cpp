@@ -45,6 +45,8 @@ static void GLUpdate()
 	glutSwapBuffers();
 }
 
+// Keyboard
+
 static void GLASCIIKeyDown(unsigned char key, int x, int y)
 {
 }
@@ -61,12 +63,38 @@ static void GLSpecialKeyUp(int key, int x, int y)
 {
 }
 
+// Mouse
+
 static void GLMouseButton(int button, int state, int x, int y)
 {
+	// Set pointer position
+	FRMVECTOR2 vPointerPosition;
+	vPointerPosition.x = +2.0f * x / (FLOAT32)(g_pApplication->m_nWidth - 1) - 1.0f;
+	vPointerPosition.y = -2.0f * y / (FLOAT32)(g_pApplication->m_nHeight - 1) + 1.0f;
+
+	g_pApplication->m_Input.m_vPointerPosition = vPointerPosition;
+
+	// Set pointer status
+	if (state == GLUT_DOWN)
+	{
+		g_pApplication->m_Input.m_nPointerState = FRM_INPUT::POINTER_DOWN;
+		g_pApplication->m_Input.m_nPointerState |= FRM_INPUT::POINTER_PRESSED;
+	}
+	else if (state == GLUT_UP)
+	{
+		g_pApplication->m_Input.m_nPointerState = FRM_INPUT::POINTER_RELEASED;
+	}
 }
 
 static void GLMouseMove(int x, int y)
 {
+	FRMVECTOR2 vPointerPosition;
+	vPointerPosition.x = +2.0f * x / (FLOAT32)(g_pApplication->m_nWidth - 1) - 1.0f;
+	vPointerPosition.y = -2.0f * y / (FLOAT32)(g_pApplication->m_nHeight - 1) + 1.0f;
+
+	g_pApplication->m_Input.m_vPointerPosition = vPointerPosition;
+
+	g_pApplication->m_Input.m_nPointerState = FRM_INPUT::POINTER_DOWN;
 }
 
 //====================================================================================================================
@@ -139,8 +167,8 @@ BOOL CFrmAppContainer::Run()
 
 	// Mouse callback
 	glutMouseFunc(GLMouseButton);
-	glutMotionFunc(GLMouseMove);        // when the mouse is moved and a button is pressed.
-	glutPassiveMotionFunc(GLMouseMove); // when the mouse is moving but no buttons are pressed.
+	glutMotionFunc(GLMouseMove);          // when the mouse is moved and a button is pressed.
+	//glutPassiveMotionFunc(GLMouseMove); // when the mouse is moving but no buttons are pressed.
 
 	// Init Glew here ...
 

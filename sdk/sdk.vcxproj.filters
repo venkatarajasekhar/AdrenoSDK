@@ -72,6 +72,9 @@
     <ClCompile Include="MyFramework\MyUtils.cpp">
       <Filter>MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\MyInput.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -123,6 +126,9 @@
       <Filter>MyFramework</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\MyUtils.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyInput.h">
       <Filter>MyFramework</Filter>
     </ClInclude>
   </ItemGroup>

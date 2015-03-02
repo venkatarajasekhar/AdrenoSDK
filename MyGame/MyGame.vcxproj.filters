@@ -169,6 +169,9 @@
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyInput.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

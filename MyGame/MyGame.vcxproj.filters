@@ -178,8 +178,18 @@
     <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MenuScreen.cpp" />
+    <ClCompile Include="PlayScreen.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyScreen.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyScreenManager.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MenuScreen.h" />
+    <ClInclude Include="PlayScreen.h" />
   </ItemGroup>
 </Project>

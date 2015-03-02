@@ -2,12 +2,7 @@
 #pragma once
 
 #include <FrmApplication.h>
-
-#include <MyPerspectiveCamera.h>
-#include <MySpriteBatch.h>
-#include <MyInput.h>
-#include <MyFileMesh1.h>
-#include <MyUIButton.h>
+#include <MyScreenManager.h>
 
 class MainGame : public CFrmApplication
 {
@@ -34,27 +29,8 @@ private:
 	Timer m_timer;
 	UserInput m_userInput;
 	SpriteBatch m_spriteBatch;
-	PerspectiveCamera m_camera_main;
+	ScreenManager m_screenManager;
 
 	// Shader resources
 	Shader m_shader_sprite;
-	Shader m_shader_terrain;
-	Shader m_shader_mesh;
-
-	// Texture resources
-	Texture m_texture_grass;
-	Texture m_texture_snowman;
-
-	Texture** m_textures_scorpion;
-
-	// Mesh resources
-	Adreno::Model* m_meshData_scorpion;
-
-	// Mesh objects
-	BasicMesh m_mesh_terrain;
-
-	FileMesh1 m_mesh_scorpion;
-
-	// GUI objects
-	UIButton m_button;
 };

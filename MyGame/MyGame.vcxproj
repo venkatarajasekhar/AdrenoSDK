@@ -116,6 +116,8 @@
     <ClCompile Include="..\sdk\MyFramework\MyMath.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyOrthoCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyPerspectiveCamera.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyScreen.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyScreenManager.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyTimer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyUIButton.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp" />
@@ -133,9 +135,13 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MenuScreen.cpp" />
+    <ClCompile Include="PlayScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MenuScreen.h" />
+    <ClInclude Include="PlayScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

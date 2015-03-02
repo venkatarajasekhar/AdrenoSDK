@@ -3,9 +3,7 @@
 #include "MyScreen.h"
 
 ScreenManager::ScreenManager()
-	: m_activeScreen(nullptr),
-	m_width(0),
-	m_height(0)
+	: m_activeScreen(nullptr)
 {
 }
 
@@ -20,9 +18,6 @@ ScreenManager::~ScreenManager()
 
 void ScreenManager::resize(int width, int height)
 {
-	m_width = width;
-	m_height = height;
-
 	if (m_activeScreen != nullptr)
 	{
 		m_activeScreen->resize(width, height);
@@ -49,9 +44,12 @@ void ScreenManager::addScreen(const MyString& id, Screen* screen)
 {
 	if (getScreen(id) == nullptr)
 	{
-		screen->init();
-		screen->resize(m_width, m_height);
+		struct { GLint x, y, width, height; } viewport;
+		glGetIntegerv(GL_VIEWPORT, (GLint*)&viewport);
 
+		screen->init();
+		screen->resize(viewport.width, viewport.height);
+		
 		m_screens[id] = screen;
 	}
 }

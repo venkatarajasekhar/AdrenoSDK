@@ -1,16 +1,7 @@
 
 #include "MainGame.h"
-#include <FrmPackedResourceGLES.h>
-
-//========================================================================================================
-//
-// Parameters
-//
-//========================================================================================================
-
-static const MyVec3 MAIN_CAM_POS = MyVec3(10.0f, 15.0f, 25.0f);
-static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 5.0f, 0.0f);
-static const float MAIN_CAM_FAR = 100.0f;
+#include "MenuScreen.h"
+#include "PlayScreen.h"
 
 #pragma region Global implementations
 
@@ -62,8 +53,6 @@ BOOL MainGame::Initialize()
 {
 	// Init here
 
-	// Mesh resources
-
 	// Shader resources
 	m_shader_sprite.init(
 		resolveAssetsPath("Shaders/sprite.vs"),
@@ -71,78 +60,14 @@ BOOL MainGame::Initialize()
 		Pos2TexVertex::ShaderAttribsDesc,
 		Pos2TexVertex::NumShaderAttribsDesc);
 
-	m_shader_terrain.init(
-		resolveAssetsPath("Shaders/terrain.vs"), 
-		resolveAssetsPath("Shaders/terrain.fs"), 
-		PosTexVertex::ShaderAttribsDesc, 
-		PosTexVertex::NumShaderAttribsDesc);
-
-	m_shader_mesh.init(
-		resolveAssetsPath("Shaders/mesh.vs"),
-		resolveAssetsPath("Shaders/mesh.fs"),
-		PosNorTexVertex::ShaderAttribsDesc,
-		PosNorTexVertex::NumShaderAttribsDesc);
-
 	// Core objects
 	m_userInput.init(m_Input);
 	m_spriteBatch.init(m_shader_sprite);
-	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
 
-	// Mesh resources
-	m_meshData_scorpion = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
+	m_screenManager.addScreen("MenuScreen", new MenuScreen(&m_screenManager));
+	m_screenManager.addScreen("PlayScreen", new PlayScreen(&m_screenManager));
 
-	// Texture resources
-	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/textures.pak").c_str());
-
-		m_texture_grass.init(resource.GetTexture("Brick"));
-		m_texture_snowman.init(resource.GetTexture("snowman"));
-	}
-
-	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/Scorpion.pak").c_str());
-
-		m_textures_scorpion = FileMesh1::initTextures(m_meshData_scorpion, resource);
-	}
-
-	// Mesh objects
-	{
-		// Terrain
-		std::vector<PosTexVertex> vertices;
-		vertices.resize(4);
-		vertices[0] = PosTexVertex(MyVec3(-0.5f, +0.0f, -0.5f), MyVec2(0, 0));
-		vertices[1] = PosTexVertex(MyVec3(-0.5f, +0.0f, +0.5f), MyVec2(0, 1));
-		vertices[2] = PosTexVertex(MyVec3(+0.5f, +0.0f, +0.5f), MyVec2(1, 1));
-		vertices[3] = PosTexVertex(MyVec3(+0.5f, +0.0f, -0.5f), MyVec2(1, 0));
-
-		UIntArray indices;
-		indices.resize(6);
-
-		indices[0] = 0;
-		indices[1] = 1;
-		indices[2] = 2;
-		indices[3] = 0;
-		indices[4] = 2;
-		indices[5] = 3;
-
-		m_mesh_terrain.init(vertices, indices, m_shader_terrain, &m_texture_grass, MyVec3(0), MyVec3(0), MyVec3(20));
-	}
-
-	{
-		Material material;
-
-		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
-		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-		material.Shininess = 16.0f;
-
-		m_mesh_scorpion.init(m_meshData_scorpion, m_textures_scorpion, m_shader_mesh, material, MyVec3(0), MyVec3(0), MyVec3(0.5f));
-	}
-	
-	// GUI objects
-	m_button.init(MyVec2(0), m_texture_snowman);
+	m_screenManager.activeScreen("MenuScreen");
 
 	m_initialized = true;
 
@@ -158,7 +83,7 @@ BOOL MainGame::Resize()
 	// Core objects
 	m_userInput.resize(m_nWidth, m_nHeight);
 	m_spriteBatch.resize(m_nWidth, m_nHeight);
-	m_camera_main.resize(m_nWidth, m_nHeight);
+	m_screenManager.resize(m_nWidth, m_nHeight);
 
 	glViewport( 0, 0, m_nWidth, m_nHeight );
 
@@ -170,12 +95,6 @@ VOID MainGame::Destroy()
 	if (!m_initialized) return;
 
 	// Destroy here
-
-	// Texture resources
-	FileMesh1::destroyTextures(m_meshData_scorpion, m_textures_scorpion);
-
-	// Mesh resources
-	Adreno::FrmDestroyLoadedModel(m_meshData_scorpion);
 }
 
 VOID MainGame::Update()
@@ -188,19 +107,7 @@ VOID MainGame::Update()
 	m_timer.update();
 	m_userInput.update();
 	m_spriteBatch.update();
-	m_camera_main.update();
-
-	// Mesh objects
-	m_mesh_terrain.update(m_timer);
-	m_mesh_scorpion.update();
-
-	// GUI objects
-	m_button.update(m_userInput);
-
-	if (m_button.isPressing())
-	{
-		//smartLog("Pressed ...");
-	}
+	m_screenManager.update(m_userInput, m_timer);
 
 	m_updated = true;
 }
@@ -217,18 +124,5 @@ VOID MainGame::Render()
 	if (!m_updated) return;
 
 	// Render here
-	
-	// Mesh objects
-	m_mesh_terrain.render(m_camera_main);
-
-	{
-		Light light;
-
-		light.LightPos = MyVec3(50.0f, 50.0f, 50.0f);
-
-		m_mesh_scorpion.render(m_camera_main, light);
-	}
-	
-	// GUI objects
-	m_button.render(m_spriteBatch);
+	m_screenManager.render(m_spriteBatch);
 }

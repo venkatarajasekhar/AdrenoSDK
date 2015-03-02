@@ -86,6 +86,8 @@
     <ClCompile Include="MyFramework\MyMath.cpp" />
     <ClCompile Include="MyFramework\MyOrthoCamera.cpp" />
     <ClCompile Include="MyFramework\MyPerspectiveCamera.cpp" />
+    <ClCompile Include="MyFramework\MyScreen.cpp" />
+    <ClCompile Include="MyFramework\MyScreenManager.cpp" />
     <ClCompile Include="MyFramework\MyTimer.cpp" />
     <ClCompile Include="MyFramework\MyUIButton.cpp" />
     <ClCompile Include="MyFramework\MyUIWidget.cpp" />
@@ -110,6 +112,8 @@
     <ClInclude Include="MyFramework\MyMath.h" />
     <ClInclude Include="MyFramework\MyOrthoCamera.h" />
     <ClInclude Include="MyFramework\MyPerspectiveCamera.h" />
+    <ClInclude Include="MyFramework\MyScreen.h" />
+    <ClInclude Include="MyFramework\MyScreenManager.h" />
     <ClInclude Include="MyFramework\MyTimer.h" />
     <ClInclude Include="MyFramework\MyUIButton.h" />
     <ClInclude Include="MyFramework\MyUIWidget.h" />

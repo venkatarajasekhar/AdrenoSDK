@@ -81,6 +81,12 @@
     <ClCompile Include="MyFramework\MyUIButton.cpp">
       <Filter>MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\MyScreen.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyScreenManager.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -141,6 +147,12 @@
       <Filter>MyFramework</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\MyUIButton.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyScreen.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyScreenManager.h">
       <Filter>MyFramework</Filter>
     </ClInclude>
   </ItemGroup>

@@ -52,10 +52,15 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmUtilsGLES.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera2D.cpp \
+				   $(SDK_MY_FRM_PATH)/MyInput.cpp \
 				   $(SDK_MY_FRM_PATH)/MyMath.cpp \
 				   $(SDK_MY_FRM_PATH)/MyOrthoCamera.cpp \
 				   $(SDK_MY_FRM_PATH)/MyPerspectiveCamera.cpp \
+				   $(SDK_MY_FRM_PATH)/MyScreen.cpp \
+				   $(SDK_MY_FRM_PATH)/MyScreenManager.cpp \
 				   $(SDK_MY_FRM_PATH)/MyTimer.cpp \
+				   $(SDK_MY_FRM_PATH)/MyUIButton.cpp \
+				   $(SDK_MY_FRM_PATH)/MyUIWidget.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUtils.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyUtils_Platform.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBasicMesh.cpp \
@@ -69,6 +74,8 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyTexture.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \
 				   $(GAME_PATH)/MainGame.cpp \
+				   $(GAME_PATH)/MenuScreen.cpp \
+				   $(GAME_PATH)/PlayScreen.cpp
 				   
 LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_FRM_INC_PATH) \

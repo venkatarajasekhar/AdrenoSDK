@@ -75,6 +75,12 @@
     <ClCompile Include="MyFramework\MyInput.cpp">
       <Filter>MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\MyUIWidget.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\MyUIButton.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -129,6 +135,12 @@
       <Filter>MyFramework</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\MyInput.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyUIWidget.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyUIButton.h">
       <Filter>MyFramework</Filter>
     </ClInclude>
   </ItemGroup>

@@ -117,6 +117,8 @@
     <ClCompile Include="..\sdk\MyFramework\MyOrthoCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyPerspectiveCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyTimer.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyUIButton.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBasicMesh.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFileMesh1.cpp" />

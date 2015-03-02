@@ -7,6 +7,7 @@
 #include <MySpriteBatch.h>
 #include <MyInput.h>
 #include <MyFileMesh1.h>
+#include <MyUIButton.h>
 
 class MainGame : public CFrmApplication
 {
@@ -53,4 +54,7 @@ private:
 	BasicMesh m_mesh_terrain;
 
 	FileMesh1 m_mesh_scorpion;
+
+	// GUI objects
+	UIButton m_button;
 };

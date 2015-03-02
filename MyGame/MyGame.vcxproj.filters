@@ -172,6 +172,12 @@
     <ClCompile Include="..\sdk\MyFramework\MyInput.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyUIButton.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

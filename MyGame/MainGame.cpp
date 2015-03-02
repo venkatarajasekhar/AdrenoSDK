@@ -141,6 +141,8 @@ BOOL MainGame::Initialize()
 		m_mesh_scorpion.init(m_meshData_scorpion, m_textures_scorpion, m_shader_mesh, material, MyVec3(0), MyVec3(0), MyVec3(0.5f));
 	}
 	
+	// GUI objects
+	m_button.init(MyVec2(0), m_texture_snowman);
 
 	m_initialized = true;
 
@@ -192,6 +194,14 @@ VOID MainGame::Update()
 	m_mesh_terrain.update(m_timer);
 	m_mesh_scorpion.update();
 
+	// GUI objects
+	m_button.update(m_userInput);
+
+	if (m_button.isPressing())
+	{
+		//smartLog("Pressed ...");
+	}
+
 	m_updated = true;
 }
 
@@ -219,7 +229,6 @@ VOID MainGame::Render()
 		m_mesh_scorpion.render(m_camera_main, light);
 	}
 	
-
-	// 2D
-	m_spriteBatch.renderTexture2D(m_texture_snowman, MyVec2(100, 100), 0, MyVec2(0.5f, 0.5f));
+	// GUI objects
+	m_button.render(m_spriteBatch);
 }

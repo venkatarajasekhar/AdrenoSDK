@@ -1,10 +1,6 @@
 
 #pragma once
 
-#include "MyInput.h"
-#include "MyTimer.h"
-#include "MySpriteBatch.h"
-
 class ScreenManager;
 
 class Screen
@@ -15,8 +11,8 @@ public:
 
 	virtual void init() = 0;
 	virtual void resize(int width, int height) = 0;
-	virtual void update(UserInput& userInput, Timer& timer) = 0;
-	virtual void render(SpriteBatch& spriteBatch) = 0;
+	virtual void update(void* utilObjs) = 0;
+	virtual void render(void* utilObjs) = 0;
 
 protected:
 	ScreenManager* m_screenManager;

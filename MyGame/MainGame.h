@@ -3,6 +3,7 @@
 
 #include <FrmApplication.h>
 #include <MyScreenManager.h>
+#include "Utils.h"
 
 class MainGame : public CFrmApplication
 {
@@ -25,10 +26,12 @@ private:
 	UINT32 g_nWindowHeight;
 	FLOAT  g_fAspectRatio;
 
-	// Core objects
+	// Global utility objects
 	Timer m_timer;
 	UserInput m_userInput;
 	SpriteBatch m_spriteBatch;
+
+	// Core objects
 	ScreenManager m_screenManager;
 
 	// Shader resources

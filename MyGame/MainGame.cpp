@@ -51,7 +51,7 @@ MainGame::MainGame(const CHAR* strName)
 
 BOOL MainGame::Initialize()
 {
-	// Init here
+	// Begin init
 
 	// Shader resources
 	m_shader_sprite.init(
@@ -60,15 +60,16 @@ BOOL MainGame::Initialize()
 		Pos2TexVertex::ShaderAttribsDesc,
 		Pos2TexVertex::NumShaderAttribsDesc);
 
-	// Core objects
+	// Global utility objects
 	m_userInput.init(m_Input);
 	m_spriteBatch.init(m_shader_sprite);
 
+	// Core objects
 	m_screenManager.addScreen("MenuScreen", new MenuScreen(&m_screenManager));
 	m_screenManager.addScreen("PlayScreen", new PlayScreen(&m_screenManager));
-
 	m_screenManager.activeScreen("MenuScreen");
 
+	// End init
 	m_initialized = true;
 
 	return Resize();
@@ -78,13 +79,16 @@ BOOL MainGame::Resize()
 {
 	if (!m_initialized) return TRUE;
 
-	// Resize here
+	// Begin resize
 
-	// Core objects
+	// Global utility objects
 	m_userInput.resize(m_nWidth, m_nHeight);
 	m_spriteBatch.resize(m_nWidth, m_nHeight);
+
+	// Core objects
 	m_screenManager.resize(m_nWidth, m_nHeight);
 
+	// End resize
 	glViewport( 0, 0, m_nWidth, m_nHeight );
 
 	return TRUE;
@@ -94,21 +98,34 @@ VOID MainGame::Destroy()
 {
 	if (!m_initialized) return;
 
-	// Destroy here
+	// Begin destroy
+
+	// End destroy
 }
 
 VOID MainGame::Update()
 {
 	if (!m_initialized) return;
 
-	// Update here
+	// Begin update
 
-	// Core objects
+	// Global utility objects
 	m_timer.update();
 	m_userInput.update();
 	m_spriteBatch.update();
-	m_screenManager.update(m_userInput, m_timer);
 
+	// Core objects
+	{
+		GLOBAL_UTIL_OBJS objs =
+		{
+			&m_timer,
+			&m_userInput,
+			&m_spriteBatch,
+		};
+		m_screenManager.update(&objs);
+	}
+	
+	// End update
 	m_updated = true;
 }
 
@@ -123,6 +140,18 @@ VOID MainGame::Render()
 
 	if (!m_updated) return;
 
-	// Render here
-	m_screenManager.render(m_spriteBatch);
+	// Begin render
+
+	// Core objects
+	{
+		GLOBAL_UTIL_OBJS objs =
+		{
+			&m_timer,
+			&m_userInput,
+			&m_spriteBatch,
+		};
+		m_screenManager.render(&objs);
+	}
+	
+	// End render
 }

@@ -41,11 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>External;Framework/Inc;Framework/Framework;Framework/Framework/OpenGLES;Framework/Framework/Win32;MyFramework;MyFramework/OpenGLES;MyFramework/Win32;$(IncludePath)</IncludePath>
+    <IncludePath>../../android-ndk/sources/android/native_app_glue;../../android-ndk/sources/gpg-cpp-sdk/android/include;../../android-ndk/platforms/android-15/arch-arm/usr/include;External;Framework/Inc;Framework/Framework;Framework/Framework/OpenGLES;Framework/Framework/Win32;MyFramework;MyFramework/OpenGLES;MyFramework/Win32;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>External;Framework/Inc;Framework/Framework;Framework/Framework/OpenGLES;Framework/Framework/Win32;MyFramework;MyFramework/OpenGLES;MyFramework/Win32;$(IncludePath)</IncludePath>
+    <IncludePath>../../android-ndk/sources/android/native_app_glue;../../android-ndk/sources/gpg-cpp-sdk/android/include;../../android-ndk/platforms/android-15/arch-arm/usr/include;External;Framework/Inc;Framework/Framework;Framework/Framework/OpenGLES;Framework/Framework/Win32;MyFramework;MyFramework/OpenGLES;MyFramework/Win32;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyFramework\Android\MyGameServer.cpp" />
     <ClCompile Include="MyFramework\MyCamera.cpp" />
     <ClCompile Include="MyFramework\MyCamera2D.cpp" />
     <ClCompile Include="MyFramework\MyInput.cpp" />
@@ -101,11 +102,13 @@
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySpriteBatch.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyTexture.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="MyFramework\Win32\MyUtils_Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyFramework\Android\MyGameServer.h" />
     <ClInclude Include="MyFramework\MyCamera.h" />
     <ClInclude Include="MyFramework\MyCamera2D.h" />
     <ClInclude Include="MyFramework\MyInput.h" />

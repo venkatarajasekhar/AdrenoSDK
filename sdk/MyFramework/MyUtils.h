@@ -65,3 +65,4 @@ inline MyString toString(const T& t)
 }
 
 MyString resolveAssetsPath(const MyString& relativePath);
+void getWindowDimension(int& width, int& height);

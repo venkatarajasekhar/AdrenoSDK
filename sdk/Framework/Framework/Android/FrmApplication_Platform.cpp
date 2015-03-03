@@ -543,6 +543,7 @@ static void CommandCallback(android_app* pApp, int32_t cmd)
 }
 
 extern AAssetManager* g_pAssetManager;
+android_app* g_androidApp = nullptr;
 
 //--------------------------------------------------------------------------------------
 // Name: android_main()
@@ -550,6 +551,8 @@ extern AAssetManager* g_pAssetManager;
 //--------------------------------------------------------------------------------------
 void android_main(android_app* pApp)
 {
+	g_androidApp = pApp;
+
 	// Native glue may get stripped if this is omitted
 	app_dummy();
 

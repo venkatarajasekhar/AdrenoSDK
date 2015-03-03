@@ -131,6 +131,7 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteBatch.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyTexture.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="PlayScreen.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

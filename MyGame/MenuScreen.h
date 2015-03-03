@@ -13,8 +13,8 @@ public:
 
 	void init();
 	void resize(int width, int height);
-	void update(UserInput& userInput, Timer& timer);
-	void render(SpriteBatch& spriteBatch);
+	void update(void* utilObjs);
+	void render(void* utilObjs);
 
 private:
 

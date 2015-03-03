@@ -1,5 +1,6 @@
 
 #include "PlayScreen.h"
+#include "Utils.h"
 
 //========================================================================================================
 //
@@ -107,17 +108,19 @@ void PlayScreen::resize(int width, int height)
 	m_camera_main.resize(width, height);
 }
 
-void PlayScreen::update(UserInput& userInput, Timer& timer)
+void PlayScreen::update(void* utilObjs)
 {
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
 	// Core objects
 	m_camera_main.update();
 
 	// Mesh objects
-	m_mesh_terrain.update(timer);
+	m_mesh_terrain.update(*globalUtilObjs->timer);
 	m_mesh_scorpion.update();
 }
 
-void PlayScreen::render(SpriteBatch& spriteBatch)
+void PlayScreen::render(void* utilObjs)
 {
 	m_mesh_terrain.render(m_camera_main);
 

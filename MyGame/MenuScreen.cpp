@@ -1,5 +1,6 @@
 
 #include "MenuScreen.h"
+#include "Utils.h"
 #include <MyScreenManager.h>
 #include <FrmPackedResourceGLES.h>
 
@@ -29,16 +30,20 @@ void MenuScreen::resize(int width, int height)
 
 }
 
-void MenuScreen::update(UserInput& userInput, Timer& timer)
+void MenuScreen::update(void* utilObjs)
 {
-	m_btn_startGame.update(userInput);
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	m_btn_startGame.update(*globalUtilObjs->userInput);
 	if (m_btn_startGame.isPressing())
 	{
 		m_screenManager->activeScreen("PlayScreen");
 	}
 }
 
-void MenuScreen::render(SpriteBatch& spriteBatch)
+void MenuScreen::render(void* utilObjs)
 {
-	m_btn_startGame.render(spriteBatch);
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	m_btn_startGame.render(*globalUtilObjs->spriteBatch);
 }

@@ -186,10 +186,14 @@
     <ClCompile Include="..\sdk\MyFramework\MyScreenManager.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyUtilsGLES.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="PlayScreen.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
 </Project>

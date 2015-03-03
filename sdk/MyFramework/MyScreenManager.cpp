@@ -24,19 +24,19 @@ void ScreenManager::resize(int width, int height)
 	}
 }
 
-void ScreenManager::update(UserInput& userInput, Timer& timer)
+void ScreenManager::update(void* utilObjs)
 {
 	if (m_activeScreen != nullptr)
 	{
-		m_activeScreen->update(userInput, timer);
+		m_activeScreen->update(utilObjs);
 	}
 }
 
-void ScreenManager::render(SpriteBatch& spriteBatch)
+void ScreenManager::render(void* utilObjs)
 {
 	if (m_activeScreen != nullptr)
 	{
-		m_activeScreen->render(spriteBatch);
+		m_activeScreen->render(utilObjs);
 	}
 }
 
@@ -44,11 +44,11 @@ void ScreenManager::addScreen(const MyString& id, Screen* screen)
 {
 	if (getScreen(id) == nullptr)
 	{
-		struct { GLint x, y, width, height; } viewport;
-		glGetIntegerv(GL_VIEWPORT, (GLint*)&viewport);
+		int width, height;
+		getWindowDimension(width, height);
 
 		screen->init();
-		screen->resize(viewport.width, viewport.height);
+		screen->resize(width, height);
 		
 		m_screens[id] = screen;
 	}

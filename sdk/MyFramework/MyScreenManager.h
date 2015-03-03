@@ -1,9 +1,7 @@
 
 #pragma once
 
-#include "MyInput.h"
-#include "MyTimer.h"
-#include "MySpriteBatch.h"
+#include "MyUtils.h"
 
 class Screen;
 
@@ -14,8 +12,8 @@ public:
 	~ScreenManager();
 
 	void resize(int width, int height);
-	void update(UserInput& userInput, Timer& timer);
-	void render(SpriteBatch& spriteBatch);
+	void update(void* utilObjs);
+	void render(void* utilObjs);
 
 	void addScreen(const MyString& id, Screen* screen);
 	void activeScreen(const MyString& id);

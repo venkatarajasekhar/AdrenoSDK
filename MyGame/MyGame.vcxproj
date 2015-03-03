@@ -134,6 +134,7 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuScreen.cpp" />

@@ -43,6 +43,11 @@ const MyVec2& UIWidget::getPos()const
 	return m_pos;
 }
 
+void UIWidget::setPos(const MyVec2& pos)
+{
+	m_pos = pos;
+}
+
 bool UIWidget::isPressing()const
 {
 	return m_isPressing;

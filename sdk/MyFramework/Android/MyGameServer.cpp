@@ -95,7 +95,8 @@ void GameServer::beginUserInitiatedSignIn()
 	}
 }
 
-void GameServer::signOut() {
+void GameServer::signOut() 
+{
 	if (m_game_services->IsAuthorized())
 	{
 		m_game_services->SignOut();

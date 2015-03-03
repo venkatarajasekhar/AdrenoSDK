@@ -17,6 +17,8 @@ public:
 	const MyVec2& getSize()const;
 	const MyVec2& getPos()const;
 
+	void setPos(const MyVec2& pos);
+
 	bool isPressing()const;
 
 protected:

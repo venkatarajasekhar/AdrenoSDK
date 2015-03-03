@@ -17,8 +17,14 @@ public:
 	void render(void* utilObjs);
 
 private:
+	static const int NUM_BUTTONS = 5;
 
-	Texture m_texture_btn_startGame;
+private:
+	int m_width, m_height;
 
-	UIButton m_btn_startGame;
+	// Texture resources
+	Texture m_texture_btns[NUM_BUTTONS];
+
+	// Buttons
+	UIButton m_btns[NUM_BUTTONS];
 };

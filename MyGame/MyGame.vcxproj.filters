@@ -189,6 +189,9 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyUtilsGLES.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp">
+      <Filter>sdk\MyFramework\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

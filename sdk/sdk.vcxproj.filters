@@ -93,6 +93,9 @@
     <ClCompile Include="MyFramework\OpenGLES\MyUtilsGLES.cpp">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\Win32\MyGameServer.cpp">
+      <Filter>MyFramework\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="MyFramework\Android\MyGameServer.h">
       <Filter>MyFramework\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\Win32\MyGameServer.h">
+      <Filter>MyFramework\Win32</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

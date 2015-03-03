@@ -105,6 +105,7 @@
     <ClCompile Include="MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="MyFramework\Win32\FrmApplication_Platform.cpp" />
+    <ClCompile Include="MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="MyFramework\Win32\MyUtils_Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +132,7 @@
     <ClInclude Include="MyFramework\OpenGLES\MySpriteBatch.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyTexture.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyVertex.h" />
+    <ClInclude Include="MyFramework\Win32\MyGameServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

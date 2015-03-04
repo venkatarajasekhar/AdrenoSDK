@@ -37,6 +37,8 @@ void GameServer::initServices(
 		})
 			.SetOnAuthActionFinished([this, finished_callback](gpg::AuthOperation op, gpg::AuthStatus status)
 		{
+			smartLog("Sign in finished with a result of " + toString((int)status));
+		
 			m_is_auth_in_progress = false;
 			if (finished_callback != nullptr)
 				finished_callback(op, status);

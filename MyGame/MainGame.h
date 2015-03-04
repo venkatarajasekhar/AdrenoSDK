@@ -1,9 +1,11 @@
 
 #pragma once
 
+// Always including Utils.h on top
+#include "Utils.h"
+
 #include <FrmApplication.h>
 #include <MyScreenManager.h>
-#include "Utils.h"
 
 class MainGame : public CFrmApplication
 {

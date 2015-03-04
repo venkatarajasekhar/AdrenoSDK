@@ -1,6 +1,8 @@
 
-#include "PlayScreen.h"
+// Always including Utils.h on top
 #include "Utils.h"
+
+#include "PlayScreen.h"
 
 //========================================================================================================
 //

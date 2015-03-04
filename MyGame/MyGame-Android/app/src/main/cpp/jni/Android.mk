@@ -62,6 +62,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIButton.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIWidget.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUtils.cpp \
+				   $(SDK_MY_FRM_ANDROID_PATH)/MyGameServer.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyUtils_Platform.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBasicMesh.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFileMesh1.cpp \
@@ -88,12 +89,13 @@ LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_MY_FRM_ANDROID_PATH) \
 					   $(LOCAL_PATH)/$(SDK_MY_FRM_OPENGL_PATH)
 				   
-LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -lOpenSLES
+LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -lOpenSLES -lz
 
 LOCAL_CFLAGS	+= -Wno-write-strings -Wno-conversion-null
 
-LOCAL_STATIC_LIBRARIES := android_native_app_glue
+LOCAL_STATIC_LIBRARIES := android_native_app_glue gpg-1
 
 include $(BUILD_SHARED_LIBRARY)
 
+$(call import-module,gpg-cpp-sdk/android)
 $(call import-module,android/native_app_glue)

@@ -1,6 +1,8 @@
 
-#include "MenuScreen.h"
+// Always including Utils.h on top
 #include "Utils.h"
+
+#include "MenuScreen.h"
 #include <MyScreenManager.h>
 #include <FrmPackedResourceGLES.h>
 

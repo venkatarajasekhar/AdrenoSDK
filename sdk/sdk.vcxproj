@@ -81,6 +81,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MyFramework\Android\MyGameServer.cpp" />
+    <ClCompile Include="MyFramework\Android\MyJNIBridge.cpp" />
+    <ClCompile Include="MyFramework\Android\MyUtils_Platform.cpp" />
     <ClCompile Include="MyFramework\MyCamera.cpp" />
     <ClCompile Include="MyFramework\MyCamera2D.cpp" />
     <ClCompile Include="MyFramework\MyInput.cpp" />

@@ -96,6 +96,12 @@
     <ClCompile Include="MyFramework\Win32\MyGameServer.cpp">
       <Filter>MyFramework\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\Android\MyUtils_Platform.cpp">
+      <Filter>MyFramework\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\Android\MyJNIBridge.cpp">
+      <Filter>MyFramework\Android</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">

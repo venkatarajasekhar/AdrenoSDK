@@ -11,6 +11,10 @@
 //
 //========================================================================================================
 
+#ifdef __ANDROID__
+const char* g_nativeActivityName = "com/game3d/mygame_android/MyGameNativeActivity";
+#endif
+
 CFrmApplication* FrmCreateApplicationInstance()
 {
 	MainGame* app = new MainGame("My Game");

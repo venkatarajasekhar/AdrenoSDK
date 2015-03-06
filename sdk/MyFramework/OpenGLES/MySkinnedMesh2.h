@@ -1,6 +1,6 @@
 #pragma once
 
-#include <OpenGLES/FrmMesh.h>
+#include "FrmMesh.h"
 #include "MyMesh.h"
 
 //================================================================================================
@@ -33,10 +33,11 @@ public:
 		const MyVec3& pos,
 		const MyVec3& rot,
 		const MyVec3& scale,
+		Material* material = nullptr,
 		std::map<MyString, AnimAction>* animActions = nullptr);
 
 	void update(Timer& timer);
-	void render(Camera& camera);
+	void render(Camera& camera, Light* light = nullptr);
 
 	MyString getCurrentAction()const;
 	void setCurrentAction(const MyString& name);

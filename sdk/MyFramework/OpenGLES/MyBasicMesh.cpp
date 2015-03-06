@@ -17,9 +17,9 @@ BasicMesh::~BasicMesh()
 	m_ibo = 0;
 }
 
-void BasicMesh::render(Camera& camera)
+void BasicMesh::render(Camera& camera, Light* light)
 {
-	Mesh::render(camera);
+	Mesh::render(camera, light);
 
 	// Bind texture
 	if (m_diffuseMap != nullptr)

@@ -39,10 +39,10 @@ public:
 		Adreno::Animation* anim,
 		Texture** modelTexture,
 		Shader& shader,
-		Material& material,
 		const MyVec3& pos,
 		const MyVec3& rot,
 		const MyVec3& scale,
+		Material* material = nullptr,
 		std::map<MyString, AnimAction>* animActions = nullptr,
 		FLOAT32 speedFactor = 1.0f);
 

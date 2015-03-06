@@ -1,6 +1,8 @@
 
 #include "MyFileMesh1.h"
 
+#pragma region Helpers
+
 //===============================================================================================================
 //
 // Helpers
@@ -57,6 +59,8 @@ void FileMesh1::destroyTextures(Adreno::Model* model, Texture** modelTexture)
 	}
 }
 
+#pragma endregion
+
 //===============================================================================================================
 //
 // FileMesh1 class
@@ -96,14 +100,13 @@ void FileMesh1::init(
 	Adreno::Model* model,
 	Texture** modelTexture,
 	Shader& shader,
-	Material& material,
 	const MyVec3& pos,
 	const MyVec3& rot,
-	const MyVec3& scale)
+	const MyVec3& scale,
+	Material* material)
 {
 	m_model = model;
 	m_modelTexture = modelTexture;
-	m_material = material;
 
 	// Create vertex and index buffers, and map vertex format
 	m_vertexBuffer = new GLuint[m_model->NumMeshes];
@@ -131,25 +134,18 @@ void FileMesh1::init(
 		m_vertexFormatMap[meshIndex].texCoord = GetPropertyIndexFromName(pMesh, "texcoord");
 	}
 
-	Mesh::init(shader, pos, rot, scale);
+	enableLighting();
+
+	Mesh::init(shader, pos, rot, scale, material);
 }
 
-void FileMesh1::update()
+void FileMesh1::update(Timer& timer)
 {
-	m_rot.y += 0.05f;
 }
 
-void FileMesh1::render(Camera& camera, Light& light)
+void FileMesh1::render(Camera& camera, Light* light)
 {
-	Mesh::render(camera);
-
-	m_shader->setUniform("u_lightPos", light.LightPos);
-	m_shader->setUniform("u_eyePos", camera.getEye());
-
-	m_shader->setUniform("u_material.Ambient", m_material.Ambient);
-	m_shader->setUniform("u_material.Diffuse", m_material.Diffuse);
-	m_shader->setUniform("u_material.Specular", m_material.Specular);
-	m_shader->setUniform("u_material.Shininess", m_material.Shininess);
+	Mesh::render(camera, light);
 
 	// Render each of the meshes
 	for (INT32 meshIndex = 0; meshIndex < m_model->NumMeshes; ++meshIndex)

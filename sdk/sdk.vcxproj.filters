@@ -176,5 +176,11 @@
     <ClInclude Include="MyFramework\Win32\MyGameServer.h">
       <Filter>MyFramework\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="MyFramework\MyLight.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyMaterial.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

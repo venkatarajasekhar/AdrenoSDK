@@ -115,6 +115,8 @@
     <ClInclude Include="MyFramework\MyCamera.h" />
     <ClInclude Include="MyFramework\MyCamera2D.h" />
     <ClInclude Include="MyFramework\MyInput.h" />
+    <ClInclude Include="MyFramework\MyLight.h" />
+    <ClInclude Include="MyFramework\MyMaterial.h" />
     <ClInclude Include="MyFramework\MyMath.h" />
     <ClInclude Include="MyFramework\MyOrthoCamera.h" />
     <ClInclude Include="MyFramework\MyPerspectiveCamera.h" />

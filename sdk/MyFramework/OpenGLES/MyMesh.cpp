@@ -2,7 +2,8 @@
 #include "MyMesh.h"
 
 Mesh::Mesh()
-	: m_shader(nullptr)
+	: m_shader(nullptr),
+	m_lightingEnabled(false)
 {
 }
 
@@ -10,19 +11,25 @@ Mesh::~Mesh()
 {
 }
 
-void Mesh::init(Shader& shader, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale)
+void Mesh::init(Shader& shader, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, Material* material)
 {
 	m_shader = &shader;
+
 	setPos(pos);
 	setRot(rot);
 	setScale(scale);
+
+	if (material != nullptr)
+	{
+		m_material = *material;
+	}
 }
 
 void Mesh::update(Timer& timer)
 {
 }
 
-void Mesh::render(Camera& camera)
+void Mesh::render(Camera& camera, Light* light)
 {
 	m_shader->apply();
 
@@ -33,6 +40,18 @@ void Mesh::render(Camera& camera)
 	m_shader->setUniform("u_world", m_world);
 	m_shader->setUniform("u_view", camera.getView());
 	m_shader->setUniform("u_proj", camera.getProj());
+
+	if (m_lightingEnabled && (light != nullptr))
+	{
+		m_shader->setUniform("u_material.Ambient", m_material.Ambient);
+		m_shader->setUniform("u_material.Diffuse", m_material.Diffuse);
+		m_shader->setUniform("u_material.Specular", m_material.Specular);
+		m_shader->setUniform("u_material.Shininess", m_material.Shininess);
+
+		m_shader->setUniform("u_light.PosOrDir", light->PosOrDir);
+
+		m_shader->setUniform("u_eyePos", camera.getEye());
+	}
 }
 
 //==========================================================================================================
@@ -75,4 +94,14 @@ void Mesh::setRot(const MyVec3& rot)
 void Mesh::setScale(const MyVec3& scale)
 {
 	m_scale = scale;
+}
+
+void Mesh::enableLighting()
+{
+	m_lightingEnabled = true;
+}
+
+void Mesh::disableLighting()
+{
+	m_lightingEnabled = false;
 }

@@ -12,21 +12,6 @@
 //
 //===============================================================================================================
 
-struct Material
-{
-	MyVec4 Diffuse;
-	MyVec4 Specular;
-	MyVec3 Ambient;
-	
-	float Shininess;
-};
-
-struct Light
-{
-	MyVec3 LightPos;
-	float pad1;
-};
-
 enum FRM_VERTEX_USAGE_CUSTOM
 {
 	FRM_VERTEX_CUSTOM_BONEINDEX1 = FRM_VERTEX_BONEINDICES,
@@ -61,13 +46,13 @@ public:
 		Adreno::Model* model,
 		Texture** modelTexture,
 		Shader& shader,
-		Material& material,
 		const MyVec3& pos,
 		const MyVec3& rot,
-		const MyVec3& scale);
+		const MyVec3& scale,
+		Material* material = nullptr);
 
-	virtual void update();
-	virtual void render(Camera& camera, Light& light);
+	virtual void update(Timer& timer);
+	virtual void render(Camera& camera, Light* light = nullptr);
 
 public:
 	static Texture** initTextures(Adreno::Model* model, CFrmPackedResourceGLES& resource);
@@ -84,6 +69,4 @@ protected:
 	GLuint* m_indexBuffer;
 
 	VERTEX_FORMAT_MAP* m_vertexFormatMap;
-
-	Material m_material;
 };

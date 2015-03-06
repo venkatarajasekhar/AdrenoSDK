@@ -1,6 +1,4 @@
 
-// Shader for skinned mesh *.model
-
 //==================================================================================================
 //
 // Declaring structs
@@ -15,6 +13,13 @@ struct MATERIAL
     float Shininess;
 };
 
+struct LIGHT
+{
+	// w == 0.0f: Directional light
+	// w == 1.0f: Point light
+    vec4 PosOrDir;
+};
+
 //==================================================================================================
 //
 // Varying variables
@@ -24,7 +29,6 @@ struct MATERIAL
 varying vec3 v_norW;
 varying vec2 v_texC;
 
-varying vec3 v_surfaceToLight;
 varying vec3 v_surfaceToEye;
 
 //==================================================================================================
@@ -34,7 +38,9 @@ varying vec3 v_surfaceToEye;
 //==================================================================================================
 
 uniform sampler2D u_diffuseSampler;
+
 uniform MATERIAL u_material;
+uniform LIGHT u_light;
 
 //==================================================================================================
 //
@@ -45,9 +51,9 @@ uniform MATERIAL u_material;
 void main()
 {
 	vec3 norW = normalize(v_norW);
-	vec3 surfaceToLight = normalize( v_surfaceToLight );
+	vec3 lightDir = -normalize(u_light.PosOrDir.xyz);
     vec3 surfaceToEye = normalize( v_surfaceToEye );
-	
+
 	// Get texture color
 	vec4 diffTexture = texture2D( u_diffuseSampler, v_texC );
 	
@@ -56,11 +62,11 @@ void main()
     gl_FragColor.a = 0.0;
     
 	// Apply diffuse color
-    float diffFactor = max( 0.0, dot( norW, surfaceToLight ) );
+	float diffFactor = max( 0.0, dot( norW, lightDir ) );
     gl_FragColor.rgba += diffTexture * u_material.Diffuse * diffFactor;
     
     // Apply specular color
-    vec3 halfVector = normalize( surfaceToLight + surfaceToEye );
+	vec3 halfVector = normalize( lightDir + surfaceToEye );
     float specFactor = pow( max( 0.0, dot( norW, halfVector ) ), u_material.Shininess );
     gl_FragColor.rgba += u_material.Specular * specFactor;
 }

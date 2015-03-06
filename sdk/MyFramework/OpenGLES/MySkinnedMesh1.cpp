@@ -2,6 +2,8 @@
 #include "MySkinnedMesh1.h"
 #include "FrmMesh.h"
 
+#pragma region Helpers
+
 //===============================================================================================================
 //
 // Helpers
@@ -160,6 +162,8 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 	return TRUE;
 }
 
+#pragma endregion
+
 //===============================================================================================================
 //
 // SkinnedMesh1 class
@@ -186,10 +190,10 @@ void SkinnedMesh1::init(
 	Adreno::Animation* anim,
 	Texture** modelTexture,
 	Shader& shader,
-	Material& material,
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
+	Material* material,
 	std::map<MyString, AnimAction>* animActions,
 	FLOAT32 speedFactor)
 {
@@ -204,7 +208,7 @@ void SkinnedMesh1::init(
 	throwIfFailed(TRUE == SetupBoneTransform(model, anim), "ERROR: Fail to setup skinned mesh type 1");
 	throwIfFailed(TRUE == RemapBoneIndices(model, m_boneRemap, m_boneRemapCount), "ERROR: Fail to setup skinned mesh type 1");
 
-	FileMesh1::init(model, modelTexture, shader, material, pos, rot, scale);
+	FileMesh1::init(model, modelTexture, shader, pos, rot, scale, material);
 }
 
 void SkinnedMesh1::update(Timer& timer)
@@ -246,7 +250,7 @@ void SkinnedMesh1::update(Timer& timer)
 		m_frameWeight = (FLOAT32)(m_totalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
 	}
 
-	FileMesh1::update();
+	FileMesh1::update(timer);
 }
 
 void SkinnedMesh1::foreachSubmesh(int index)

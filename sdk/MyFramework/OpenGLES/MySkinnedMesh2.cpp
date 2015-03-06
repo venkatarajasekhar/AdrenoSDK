@@ -1,12 +1,15 @@
 
 #include "MySkinnedMesh2.h"
 
+#pragma region Helper
+
 //===============================================================================================================
 //
 // Helper
 //
 //===============================================================================================================
 
+/*
 static MyVec3 convert(const FRMVECTOR3& v)
 {
 	return MyVec3(v.v[0], v.v[1], v.v[2]);
@@ -16,6 +19,7 @@ static MyVec4 convert(const FRMVECTOR4& v)
 {
 	return MyVec4(v.v[0], v.v[1], v.v[2], v.v[3]);
 }
+/**/
 
 static VOID BindAnimationDataToMesh(FRM_ANIMATION_SET* pAnimationSet, CFrmMesh* pMesh)
 {
@@ -74,6 +78,8 @@ static VOID SetAnimationTime(FRM_ANIMATION_SET* pAnimationSet, UINT32 nPeriodicA
 	}
 }
 
+#pragma endregion
+
 //===============================================================================================================
 //
 // SkinnedMesh class
@@ -99,6 +105,7 @@ void SkinnedMesh2::init(
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
+	Material* material,
 	std::map<MyString, AnimAction>* animActions)
 {
 	m_mesh = &mesh;
@@ -112,15 +119,13 @@ void SkinnedMesh2::init(
 	m_mesh->MakeDrawable(&resource);
 	BindAnimationDataToMesh(m_animationSet, m_mesh);
 
-	Mesh::init(shader, pos, rot, scale);
+	enableLighting();
+
+	Mesh::init(shader, pos, rot, scale, material);
 }
 
 void SkinnedMesh2::update(Timer& timer)
 {
-	////////////////////////////////////////
-	m_rot.y += 0.05f;
-	///////////////////////////////////////
-
 	m_totalTicks += (UINT32)(timer.getElapsedTime() * FRM_ANIMATION_TICKS_PER_SEC);
 
 	if (!m_animActions.empty())
@@ -138,9 +143,9 @@ void SkinnedMesh2::update(Timer& timer)
 	Mesh::update(timer);
 }
 
-void SkinnedMesh2::render(Camera& camera)
+void SkinnedMesh2::render(Camera& camera, Light* light)
 {
-	Mesh::render(camera);
+	Mesh::render(camera, light);
 
 	FRM_MESH* pMesh = m_mesh->m_pFrames[0].m_pMesh;
 
@@ -154,14 +159,6 @@ void SkinnedMesh2::render(Camera& camera)
 	{
 		FRM_MESH_SUBSET* pSubset = &pMesh->m_pSubsets[nSubset];
 
-		// Set material color properties 
-		FRMVECTOR3 vAmbient = 0.2f * pSubset->m_vAmbientColor;
-		FRMVECTOR4 vDiffuse = pSubset->m_vDiffuseColor;
-		FRMVECTOR4 vSpecular = pSubset->m_vSpecularColor;
-
-		m_shader->setUniform("u_material.Ambient", convert(vAmbient));
-		m_shader->setUniform("u_material.Diffuse", convert(vDiffuse));
-		m_shader->setUniform("u_material.Specular", convert(vSpecular));
 		m_shader->setUniform("u_diffuseSampler", 0);
 
 		// Setup the material of the mesh subset

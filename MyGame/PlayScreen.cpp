@@ -10,8 +10,12 @@
 //
 //========================================================================================================
 
-static const MyVec3 MAIN_CAM_POS = MyVec3(10.0f, 15.0f, 25.0f);
-static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 5.0f, 0.0f);
+/*static const MyVec3 MAIN_CAM_POS = MyVec3(10.0f, 15.0f, 25.0f);
+static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 5.0f, 0.0f);*/
+
+static const MyVec3 MAIN_CAM_POS = MyVec3(2.0f, 1.3f, 3.0f);
+static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 1.0f, 0.0f);
+
 static const float MAIN_CAM_FAR = 100.0f;
 
 //========================================================================================================
@@ -32,6 +36,9 @@ PlayScreen::~PlayScreen()
 
 	// Mesh resources
 	Adreno::FrmDestroyLoadedModel(m_meshData_scorpion);
+	Adreno::FrmDestroyLoadedAnimation(m_animData_scorpion);
+
+	delete m_animData_boy;
 }
 
 void PlayScreen::init()
@@ -48,12 +55,31 @@ void PlayScreen::init()
 
 	m_shader_mesh.init(
 		resolveAssetsPath("Shaders/mesh.vs"),
-		resolveAssetsPath("Shaders/mesh.fs"),
+		resolveAssetsPath("Shaders/PhongShading.fs"),
 		PosNorTexVertex::ShaderAttribsDesc,
 		PosNorTexVertex::NumShaderAttribsDesc);
 
+	m_shader_skinnedMesh1.init(
+		resolveAssetsPath("Shaders/skinnedMesh1.vs"),
+		resolveAssetsPath("Shaders/PhongShading.fs"),
+		SkinnedVertex::ShaderAttribsDesc,
+		SkinnedVertex::NumShaderAttribsDesc);
+
+	m_shader_skinnedMesh2.init(
+		resolveAssetsPath("Shaders/skinnedMesh2.vs"),
+		resolveAssetsPath("Shaders/PhongShading.fs"),
+		SkinnedVertex::ShaderAttribsDesc,
+		SkinnedVertex::NumShaderAttribsDesc);
+
 	// Mesh resources
 	m_meshData_scorpion = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
+	m_animData_scorpion = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
+
+	m_meshData_boy.Load(resolveAssetsPath("Meshes/Boy03.mesh").c_str());
+	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_animData_boy);
+
+	//m_meshData_boy.Load(resolveAssetsPath("Meshes/Dman.mesh").c_str());
+	//FrmReadAnimation(resolveAssetsPath("Meshes/Dman.anim").c_str(), &m_animData_boy);
 
 	// Texture resources
 	{
@@ -101,7 +127,34 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
-		m_mesh_scorpion.init(m_meshData_scorpion, m_textures_scorpion, m_shader_mesh, material, MyVec3(0), MyVec3(0), MyVec3(0.5f));
+		//m_mesh_scorpion.init(m_meshData_scorpion, m_textures_scorpion, m_shader_mesh, MyVec3(0), MyVec3(0), MyVec3(0.5f), &material);
+		/*m_skinnedMesh_scorpion.init(
+			m_meshData_scorpion,
+			m_animData_scorpion,
+			m_textures_scorpion,
+			m_shader_skinnedMesh1,
+			MyVec3(0),
+			MyVec3(0),
+			MyVec3(1.0f),
+			&material);*/
+	}
+
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/Boy03.pak").c_str());
+		//resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
+
+		Material material;
+
+		material.Ambient = MyVec3(0.1f, 0.1f, 0.1f);
+		material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		material.Specular = MyVec4(0.4f, 0.4f, 0.4f, 1.0f);
+		material.Shininess = 16.0f;
+
+		m_skinnedMesh_boy.init(m_meshData_boy, m_animData_boy, resource, m_shader_skinnedMesh2,
+			MyVec3(0),
+			MyVec3(0),
+			MyVec3(1.0f), &material);
 	}
 }
 
@@ -119,7 +172,9 @@ void PlayScreen::update(void* utilObjs)
 
 	// Mesh objects
 	m_mesh_terrain.update(*globalUtilObjs->timer);
-	m_mesh_scorpion.update();
+	//m_mesh_scorpion.update(*globalUtilObjs->timer);
+	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
+	m_skinnedMesh_boy.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -128,8 +183,10 @@ void PlayScreen::render(void* utilObjs)
 
 	{
 		Light light;
-		light.LightPos = MyVec3(50.0f, 50.0f, 50.0f);
+		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		m_mesh_scorpion.render(m_camera_main, light);
+		//m_mesh_scorpion.render(m_camera_main, &light);
+		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
+		m_skinnedMesh_boy.render(m_camera_main, &light);
 	}
 }

@@ -102,6 +102,9 @@
     <ClCompile Include="MyFramework\Android\MyJNIBridge.cpp">
       <Filter>MyFramework\Android</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="MyFramework\MyMaterial.h">
       <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h">
+      <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

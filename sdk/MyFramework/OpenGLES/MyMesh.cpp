@@ -75,6 +75,11 @@ MyVec3 Mesh::getScale()const
 	return m_scale;
 }
 
+Shader* Mesh::getShader()const
+{
+	return m_shader;
+}
+
 //==========================================================================================================
 //
 // Setter

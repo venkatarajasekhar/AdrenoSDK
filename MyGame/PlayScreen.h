@@ -4,7 +4,7 @@
 #include <MyScreen.h>
 
 #include <MyPerspectiveCamera.h>
-#include <MyBasicMesh.h>
+#include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
 
@@ -31,7 +31,7 @@ private:
 	Shader m_shader_skinnedMesh2;
 
 	// Texture resources
-	Texture m_texture_grass;
+	Texture m_textures_terrain[3];
 	Texture** m_textures_scorpion;
 
 	// Mesh resources
@@ -42,7 +42,7 @@ private:
 	FRM_ANIMATION_SET* m_animData_boy;
 
 	// Mesh objects
-	BasicMesh m_mesh_terrain;
+	FlatTerrain m_mesh_terrain;
 	//FileMesh1 m_mesh_scorpion;
 	//SkinnedMesh1 m_skinnedMesh_scorpion;
 	SkinnedMesh2 m_skinnedMesh_boy;

@@ -97,6 +97,7 @@
     <ClCompile Include="MyFramework\MyUtils.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyBasicMesh.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyFileMesh1.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyInputLayout.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyMesh.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyShader.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="MyFramework\MyUtils.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyFileMesh1.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyInputLayout.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyMesh.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyShader.h" />

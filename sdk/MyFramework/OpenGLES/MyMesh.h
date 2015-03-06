@@ -23,6 +23,8 @@ public:
 	MyVec3 getRot()const;
 	MyVec3 getScale()const;
 
+	Shader* getShader()const;
+
 	// Setter
 
 	void setPos(const MyVec3& pos);

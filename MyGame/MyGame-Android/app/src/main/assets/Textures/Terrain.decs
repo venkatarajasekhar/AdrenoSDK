@@ -1,2 +1,4 @@
 # Contains textures:
-grass -> grass.jpg
+diffuse_1 -> stone_pavement_1.jpg
+diffuse_2 -> grass.jpg
+blend -> terrain_map.jpg

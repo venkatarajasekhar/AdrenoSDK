@@ -10,11 +10,16 @@
 //
 //========================================================================================================
 
-/*static const MyVec3 MAIN_CAM_POS = MyVec3(10.0f, 15.0f, 25.0f);
-static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 5.0f, 0.0f);*/
+// View model scorpion
+//static const MyVec3 MAIN_CAM_POS = MyVec3(10.0f, 15.0f, 25.0f);
+//static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 5.0f, 0.0f);
 
-static const MyVec3 MAIN_CAM_POS = MyVec3(2.0f, 1.3f, 3.0f);
-static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 1.0f, 0.0f);
+// View model boy
+//static const MyVec3 MAIN_CAM_POS = MyVec3(2.0f, 1.3f, 3.0f);
+//static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 1.0f, 0.0f);
+
+static const MyVec3 MAIN_CAM_POS = MyVec3(0.0f, 10.0f, 10.0f);
+static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 0.0f, 0.0f);
 
 static const float MAIN_CAM_FAR = 100.0f;
 
@@ -86,7 +91,9 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Terrain.pak").c_str());
 
-		m_texture_grass.init(resource.GetTexture("grass"));
+		m_textures_terrain[0].init(resource.GetTexture("diffuse_1"));
+		m_textures_terrain[1].init(resource.GetTexture("diffuse_2"));
+		m_textures_terrain[2].init(resource.GetTexture("blend"));
 	}
 
 	{
@@ -98,27 +105,15 @@ void PlayScreen::init()
 
 	// Mesh objects
 	{
-		// Terrain
-		std::vector<PosTexVertex> vertices;
-		vertices.resize(4);
-		vertices[0] = PosTexVertex(MyVec3(-0.5f, +0.0f, -0.5f), MyVec2(0, 0));
-		vertices[1] = PosTexVertex(MyVec3(-0.5f, +0.0f, +0.5f), MyVec2(0, 1));
-		vertices[2] = PosTexVertex(MyVec3(+0.5f, +0.0f, +0.5f), MyVec2(1, 1));
-		vertices[3] = PosTexVertex(MyVec3(+0.5f, +0.0f, -0.5f), MyVec2(1, 0));
+		FlatTerrainProperties properties = 
+		{
+			MyVec3(8.0f, 2.0f, 1.0f),
+			MyVec2(0.45f, 0.55f),
+		};
 
-		UIntArray indices;
-		indices.resize(6);
-
-		indices[0] = 0;
-		indices[1] = 1;
-		indices[2] = 2;
-		indices[3] = 0;
-		indices[4] = 2;
-		indices[5] = 3;
-
-		m_mesh_terrain.init(vertices, indices, m_shader_terrain, &m_texture_grass, MyVec3(0), MyVec3(0), MyVec3(20));
+		m_mesh_terrain.init(m_shader_terrain, m_textures_terrain[0], m_textures_terrain[1], m_textures_terrain[2], MyVec2(20), properties);
 	}
-
+	
 	{
 		Material material;
 
@@ -168,10 +163,26 @@ void PlayScreen::update(void* utilObjs)
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	// Core objects
-	m_camera_main.update();
 
+	{
+		// Camera
+		MyVec2 delta;
+		MyVec3 eye;
+
+		// dpi-dependence
+		float CAM_MOVE_FACTOR = 0.03F;
+		if (globalUtilObjs->userInput->pointer_Dragging(delta))
+		{
+			eye = m_camera_main.getEye();
+			eye.x += delta.x * CAM_MOVE_FACTOR;
+			eye.z += delta.y * CAM_MOVE_FACTOR;
+			m_camera_main.setEye(eye);
+		}
+
+		m_camera_main.update();
+	}
+	
 	// Mesh objects
-	m_mesh_terrain.update(*globalUtilObjs->timer);
 	//m_mesh_scorpion.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
 	m_skinnedMesh_boy.update(*globalUtilObjs->timer);

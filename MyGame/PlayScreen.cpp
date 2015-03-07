@@ -10,14 +10,6 @@
 //
 //========================================================================================================
 
-// View model scorpion
-//static const MyVec3 MAIN_CAM_POS = MyVec3(10.0f, 15.0f, 25.0f);
-//static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 5.0f, 0.0f);
-
-// View model boy
-//static const MyVec3 MAIN_CAM_POS = MyVec3(2.0f, 1.3f, 3.0f);
-//static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 1.0f, 0.0f);
-
 static const MyVec3 MAIN_CAM_POS = MyVec3(0.0f, 10.0f, 10.0f);
 static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 0.0f, 0.0f);
 
@@ -36,14 +28,26 @@ PlayScreen::PlayScreen(ScreenManager* screenManager)
 
 PlayScreen::~PlayScreen()
 {
-	// Texture resources
-	FileMesh1::destroyTextures(m_meshData_scorpion, m_textures_scorpion);
+	// Assets mesh textures
+	FileMesh1::destroyTextures(m_mesh1Datas[MESH_1_DATA_SCORPION], m_meshTextures[TEXTURES_MESH_SCORPION]);
 
-	// Mesh resources
-	Adreno::FrmDestroyLoadedModel(m_meshData_scorpion);
-	Adreno::FrmDestroyLoadedAnimation(m_animData_scorpion);
+	// Assets mesh 1 datas
+	for (size_t i = 0; i < NUM_MESH_1_DATAS; i++)
+	{
+		Adreno::FrmDestroyLoadedModel(m_mesh1Datas[i]);
+	}
 
-	delete m_animData_boy;
+	// Assets anim 1 datas
+	for (size_t i = 0; i < NUM_ANIM_1_DATAS; i++)
+	{
+		Adreno::FrmDestroyLoadedAnimation(m_anim1Datas[i]);
+	}
+
+	// Assets anim 2 datas
+	for (size_t i = 0; i < NUM_ANIM_2_DATAS; i++)
+	{
+		delete m_anim2Datas[i];
+	}
 }
 
 void PlayScreen::init()
@@ -51,56 +55,59 @@ void PlayScreen::init()
 	// Core objects
 	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
 
-	// Shader resources
-	m_shader_terrain.init(
+	// Assets shaders
+	m_shaders[SHADER_TERRAIN].init(
 		resolveAssetsPath("Shaders/terrain.vs"),
 		resolveAssetsPath("Shaders/terrain.fs"),
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
 
-	m_shader_mesh.init(
+	m_shaders[SHADER_MESH].init(
 		resolveAssetsPath("Shaders/mesh.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		PosNorTexVertex::ShaderAttribsDesc,
 		PosNorTexVertex::NumShaderAttribsDesc);
 
-	m_shader_skinnedMesh1.init(
+	m_shaders[SHADER_SKINNED_MESH_1].init(
 		resolveAssetsPath("Shaders/skinnedMesh1.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
 
-	m_shader_skinnedMesh2.init(
+	m_shaders[SHADER_SKINNED_MESH_2].init(
 		resolveAssetsPath("Shaders/skinnedMesh2.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
 
-	// Mesh resources
-	m_meshData_scorpion = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
-	m_animData_scorpion = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
-
-	m_meshData_boy.Load(resolveAssetsPath("Meshes/Boy03.mesh").c_str());
-	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_animData_boy);
-
-	//m_meshData_boy.Load(resolveAssetsPath("Meshes/Dman.mesh").c_str());
-	//FrmReadAnimation(resolveAssetsPath("Meshes/Dman.anim").c_str(), &m_animData_boy);
-
-	// Texture resources
+	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Terrain.pak").c_str());
 
-		m_textures_terrain[0].init(resource.GetTexture("diffuse_1"));
-		m_textures_terrain[1].init(resource.GetTexture("diffuse_2"));
-		m_textures_terrain[2].init(resource.GetTexture("blend"));
+		m_textures[TEXTURE_TERRAIN_DIFF_1].init(resource.GetTexture("diffuse_1"));
+		m_textures[TEXTURE_TERRAIN_DIFF_2].init(resource.GetTexture("diffuse_2"));
+		m_textures[TEXTURE_TERRAIN_BLEND].init(resource.GetTexture("blend"));
 	}
 
+	// Assets mesh 1 datas
+	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
+
+	// Assets mesh 2 datas
+	m_mesh2Datas[MESH_2_DATA_BOY].Load(resolveAssetsPath("Meshes/Boy03.mesh").c_str());
+
+	// Assets anim 1 datas
+	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
+
+	// Assets anim 2 datas
+	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_BOY]);
+
+	// Assets mesh textures
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Scorpion.pak").c_str());
 
-		m_textures_scorpion = FileMesh1::initTextures(m_meshData_scorpion, resource);
+		m_meshTextures[TEXTURES_MESH_SCORPION] = FileMesh1::initTextures(m_mesh1Datas[MESH_1_DATA_SCORPION], resource);
 	}
 
 	// Mesh objects
@@ -111,7 +118,13 @@ void PlayScreen::init()
 			MyVec2(0.45f, 0.55f),
 		};
 
-		m_mesh_terrain.init(m_shader_terrain, m_textures_terrain[0], m_textures_terrain[1], m_textures_terrain[2], MyVec2(20), properties);
+		m_mesh_terrain.init(
+			m_shaders[SHADER_TERRAIN], 
+			m_textures[TEXTURE_TERRAIN_DIFF_1], 
+			m_textures[TEXTURE_TERRAIN_DIFF_2], 
+			m_textures[TEXTURE_TERRAIN_BLEND], 
+			MyVec2(20), 
+			properties);
 	}
 	
 	{
@@ -122,22 +135,31 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
-		//m_mesh_scorpion.init(m_meshData_scorpion, m_textures_scorpion, m_shader_mesh, MyVec3(0), MyVec3(0), MyVec3(0.5f), &material);
-		/*m_skinnedMesh_scorpion.init(
-			m_meshData_scorpion,
-			m_animData_scorpion,
-			m_textures_scorpion,
-			m_shader_skinnedMesh1,
+		m_mesh_scorpion.init(
+			m_mesh1Datas[MESH_1_DATA_SCORPION], 
+			m_meshTextures[TEXTURES_MESH_SCORPION], 
+			m_shaders[SHADER_MESH], 
+			MyVec3(0), 
+			MyVec3(0), 
+			MyVec3(0.1f), 
+			&material);
+
+		/*
+		m_skinnedMesh_scorpion.init(
+			m_mesh1Datas[MESH_1_DATA_SCORPION],
+			m_anim1Datas[ANIM_1_DATA_SCORPION],
+			m_meshTextures[TEXTURES_MESH_SCORPION],
+			m_shaders[SHADER_SKINNED_MESH_1],
 			MyVec3(0),
 			MyVec3(0),
 			MyVec3(1.0f),
-			&material);*/
+			&material);
+		/**/
 	}
 
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Boy03.pak").c_str());
-		//resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
 
 		Material material;
 
@@ -146,10 +168,17 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.4f, 0.4f, 0.4f, 1.0f);
 		material.Shininess = 16.0f;
 
-		m_skinnedMesh_boy.init(m_meshData_boy, m_animData_boy, resource, m_shader_skinnedMesh2,
+		/*
+		m_skinnedMesh_boy.init(
+			m_mesh2Datas[MESH_2_DATA_BOY], 
+			m_anim2Datas[ANIM_2_DATA_BOY], 
+			resource, 
+			m_shaders[SHADER_SKINNED_MESH_2],
 			MyVec3(0),
 			MyVec3(0),
-			MyVec3(1.0f), &material);
+			MyVec3(1.0f), 
+			&material);
+		/**/
 	}
 }
 
@@ -183,9 +212,9 @@ void PlayScreen::update(void* utilObjs)
 	}
 	
 	// Mesh objects
-	//m_mesh_scorpion.update(*globalUtilObjs->timer);
+	m_mesh_scorpion.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
-	m_skinnedMesh_boy.update(*globalUtilObjs->timer);
+	//m_skinnedMesh_boy.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -196,8 +225,8 @@ void PlayScreen::render(void* utilObjs)
 		Light light;
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		//m_mesh_scorpion.render(m_camera_main, &light);
+		m_mesh_scorpion.render(m_camera_main, &light);
 		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
-		m_skinnedMesh_boy.render(m_camera_main, &light);
+		//m_skinnedMesh_boy.render(m_camera_main, &light);
 	}
 }

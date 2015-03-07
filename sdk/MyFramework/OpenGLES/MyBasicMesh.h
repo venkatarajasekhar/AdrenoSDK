@@ -31,6 +31,18 @@ public:
 
 	void render(Camera& camera, Light* light = nullptr);
 
+	// Getter
+
+	MyVec3 getPos();
+	MyVec3 getRot();
+	MyVec3 getScale();
+
+	// Setter
+
+	void setPos(const MyVec3& pos);
+	void setRot(const MyVec3& rot);
+	void setScale(const MyVec3& scale);
+
 	void setDiffuseMap(Texture* diffuseMap);
 
 private:
@@ -76,5 +88,18 @@ void BasicMesh::init(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_numIndices * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
 
-	Mesh::init(shader, pos, rot, scale, material);
+	// Add an instance
+	addInstance(Mesh::buildMeshInstance(pos, rot, scale));
+
+	//Mesh::init(shader, pos, rot, scale, material);
+	Mesh::init(shader, material);
+
+	/*
+	Instance* instance = new Instance;
+	instance->Position = pos;
+	instance->Rotation = rot;
+	instance->Scale = scale;
+
+	addInstance(instance);
+	/**/
 }

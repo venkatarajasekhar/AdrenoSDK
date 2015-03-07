@@ -121,7 +121,8 @@ void SkinnedMesh2::init(
 
 	enableLighting();
 
-	Mesh::init(shader, pos, rot, scale, material);
+	//Mesh::init(shader, pos, rot, scale, material);
+	Mesh::init(shader, material);
 }
 
 void SkinnedMesh2::update(Timer& timer)

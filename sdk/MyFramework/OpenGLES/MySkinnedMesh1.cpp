@@ -208,7 +208,8 @@ void SkinnedMesh1::init(
 	throwIfFailed(TRUE == SetupBoneTransform(model, anim), "ERROR: Fail to setup skinned mesh type 1");
 	throwIfFailed(TRUE == RemapBoneIndices(model, m_boneRemap, m_boneRemapCount), "ERROR: Fail to setup skinned mesh type 1");
 
-	FileMesh1::init(model, modelTexture, shader, pos, rot, scale, material);
+	//FileMesh1::init(model, modelTexture, shader, pos, rot, scale, material);
+	FileMesh1::init(model, modelTexture, shader, material);
 }
 
 void SkinnedMesh1::update(Timer& timer)

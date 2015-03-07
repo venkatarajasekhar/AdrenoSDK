@@ -42,6 +42,7 @@ public:
 	FileMesh1();
 	virtual ~FileMesh1();
 
+	/*
 	virtual void init(
 		Adreno::Model* model,
 		Texture** modelTexture,
@@ -49,6 +50,12 @@ public:
 		const MyVec3& pos,
 		const MyVec3& rot,
 		const MyVec3& scale,
+		Material* material = nullptr);
+	/**/
+	virtual void init(
+		Adreno::Model* model,
+		Texture** modelTexture,
+		Shader& shader,
 		Material* material = nullptr);
 
 	virtual void update(Timer& timer);

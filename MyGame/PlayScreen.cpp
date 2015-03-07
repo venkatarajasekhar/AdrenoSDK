@@ -138,11 +138,12 @@ void PlayScreen::init()
 		m_mesh_scorpion.init(
 			m_mesh1Datas[MESH_1_DATA_SCORPION], 
 			m_meshTextures[TEXTURES_MESH_SCORPION], 
-			m_shaders[SHADER_MESH], 
-			MyVec3(0), 
-			MyVec3(0), 
-			MyVec3(0.1f), 
+			m_shaders[SHADER_MESH],
 			&material);
+
+		m_mesh_scorpion.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.1f)));
+		m_mesh_scorpion.addInstance(Mesh::buildMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.1f)));
+		m_mesh_scorpion.addInstance(Mesh::buildMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.1f)));
 
 		/*
 		m_skinnedMesh_scorpion.init(

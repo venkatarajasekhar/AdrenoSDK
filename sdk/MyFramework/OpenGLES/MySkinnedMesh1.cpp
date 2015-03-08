@@ -12,6 +12,20 @@
 
 INT32 GetPropertyIndexFromName(Adreno::Mesh* pMesh, char* propertyName);
 
+SkinnedMesh1::Instance* SkinnedMesh1::buildSkinnedMeshInstance(const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, const MyString& action)
+{
+	SkinnedMesh1::Instance* instance = new SkinnedMesh1::Instance;
+
+	instance->Position = pos;
+	instance->Rotation = rot;
+	instance->Scale = scale;
+
+	instance->CurrentAction = action;
+	instance->TotalTicks = 0;
+
+	return instance;
+}
+
 // Desc: Get final transform for a bone
 // Transform of a bone is relative to its parent. When rendering, we'll need world transform of bone.
 // This function compute world transform of a bone.
@@ -173,11 +187,11 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 SkinnedMesh1::SkinnedMesh1()
 	: m_anim(nullptr),
 	m_boneRemapCount(0),
-	m_leftFrame(0),
-	m_rightFrame(0),
-	m_frameWeight(0),
-	m_speedFactor(1.0f),
-	m_totalTicks(0)
+	//m_leftFrame(0),
+	//m_rightFrame(0),
+	//m_frameWeight(0),
+	m_speedFactor(1.0f)
+	//m_totalTicks(0)
 {
 }
 
@@ -185,6 +199,7 @@ SkinnedMesh1::~SkinnedMesh1()
 {
 }
 
+/*
 void SkinnedMesh1::init(
 	Adreno::Model* model,
 	Adreno::Animation* anim,
@@ -196,24 +211,45 @@ void SkinnedMesh1::init(
 	Material* material,
 	std::map<MyString, AnimAction>* animActions,
 	FLOAT32 speedFactor)
+	/**/
+void SkinnedMesh1::init(
+	Adreno::Model* model,
+	Adreno::Animation* anim,
+	Texture** modelTexture,
+	Shader& shader,
+	Material* material,
+	std::map<MyString, AnimAction>* animActions,
+	FLOAT32 speedFactor)
 {
+	smartLog("----------------------------------BEGIN INIT SKINNED MESH");
+
 	m_anim = anim;
 	m_speedFactor = speedFactor;
-	m_animActions.clear();
+	
+	smartLog("----------------------------------BEGIN CLEAR ANIM");
+	//m_animActions.clear();
+	smartLog("----------------------------------END CLEAR ANIM");
 	if (animActions != nullptr)
 	{
 		m_animActions = (*animActions);
 	}
 
+	smartLog("----------------------------------BEGIN SetupBoneTransform");
 	throwIfFailed(TRUE == SetupBoneTransform(model, anim), "ERROR: Fail to setup skinned mesh type 1");
+	smartLog("----------------------------------BEGIN RemapBoneIndices");
 	throwIfFailed(TRUE == RemapBoneIndices(model, m_boneRemap, m_boneRemapCount), "ERROR: Fail to setup skinned mesh type 1");
 
+	smartLog("----------------------------------BEGIN INIT FILE MESH");
+	
 	//FileMesh1::init(model, modelTexture, shader, pos, rot, scale, material);
 	FileMesh1::init(model, modelTexture, shader, material);
+	
+	smartLog("----------------------------------END INIT FILE MESH");
 }
 
 void SkinnedMesh1::update(Timer& timer)
 {
+	/*
 	m_totalTicks += (UINT32)(timer.getElapsedTime() * FRM_ANIMATION_TICKS_PER_SEC);
 
 	if (m_speedFactor > 0.0f)
@@ -250,10 +286,122 @@ void SkinnedMesh1::update(Timer& timer)
 		m_rightFrame = (m_leftFrame != frameStart + frameLength - 1) ? m_leftFrame + 1 : frameStart;
 		m_frameWeight = (FLOAT32)(m_totalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
 	}
+	/**/
+	
+	UINT32 ticksPerFrame = (UINT32)(TICKS_PER_FRAME / m_speedFactor);
+
+	for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
+	{
+		SkinnedMesh1::Instance* instance = (SkinnedMesh1::Instance*)(*i);
+
+		// Update current frame
+
+		// At time of t0, we're being between m_leftFrame Frame and m_rightFrame Frame.
+		// We're interpolating transform at t0 basing on m_leftFrame Frame and m_rightFrame Frame.
+		INT32   leftFrame;
+		INT32   rightFrame;
+		FLOAT32 frameWeight;
+
+		instance->TotalTicks += (UINT32)(timer.getElapsedTime() * FRM_ANIMATION_TICKS_PER_SEC);
+
+		if (m_speedFactor > 0.0f)
+		{
+			UINT32 frameStart, frameLength;
+
+			if (!m_animActions.empty())
+			{
+				AnimAction action = getAction(instance->CurrentAction);
+				frameStart = action.FrameStart;
+				frameLength = action.FrameLength;
+
+				if (frameStart >= m_anim->NumFrames)
+				{
+					frameStart = 0;
+				}
+				if (frameLength > m_anim->NumFrames - frameStart)
+				{
+					frameLength = m_anim->NumFrames - frameStart;
+				}
+			}
+			else
+			{
+				frameStart = 0;
+				frameLength = m_anim->NumFrames;
+			}
+
+			frameLength = (frameLength == 0) ? m_anim->NumFrames - frameStart : frameLength;
+
+			UINT32 totalFrames = instance->TotalTicks / ticksPerFrame;
+
+			leftFrame = frameStart + totalFrames % frameLength;
+			rightFrame = (leftFrame != frameStart + frameLength - 1) ? leftFrame + 1 : frameStart;
+			frameWeight = (FLOAT32)(instance->TotalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
+		}
+
+		// Manipulating array of world matrices
+
+		for (UINT32 boneIndex = 0; boneIndex < m_boneRemapCount; ++boneIndex)
+		{
+			FRMMATRIX4X4 matBoneMatrix = FrmMatrixIdentity();
+
+			// Get the current and last transforms
+			Adreno::Joint* pJoint = m_model->Joints + m_boneRemap[boneIndex];
+			Adreno::AnimationTrack* pTrack = m_anim->Tracks + m_boneRemap[boneIndex];
+
+			Adreno::Transform* pCurTransform;
+			Adreno::Transform* pLastTransform;
+
+			if (pTrack->NumKeyframes >= 0)
+			{
+				pCurTransform = pTrack->Keyframes + rightFrame;
+				pLastTransform = pTrack->Keyframes + leftFrame;
+			}
+			else
+			{
+				pCurTransform = &pJoint->Transform;
+				pLastTransform = &pJoint->Transform;
+			}
+
+			// Interpolate between the last and current transforms
+			Adreno::Transform transform;
+			transform.Position = FrmVector3Lerp(pLastTransform->Position, pCurTransform->Position, frameWeight);
+			transform.Rotation = FrmVector4SLerp(pLastTransform->Rotation, pCurTransform->Rotation, frameWeight);
+
+			// Apply inverse bind transform to final matrix
+			FRMMATRIX4X4 matInverseBindPosition = FrmMatrixTranslate(pJoint->InverseBindPose.Position);
+			FRMMATRIX4X4 matInverseBindRotation = FrmMatrixRotate(pJoint->InverseBindPose.Rotation);
+
+			matBoneMatrix = matInverseBindRotation;
+			matBoneMatrix = FrmMatrixMultiply(matBoneMatrix, matInverseBindPosition);
+
+			// Apply interpolated transform to final matrix
+			FRMMATRIX4X4 matBonePosition = FrmMatrixTranslate(transform.Position);
+			FRMMATRIX4X4 matBoneRotation = FrmMatrixRotate(transform.Rotation);
+
+			matBoneMatrix = FrmMatrixMultiply(matBoneMatrix, matBoneRotation);
+			matBoneMatrix = FrmMatrixMultiply(matBoneMatrix, matBonePosition);
+
+			// Place it in a 4x3 matrix
+			matBoneMatrix = FrmMatrixTranspose(matBoneMatrix);
+			memcpy(&instance->WorldArray[boneIndex], &matBoneMatrix, sizeof(FRMMATRIX4X3));
+		}
+	}
 
 	FileMesh1::update(timer);
 }
 
+void SkinnedMesh1::foreachInstance(int id)
+{
+	SkinnedMesh1::Instance* instance = (SkinnedMesh1::Instance*)m_instances[id];
+
+	m_shader->setUniform(
+		"u_worldArray",
+		(FLOAT32*)&instance->WorldArray[0],
+		MAX_BONES * 3,
+		4);
+}
+
+/*
 void SkinnedMesh1::foreachSubmesh(int index)
 {
 	// Prepare this frame's transforms for each of the bones
@@ -311,7 +459,9 @@ void SkinnedMesh1::foreachSubmesh(int index)
 		MAX_BONES * 3,
 		4);
 }
+/**/
 
+/*
 MyString SkinnedMesh1::getCurrentAction()const
 {
 	return m_currentAction;
@@ -321,6 +471,7 @@ void SkinnedMesh1::setCurrentAction(const MyString& name)
 {
 	m_currentAction = name;
 }
+/**/
 
 SkinnedMesh1::AnimAction SkinnedMesh1::getAction(const MyString& name)const
 {

@@ -39,16 +39,9 @@ Mesh::~Mesh()
 	m_instances.clear();
 }
 
-//void Mesh::init(Shader& shader, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, Material* material)
 void Mesh::init(Shader& shader, Material* material)
 {
 	m_shader = &shader;
-
-	/*
-	setPos(pos);
-	setRot(rot);
-	setScale(scale);
-	/**/
 
 	if (material != nullptr)
 	{
@@ -63,14 +56,6 @@ void Mesh::update(Timer& timer)
 void Mesh::render(Camera& camera, Light* light)
 {
 	m_shader->apply();
-
-	/*
-	m_world = createTranslationMatrix(m_pos);
-	m_world *= createYawPitchRollMatrix(m_rot.y, m_rot.x, m_rot.z);
-	m_world *= createScaleMatrix(m_scale);
-
-	m_shader->setUniform("u_world", m_world);
-	/**/
 
 	for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
 	{
@@ -96,57 +81,6 @@ void Mesh::render(Camera& camera, Light* light)
 		m_shader->setUniform("u_eyePos", camera.getEye());
 	}
 }
-
-/*
-
-//==========================================================================================================
-//
-// Getter
-//
-//==========================================================================================================
-
-MyVec3 Mesh::getPos()const
-{
-	return m_pos;
-}
-
-MyVec3 Mesh::getRot()const
-{
-	return m_rot;
-}
-
-MyVec3 Mesh::getScale()const
-{
-	return m_scale;
-}
-
-Shader* Mesh::getShader()const
-{
-	return m_shader;
-}
-
-//==========================================================================================================
-//
-// Setter
-//
-//==========================================================================================================
-
-void Mesh::setPos(const MyVec3& pos)
-{
-	m_pos = pos;
-}
-
-void Mesh::setRot(const MyVec3& rot)
-{
-	m_rot = rot;
-}
-
-void Mesh::setScale(const MyVec3& scale)
-{
-	m_scale = scale;
-}
-
-/**/
 
 // Getter
 

@@ -22,28 +22,10 @@ public:
 	Mesh();
 	virtual ~Mesh();
 
-	//virtual void init(Shader& shader, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, Material* material = nullptr);
 	virtual void init(Shader& shader, Material* material = nullptr);
 	virtual void update(Timer& timer);
 	virtual void render(Camera& camera, Light* light = nullptr);
 
-	/*
-	// Getter
-
-	MyVec3 getPos()const;
-	MyVec3 getRot()const;
-	MyVec3 getScale()const;
-
-	Shader* getShader()const;
-
-	// Setter
-
-	void setPos(const MyVec3& pos);
-	void setRot(const MyVec3& rot);
-	void setScale(const MyVec3& scale);
-	/**/
-
-	
 	// Getter
 
 	Shader* getShader()const;
@@ -66,12 +48,6 @@ protected:
 	Shader* m_shader;
 
 	std::vector<Instance*> m_instances;
-	/*
-	MyVec3 m_pos;
-	MyVec3 m_rot;
-	MyVec3 m_scale;
-	MyMat4 m_world;
-	/**/
 
 	Material m_material;
 	bool m_lightingEnabled;

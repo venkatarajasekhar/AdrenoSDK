@@ -96,16 +96,6 @@ FileMesh1::~FileMesh1()
 	SAFE_DELETE_ARRAY(m_vertexFormatMap);
 }
 
-/*
-void FileMesh1::init(
-	Adreno::Model* model,
-	Texture** modelTexture,
-	Shader& shader,
-	const MyVec3& pos,
-	const MyVec3& rot,
-	const MyVec3& scale,
-	Material* material)
-	/**/
 void FileMesh1::init(
 	Adreno::Model* model,
 	Texture** modelTexture,
@@ -143,7 +133,6 @@ void FileMesh1::init(
 
 	enableLighting();
 
-	//Mesh::init(shader, pos, rot, scale, material);
 	Mesh::init(shader, material);
 }
 
@@ -154,6 +143,8 @@ void FileMesh1::update(Timer& timer)
 void FileMesh1::render(Camera& camera, Light* light)
 {
 	Mesh::render(camera, light);
+
+	// Set animation here instead of for each sub-mesh
 
 	// Render each of the meshes
 	for (INT32 meshIndex = 0; meshIndex < m_model->NumMeshes; ++meshIndex)
@@ -230,7 +221,7 @@ void FileMesh1::render(Camera& camera, Light* light)
 		// Set index buffer
 		FrmSetIndexBuffer(m_indexBuffer[meshIndex]);
 
-		foreachSubmesh(meshIndex);
+		//foreachSubmesh(meshIndex);
 
 		// Render each mesh surface
 		for (UINT32 surfaceIndex = 0; surfaceIndex < pMesh->Surfaces.NumSurfaces; ++surfaceIndex)
@@ -241,9 +232,12 @@ void FileMesh1::render(Camera& camera, Light* light)
 			m_shader->setUniform("u_diffuseSampler", m_modelTexture[pSurface->MaterialId]->bind());
 
 			// Draw the surface
+			int id(0);
 			for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
 			{
 				m_shader->setUniform("u_world", (*i)->World);
+				foreachInstance(id++);
+
 				glDrawElements(GL_TRIANGLES, pSurface->NumTriangles * 3, GL_UNSIGNED_INT, (GLvoid*)(pSurface->StartIndex * sizeof(UINT32)));
 			}
 		}

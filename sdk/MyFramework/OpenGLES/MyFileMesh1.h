@@ -42,16 +42,6 @@ public:
 	FileMesh1();
 	virtual ~FileMesh1();
 
-	/*
-	virtual void init(
-		Adreno::Model* model,
-		Texture** modelTexture,
-		Shader& shader,
-		const MyVec3& pos,
-		const MyVec3& rot,
-		const MyVec3& scale,
-		Material* material = nullptr);
-	/**/
 	virtual void init(
 		Adreno::Model* model,
 		Texture** modelTexture,
@@ -66,7 +56,8 @@ public:
 	static void destroyTextures(Adreno::Model* model, Texture** modelTexture);
 
 protected:
-	virtual void foreachSubmesh(int index){}
+	//virtual void foreachSubmesh(int index){}
+	virtual void foreachInstance(int id){}
 
 protected:
 	Adreno::Model* m_model;

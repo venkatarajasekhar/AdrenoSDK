@@ -85,7 +85,7 @@ private:
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
 
-	FileMesh1 m_mesh_scorpion;
+	//FileMesh1 m_mesh_scorpion;
 	//SkinnedMesh1 m_skinnedMesh_scorpion;
-	//SkinnedMesh2 m_skinnedMesh_boy;
+	SkinnedMesh2 m_skinnedMesh_boy;
 };

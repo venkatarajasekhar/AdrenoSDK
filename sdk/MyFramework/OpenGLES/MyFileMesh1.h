@@ -56,7 +56,6 @@ public:
 	static void destroyTextures(Adreno::Model* model, Texture** modelTexture);
 
 protected:
-	//virtual void foreachSubmesh(int index){}
 	virtual void foreachInstance(int id){}
 
 protected:

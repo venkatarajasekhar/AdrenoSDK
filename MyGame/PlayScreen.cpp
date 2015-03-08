@@ -56,37 +56,30 @@ void PlayScreen::init()
 	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
 
 	// Assets shaders
-	
-	smartLog("----------------------------------1");
 	m_shaders[SHADER_TERRAIN].init(
 		resolveAssetsPath("Shaders/terrain.vs"),
 		resolveAssetsPath("Shaders/terrain.fs"),
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
 
-	smartLog("----------------------------------2");
 	m_shaders[SHADER_MESH].init(
 		resolveAssetsPath("Shaders/mesh.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		PosNorTexVertex::ShaderAttribsDesc,
 		PosNorTexVertex::NumShaderAttribsDesc);
 
-	smartLog("----------------------------------3");
 	m_shaders[SHADER_SKINNED_MESH_1].init(
 		resolveAssetsPath("Shaders/skinnedMesh1.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
 
-	smartLog("----------------------------------4");
 	m_shaders[SHADER_SKINNED_MESH_2].init(
 		resolveAssetsPath("Shaders/skinnedMesh2.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
 		
-	smartLog("----------------------------------5");
-
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
@@ -142,6 +135,7 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
+		/*
 		m_mesh_scorpion.init(
 			m_mesh1Datas[MESH_1_DATA_SCORPION], 
 			m_meshTextures[TEXTURES_MESH_SCORPION], 
@@ -153,13 +147,13 @@ void PlayScreen::init()
 		m_mesh_scorpion.addInstance(Mesh::buildMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.1f)));
 		/**/
 
-
-		/*m_skinnedMesh_scorpion.init(
+		/*
+		m_skinnedMesh_scorpion.init(
 			m_mesh1Datas[MESH_1_DATA_SCORPION],
 			m_anim1Datas[ANIM_1_DATA_SCORPION],
 			m_meshTextures[TEXTURES_MESH_SCORPION],
 			m_shaders[SHADER_SKINNED_MESH_1],
-			&material);/**/
+			&material);
 
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.2f), ""));
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
@@ -178,16 +172,16 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.4f, 0.4f, 0.4f, 1.0f);
 		material.Shininess = 16.0f;
 
-		/*
 		m_skinnedMesh_boy.init(
 			m_mesh2Datas[MESH_2_DATA_BOY], 
 			m_anim2Datas[ANIM_2_DATA_BOY], 
 			resource, 
 			m_shaders[SHADER_SKINNED_MESH_2],
-			MyVec3(0),
-			MyVec3(0),
-			MyVec3(1.0f), 
 			&material);
+
+		m_skinnedMesh_boy.addInstance(SkinnedMesh2::buildSkinnedMeshInstance(MyVec3(0), MyVec3(0), MyVec3(1.0f), ""));
+		m_skinnedMesh_boy.addInstance(SkinnedMesh2::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(1.0f), ""));
+		m_skinnedMesh_boy.addInstance(SkinnedMesh2::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(1.0f), ""));
 		/**/
 	}
 }
@@ -222,9 +216,9 @@ void PlayScreen::update(void* utilObjs)
 	}
 	
 	// Mesh objects
-	m_mesh_scorpion.update(*globalUtilObjs->timer);
+	//m_mesh_scorpion.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
-	//m_skinnedMesh_boy.update(*globalUtilObjs->timer);
+	m_skinnedMesh_boy.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -235,8 +229,8 @@ void PlayScreen::render(void* utilObjs)
 		Light light;
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		m_mesh_scorpion.render(m_camera_main, &light);
+		//m_mesh_scorpion.render(m_camera_main, &light);
 		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
-		//m_skinnedMesh_boy.render(m_camera_main, &light);
+		m_skinnedMesh_boy.render(m_camera_main, &light);
 	}
 }

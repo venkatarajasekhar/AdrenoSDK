@@ -93,13 +93,4 @@ void BasicMesh::init(
 
 	//Mesh::init(shader, pos, rot, scale, material);
 	Mesh::init(shader, material);
-
-	/*
-	Instance* instance = new Instance;
-	instance->Position = pos;
-	instance->Rotation = rot;
-	instance->Scale = scale;
-
-	addInstance(instance);
-	/**/
 }

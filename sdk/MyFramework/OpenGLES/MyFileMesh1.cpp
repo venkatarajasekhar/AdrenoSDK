@@ -1,6 +1,8 @@
 
 #include "MyFileMesh1.h"
 
+#pragma region Helpers
+
 //===============================================================================================================
 //
 // Helpers
@@ -57,6 +59,8 @@ void FileMesh1::destroyTextures(Adreno::Model* model, Texture** modelTexture)
 	}
 }
 
+#pragma endregion
+
 //===============================================================================================================
 //
 // FileMesh1 class
@@ -96,14 +100,10 @@ void FileMesh1::init(
 	Adreno::Model* model,
 	Texture** modelTexture,
 	Shader& shader,
-	Material& material,
-	const MyVec3& pos,
-	const MyVec3& rot,
-	const MyVec3& scale)
+	Material* material)
 {
 	m_model = model;
 	m_modelTexture = modelTexture;
-	m_material = material;
 
 	// Create vertex and index buffers, and map vertex format
 	m_vertexBuffer = new GLuint[m_model->NumMeshes];
@@ -131,25 +131,20 @@ void FileMesh1::init(
 		m_vertexFormatMap[meshIndex].texCoord = GetPropertyIndexFromName(pMesh, "texcoord");
 	}
 
-	Mesh::init(shader, pos, rot, scale);
+	enableLighting();
+
+	Mesh::init(shader, material);
 }
 
-void FileMesh1::update()
+void FileMesh1::update(Timer& timer)
 {
-	m_rot.y += 0.05f;
 }
 
-void FileMesh1::render(Camera& camera, Light& light)
+void FileMesh1::render(Camera& camera, Light* light)
 {
-	Mesh::render(camera);
+	Mesh::render(camera, light);
 
-	m_shader->setUniform("u_lightPos", light.LightPos);
-	m_shader->setUniform("u_eyePos", camera.getEye());
-
-	m_shader->setUniform("u_material.Ambient", m_material.Ambient);
-	m_shader->setUniform("u_material.Diffuse", m_material.Diffuse);
-	m_shader->setUniform("u_material.Specular", m_material.Specular);
-	m_shader->setUniform("u_material.Shininess", m_material.Shininess);
+	// Set animation here instead of for each sub-mesh
 
 	// Render each of the meshes
 	for (INT32 meshIndex = 0; meshIndex < m_model->NumMeshes; ++meshIndex)
@@ -226,7 +221,7 @@ void FileMesh1::render(Camera& camera, Light& light)
 		// Set index buffer
 		FrmSetIndexBuffer(m_indexBuffer[meshIndex]);
 
-		foreachSubmesh(meshIndex);
+		//foreachSubmesh(meshIndex);
 
 		// Render each mesh surface
 		for (UINT32 surfaceIndex = 0; surfaceIndex < pMesh->Surfaces.NumSurfaces; ++surfaceIndex)
@@ -237,7 +232,14 @@ void FileMesh1::render(Camera& camera, Light& light)
 			m_shader->setUniform("u_diffuseSampler", m_modelTexture[pSurface->MaterialId]->bind());
 
 			// Draw the surface
-			glDrawElements(GL_TRIANGLES, pSurface->NumTriangles * 3, GL_UNSIGNED_INT, (GLvoid*)(pSurface->StartIndex * sizeof(UINT32)));
+			int id(0);
+			for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
+			{
+				m_shader->setUniform("u_world", (*i)->World);
+				foreachInstance(id++);
+
+				glDrawElements(GL_TRIANGLES, pSurface->NumTriangles * 3, GL_UNSIGNED_INT, (GLvoid*)(pSurface->StartIndex * sizeof(UINT32)));
+			}
 		}
 	}
 

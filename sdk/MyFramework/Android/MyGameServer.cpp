@@ -2,8 +2,6 @@
 #include "MyGameServer.h"
 #include "MyUtils.h"
 
-#include "gpg/achievement_manager.h"
-#include "gpg/android_initialization.h"
 #include <android_native_app_glue.h>
 
 //========================================================================================================================
@@ -125,7 +123,10 @@ void GameServer::showAchievements()
 {
 	if (m_game_services->IsAuthorized())
 	{
-		m_game_services->Achievements().ShowAllUI();
+		m_game_services->Achievements().ShowAllUI(
+			[](gpg::UIStatus status)
+			{}
+		);
 	}
 }
 
@@ -133,7 +134,11 @@ void GameServer::showLeaderboard(char const *leaderboard_id)
 {
 	if (m_game_services->IsAuthorized())
 	{
-		m_game_services->Leaderboards().ShowUI(leaderboard_id);
+		m_game_services->Leaderboards().ShowUI(
+			leaderboard_id,
+			[](gpg::UIStatus status)
+			{}
+		);
 	}
 }
 

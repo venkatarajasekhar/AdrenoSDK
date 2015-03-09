@@ -2,13 +2,18 @@
 #include "MyTexture.h"
 
 int Texture::s_textureSlot = 0;
-
-// Must query from device
-int Texture::s_maxTextureSlot = 32;
+int Texture::s_maxTextureSlot = -1;
 
 Texture::Texture()
 	: m_frmTexture(nullptr)
 {
+	// Determine maximum of number of texture units
+	if (s_maxTextureSlot < 0)
+	{
+		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &s_maxTextureSlot);
+	}
+
+	// Determine texture unit for this texture
 	m_textureSlot = s_textureSlot++;
 	if (s_textureSlot >= s_maxTextureSlot)
 	{

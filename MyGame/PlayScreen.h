@@ -4,11 +4,61 @@
 #include <MyScreen.h>
 
 #include <MyPerspectiveCamera.h>
-#include <MyBasicMesh.h>
-#include <MyFileMesh1.h>
+#include <MyFlatTerrain.h>
+#include <MySkinnedMesh1.h>
+#include <MySkinnedMesh2.h>
 
 class PlayScreen : public Screen
 {
+private:
+
+	enum
+	{
+		SHADER_TERRAIN,
+		SHADER_MESH,
+		SHADER_SKINNED_MESH_1,
+		SHADER_SKINNED_MESH_2,
+		NUM_SHADERS,
+	};
+
+	enum
+	{
+		TEXTURE_TERRAIN_DIFF_1,
+		TEXTURE_TERRAIN_DIFF_2,
+		TEXTURE_TERRAIN_BLEND,
+		NUM_TEXTURES,
+	};
+
+	enum
+	{
+		TEXTURES_MESH_SCORPION,
+		NUM_TEXTURES_MESHES,
+	};
+
+	enum
+	{
+		MESH_1_DATA_SCORPION,
+		NUM_MESH_1_DATAS,
+	};
+
+	enum
+	{
+		MESH_2_DATA_BOY,
+		NUM_MESH_2_DATAS,
+	};
+
+	enum
+	{
+		ANIM_1_DATA_SCORPION,
+		NUM_ANIM_1_DATAS,
+	};
+
+	enum
+	{
+		ANIM_2_DATA_BOY,
+		NUM_ANIM_2_DATAS,
+	};
+
 public:
 	PlayScreen(ScreenManager* screenManager);
 	~PlayScreen();
@@ -23,18 +73,19 @@ private:
 	// Core objects
 	PerspectiveCamera m_camera_main;
 
-	// Shader resources
-	Shader m_shader_terrain;
-	Shader m_shader_mesh;
-
-	// Texture resources
-	Texture m_texture_grass;
-	Texture** m_textures_scorpion;
-
-	// Mesh resources
-	Adreno::Model* m_meshData_scorpion;
+	// Assets
+	Shader             m_shaders     [NUM_SHADERS];
+	Texture            m_textures    [NUM_TEXTURES];
+	Texture**          m_meshTextures[NUM_TEXTURES_MESHES];
+	Adreno::Model*     m_mesh1Datas  [NUM_MESH_1_DATAS];
+	CFrmMesh           m_mesh2Datas  [NUM_MESH_2_DATAS];
+	Adreno::Animation* m_anim1Datas  [NUM_ANIM_1_DATAS];
+	FRM_ANIMATION_SET* m_anim2Datas  [NUM_ANIM_2_DATAS];
 
 	// Mesh objects
-	BasicMesh m_mesh_terrain;
-	FileMesh1 m_mesh_scorpion;
+	FlatTerrain m_mesh_terrain;
+
+	//FileMesh1 m_mesh_scorpion;
+	//SkinnedMesh1 m_skinnedMesh_scorpion;
+	SkinnedMesh2 m_skinnedMesh_boy;
 };

@@ -14,9 +14,15 @@ public:
 	virtual void resize(int width, int height);
 	virtual void update();
 
+	// Getter
+
 	const MyVec3& getEye()const;
 	const MyMat4& getView()const;
 	const MyMat4& getProj()const;
+
+	// Setter
+
+	void setEye(const MyVec3& eyeP);
 
 protected:
 	virtual void computeView();

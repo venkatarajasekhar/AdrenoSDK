@@ -192,6 +192,9 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp">
       <Filter>sdk\MyFramework\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

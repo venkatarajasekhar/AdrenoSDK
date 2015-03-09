@@ -1,6 +1,6 @@
 #pragma once
 
-#include <OpenGLES/FrmMesh.h>
+#include "FrmMesh.h"
 #include "MyMesh.h"
 
 //================================================================================================
@@ -21,6 +21,12 @@ public:
 		float TimeEnd;
 	};
 
+	struct Instance : public Mesh::Instance
+	{
+		MyString CurrentAction;
+		UINT32   TotalTicks;
+	};
+
 public:
 	SkinnedMesh2();
 	~SkinnedMesh2();
@@ -30,19 +36,17 @@ public:
 		FRM_ANIMATION_SET* animationSet,
 		CFrmPackedResourceGLES& resource,
 		Shader& shader,
-		const MyVec3& pos,
-		const MyVec3& rot,
-		const MyVec3& scale,
+		Material* material = nullptr,
 		std::map<MyString, AnimAction>* animActions = nullptr);
 
 	void update(Timer& timer);
-	void render(Camera& camera);
-
-	MyString getCurrentAction()const;
-	void setCurrentAction(const MyString& name);
+	void render(Camera& camera, Light* light = nullptr);
 
 private:
 	AnimAction getAction(const MyString& name)const;
+
+public:
+	static SkinnedMesh2::Instance* buildSkinnedMeshInstance(const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, const MyString& action);
 
 public:
 	static const UINT32 MAX_BONES = 26;
@@ -51,8 +55,5 @@ private:
 	CFrmMesh* m_mesh;
 	FRM_ANIMATION_SET* m_animationSet;
 
-	MyString m_currentAction;
 	std::map<MyString, AnimAction> m_animActions;
-
-	UINT32 m_totalTicks;
 };

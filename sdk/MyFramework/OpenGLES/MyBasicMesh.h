@@ -26,9 +26,22 @@ public:
 		Texture* diffuseMap,
 		const MyVec3& pos,
 		const MyVec3& rot,
-		const MyVec3& scale);
+		const MyVec3& scale,
+		Material* material = nullptr);
 
-	void render(Camera& camera);
+	void render(Camera& camera, Light* light = nullptr);
+
+	// Getter
+
+	MyVec3 getPos();
+	MyVec3 getRot();
+	MyVec3 getScale();
+
+	// Setter
+
+	void setPos(const MyVec3& pos);
+	void setRot(const MyVec3& rot);
+	void setScale(const MyVec3& scale);
 
 	void setDiffuseMap(Texture* diffuseMap);
 
@@ -55,7 +68,8 @@ void BasicMesh::init(
 	Texture* diffuseMap,
 	const MyVec3& pos,
 	const MyVec3& rot,
-	const MyVec3& scale)
+	const MyVec3& scale,
+	Material* material)
 {
 	m_diffuseMap = diffuseMap;
 	m_inputLayout.init(VertexType::ShaderAttribsDesc, VertexType::NumShaderAttribsDesc);
@@ -74,5 +88,9 @@ void BasicMesh::init(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_numIndices * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
 
-	Mesh::init(shader, pos, rot, scale);
+	// Add an instance
+	addInstance(Mesh::buildMeshInstance(pos, rot, scale));
+
+	//Mesh::init(shader, pos, rot, scale, material);
+	Mesh::init(shader, material);
 }

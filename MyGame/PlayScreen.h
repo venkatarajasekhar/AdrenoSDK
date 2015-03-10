@@ -7,6 +7,8 @@
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
+#include "Player.h"
+#include "DmanManager.h"
 
 class PlayScreen : public Screen
 {
@@ -44,6 +46,7 @@ private:
 	enum
 	{
 		MESH_2_DATA_BOY,
+		MESH_2_DATA_DMAN,
 		NUM_MESH_2_DATAS,
 	};
 
@@ -56,6 +59,7 @@ private:
 	enum
 	{
 		ANIM_2_DATA_BOY,
+		ANIM_2_DATA_DMAN,
 		NUM_ANIM_2_DATAS,
 	};
 
@@ -67,6 +71,7 @@ public:
 	void resize(int width, int height);
 	void update(void* utilObjs);
 	void render(void* utilObjs);
+	void cloneDman();
 
 private:
 
@@ -87,5 +92,8 @@ private:
 
 	//FileMesh1 m_mesh_scorpion;
 	//SkinnedMesh1 m_skinnedMesh_scorpion;
-	SkinnedMesh2 m_skinnedMesh_boy;
+	//SkinnedMesh2 m_skinnedMesh_boy;
+
+	Player m_player;
+	DmanManager m_dmanManager;
 };

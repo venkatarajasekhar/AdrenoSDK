@@ -95,12 +95,14 @@ void PlayScreen::init()
 
 	// Assets mesh 2 datas
 	m_mesh2Datas[MESH_2_DATA_BOY].Load(resolveAssetsPath("Meshes/Boy03.mesh").c_str());
+	m_mesh2Datas[MESH_2_DATA_DMAN].Load(resolveAssetsPath("Meshes/Dman.mesh").c_str());
 
 	// Assets anim 1 datas
 	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
 
 	// Assets anim 2 datas
 	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_BOY]);
+	FrmReadAnimation(resolveAssetsPath("Meshes/Dman.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_DMAN]);
 
 	// Assets mesh textures
 	{
@@ -166,6 +168,7 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Boy03.pak").c_str());
 
+		/*
 		Material material;
 
 		material.Ambient = MyVec3(0.1f, 0.1f, 0.1f);
@@ -184,6 +187,24 @@ void PlayScreen::init()
 		m_skinnedMesh_boy.addInstance(SkinnedMesh2::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(1.0f), ""));
 		m_skinnedMesh_boy.addInstance(SkinnedMesh2::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(1.0f), ""));
 		/**/
+		m_player.init(m_mesh2Datas[MESH_2_DATA_BOY],
+			m_anim2Datas[ANIM_2_DATA_BOY],
+			resource,
+			m_shaders[SHADER_SKINNED_MESH_2], MyVec3(0), MyVec3(0), MyVec3(1));
+	}
+
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
+		
+		m_dmanManager.init(m_mesh2Datas[MESH_2_DATA_DMAN],
+			m_anim2Datas[ANIM_2_DATA_DMAN],
+			resource,
+			m_shaders[SHADER_SKINNED_MESH_2]);
+
+		Dman* dman = new Dman;
+		dman->init(0, MyVec3(-10, 0, 0), MyVec3(0), MyVec3(0.7));
+		m_dmanManager.insertDmanToList(dman);
 	}
 }
 
@@ -219,7 +240,13 @@ void PlayScreen::update(void* utilObjs)
 	// Mesh objects
 	//m_mesh_scorpion.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
-	m_skinnedMesh_boy.update(*globalUtilObjs->timer);
+	//m_skinnedMesh_boy.update(*globalUtilObjs->timer);
+
+	int width, height;
+	getWindowDimension(width, height);
+
+	m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+	m_dmanManager.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -232,6 +259,9 @@ void PlayScreen::render(void* utilObjs)
 
 		//m_mesh_scorpion.render(m_camera_main, &light);
 		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
-		m_skinnedMesh_boy.render(m_camera_main, &light);
+		//m_skinnedMesh_boy.render(m_camera_main, &light);
+
+		m_player.render(m_camera_main, light);
+		m_dmanManager.render(m_camera_main, light);
 	}
 }

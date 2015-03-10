@@ -195,6 +195,9 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Dman.cpp" />
+    <ClCompile Include="DmanManager.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +205,9 @@
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="PlayScreen.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Dman.h" />
+    <ClInclude Include="DmanManager.h" />
     <ClInclude Include="EnemyAI.h" />
   </ItemGroup>
 </Project>

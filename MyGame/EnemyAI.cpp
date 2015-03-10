@@ -19,7 +19,7 @@ void EnemyAI::init(
 
 
 
-void EnemyAI::update(CFrmTimer& timer)
+void EnemyAI::update(Timer& timer)
 {
 	if (m_enemyState == Die)
 	{
@@ -99,9 +99,9 @@ void EnemyAI::update(CFrmTimer& timer)
 		}
 
 		MyVec3 heading = MyVec3(
-			(float)cos(m_enemyOrientation), 0, (float)sin(m_enemyOrientation));
+			(float)dCos(m_enemyOrientation), 0, (float)dSin(m_enemyOrientation));
 
-		m_pos = MoveEnemy(m_pos, heading * currentEnemySpeed);
+		m_pos = MoveEnemy(m_pos, heading * currentEnemySpeed, timer);
 		//m_pos.x = clamp(m_pos.x, -20.0f, 20.0f);
 		//m_pos.z = clamp(m_pos.z, -20.0f, 20.0f);
 
@@ -111,9 +111,9 @@ void EnemyAI::update(CFrmTimer& timer)
 
 }
 
-MyVec3 EnemyAI::MoveEnemy(MyVec3 currPos, MyVec3 moveAmt)
+MyVec3 EnemyAI::MoveEnemy(MyVec3 currPos, MyVec3 moveAmt, Timer& timer)
 {
-	MyVec3 foreMove = currPos + moveAmt;
+	MyVec3 foreMove = currPos + moveAmt * timer.getElapsedTime() * 40.0f;
 
 	// kiem tra dich den co phai mat dat k?
 	/*if (_level.Terrain.DetermineTerrainType(foreMove.x, foreMove.z) == Terrain.TerrainType.Ground)
@@ -179,7 +179,7 @@ float EnemyAI::TurnToFace(MyVec3 position, MyVec3 faceThis, float currentAngle, 
 	float x = faceThis.x - position.x;
 	float z = faceThis.z - position.z;
 
-	float desiredAngle = atan2(z, x);
+	float desiredAngle = dATan2(z, x);
 
 	float difference = WrapAngle(desiredAngle - currentAngle);
 
@@ -215,7 +215,7 @@ void EnemyAI::rotateEnemy(const MyVec3& positionNext)
 	if (cos > 1)
 		cos = 1;
 
-	float angle = acos(cos);
+	float angle = dACos(cos);
 	if (positionNext.x <= position.x)
 	{
 		angle = -angle;

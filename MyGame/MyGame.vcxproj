@@ -137,15 +137,21 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
+    <ClCompile Include="Dman.cpp" />
+    <ClCompile Include="DmanManager.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dman.h" />
+    <ClInclude Include="DmanManager.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MenuScreen.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScreen.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

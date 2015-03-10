@@ -1,6 +1,7 @@
 #pragma once
 
 #include <MyUtils.h>
+#include <MyTimer.h>
 
 class EnemyAI
 {
@@ -42,11 +43,11 @@ public:
 		MyVec3 vectorRotation,
 		float angle,
 		MyVec3 scale);
-	void update(CFrmTimer& timer);
+	void update(Timer& timer);
 	float TurnToFace(MyVec3 position, MyVec3 faceThis, float currentAngle, float turnSpeed);
 	void Wanders(MyVec3 position, float& orientation, float turnSpeed);
 	void Wanders(MyVec3 position, MyVec3& wanderDirection, float& orientation, float turnSpeed);
-	MyVec3 MoveEnemy(MyVec3 currPos, MyVec3 moveAmt);
+	MyVec3 MoveEnemy(MyVec3 currPos, MyVec3 moveAmt, Timer& timer);
 	float WrapAngle(float radians);
 	void rotateEnemy(const MyVec3& positionNext);
 };

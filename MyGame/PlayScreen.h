@@ -34,12 +34,14 @@ private:
 	enum
 	{
 		TEXTURES_MESH_SCORPION,
+		TEXTURES_MESH_INDIA_TOWER_OF_VICTORY,
 		NUM_TEXTURES_MESHES,
 	};
 
 	enum
 	{
 		MESH_1_DATA_SCORPION,
+		MESH_1_DATA_INDIA_TOWER_OF_VICTORY,
 		NUM_MESH_1_DATAS,
 	};
 
@@ -90,6 +92,7 @@ private:
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
 
+	FileMesh1 m_mesh_indiaTowerOfVictory;
 	//FileMesh1 m_mesh_scorpion;
 	//SkinnedMesh1 m_skinnedMesh_scorpion;
 	//SkinnedMesh2 m_skinnedMesh_boy;

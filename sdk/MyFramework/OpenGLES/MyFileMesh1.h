@@ -21,13 +21,13 @@ enum FRM_VERTEX_USAGE_CUSTOM
 
 struct VERTEX_FORMAT_MAP
 {
-	UINT32 position;
-	UINT32 normal;
-	UINT32 tangent;
-	UINT32 binormal;
-	UINT32 boneIndex;
-	UINT32 boneWeight;
-	UINT32 texCoord;
+	INT32 position;
+	INT32 normal;
+	INT32 tangent;
+	INT32 binormal;
+	INT32 boneIndex;
+	INT32 boneWeight;
+	INT32 texCoord;
 };
 
 //===============================================================================================================

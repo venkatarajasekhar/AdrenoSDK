@@ -1,8 +1,5 @@
 #include "Player.h"
 
-extern MyVec3 PositionPlayer;
-extern MyVec3 PositionDman;
-
 MyVec3 PositionDman;
 MyVec3 PositionPlayer;
 
@@ -119,7 +116,7 @@ void Player::rotatePlayer()
 		angle = -angle;
 	}
 
-	m_instance->Rotation.y = angle - 20;
+	m_instance->Rotation.y = angle - 10;
 }
 
 void Player::setHelth(int helth)

@@ -135,16 +135,16 @@ void EnemyAI::Wanders(MyVec3 position, float& orientation, float turnSpeed)
 {
 	float e = 0.1f;
 
-	if (fabs(m_pos.x + m_pos.z) > e)
+	if (fabs(m_pos.z) > e)
 	{
-		MyVec3 positionNext = MyVec3(m_pos.x, 0, -m_pos.x);
+		MyVec3 positionNext = MyVec3(m_pos.x, 0, 0);
 		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}
 	else
 	{
 		MyVec3 positionNext;
-		if (m_type == 0) positionNext = MyVec3(20, 0, -20);
-		else positionNext = MyVec3(-20, 0, 20);
+		if (m_type == 0) positionNext = MyVec3(50, 0, 0);
+		else positionNext = MyVec3(-50, 0, 0);
 		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}
 }

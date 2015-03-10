@@ -22,10 +22,10 @@ public:
 	};
 
 	// constant
-	const float MaxEnemySpeed = 0.06f;
-	const float EnemyTurnSpeed = 25.0f;
+	const float MaxEnemySpeed = 0.05f;
+	const float EnemyTurnSpeed = 5.0f;
 	const float EnemyChaseDistance = 8.0f;
-	const float EnemyCaughtDistance = 2.0f;
+	const float EnemyCaughtDistance = 1.5f;
 	const float EnemyHysteresis = 0.5f;
 
 	// field

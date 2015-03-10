@@ -99,4 +99,6 @@ private:
 
 	Player m_player;
 	DmanManager m_dmanManager;
+
+	float m_countTime = 2;
 };

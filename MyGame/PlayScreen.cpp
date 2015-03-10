@@ -15,6 +15,7 @@ static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 0.0f, 0.0f);
 
 static const float MAIN_CAM_FAR = 100.0f;
 
+extern MyVec3 PositionPlayer;
 //========================================================================================================
 //
 // PlayScreen class
@@ -228,9 +229,23 @@ void PlayScreen::init()
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2]);
 
-		Dman* dman = new Dman;
-		dman->init(0, MyVec3(-10, 0, 0), MyVec3(0), MyVec3(0.7));
-		m_dmanManager.insertDmanToList(dman);
+		/*Dman* dman = new Dman;
+		dman->init(0, MyVec3(-100, 0, 0), MyVec3(0), MyVec3(0.7));
+		m_dmanManager.insertDmanToList(dman);*/
+	}
+}
+
+void PlayScreen::cloneDman()
+{
+	if (m_dmanManager.getNDman() < 10)
+	{
+		Dman* dman1 = new Dman;
+		dman1->init(0, MyVec3(-50, 0, 0), MyVec3(0), MyVec3(0.7));
+		m_dmanManager.insertDmanToList(dman1);
+
+		Dman* dman2 = new Dman;
+		dman2->init(1, MyVec3(50, 0, 0), MyVec3(0), MyVec3(0.7));
+		m_dmanManager.insertDmanToList(dman2);
 	}
 }
 
@@ -248,17 +263,23 @@ void PlayScreen::update(void* utilObjs)
 	{
 		// Camera
 		MyVec2 delta;
-		MyVec3 eye;
+		//MyVec3 eye;
 
 		// dpi-dependence
+		/*
 		float CAM_MOVE_FACTOR = 0.03F;
 		if (globalUtilObjs->userInput->pointer_Dragging(delta))
 		{
 			eye = m_camera_main.getEye();
-			eye.x += delta.x * CAM_MOVE_FACTOR;
-			eye.z += delta.y * CAM_MOVE_FACTOR;
+			eye.x -= delta.x * CAM_MOVE_FACTOR;
+			eye.z -= delta.y * CAM_MOVE_FACTOR;
 			m_camera_main.setEye(eye);
 		}
+		/**/
+		MyVec3 offset = MyVec3(0, 15, 15);
+		MyVec3 eye = PositionPlayer + offset;
+		m_camera_main.setEye(eye);
+
 
 		m_camera_main.update();
 	}
@@ -271,6 +292,13 @@ void PlayScreen::update(void* utilObjs)
 
 	int width, height;
 	getWindowDimension(width, height);
+
+	m_countTime += globalUtilObjs->timer->getElapsedTime();
+	if (m_countTime > 4)
+	{
+		cloneDman();
+		m_countTime -= 4;
+	}
 
 	m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 	m_dmanManager.update(*globalUtilObjs->timer);

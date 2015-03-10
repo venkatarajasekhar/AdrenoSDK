@@ -69,8 +69,4 @@ void main()
 	vec3 halfVector = normalize( lightDir + surfaceToEye );
     float specFactor = pow( max( 0.0, dot( norW, halfVector ) ), u_material.Shininess );
     gl_FragColor.rgba += u_material.Specular * specFactor;
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	//gl_FragColor = vec4(v_texC.y, v_texC.y, v_texC.y, 1.0);
 }

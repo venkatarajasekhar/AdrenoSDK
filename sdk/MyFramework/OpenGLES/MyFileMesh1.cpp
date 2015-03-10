@@ -221,11 +221,6 @@ void FileMesh1::render(Camera& camera, Light* light)
 			glEnableVertexAttribArray(FRM_VERTEX_TEXCOORD0);
 		}
 		
-		/*
-		glVertexAttribPointer(FRM_VERTEX_TEXCOORD0, 2, GL_FLOAT, pMesh->Vertices.Format.Properties[6].IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pMesh->Vertices.Format.Properties[6].Offset);
-		glEnableVertexAttribArray(FRM_VERTEX_TEXCOORD0);
-		/**/
-
 		// Set index buffer
 		FrmSetIndexBuffer(m_indexBuffer[meshIndex]);
 

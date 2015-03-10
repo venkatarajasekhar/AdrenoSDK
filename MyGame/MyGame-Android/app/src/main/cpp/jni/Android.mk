@@ -77,10 +77,13 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyTexture.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyUtilsGLES.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \
+				   $(GAME_PATH)/Dman.cpp \
+				   $(GAME_PATH)/DmanManager.cpp \
+				   $(GAME_PATH)/EnemyAI.cpp \
 				   $(GAME_PATH)/MainGame.cpp \
 				   $(GAME_PATH)/MenuScreen.cpp \
-				   $(GAME_PATH)/PlayScreen.cpp \
-				   $(GAME_PATH)/Player.cpp
+				   $(GAME_PATH)/Player.cpp \
+				   $(GAME_PATH)/PlayScreen.cpp
 				   
 LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_FRM_INC_PATH) \

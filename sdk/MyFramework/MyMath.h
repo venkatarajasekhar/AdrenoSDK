@@ -149,7 +149,9 @@ MyMat4 createScaleMatrix(const MyVec3& scale);
 float distance(const MyVec3& p1, const MyVec3& p2);
 MyVec3 intersect(const Ray& ray, const Plane& plane);
 
+MyVec2 project(const MyVec3& posW, int w, int h, const MyMat4& view, const MyMat4& proj);
 MyVec3 unProject(const MyVec2& screenPos, int w, int h, const MyMat4& view, const MyMat4& proj, float depth);
+
 Ray createRayInWorld(const MyVec2& screenPos, int w, int h, const MyMat4& view, const MyMat4& proj);
 
 //===========================================================================================================

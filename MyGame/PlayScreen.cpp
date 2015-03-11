@@ -92,6 +92,20 @@ void PlayScreen::init()
 		m_textures[TEXTURE_TERRAIN_BLEND].init(resource.GetTexture("blend"));
 	}
 
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/HUD.pak").c_str());
+
+		m_textures[TEXTURE_GREEN_FORE_BLOODBAR].init(resource.GetTexture("green_fore_bloodbar"));
+		m_textures[TEXTURE_GREEN_BACK_BLOODBAR].init(resource.GetTexture("green_back_bloodbar"));
+		m_textures[TEXTURE_RED_FORE_BLOODBAR].init(resource.GetTexture("red_fore_bloodbar"));
+		m_textures[TEXTURE_RED_BACK_BLOODBAR].init(resource.GetTexture("red_back_bloodbar"));
+	}
+
+	// Core objects
+	m_bloodbar_green.init(m_textures[TEXTURE_GREEN_FORE_BLOODBAR], m_textures[TEXTURE_GREEN_BACK_BLOODBAR]);
+	m_bloodbar_red.init(m_textures[TEXTURE_RED_FORE_BLOODBAR], m_textures[TEXTURE_RED_BACK_BLOODBAR]);
+
 	// Assets mesh 1 datas
 	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/india_tower_of_victory.model").c_str());
@@ -306,6 +320,8 @@ void PlayScreen::update(void* utilObjs)
 
 void PlayScreen::render(void* utilObjs)
 {
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
 	m_mesh_terrain.render(m_camera_main);
 
 	{
@@ -320,5 +336,12 @@ void PlayScreen::render(void* utilObjs)
 
 		m_player.render(m_camera_main, light);
 		m_dmanManager.render(m_camera_main, light);
+	}
+
+	{
+		static float health = 1.0f;
+		health *= 0.999f;
+		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer, health);
+		//m_bloodbar_red.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer, health);
 	}
 }

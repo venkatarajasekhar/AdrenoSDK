@@ -4,6 +4,7 @@
 #include <MyScreen.h>
 
 #include <MyPerspectiveCamera.h>
+#include <MyBloodBar.h>
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
@@ -28,6 +29,10 @@ private:
 		TEXTURE_TERRAIN_DIFF_1,
 		TEXTURE_TERRAIN_DIFF_2,
 		TEXTURE_TERRAIN_BLEND,
+		TEXTURE_GREEN_FORE_BLOODBAR,
+		TEXTURE_GREEN_BACK_BLOODBAR,
+		TEXTURE_RED_FORE_BLOODBAR,
+		TEXTURE_RED_BACK_BLOODBAR,
 		NUM_TEXTURES,
 	};
 
@@ -79,6 +84,8 @@ private:
 
 	// Core objects
 	PerspectiveCamera m_camera_main;
+	BloodBar m_bloodbar_green;
+	BloodBar m_bloodbar_red;
 
 	// Assets
 	Shader             m_shaders     [NUM_SHADERS];

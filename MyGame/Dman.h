@@ -25,6 +25,7 @@ inline MyVec2 convert3DTo2D(const MyVec3& posW, const MyMat4& view, const MyMat4
 	return MyVec2(screenWidthHalf * (posH.x + 1), screenHeightHalf * (1 - posH.y));
 }
 
+/*
 class BloodBar
 {
 public:
@@ -49,6 +50,7 @@ private:
 	Shader* m_texture2DShader;
 	CFrmTexture* m_bloodTexture;
 };
+/**/
 
 class Dman
 {

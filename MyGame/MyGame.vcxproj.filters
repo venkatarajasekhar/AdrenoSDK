@@ -199,6 +199,9 @@
     <ClCompile Include="Dman.cpp" />
     <ClCompile Include="DmanManager.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

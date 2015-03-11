@@ -199,6 +199,17 @@ MyVec3 intersect(const Ray& ray, const Plane& plane)
 	return (P0 + t * n);
 }
 
+MyVec2 project(const MyVec3& posW, int w, int h, const MyMat4& view, const MyMat4& proj)
+{
+	float halfW = (float)w / 2.0f;
+	float halfH = (float)h / 2.0f;
+
+	MyVec4 posH = proj * view * MyVec4(posW, 1.0f);
+	posH = posH / posH.w;
+
+	return MyVec2(halfW * (posH.x + 1), halfH * (1 - posH.y));
+}
+
 MyVec3 unProject(const MyVec2& screenPos, int w, int h, const MyMat4& view, const MyMat4& proj, float depth)
 {
 	MyVec4 viewport = MyVec4(0, 0, w, h);

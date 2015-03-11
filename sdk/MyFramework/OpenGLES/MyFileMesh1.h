@@ -39,6 +39,18 @@ struct VERTEX_FORMAT_MAP
 class FileMesh1 : public Mesh
 {
 public:
+	struct MeshTextures
+	{
+		MeshTextures();
+		~MeshTextures();
+
+		void init(Adreno::Model* model, CFrmPackedResourceGLES& resource);
+
+		Texture** Textures;
+		int NumTextures;
+	};
+
+public:
 	FileMesh1();
 	virtual ~FileMesh1();
 
@@ -50,10 +62,6 @@ public:
 
 	virtual void update(Timer& timer);
 	virtual void render(Camera& camera, Light* light = nullptr);
-
-public:
-	static Texture** initTextures(Adreno::Model* model, CFrmPackedResourceGLES& resource);
-	static void destroyTextures(Adreno::Model* model, Texture** modelTexture);
 
 protected:
 	virtual void foreachInstance(int id){}

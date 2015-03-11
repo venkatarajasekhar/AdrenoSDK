@@ -25,41 +25,49 @@ INT32 GetPropertyIndexFromName(Adreno::Mesh* pMesh, char* propertyName)
 	return -1;
 }
 
-Texture** FileMesh1::initTextures(Adreno::Model* model, CFrmPackedResourceGLES& resource)
-{
-	Texture** modelTexture = nullptr;
+#pragma endregion
 
+//===============================================================================================================
+//
+// FileMesh1 class
+//
+//===============================================================================================================
+
+FileMesh1::MeshTextures::MeshTextures()
+	: NumTextures(0)
+{
+	Textures = nullptr;
+}
+
+FileMesh1::MeshTextures::~MeshTextures()
+{
+	if (Textures)
+	{
+		for (INT32 i = 0; i < NumTextures; ++i)
+		{
+			delete Textures[i];
+		}
+
+		delete[] Textures;
+	}
+}
+
+void FileMesh1::MeshTextures::init(Adreno::Model* model, CFrmPackedResourceGLES& resource)
+{
 	if (model->NumMaterials > 0)
 	{
-		modelTexture = new Texture*[model->NumMaterials];
-		memset(modelTexture, 0, sizeof(Texture*) * model->NumMaterials);
+		Textures = new Texture*[model->NumMaterials];
+		memset(Textures, 0, sizeof(Texture*) * model->NumMaterials);
 
 		for (INT32 materialIndex = 0; materialIndex < model->NumMaterials; ++materialIndex)
 		{
 			Adreno::Material* pMaterial = model->Materials + materialIndex;
 
-			modelTexture[materialIndex] = new Texture;
-			modelTexture[materialIndex]->init(resource.GetTexture(pMaterial->Id.Name));
+			Textures[materialIndex] = new Texture;
+			Textures[materialIndex]->init(resource.GetTexture(pMaterial->Id.Name));
 		}
 	}
-
-	return modelTexture;
 }
-
-void FileMesh1::destroyTextures(Adreno::Model* model, Texture** modelTexture)
-{
-	if (modelTexture)
-	{
-		for (INT32 materialIndex = 0; materialIndex < model->NumMaterials; ++materialIndex)
-		{
-			delete modelTexture[materialIndex];
-		}
-
-		delete[] modelTexture;
-	}
-}
-
-#pragma endregion
 
 //===============================================================================================================
 //

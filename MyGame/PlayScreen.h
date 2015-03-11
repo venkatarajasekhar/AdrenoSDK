@@ -88,13 +88,13 @@ private:
 	BloodBar m_bloodbar_red;
 
 	// Assets
-	Shader             m_shaders     [NUM_SHADERS];
-	Texture            m_textures    [NUM_TEXTURES];
-	Texture**          m_meshTextures[NUM_TEXTURES_MESHES];
-	Adreno::Model*     m_mesh1Datas  [NUM_MESH_1_DATAS];
-	CFrmMesh           m_mesh2Datas  [NUM_MESH_2_DATAS];
-	Adreno::Animation* m_anim1Datas  [NUM_ANIM_1_DATAS];
-	FRM_ANIMATION_SET* m_anim2Datas  [NUM_ANIM_2_DATAS];
+	Shader                     m_shaders     [NUM_SHADERS];
+	Texture                    m_textures    [NUM_TEXTURES];
+	SkinnedMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
+	Adreno::Model*             m_mesh1Datas  [NUM_MESH_1_DATAS];
+	CFrmMesh                   m_mesh2Datas  [NUM_MESH_2_DATAS];
+	Adreno::Animation*         m_anim1Datas  [NUM_ANIM_1_DATAS];
+	FRM_ANIMATION_SET*         m_anim2Datas  [NUM_ANIM_2_DATAS];
 
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;

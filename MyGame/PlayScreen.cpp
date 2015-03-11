@@ -29,10 +29,6 @@ PlayScreen::PlayScreen(ScreenManager* screenManager)
 
 PlayScreen::~PlayScreen()
 {
-	// Assets mesh textures
-	FileMesh1::destroyTextures(m_mesh1Datas[MESH_1_DATA_SCORPION], m_meshTextures[TEXTURES_MESH_SCORPION]);
-	FileMesh1::destroyTextures(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY]);
-
 	// Assets mesh 1 datas
 	for (size_t i = 0; i < NUM_MESH_1_DATAS; i++)
 	{
@@ -126,14 +122,14 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Scorpion.pak").c_str());
 
-		m_meshTextures[TEXTURES_MESH_SCORPION] = FileMesh1::initTextures(m_mesh1Datas[MESH_1_DATA_SCORPION], resource);
+		m_meshTextures[TEXTURES_MESH_SCORPION].init(m_mesh1Datas[MESH_1_DATA_SCORPION], resource);
 	}
 
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/india_tower_of_victory.pak").c_str());
 
-		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY] = FileMesh1::initTextures(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], resource);
+		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], resource);
 	}
 
 	// Mesh objects
@@ -198,7 +194,7 @@ void PlayScreen::init()
 
 		m_mesh_indiaTowerOfVictory.init(
 			m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
-			m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
+			m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].Textures,
 			m_shaders[SHADER_MESH],
 			&material);
 

@@ -174,13 +174,13 @@ void PlayScreen::init()
 		m_skinnedMesh_scorpion.init(
 			m_mesh1Datas[MESH_1_DATA_SCORPION],
 			m_anim1Datas[ANIM_1_DATA_SCORPION],
-			m_meshTextures[TEXTURES_MESH_SCORPION],
+			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
 			m_shaders[SHADER_SKINNED_MESH_1],
 			&material);
 
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.2f), ""));
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
+		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
+		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
+		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
 		/**/
 	}
 
@@ -192,6 +192,7 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
+		/*
 		m_mesh_indiaTowerOfVictory.init(
 			m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
 			m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].Textures,
@@ -199,6 +200,7 @@ void PlayScreen::init()
 			&material);
 
 		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.4f)));
+		*/
 	}
 
 	{
@@ -298,7 +300,7 @@ void PlayScreen::update(void* utilObjs)
 	//m_mesh_scorpion.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_boy.update(*globalUtilObjs->timer);
-	m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
+	//m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
 
 	int width, height;
 	getWindowDimension(width, height);
@@ -328,7 +330,7 @@ void PlayScreen::render(void* utilObjs)
 		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
 		//m_skinnedMesh_boy.render(m_camera_main, &light);
 
-		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
+		//m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
 		m_player.render(m_camera_main, light);
 		m_dmanManager.render(m_camera_main, light);

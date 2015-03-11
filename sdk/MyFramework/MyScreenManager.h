@@ -24,4 +24,6 @@ private:
 private:
 	Screen* m_activeScreen;
 	std::map<MyString, Screen*> m_screens;
+
+	bool m_justActiveScreen;
 };

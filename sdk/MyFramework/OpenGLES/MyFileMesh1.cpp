@@ -27,9 +27,97 @@ INT32 GetPropertyIndexFromName(Adreno::Mesh* pMesh, char* propertyName)
 
 #pragma endregion
 
+#pragma region FileMesh1 Helpers
+
 //===============================================================================================================
 //
-// FileMesh1 class
+// FileMesh1 Helpers
+//
+//===============================================================================================================
+
+void FileMesh1::prepareRenderSubmesh(int submesh)
+{
+	Adreno::Mesh* pMesh = m_model->Meshes + submesh;
+
+	// Set vertex buffer
+	FrmSetVertexBuffer(m_vertexBuffer[submesh]);
+
+	// Set vertex attributes
+	Adreno::VertexProperty* pPositionProperty = (m_vertexFormatMap[submesh].position >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].position : nullptr);
+	Adreno::VertexProperty* pNormalProperty = (m_vertexFormatMap[submesh].normal >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].normal : nullptr);
+	Adreno::VertexProperty* pTangentProperty = (m_vertexFormatMap[submesh].tangent >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].tangent : nullptr);
+	Adreno::VertexProperty* pBinormalProperty = (m_vertexFormatMap[submesh].binormal >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].binormal : nullptr);
+	Adreno::VertexProperty* pBoneIndexProperty = (m_vertexFormatMap[submesh].boneIndex >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].boneIndex : nullptr);
+	Adreno::VertexProperty* pBoneWeightProperty = (m_vertexFormatMap[submesh].boneWeight >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].boneWeight : nullptr);
+	Adreno::VertexProperty* pTexCoordProperty = (m_vertexFormatMap[submesh].texCoord >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[submesh].texCoord : nullptr);
+
+	if (pPositionProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_POSITION, 3, GL_FLOAT, pPositionProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pPositionProperty->Offset);
+		glEnableVertexAttribArray(FRM_VERTEX_POSITION);
+	}
+
+	if (pNormalProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_NORMAL, 3, GL_FLOAT, pNormalProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pNormalProperty->Offset);
+		glEnableVertexAttribArray(FRM_VERTEX_NORMAL);
+	}
+
+	if (pTangentProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_TANGENT, 3, GL_FLOAT, pTangentProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pTangentProperty->Offset);
+		glEnableVertexAttribArray(FRM_VERTEX_TANGENT);
+	}
+
+	if (pBinormalProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_BINORMAL, 3, GL_FLOAT, pBinormalProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pBinormalProperty->Offset);
+		glEnableVertexAttribArray(FRM_VERTEX_BINORMAL);
+	}
+
+	if (pBoneIndexProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_CUSTOM_BONEINDEX1, 1, GL_UNSIGNED_BYTE, pBoneIndexProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)(pBoneIndexProperty->Offset + 0));
+		glEnableVertexAttribArray(FRM_VERTEX_CUSTOM_BONEINDEX1);
+	}
+
+#if defined( USE_TWO_BONES ) || defined( USE_THREE_BONES )
+	if (pBoneIndexProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_CUSTOM_BONEINDEX2, 1, GL_UNSIGNED_BYTE, pBoneIndexProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)(pBoneIndexProperty->Offset + 4));
+		glEnableVertexAttribArray(FRM_VERTEX_CUSTOM_BONEINDEX2);
+	}
+#endif
+
+#if defined( USE_THREE_BONES )
+	if (pBoneIndexProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_CUSTOM_BONEINDEX3, 1, GL_UNSIGNED_BYTE, pBoneIndexProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)(pBoneIndexProperty->Offset + 8));
+		glEnableVertexAttribArray(FRM_VERTEX_CUSTOM_BONEINDEX3);
+	}
+#endif
+
+	if (pBoneWeightProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_BONEWEIGHTS, 3, GL_FLOAT, pBoneWeightProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pBoneWeightProperty->Offset);
+		glEnableVertexAttribArray(FRM_VERTEX_BONEWEIGHTS);
+	}
+
+	if (pTexCoordProperty != nullptr)
+	{
+		glVertexAttribPointer(FRM_VERTEX_TEXCOORD0, 2, GL_FLOAT, pTexCoordProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pTexCoordProperty->Offset);
+		glEnableVertexAttribArray(FRM_VERTEX_TEXCOORD0);
+	}
+
+	// Set index buffer
+	FrmSetIndexBuffer(m_indexBuffer[submesh]);
+}
+
+#pragma endregion
+
+//===============================================================================================================
+//
+// FileMesh1::MeshTextures struct
 //
 //===============================================================================================================
 
@@ -152,13 +240,13 @@ void FileMesh1::render(Camera& camera, Light* light)
 {
 	Mesh::render(camera, light);
 
-	// Set animation here instead of for each sub-mesh
-
 	// Render each of the meshes
 	for (INT32 meshIndex = 0; meshIndex < m_model->NumMeshes; ++meshIndex)
 	{
 		Adreno::Mesh* pMesh = m_model->Meshes + meshIndex;
 
+		prepareRenderSubmesh(meshIndex);
+		/*
 		// Set vertex buffer
 		FrmSetVertexBuffer(m_vertexBuffer[meshIndex]);
 
@@ -231,6 +319,7 @@ void FileMesh1::render(Camera& camera, Light* light)
 		
 		// Set index buffer
 		FrmSetIndexBuffer(m_indexBuffer[meshIndex]);
+		/**/
 
 		//foreachSubmesh(meshIndex);
 
@@ -243,11 +332,11 @@ void FileMesh1::render(Camera& camera, Light* light)
 			m_shader->setUniform("u_diffuseSampler", m_modelTexture[pSurface->MaterialId]->bind());
 
 			// Draw the surface
-			int id(0);
+			//int id(0);
 			for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
 			{
 				m_shader->setUniform("u_world", (*i)->World);
-				foreachInstance(id++);
+				//foreachInstance(id++);
 
 				glDrawElements(GL_TRIANGLES, pSurface->NumTriangles * 3, GL_UNSIGNED_INT, (GLvoid*)(pSurface->StartIndex * sizeof(UINT32)));
 			}

@@ -64,7 +64,8 @@ public:
 	virtual void render(Camera& camera, Light* light = nullptr);
 
 protected:
-	virtual void foreachInstance(int id){}
+	void prepareRenderSubmesh(int submesh);
+	//virtual void foreachInstance(int id){}
 
 protected:
 	Adreno::Model* m_model;

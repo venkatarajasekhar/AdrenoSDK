@@ -221,30 +221,20 @@ void SkinnedMesh1::init(
 	std::map<MyString, AnimAction>* animActions,
 	FLOAT32 speedFactor)
 {
-	smartLog("----------------------------------BEGIN INIT SKINNED MESH");
-
 	m_anim = anim;
 	m_speedFactor = speedFactor;
 	
-	smartLog("----------------------------------BEGIN CLEAR ANIM");
 	//m_animActions.clear();
-	smartLog("----------------------------------END CLEAR ANIM");
 	if (animActions != nullptr)
 	{
 		m_animActions = (*animActions);
 	}
 
-	smartLog("----------------------------------BEGIN SetupBoneTransform");
 	throwIfFailed(TRUE == SetupBoneTransform(model, anim), "ERROR: Fail to setup skinned mesh type 1");
-	smartLog("----------------------------------BEGIN RemapBoneIndices");
 	throwIfFailed(TRUE == RemapBoneIndices(model, m_boneRemap, m_boneRemapCount), "ERROR: Fail to setup skinned mesh type 1");
 
-	smartLog("----------------------------------BEGIN INIT FILE MESH");
-	
 	//FileMesh1::init(model, modelTexture, shader, pos, rot, scale, material);
 	FileMesh1::init(model, modelTexture, shader, material);
-	
-	smartLog("----------------------------------END INIT FILE MESH");
 }
 
 void SkinnedMesh1::update(Timer& timer)
@@ -294,14 +284,6 @@ void SkinnedMesh1::update(Timer& timer)
 	{
 		SkinnedMesh1::Instance* instance = (SkinnedMesh1::Instance*)(*i);
 
-		// Update current frame
-
-		// At time of t0, we're being between m_leftFrame Frame and m_rightFrame Frame.
-		// We're interpolating transform at t0 basing on m_leftFrame Frame and m_rightFrame Frame.
-		INT32   leftFrame;
-		INT32   rightFrame;
-		FLOAT32 frameWeight;
-
 		instance->TotalTicks += (UINT32)(timer.getElapsedTime() * FRM_ANIMATION_TICKS_PER_SEC);
 
 		if (m_speedFactor > 0.0f)
@@ -333,11 +315,12 @@ void SkinnedMesh1::update(Timer& timer)
 
 			UINT32 totalFrames = instance->TotalTicks / ticksPerFrame;
 
-			leftFrame = frameStart + totalFrames % frameLength;
-			rightFrame = (leftFrame != frameStart + frameLength - 1) ? leftFrame + 1 : frameStart;
-			frameWeight = (FLOAT32)(instance->TotalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
+			instance->LeftFrame = frameStart + totalFrames % frameLength;
+			instance->RightFrame = (instance->LeftFrame != frameStart + frameLength - 1) ? instance->LeftFrame + 1 : frameStart;
+			instance->FrameWeight = (FLOAT32)(instance->TotalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
 		}
 
+		/*
 		// Manipulating array of world matrices
 
 		for (UINT32 boneIndex = 0; boneIndex < m_boneRemapCount; ++boneIndex)
@@ -385,11 +368,50 @@ void SkinnedMesh1::update(Timer& timer)
 			matBoneMatrix = FrmMatrixTranspose(matBoneMatrix);
 			memcpy(&instance->WorldArray[boneIndex], &matBoneMatrix, sizeof(FRMMATRIX4X3));
 		}
+		/**/
 	}
 
 	FileMesh1::update(timer);
 }
 
+void SkinnedMesh1::render(Camera& camera, Light* light)
+{
+	Mesh::render(camera, light);
+
+	for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
+	{
+		SkinnedMesh1::Instance* instance = (SkinnedMesh1::Instance*)(*i);
+
+		// Set uniform for each instance
+		m_shader->setUniform("u_world", instance->World);
+		setWorldArray(instance);
+
+		// Draw mesh
+		for (INT32 meshIndex = 0; meshIndex < m_model->NumMeshes; ++meshIndex)
+		{
+			Adreno::Mesh* pMesh = m_model->Meshes + meshIndex;
+
+			prepareRenderSubmesh(meshIndex);
+
+			// Render each mesh surface
+			for (UINT32 surfaceIndex = 0; surfaceIndex < pMesh->Surfaces.NumSurfaces; ++surfaceIndex)
+			{
+				Adreno::MeshSurface* pSurface = pMesh->Surfaces.Surfaces + surfaceIndex;
+
+				// Set the material for the surface
+				m_shader->setUniform("u_diffuseSampler", m_modelTexture[pSurface->MaterialId]->bind());
+
+				// Draw the surface
+				glDrawElements(GL_TRIANGLES, pSurface->NumTriangles * 3, GL_UNSIGNED_INT, (GLvoid*)(pSurface->StartIndex * sizeof(UINT32)));
+			}
+		}
+	}
+
+	FrmSetVertexBuffer(NULL);
+	FrmSetIndexBuffer(NULL);
+}
+
+/*
 void SkinnedMesh1::foreachInstance(int id)
 {
 	SkinnedMesh1::Instance* instance = (SkinnedMesh1::Instance*)m_instances[id];
@@ -400,9 +422,10 @@ void SkinnedMesh1::foreachInstance(int id)
 		MAX_BONES * 3,
 		4);
 }
+/**/
 
-/*
-void SkinnedMesh1::foreachSubmesh(int index)
+void SkinnedMesh1::setWorldArray(SkinnedMesh1::Instance* instance)
+//void SkinnedMesh1::foreachSubmesh(int index)
 {
 	// Prepare this frame's transforms for each of the bones
 	FRMMATRIX4X3 matWorldMatrixArray[MAX_BONES];
@@ -419,8 +442,8 @@ void SkinnedMesh1::foreachSubmesh(int index)
 
 		if (pTrack->NumKeyframes >= 0)
 		{
-			pCurTransform = pTrack->Keyframes + m_rightFrame;
-			pLastTransform = pTrack->Keyframes + m_leftFrame;
+			pCurTransform = pTrack->Keyframes + instance->RightFrame;// m_rightFrame;
+			pLastTransform = pTrack->Keyframes + instance->LeftFrame;// m_leftFrame;
 		}
 		else
 		{
@@ -430,8 +453,8 @@ void SkinnedMesh1::foreachSubmesh(int index)
 
 		// Interpolate between the last and current transforms
 		Adreno::Transform transform;
-		transform.Position = FrmVector3Lerp(pLastTransform->Position, pCurTransform->Position, m_frameWeight);
-		transform.Rotation = FrmVector4SLerp(pLastTransform->Rotation, pCurTransform->Rotation, m_frameWeight);
+		transform.Position = FrmVector3Lerp(pLastTransform->Position, pCurTransform->Position, instance->FrameWeight);// m_frameWeight);
+		transform.Rotation = FrmVector4SLerp(pLastTransform->Rotation, pCurTransform->Rotation, instance->FrameWeight);// m_frameWeight);
 
 		// Apply inverse bind transform to final matrix
 		FRMMATRIX4X4 matInverseBindPosition = FrmMatrixTranslate(pJoint->InverseBindPose.Position);

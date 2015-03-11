@@ -3,7 +3,8 @@
 #include "MyScreen.h"
 
 ScreenManager::ScreenManager()
-	: m_activeScreen(nullptr)
+	: m_activeScreen(nullptr),
+	m_justActiveScreen(false)
 {
 }
 
@@ -28,13 +29,14 @@ void ScreenManager::update(void* utilObjs)
 {
 	if (m_activeScreen != nullptr)
 	{
+		m_justActiveScreen = false;
 		m_activeScreen->update(utilObjs);
 	}
 }
 
 void ScreenManager::render(void* utilObjs)
 {
-	if (m_activeScreen != nullptr)
+	if (m_activeScreen != nullptr && !m_justActiveScreen)
 	{
 		m_activeScreen->render(utilObjs);
 	}
@@ -57,6 +59,7 @@ void ScreenManager::addScreen(const MyString& id, Screen* screen)
 void ScreenManager::activeScreen(const MyString& id)
 {
 	m_activeScreen = getScreen(id);
+	m_justActiveScreen = true;
 }
 
 Screen* ScreenManager::getScreen(const MyString& id)

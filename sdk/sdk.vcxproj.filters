@@ -105,6 +105,9 @@
     <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyBloodBar.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -186,6 +189,9 @@
       <Filter>MyFramework</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyBloodBar.h">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
   </ItemGroup>

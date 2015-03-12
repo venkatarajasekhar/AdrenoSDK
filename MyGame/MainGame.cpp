@@ -67,7 +67,7 @@ BOOL MainGame::Initialize()
 	// Global utility objects
 	m_userInput.init(m_Input);
 	m_spriteBatch.init(m_shader_sprite);
-	m_gameServer.init();
+	//m_gameServer.init();
 
 	// Core objects
 	m_screenManager.addScreen("MenuScreen", new MenuScreen(&m_screenManager));
@@ -126,7 +126,7 @@ VOID MainGame::Update()
 			&m_timer,
 			&m_userInput,
 			&m_spriteBatch,
-			&m_gameServer,
+			nullptr,// &m_gameServer,
 		};
 		m_screenManager.update(&objs);
 	}
@@ -155,7 +155,7 @@ VOID MainGame::Render()
 			&m_timer,
 			&m_userInput,
 			&m_spriteBatch,
-			&m_gameServer,
+			nullptr,// &m_gameServer,
 		};
 		m_screenManager.render(&objs);
 	}

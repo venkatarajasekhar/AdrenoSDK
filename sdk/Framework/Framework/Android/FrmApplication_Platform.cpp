@@ -104,7 +104,7 @@ BOOL CFrmAppContainer::Initialize()
     m_pApplication->m_eglContextGL = m_eglContext;
 
 	// TODO: Move to app container class when everything works
-	InitializeTCPServer();
+	//InitializeTCPServer();
 	m_pApplication->m_nWidth = ANativeWindow_getWidth(m_pAndroidApp->window);     // NATIVE_APP_WIDTH;
 	m_pApplication->m_nHeight = ANativeWindow_getHeight(m_pAndroidApp->window);   // NATIVE_APP_HEIGHT; 
 	m_pApplication->Resize();

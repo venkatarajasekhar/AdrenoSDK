@@ -65,7 +65,6 @@ public:
 
 protected:
 	void prepareRenderSubmesh(int submesh);
-	//virtual void foreachInstance(int id){}
 
 protected:
 	Adreno::Model* m_model;

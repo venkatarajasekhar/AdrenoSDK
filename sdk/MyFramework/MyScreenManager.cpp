@@ -14,7 +14,6 @@ ScreenManager::~ScreenManager()
 	{
 		delete(i->second);
 	}
-	m_screens.clear();
 }
 
 void ScreenManager::resize(int width, int height)

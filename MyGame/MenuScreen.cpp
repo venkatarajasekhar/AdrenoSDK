@@ -61,17 +61,17 @@ void MenuScreen::update(void* utilObjs)
 
 	if (m_btns[1].isPressing())
 	{
-		globalUtilObjs->gameServer->beginUserInitiatedSignIn();
+		//globalUtilObjs->gameServer->beginUserInitiatedSignIn();
 	}
 
 	if (m_btns[2].isPressing())
 	{
-		globalUtilObjs->gameServer->signOut();
+		//globalUtilObjs->gameServer->signOut();
 	}
 
 	if (m_btns[3].isPressing())
 	{
-		globalUtilObjs->gameServer->showAchievements();
+		//globalUtilObjs->gameServer->showAchievements();
 	}
 
 	if (m_btns[4].isPressing())

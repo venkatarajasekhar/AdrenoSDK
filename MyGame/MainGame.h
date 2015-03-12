@@ -32,7 +32,7 @@ private:
 	Timer m_timer;
 	UserInput m_userInput;
 	SpriteBatch m_spriteBatch;
-	GameServer m_gameServer;
+	//GameServer m_gameServer;
 
 	// Core objects
 	ScreenManager m_screenManager;

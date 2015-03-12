@@ -246,83 +246,7 @@ void FileMesh1::render(Camera& camera, Light* light)
 		Adreno::Mesh* pMesh = m_model->Meshes + meshIndex;
 
 		prepareRenderSubmesh(meshIndex);
-		/*
-		// Set vertex buffer
-		FrmSetVertexBuffer(m_vertexBuffer[meshIndex]);
-
-		// Set vertex attributes
-		Adreno::VertexProperty* pPositionProperty = (m_vertexFormatMap[meshIndex].position >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].position : nullptr);
-		Adreno::VertexProperty* pNormalProperty = (m_vertexFormatMap[meshIndex].normal >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].normal : nullptr);
-		Adreno::VertexProperty* pTangentProperty = (m_vertexFormatMap[meshIndex].tangent >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].tangent : nullptr);
-		Adreno::VertexProperty* pBinormalProperty = (m_vertexFormatMap[meshIndex].binormal >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].binormal : nullptr);
-		Adreno::VertexProperty* pBoneIndexProperty = (m_vertexFormatMap[meshIndex].boneIndex >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].boneIndex : nullptr);
-		Adreno::VertexProperty* pBoneWeightProperty = (m_vertexFormatMap[meshIndex].boneWeight >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].boneWeight : nullptr);
-		Adreno::VertexProperty* pTexCoordProperty = (m_vertexFormatMap[meshIndex].texCoord >= 0 ? pMesh->Vertices.Format.Properties + m_vertexFormatMap[meshIndex].texCoord : nullptr);
-
-		if (pPositionProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_POSITION, 3, GL_FLOAT, pPositionProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pPositionProperty->Offset);
-			glEnableVertexAttribArray(FRM_VERTEX_POSITION);
-		}
-
-		if (pNormalProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_NORMAL, 3, GL_FLOAT, pNormalProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pNormalProperty->Offset);
-			glEnableVertexAttribArray(FRM_VERTEX_NORMAL);
-		}
-
-		if (pTangentProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_TANGENT, 3, GL_FLOAT, pTangentProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pTangentProperty->Offset);
-			glEnableVertexAttribArray(FRM_VERTEX_TANGENT);
-		}
-
-		if (pBinormalProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_BINORMAL, 3, GL_FLOAT, pBinormalProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pBinormalProperty->Offset);
-			glEnableVertexAttribArray(FRM_VERTEX_BINORMAL);
-		}
-
-		if (pBoneIndexProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_CUSTOM_BONEINDEX1, 1, GL_UNSIGNED_BYTE, pBoneIndexProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)(pBoneIndexProperty->Offset + 0));
-			glEnableVertexAttribArray(FRM_VERTEX_CUSTOM_BONEINDEX1);
-		}
-
-#if defined( USE_TWO_BONES ) || defined( USE_THREE_BONES )
-		if (pBoneIndexProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_CUSTOM_BONEINDEX2, 1, GL_UNSIGNED_BYTE, pBoneIndexProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)(pBoneIndexProperty->Offset + 4));
-			glEnableVertexAttribArray(FRM_VERTEX_CUSTOM_BONEINDEX2);
-		}
-#endif
-
-#if defined( USE_THREE_BONES )
-		if (pBoneIndexProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_CUSTOM_BONEINDEX3, 1, GL_UNSIGNED_BYTE, pBoneIndexProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)(pBoneIndexProperty->Offset + 8));
-			glEnableVertexAttribArray(FRM_VERTEX_CUSTOM_BONEINDEX3);
-		}
-#endif
-
-		if (pBoneWeightProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_BONEWEIGHTS, 3, GL_FLOAT, pBoneWeightProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pBoneWeightProperty->Offset);
-			glEnableVertexAttribArray(FRM_VERTEX_BONEWEIGHTS);
-		}
-
-		if (pTexCoordProperty != nullptr)
-		{
-			glVertexAttribPointer(FRM_VERTEX_TEXCOORD0, 2, GL_FLOAT, pTexCoordProperty->IsNormalized(), pMesh->Vertices.Format.Stride, (GLvoid*)pTexCoordProperty->Offset);
-			glEnableVertexAttribArray(FRM_VERTEX_TEXCOORD0);
-		}
 		
-		// Set index buffer
-		FrmSetIndexBuffer(m_indexBuffer[meshIndex]);
-		/**/
-
-		//foreachSubmesh(meshIndex);
-
 		// Render each mesh surface
 		for (UINT32 surfaceIndex = 0; surfaceIndex < pMesh->Surfaces.NumSurfaces; ++surfaceIndex)
 		{
@@ -332,11 +256,9 @@ void FileMesh1::render(Camera& camera, Light* light)
 			m_shader->setUniform("u_diffuseSampler", m_modelTexture[pSurface->MaterialId]->bind());
 
 			// Draw the surface
-			//int id(0);
 			for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
 			{
 				m_shader->setUniform("u_world", (*i)->World);
-				//foreachInstance(id++);
 
 				glDrawElements(GL_TRIANGLES, pSurface->NumTriangles * 3, GL_UNSIGNED_INT, (GLvoid*)(pSurface->StartIndex * sizeof(UINT32)));
 			}

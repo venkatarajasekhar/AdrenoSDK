@@ -22,7 +22,6 @@
 class SkinnedMesh1 : public FileMesh1
 {
 public:
-	//static const UINT32 MAX_BONES = 80;
 	static const UINT32 MAX_BONES = 50;
 	static const UINT32 TOTAL_BONES = 256;
 	static const UINT32 TICKS_PER_FRAME = 150;
@@ -52,19 +51,6 @@ public:
 	SkinnedMesh1();
 	~SkinnedMesh1();
 
-	/*
-	void init(
-		Adreno::Model* model,
-		Adreno::Animation* anim,
-		Texture** modelTexture,
-		Shader& shader,
-		const MyVec3& pos,
-		const MyVec3& rot,
-		const MyVec3& scale,
-		Material* material = nullptr,
-		std::map<MyString, AnimAction>* animActions = nullptr,
-		FLOAT32 speedFactor = 1.0f);
-	/**/
 	void init(
 		Adreno::Model* model,
 		Adreno::Animation* anim,
@@ -77,13 +63,8 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera, Light* light = nullptr);
 
-	//MyString getCurrentAction()const;
-	//void setCurrentAction(const MyString& name);
-
 private:
 	void setWorldArray(SkinnedMesh1::Instance* instance);
-	//void foreachSubmesh(int index);
-	//void foreachInstance(int id);
 
 	AnimAction getAction(const MyString& name)const;
 
@@ -97,19 +78,8 @@ private:
 	UINT32 m_boneRemap[MAX_BONES];
 	UINT32 m_boneRemapCount;
 
-	/*
-	// At time of t0, we're being between m_leftFrame Frame and m_rightFrame Frame.
-	// We're interpolating transform at t0 basing on m_leftFrame Frame and m_rightFrame Frame.
-	INT32   m_leftFrame;
-	INT32   m_rightFrame;
-	FLOAT32 m_frameWeight;
-	/**/
-
 	// Animation speed and range
 	FLOAT32 m_speedFactor;
 
 	std::map<MyString, AnimAction> m_animActions;
-	//MyString m_currentAction;
-
-	//UINT32 m_totalTicks;
 };

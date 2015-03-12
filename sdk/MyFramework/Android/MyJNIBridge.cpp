@@ -6,6 +6,25 @@ extern const char* g_nativeActivityName;
 
 extern "C"
 {
+	// Start app
+	// or return from pause state:
+	//  - nativeOnActivityCreated
+	//  - nativeOnActivityStarted
+	//  - nativeOnActivityResumed
+
+	// When press return/home button:
+	//  - nativeOnActivityPaused
+
+	// When phone go to dim display:
+	//  - nativeOnActivityPaused
+	//  - nativeOnActivitySaveInstanceState
+	//  - nativeOnActivityStopped
+	
+	// When press power button:
+	//  - nativeOnActivityPaused
+	//  - nativeOnActivitySaveInstanceState
+	//  - nativeOnActivityStopped
+
 	void nativeOnActivityResult(JNIEnv *env, jobject thiz,
 		jobject activity, jint requestCode, jint resultCode, jobject data)
 	{

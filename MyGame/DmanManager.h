@@ -19,6 +19,6 @@ public:
 	void insertDmanToList(Dman* dman);
 	void removeDmanFromList(Dman* dman);
 	void update(Timer& timer);
-	void render(Camera& camera, Light& light);
+	void render(Camera& camera, Light& light, SpriteBatch& spriteBatch);
 	int getNDman();
 };

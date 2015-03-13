@@ -7,7 +7,7 @@ Dman::Dman()
 {
 	m_id = m_numIDs++;
 	m_isDeleted = false;
-	m_helth = 100;
+	m_health = MaxHealth;
 	m_dam = 50;
 }
 
@@ -15,9 +15,11 @@ void Dman::init(
 	int type,
 	const MyVec3& pos,
 	const MyVec3& rot,
-	const MyVec3& scale)
+	const MyVec3& scale,
+	BloodBar* bloodBar)
 {
 	m_type = type;
+	m_bloodBar = bloodBar;
 	//m_bloodBar.init(tex2DShader, tex2D);
 	m_instance = SkinnedMesh2::buildSkinnedMeshInstance(pos, rot, scale, "");
 	//m_player.addInstance(m_instance);
@@ -32,7 +34,7 @@ void Dman::update(Timer& timer)
 	copyAllProperties();
 	PositionDman = m_instance->Position;
 	
-	float e = 0.1f;
+	/*float e = 0.1f;
 	if (m_type == 0)
 	{
 		if ((fabs(m_instance->Position.x - 20) < e) && (fabs(m_instance->Position.z + 20) < e))
@@ -48,27 +50,22 @@ void Dman::update(Timer& timer)
 		}
 	}
 
-	if (m_helth <= 0) m_isDeleted = true;
+	if (m_health <= 0) m_isDeleted = true;*/
 }
 
 void Dman::copyAllProperties()
 {
-	//m_dman.setPos(m_ai.m_pos);
-	//m_dman.setRot(MyVec3(0, m_ai.m_angle, 0));
-	//m_dman.setScale(m_ai.m_scale);
-
 	m_instance->Position = m_ai.m_pos;
 	m_instance->Rotation = MyVec3(0, m_ai.m_angle, 0);
 	m_instance->Scale = m_ai.m_scale;
 
 }
 
-/*void Dman::render(Camera& camera)
+void Dman::render(Camera& camera, SpriteBatch& spriteBatch)
 {
-	m_dman.render(camera);
-	m_bloodBar.m_pos = m_dman.getPos() + MyVec3(-1.5, 7, 0);
-	m_bloodBar.render(camera);
-}*/
+	MyVec3 pos = m_instance->Position + MyVec3(-0.8, 2.3, 0);
+	m_bloodBar->render(spriteBatch, camera, pos, m_health/(float)MaxHealth);
+}
 
 SkinnedMesh2::Instance* Dman::getDman()
 {
@@ -85,14 +82,14 @@ bool Dman::getIsDeleted()
 	return m_isDeleted;
 }
 
-void Dman::setHelth(int helth)
+void Dman::setHealth(int health)
 {
-	m_helth = helth;
+	m_health = health;
 }
 
-int Dman::getHelth()
+int Dman::getHealth()
 {
-	return m_helth;
+	return m_health;
 }
 
 void Dman::setDam(int dam)

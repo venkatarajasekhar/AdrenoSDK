@@ -45,6 +45,8 @@ public:
 
 	void setDiffuseMap(Texture* diffuseMap);
 
+	void setPrimitive(GLenum primitive);
+
 private:
 	GLuint m_vbo;
 	GLuint m_ibo;
@@ -52,6 +54,8 @@ private:
 
 	InputLayout m_inputLayout;
 	Texture* m_diffuseMap;
+
+	GLenum m_primitive;
 };
 
 //===============================================================================================================

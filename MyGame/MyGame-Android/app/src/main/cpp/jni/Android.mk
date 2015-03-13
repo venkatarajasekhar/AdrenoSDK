@@ -52,6 +52,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmUtilsGLES.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera2D.cpp \
+				   $(SDK_MY_FRM_PATH)/MyInitFile.cpp \
 				   $(SDK_MY_FRM_PATH)/MyInput.cpp \
 				   $(SDK_MY_FRM_PATH)/MyMath.cpp \
 				   $(SDK_MY_FRM_PATH)/MyOrthoCamera.cpp \

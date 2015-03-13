@@ -202,6 +202,9 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyInitFile.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

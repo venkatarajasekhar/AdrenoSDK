@@ -201,28 +201,24 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
 
-		m_dmanManager.init(m_mesh2Datas[MESH_2_DATA_DMAN],
+		g_dmanManager.init(m_mesh2Datas[MESH_2_DATA_DMAN],
 			m_anim2Datas[ANIM_2_DATA_DMAN],
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2]);
-
-		/*Dman* dman = new Dman;
-		dman->init(0, MyVec3(-100, 0, 0), MyVec3(0), MyVec3(0.7));
-		m_dmanManager.insertDmanToList(dman);*/
 	}
 }
 
-void PlayScreen::cloneDman()
+void PlayScreen::cloneTrooper()
 {
-	if (m_dmanManager.getNDman() < 10)
+	if (g_dmanManager.getNTrooper() < 5)
 	{
-		Dman* dman1 = new Dman;
-		dman1->init(0, MyVec3(-5, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
-		m_dmanManager.insertDmanToList(dman1);
+		Trooper* dman = new Trooper;
+		dman->init(0, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
+		g_dmanManager.insertTrooperToList(dman);
 
-		Dman* dman2 = new Dman;
-		dman2->init(1, MyVec3(50, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
-		m_dmanManager.insertDmanToList(dman2);
+		Trooper* scorpion = new Trooper;
+		scorpion->init(1, MyVec3(20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
+		g_dmanManager.insertTrooperToList(scorpion);
 	}
 }
 
@@ -271,12 +267,13 @@ void PlayScreen::update(void* utilObjs)
 	m_countTime += globalUtilObjs->timer->getElapsedTime();
 	if (m_countTime > 4)
 	{
-		cloneDman();
+		cloneTrooper();
 		m_countTime -= 4;
 	}
 
 	m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
-	m_dmanManager.update(*globalUtilObjs->timer);
+	g_dmanManager.update(*globalUtilObjs->timer);
+	//m_scorpionManager.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -294,13 +291,13 @@ void PlayScreen::render(void* utilObjs)
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
 		m_player.render(m_camera_main, light);
-		m_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		g_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
 
 	{
 		static float health = 1.0f;
 		health *= 0.999f;
 		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer + MyVec3(-1, 2.5, 0), health);
-		//m_bloodbar_red.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer, health);
 	}
 }

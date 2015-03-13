@@ -7,9 +7,9 @@
 
 const int MaxHealth = 100;
 
-class Dman
+class Trooper
 {
-private:
+public:
 	SkinnedMesh2::Instance* m_instance;
 	EnemyAI m_ai;
 	BloodBar* m_bloodBar;
@@ -20,7 +20,7 @@ private:
 	static int m_numIDs;
 	bool m_isDeleted;
 public:
-	Dman();
+	Trooper();
 	void init(
 		int type,
 		const MyVec3& pos,
@@ -32,7 +32,7 @@ public:
 	void render(Camera& camera, SpriteBatch& spriteBatch);
 	void copyAllProperties();
 
-	SkinnedMesh2::Instance* getDman();
+	SkinnedMesh2::Instance* getTrooper();
 	bool getIsDeleted();
 	int getId();
 	void setHealth(int helth);

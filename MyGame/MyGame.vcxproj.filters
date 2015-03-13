@@ -196,12 +196,13 @@
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Dman.cpp" />
-    <ClCompile Include="DmanManager.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="Trooper.cpp" />
+    <ClCompile Include="TrooperManager.cpp" />
+    <ClCompile Include="Global.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />
@@ -209,8 +210,9 @@
     <ClInclude Include="PlayScreen.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Dman.h" />
-    <ClInclude Include="DmanManager.h" />
     <ClInclude Include="EnemyAI.h" />
+    <ClInclude Include="Trooper.h" />
+    <ClInclude Include="TrooperManager.h" />
+    <ClInclude Include="Global.h" />
   </ItemGroup>
 </Project>

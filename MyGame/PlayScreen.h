@@ -9,7 +9,7 @@
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
 #include "Player.h"
-#include "DmanManager.h"
+#include "Global.h"
 
 class PlayScreen : public Screen
 {
@@ -78,7 +78,7 @@ public:
 	void resize(int width, int height);
 	void update(void* utilObjs);
 	void render(void* utilObjs);
-	void cloneDman();
+	void cloneTrooper();
 
 private:
 
@@ -103,7 +103,8 @@ private:
 	SkinnedMesh1 m_skinnedMesh_scorpion;
 
 	Player m_player;
-	DmanManager m_dmanManager;
+	//TrooperManager m_dmanManager;
+	//TrooperManager m_scorpionManager;
 
 	float m_countTime = 2;
 };

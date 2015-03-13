@@ -2,6 +2,7 @@
 
 #include <MySkinnedMesh2.h>
 #include <MyInput.h>
+#include "Global.h"
 
 class Player
 {
@@ -26,9 +27,10 @@ public:
 
 	void update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height);
 	void render(Camera& camera, Light& light);
-	void rotatePlayer();
+	void rotatePlayer(MyVec3 pointDestination);
 	void setHelth(int helth);
 	int getHelth();
 	void setDam(int dam);
 	int getDam();
+	int findTrooperToBeat();
 };

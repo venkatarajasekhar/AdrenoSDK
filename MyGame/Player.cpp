@@ -1,6 +1,6 @@
 #include "Player.h"
 
-MyVec3 PositionDman;
+MyVec3 PositionTrooper;
 MyVec3 PositionPlayer;
 
 void Player::init(
@@ -38,16 +38,14 @@ void Player::init(
 		m_player.addInstance(m_instance);
 	}
 
-	
-	//m_player.setCurrentPose("Stand");
 }
 
 void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
-	MyVec3 position = m_instance->Position; //m_player.getPos();
+	MyVec3 position = m_instance->Position; 
 
 	MyVec2 pointTouch;
-	if (userInput.pointer_Pressing(pointTouch))//.isTouching(pointTouch))
+	if (userInput.pointer_Pressing(pointTouch))
 	{
 		Plane terrainPlane = { 0.0f, MyVec3(0, 1, 0) };
 		Ray ray = createRayInWorld(pointTouch, width, height, camera.getView(), camera.getProj());
@@ -61,7 +59,7 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 		float t = max(fabs(x), fabs(z)) * 10;
 		m_direction = MyVec3(x / t, y / t, z / t);
 
-		rotatePlayer();
+		rotatePlayer(m_pointTouch);
 	}
 
 	float moveFactor = 40.0f;
@@ -69,26 +67,35 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 	float e = 0.1f;
 	if ((fabs(position.x - m_pointTouch.x) > e) || (fabs(position.z - m_pointTouch.z) > e))
 	{
-		m_instance->CurrentAction = "Run"; //m_player.setCurrentPose("Run");
+		m_instance->CurrentAction = "Run"; 
 		position.x += m_direction.x * timer.getElapsedTime() * moveFactor;
 		position.z += m_direction.z * timer.getElapsedTime() * moveFactor;
 	}
 	else
 	{
-		if (m_instance->CurrentAction == "Run")
+		m_instance->CurrentAction = "Stand"; 
+		int id = findTrooperToBeat();
+		if (id != -1)
 		{
-			m_instance->Rotation.y += 180.0f;
+			rotatePlayer(g_dmanManager.m_listTroopers[id]->m_instance->Position);
+			m_instance->CurrentAction = "Beat";
 		}
-			
-		m_instance->CurrentAction = "Stand"; //m_player.setCurrentPose("Stand");
-		float dist = distance(position, PositionDman);
-		if (dist < 2.0f)
-			m_instance->CurrentAction = "Beat"; //m_player.setCurrentPose("Beat");
 	}
-	m_instance->Position = position; //m_player.setPos(position);
-	PositionPlayer = m_instance->Position;// m_player.getPos();
+	m_instance->Position = position; 
+	PositionPlayer = m_instance->Position;
 
 	m_player.update(timer);
+}
+
+int Player::findTrooperToBeat()
+{
+	MyVec3 position = m_instance->Position;
+	for (auto i = g_dmanManager.m_listTroopers.begin(); i != g_dmanManager.m_listTroopers.end(); i++)
+		if (distance(position, i->second->m_instance->Position) < 2.0f)
+		{
+			return i->second->m_id;
+		}
+	return -1;
 }
 
 void Player::render(Camera& camera, Light& light)
@@ -96,10 +103,10 @@ void Player::render(Camera& camera, Light& light)
 	m_player.render(camera, &light);
 }
 
-void Player::rotatePlayer()
+void Player::rotatePlayer(MyVec3 pointDestination)
 {
-	MyVec3 position = m_instance->Position;//m_player.getPos();
-	MyVec3 dir = position - m_pointTouch;
+	MyVec3 position = m_instance->Position;
+	MyVec3 dir = position - pointDestination;
 	MyVec3 baseVec = MyVec3(0, 0, -1);
 
 	dir = normalize(dir);
@@ -111,7 +118,7 @@ void Player::rotatePlayer()
 		cos = 1;
 
 	float angle = dACos(cos);
-	if (m_pointTouch.x <= position.x)
+	if (pointDestination.x <= position.x)
 	{
 		angle = -angle;
 	}

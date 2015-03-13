@@ -138,8 +138,9 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
-    <ClCompile Include="Dman.cpp" />
-    <ClCompile Include="DmanManager.cpp" />
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Trooper.cpp" />
+    <ClCompile Include="TrooperManager.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
@@ -147,8 +148,9 @@
     <ClCompile Include="PlayScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dman.h" />
-    <ClInclude Include="DmanManager.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Trooper.h" />
+    <ClInclude Include="TrooperManager.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MenuScreen.h" />

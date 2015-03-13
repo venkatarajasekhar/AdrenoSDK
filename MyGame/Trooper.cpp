@@ -1,9 +1,9 @@
-#include "Dman.h"
+#include "Trooper.h"
 
-extern MyVec3 PositionDman;
-int Dman::m_numIDs = 0;
+extern MyVec3 PositionTrooper;
+int Trooper::m_numIDs = 0;
 
-Dman::Dman()
+Trooper::Trooper()
 {
 	m_id = m_numIDs++;
 	m_isDeleted = false;
@@ -11,7 +11,7 @@ Dman::Dman()
 	m_dam = 50;
 }
 
-void Dman::init(
+void Trooper::init(
 	int type,
 	const MyVec3& pos,
 	const MyVec3& rot,
@@ -27,12 +27,12 @@ void Dman::init(
 	m_ai.init(m_type, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale);
 }
 
-void Dman::update(Timer& timer)
+void Trooper::update(Timer& timer)
 {
 	m_ai.m_pos = m_instance->Position;
 	m_ai.update(timer);
 	copyAllProperties();
-	PositionDman = m_instance->Position;
+	PositionTrooper = m_instance->Position;
 	
 	/*float e = 0.1f;
 	if (m_type == 0)
@@ -53,7 +53,7 @@ void Dman::update(Timer& timer)
 	if (m_health <= 0) m_isDeleted = true;*/
 }
 
-void Dman::copyAllProperties()
+void Trooper::copyAllProperties()
 {
 	m_instance->Position = m_ai.m_pos;
 	m_instance->Rotation = MyVec3(0, m_ai.m_angle, 0);
@@ -61,43 +61,43 @@ void Dman::copyAllProperties()
 
 }
 
-void Dman::render(Camera& camera, SpriteBatch& spriteBatch)
+void Trooper::render(Camera& camera, SpriteBatch& spriteBatch)
 {
 	MyVec3 pos = m_instance->Position + MyVec3(-0.8, 2.3, 0);
 	m_bloodBar->render(spriteBatch, camera, pos, m_health/(float)MaxHealth);
 }
 
-SkinnedMesh2::Instance* Dman::getDman()
+SkinnedMesh2::Instance* Trooper::getTrooper()
 {
 	return m_instance;
 }
 
-int Dman::getId()
+int Trooper::getId()
 {
 	return m_id;
 }
 
-bool Dman::getIsDeleted()
+bool Trooper::getIsDeleted()
 {
 	return m_isDeleted;
 }
 
-void Dman::setHealth(int health)
+void Trooper::setHealth(int health)
 {
 	m_health = health;
 }
 
-int Dman::getHealth()
+int Trooper::getHealth()
 {
 	return m_health;
 }
 
-void Dman::setDam(int dam)
+void Trooper::setDam(int dam)
 {
 	m_dam = dam;
 }
 
-int Dman::getDam()
+int Trooper::getDam()
 {
 	return m_dam;
 }

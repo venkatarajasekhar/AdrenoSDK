@@ -5,7 +5,8 @@ BasicMesh::BasicMesh()
 	: m_vbo(0),
 	m_ibo(0),
 	m_numIndices(0),
-	m_diffuseMap(nullptr)
+	m_diffuseMap(nullptr),
+	m_primitive(GL_TRIANGLES)
 {
 }
 
@@ -40,7 +41,7 @@ void BasicMesh::render(Camera& camera, Light* light)
 
 	// Render
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-	glDrawElements(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, NULL);
+	glDrawElements(m_primitive, m_numIndices, GL_UNSIGNED_INT, NULL);
 
 	// Unbind vertex buffer
 	m_inputLayout.unbind();
@@ -89,4 +90,9 @@ void BasicMesh::setScale(const MyVec3& scale)
 void BasicMesh::setDiffuseMap(Texture* diffuseMap)
 {
 	m_diffuseMap = diffuseMap;
+}
+
+void BasicMesh::setPrimitive(GLenum primitive)
+{
+	m_primitive = primitive;
 }

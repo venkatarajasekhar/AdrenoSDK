@@ -65,5 +65,12 @@ inline MyString toString(const T& t)
 	return ostr.str();
 }
 
+template <typename T>
+inline void stringTo(const MyString& str, T& t)
+{
+	std::istringstream istr(str);
+	istr >> t;
+}
+
 MyString resolveAssetsPath(const MyString& relativePath);
 void getWindowDimension(int& width, int& height);

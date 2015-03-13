@@ -54,9 +54,11 @@ void DmanManager::update(Timer& timer)
 	m_dman.update(timer);
 }
 
-void DmanManager::render(Camera& camera, Light& light)
+void DmanManager::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	m_dman.render(camera, &light);
+	for (auto i = m_listDmans.begin(); i != m_listDmans.end(); i++)
+		i->second->render(camera, spriteBatch);
 }
 
 int DmanManager::getNDman()

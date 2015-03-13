@@ -217,11 +217,11 @@ void PlayScreen::cloneDman()
 	if (m_dmanManager.getNDman() < 10)
 	{
 		Dman* dman1 = new Dman;
-		dman1->init(0, MyVec3(-50, 0, 0), MyVec3(0), MyVec3(0.7));
+		dman1->init(0, MyVec3(-5, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
 		m_dmanManager.insertDmanToList(dman1);
 
 		Dman* dman2 = new Dman;
-		dman2->init(1, MyVec3(50, 0, 0), MyVec3(0), MyVec3(0.7));
+		dman2->init(1, MyVec3(50, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
 		m_dmanManager.insertDmanToList(dman2);
 	}
 }
@@ -294,13 +294,13 @@ void PlayScreen::render(void* utilObjs)
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
 		m_player.render(m_camera_main, light);
-		m_dmanManager.render(m_camera_main, light);
+		m_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
 
 	{
 		static float health = 1.0f;
 		health *= 0.999f;
-		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer, health);
+		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer + MyVec3(-1, 2.5, 0), health);
 		//m_bloodbar_red.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer, health);
 	}
 }

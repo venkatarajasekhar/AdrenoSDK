@@ -203,6 +203,9 @@
     <ClCompile Include="Trooper.cpp" />
     <ClCompile Include="TrooperManager.cpp" />
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyInitFile.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

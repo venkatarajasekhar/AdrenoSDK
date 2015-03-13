@@ -26,6 +26,7 @@ typedef std::vector<UINT> UIntArray;
 typedef std::vector<float> FloatArray;
 
 typedef std::map<MyString, int> StringIntDictionary;
+typedef std::map<MyString, MyString> StringStringDictionary;
 
 //===========================================================================================================
 //

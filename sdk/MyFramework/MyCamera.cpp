@@ -87,3 +87,8 @@ void Camera::setEye(const MyVec3& eyeP)
 {
 	m_eyeP = eyeP;
 }
+
+void Camera::setLook(const MyVec3& lookV)
+{
+	m_lookV = lookV;
+}

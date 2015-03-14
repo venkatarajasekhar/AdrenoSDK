@@ -23,6 +23,7 @@ public:
 	// Setter
 
 	void setEye(const MyVec3& eyeP);
+	void setLook(const MyVec3& lookV);
 
 protected:
 	virtual void computeView();

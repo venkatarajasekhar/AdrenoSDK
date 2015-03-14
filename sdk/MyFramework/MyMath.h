@@ -67,7 +67,7 @@ T& operator>>(T& istr, MyVec3& vec)
 template <typename T>
 T& operator>>(T& istr, MyVec4& vec)
 {
-	istr >> vec.x >> vec.y >> vec.z >> vec.t;
+	istr >> vec.x >> vec.y >> vec.z >> vec.w;
 	return istr;
 }
 

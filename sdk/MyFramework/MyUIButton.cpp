@@ -18,5 +18,10 @@ void UIButton::init(const MyVec2& pos, Texture& texture)
 
 void UIButton::render(SpriteBatch& spriteBatch)
 {
+	if (m_status == HIDDEN)
+	{
+		return;
+	}
+
 	spriteBatch.renderTexture2D(*m_texture, m_pos, 0, MyVec2(1));
 }

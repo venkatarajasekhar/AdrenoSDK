@@ -129,6 +129,7 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyInputLayout.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyMesh.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyMiniMap.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyShader.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh2.cpp" />

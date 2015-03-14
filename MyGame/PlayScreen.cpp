@@ -92,15 +92,20 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/HUD.pak").c_str());
 
-		m_textures[TEXTURE_GREEN_FORE_BLOODBAR].init(resource.GetTexture("green_fore_bloodbar"));
-		m_textures[TEXTURE_GREEN_BACK_BLOODBAR].init(resource.GetTexture("green_back_bloodbar"));
-		m_textures[TEXTURE_RED_FORE_BLOODBAR].init(resource.GetTexture("red_fore_bloodbar"));
-		m_textures[TEXTURE_RED_BACK_BLOODBAR].init(resource.GetTexture("red_back_bloodbar"));
+		m_textures[TEXTURE_BLOODBAR_GREEN_FORE].init(resource.GetTexture("green_fore_bloodbar"));
+		m_textures[TEXTURE_BLOODBAR_GREEN_BACK].init(resource.GetTexture("green_back_bloodbar"));
+		m_textures[TEXTURE_BLOODBAR_RED_FORE].init(resource.GetTexture("red_fore_bloodbar"));
+		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("red_back_bloodbar"));
 	}
 
-	// Core objects
-	m_bloodbar_green.init(m_textures[TEXTURE_GREEN_FORE_BLOODBAR], m_textures[TEXTURE_GREEN_BACK_BLOODBAR]);
-	m_bloodbar_red.init(m_textures[TEXTURE_RED_FORE_BLOODBAR], m_textures[TEXTURE_RED_BACK_BLOODBAR]);
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/minimap.pak").c_str());
+
+		m_textures[TEXTURE_MINIMAP_BACKGROUND].init(resource.GetTexture("minimap"));
+		m_textures[TEXTURE_MINIMAP_CLOSE_BTN].init(resource.GetTexture("close_button"));
+		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("player"));
+	}
 
 	// Assets mesh 1 datas
 	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
@@ -132,13 +137,22 @@ void PlayScreen::init()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], resource);
 	}
 
+	// HUD objects
+	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
+	m_bloodbar_red.init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
+	m_miniMap.init(
+		m_textures[TEXTURE_MINIMAP_BACKGROUND],
+		m_textures[TEXTURE_MINIMAP_PLAYER],
+		m_textures[TEXTURE_MINIMAP_CLOSE_BTN],
+		MyVec3(),
+		MyVec2(100));
+
 	// Mesh objects
 	{
 		FlatTerrainProperties properties =
 		{
 			MyVec3(32.0f, 10.0f, 2.0f),
 			MyVec2(0.45f, 0.55f),
-			//MyVec2(1.0f, 1.0f),
 		};
 
 		m_mesh_terrain.init(
@@ -224,7 +238,11 @@ void PlayScreen::cloneTrooper()
 
 void PlayScreen::resize(int width, int height)
 {
+	// Core objects
 	m_camera_main.resize(width, height);
+
+	// HUD objects
+	m_miniMap.resize(width, height);
 }
 
 void PlayScreen::update(void* utilObjs)
@@ -232,30 +250,30 @@ void PlayScreen::update(void* utilObjs)
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	// Core objects
-
 	{
-		// Camera
+		/*
 		MyVec2 delta;
-		//MyVec3 eye;
+		MyVec3 eye;
 
 		// dpi-dependence
-		/*
 		float CAM_MOVE_FACTOR = 0.03F;
 		if (globalUtilObjs->userInput->pointer_Dragging(delta))
 		{
-		eye = m_camera_main.getEye();
-		eye.x -= delta.x * CAM_MOVE_FACTOR;
-		eye.z -= delta.y * CAM_MOVE_FACTOR;
-		m_camera_main.setEye(eye);
+			eye = m_camera_main.getEye();
+			eye.x -= delta.x * CAM_MOVE_FACTOR;
+			eye.z -= delta.y * CAM_MOVE_FACTOR;
+			m_camera_main.setEye(eye);
 		}
 		/**/
 		MyVec3 offset = MyVec3(0, 15, 15);
 		MyVec3 eye = PositionPlayer + offset;
 		m_camera_main.setEye(eye);
 
-
 		m_camera_main.update();
 	}
+
+	// HUD objects
+	m_miniMap.update(*globalUtilObjs->userInput);
 
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
@@ -280,6 +298,8 @@ void PlayScreen::render(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
+	// Mesh objects
+
 	m_mesh_terrain.render(m_camera_main);
 
 	{
@@ -295,9 +315,11 @@ void PlayScreen::render(void* utilObjs)
 		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
 
+	// HUD objects
 	{
 		static float health = 1.0f;
 		health *= 0.999f;
 		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer + MyVec3(-1, 2.5, 0), health);
 	}
+	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
 }

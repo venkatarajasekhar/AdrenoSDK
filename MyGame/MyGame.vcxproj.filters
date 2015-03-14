@@ -206,6 +206,9 @@
     <ClCompile Include="..\sdk\MyFramework\MyInitFile.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyMiniMap.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h" />

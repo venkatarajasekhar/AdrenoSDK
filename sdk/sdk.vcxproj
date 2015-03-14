@@ -102,6 +102,7 @@
     <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyInputLayout.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyMesh.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyMiniMap.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyShader.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyInputLayout.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyMesh.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyMiniMap.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyShader.h" />
     <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh1.h" />
     <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh2.h" />

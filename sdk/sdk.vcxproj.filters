@@ -111,6 +111,9 @@
     <ClCompile Include="MyFramework\MyInitFile.cpp">
       <Filter>MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyMiniMap.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="MyFramework\MyInitFile.h">
       <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyMiniMap.h">
+      <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

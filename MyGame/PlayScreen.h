@@ -5,6 +5,7 @@
 
 #include <MyPerspectiveCamera.h>
 #include <MyBloodBar.h>
+#include <MyMiniMap.h>
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
@@ -29,10 +30,13 @@ private:
 		TEXTURE_TERRAIN_DIFF_1,
 		TEXTURE_TERRAIN_DIFF_2,
 		TEXTURE_TERRAIN_BLEND,
-		TEXTURE_GREEN_FORE_BLOODBAR,
-		TEXTURE_GREEN_BACK_BLOODBAR,
-		TEXTURE_RED_FORE_BLOODBAR,
-		TEXTURE_RED_BACK_BLOODBAR,
+		TEXTURE_BLOODBAR_GREEN_FORE,
+		TEXTURE_BLOODBAR_GREEN_BACK,
+		TEXTURE_BLOODBAR_RED_FORE,
+		TEXTURE_BLOODBAR_RED_BACK,
+		TEXTURE_MINIMAP_BACKGROUND,
+		TEXTURE_MINIMAP_CLOSE_BTN,
+		TEXTURE_MINIMAP_PLAYER,
 		NUM_TEXTURES,
 	};
 
@@ -78,23 +82,28 @@ public:
 	void resize(int width, int height);
 	void update(void* utilObjs);
 	void render(void* utilObjs);
+
+private:
 	void cloneTrooper();
 
 private:
 
 	// Core objects
 	PerspectiveCamera m_camera_main;
+	
+	// Assets
+	Shader                  m_shaders[NUM_SHADERS];
+	Texture                 m_textures[NUM_TEXTURES];
+	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
+	Adreno::Model*          m_mesh1Datas[NUM_MESH_1_DATAS];
+	CFrmMesh                m_mesh2Datas[NUM_MESH_2_DATAS];
+	Adreno::Animation*      m_anim1Datas[NUM_ANIM_1_DATAS];
+	FRM_ANIMATION_SET*      m_anim2Datas[NUM_ANIM_2_DATAS];
+
+	// HUD objects
 	BloodBar m_bloodbar_green;
 	BloodBar m_bloodbar_red;
-
-	// Assets
-	Shader                     m_shaders[NUM_SHADERS];
-	Texture                    m_textures[NUM_TEXTURES];
-	SkinnedMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
-	Adreno::Model*             m_mesh1Datas[NUM_MESH_1_DATAS];
-	CFrmMesh                   m_mesh2Datas[NUM_MESH_2_DATAS];
-	Adreno::Animation*         m_anim1Datas[NUM_ANIM_1_DATAS];
-	FRM_ANIMATION_SET*         m_anim2Datas[NUM_ANIM_2_DATAS];
+	MiniMap  m_miniMap;
 
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;

@@ -2,7 +2,8 @@
 #include "MyUIWidget.h"
 
 UIWidget::UIWidget()
-	: m_isPressing(false)
+	: m_isPressing(false),
+	m_status(ACTIVE)
 {
 }
 
@@ -20,18 +21,23 @@ void UIWidget::update(UserInput& userInput)
 {
 	m_isPressing = false;
 
-	MyVec2 pos;
-	if (userInput.pointer_Releasing(pos))
+	if (m_status == ACTIVE)
 	{
-		float x = pos.x;
-		float y = pos.y;
-		if ((x >= m_pos.x) && (x <= m_pos.x + m_size.x) &&
-			(y >= m_pos.y) && (y <= m_pos.y + m_size.y))
+		MyVec2 pos;
+		if (userInput.pointer_Releasing(pos))
 		{
-			m_isPressing = true;
+			float x = pos.x;
+			float y = pos.y;
+			if ((x >= m_pos.x) && (x <= m_pos.x + m_size.x) &&
+				(y >= m_pos.y) && (y <= m_pos.y + m_size.y))
+			{
+				m_isPressing = true;
+			}
 		}
 	}
 }
+
+// Getter
 
 const MyVec2& UIWidget::getSize()const
 {
@@ -43,12 +49,19 @@ const MyVec2& UIWidget::getPos()const
 	return m_pos;
 }
 
+bool UIWidget::isPressing()const
+{
+	return (m_isPressing && (m_status == ACTIVE));
+}
+
+// Setter
+
 void UIWidget::setPos(const MyVec2& pos)
 {
 	m_pos = pos;
 }
 
-bool UIWidget::isPressing()const
+void UIWidget::setStatus(Status status)
 {
-	return m_isPressing;
+	m_status = status;
 }

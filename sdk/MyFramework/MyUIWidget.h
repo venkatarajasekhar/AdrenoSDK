@@ -7,6 +7,14 @@
 class UIWidget
 {
 public:
+	enum Status
+	{
+		ACTIVE,
+		INACTIVE,
+		HIDDEN,
+	};
+
+public:
 	UIWidget();
 	virtual ~UIWidget();
 
@@ -14,15 +22,22 @@ public:
 	virtual void update(UserInput& userInput);
 	virtual void render(SpriteBatch& spriteBatch) = 0;
 
+	// Getter
+
 	const MyVec2& getSize()const;
 	const MyVec2& getPos()const;
 
-	void setPos(const MyVec2& pos);
-
 	bool isPressing()const;
+
+	// Setter
+
+	void setPos(const MyVec2& pos);
+	void setStatus(Status status);
 
 protected:
 	MyVec2 m_pos;
 	MyVec2 m_size;
 	bool m_isPressing;
+
+	Status m_status;
 };

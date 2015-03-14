@@ -58,7 +58,16 @@ void ScreenManager::addScreen(const MyString& id, Screen* screen)
 void ScreenManager::activeScreen(const MyString& id)
 {
 	m_activeScreen = getScreen(id);
-	m_justActiveScreen = true;
+
+	if (m_activeScreen != nullptr)
+	{
+		int width, height;
+		getWindowDimension(width, height);
+
+		m_activeScreen->resize(width, height);
+
+		m_justActiveScreen = true;
+	}
 }
 
 Screen* ScreenManager::getScreen(const MyString& id)

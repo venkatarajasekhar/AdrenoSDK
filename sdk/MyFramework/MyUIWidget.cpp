@@ -13,8 +13,8 @@ UIWidget::~UIWidget()
 
 void UIWidget::init(const MyVec2& pos, const MyVec2& size)
 {
-	m_pos = pos;
-	m_size = size;
+	m_rect.Pos = pos;
+	m_rect.Size = size;
 }
 
 void UIWidget::update(UserInput& userInput)
@@ -26,13 +26,7 @@ void UIWidget::update(UserInput& userInput)
 		MyVec2 pos;
 		if (userInput.pointer_Releasing(pos))
 		{
-			float x = pos.x;
-			float y = pos.y;
-			if ((x >= m_pos.x) && (x <= m_pos.x + m_size.x) &&
-				(y >= m_pos.y) && (y <= m_pos.y + m_size.y))
-			{
-				m_isPressing = true;
-			}
+			m_isPressing = isInside(pos, m_rect);
 		}
 	}
 }
@@ -41,12 +35,12 @@ void UIWidget::update(UserInput& userInput)
 
 const MyVec2& UIWidget::getSize()const
 {
-	return m_size;
+	return m_rect.Size;
 }
 
 const MyVec2& UIWidget::getPos()const
 {
-	return m_pos;
+	return m_rect.Pos;
 }
 
 bool UIWidget::isPressing()const
@@ -58,7 +52,7 @@ bool UIWidget::isPressing()const
 
 void UIWidget::setPos(const MyVec2& pos)
 {
-	m_pos = pos;
+	m_rect.Pos = pos;
 }
 
 void UIWidget::setStatus(Status status)

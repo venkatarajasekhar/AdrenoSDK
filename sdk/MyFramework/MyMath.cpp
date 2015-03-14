@@ -173,6 +173,16 @@ MyMat4 createScaleMatrix(const MyVec3& scale)
 //
 //===========================================================================================================
 
+bool isInside(const MyVec2& point, const Rect2D& rect)
+{
+	return (
+		(point.x >= rect.Pos.x) && 
+		(point.x <= rect.Pos.x + rect.Size.x) &&
+		(point.y >= rect.Pos.y) && 
+		(point.y <= rect.Pos.y + rect.Size.y)
+		);
+}
+
 float distance(const MyVec3& p1, const MyVec3& p2)
 {
 	return glm::distance(p1, p2);

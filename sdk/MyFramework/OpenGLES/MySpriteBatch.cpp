@@ -55,13 +55,21 @@ MyVec2 SpriteBatch::convertToWorld(const MyVec2& screenPos)
 
 void SpriteBatch::renderTexture2D(Texture& texture, const MyVec2& pos, float rot, const MyVec2& scale)
 {
-	float spriteW = scale.x * texture.getWidth();
-	float spriteH = scale.y * texture.getHeight();
+	Rect2D dest = 
+	{
+		pos,
+		MyVec2(scale.x * texture.getWidth(), scale.y * texture.getHeight())
+	};
 
-	MyVec2 pos2 = convertToWorld(pos);
-	MyVec3 pos3 = MyVec3(pos2.x + spriteW / 2.0f, pos2.y - spriteH / 2.0f, 0);
+	renderTexture2D(texture, dest, rot);
+}
+
+void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, float rot)
+{
+	MyVec2 pos2 = convertToWorld(dest.Pos);
+	MyVec3 pos3 = MyVec3(pos2.x + dest.Size.x / 2.0f, pos2.y - dest.Size.y / 2.0f, 0);
 	MyVec3 rot3 = MyVec3(0, 0, -rot);
-	MyVec3 scale3 = MyVec3(spriteW, spriteH, 1);
+	MyVec3 scale3 = MyVec3(dest.Size.x, dest.Size.y, 1);
 
 	m_squad.setPos(pos3);
 	m_squad.setRot(rot3);

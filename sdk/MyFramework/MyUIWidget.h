@@ -35,8 +35,7 @@ public:
 	void setStatus(Status status);
 
 protected:
-	MyVec2 m_pos;
-	MyVec2 m_size;
+	Rect2D m_rect;
 	bool m_isPressing;
 
 	Status m_status;

@@ -44,6 +44,19 @@ struct Plane
 	MyVec3 Normal;
 };
 
+struct Rect2D
+{
+	Rect2D(){}
+	Rect2D(MyVec2 _pos, MyVec2 _size)
+		: Pos(_pos),
+		Size(_size)
+	{
+	}
+
+	MyVec2 Pos;
+	MyVec2 Size;
+};
+
 //===========================================================================================================
 //
 // IO functions
@@ -172,6 +185,8 @@ MyMat4 createScaleMatrix(const MyVec3& scale);
 // Geometric functions
 //
 //===========================================================================================================
+
+bool isInside(const MyVec2& point, const Rect2D& rect);
 
 float distance(const MyVec3& p1, const MyVec3& p2);
 MyVec3 intersect(const Ray& ray, const Plane& plane);

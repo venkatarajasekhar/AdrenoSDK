@@ -6,6 +6,7 @@
 #include <MyPerspectiveCamera.h>
 #include <MyBloodBar.h>
 #include <MyMiniMap.h>
+#include <MySpriteSheet.h>
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
@@ -37,6 +38,7 @@ private:
 		TEXTURE_MINIMAP_BACKGROUND,
 		TEXTURE_MINIMAP_CLOSE_BTN,
 		TEXTURE_MINIMAP_PLAYER,
+		TEXTURE_SPRITE_SHEET_DUMP,
 		NUM_TEXTURES,
 	};
 
@@ -104,6 +106,7 @@ private:
 	BloodBar m_bloodbar_green;
 	BloodBar m_bloodbar_red;
 	MiniMap  m_miniMap;
+	SpriteSheet m_spriteSheet_dump;
 
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;

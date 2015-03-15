@@ -107,6 +107,13 @@ void PlayScreen::init()
 		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("player"));
 	}
 
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheets.pak").c_str());
+
+		m_textures[TEXTURE_SPRITE_SHEET_DUMP].init(resource.GetTexture("runningcat"));
+	}
+
 	// Assets mesh 1 datas
 	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/india_tower_of_victory.model").c_str());
@@ -146,6 +153,7 @@ void PlayScreen::init()
 		m_textures[TEXTURE_MINIMAP_CLOSE_BTN],
 		MyVec3(),
 		MyVec2(100));
+	m_spriteSheet_dump.init(m_textures[TEXTURE_SPRITE_SHEET_DUMP], 10, MyIVec2(2, 4), MyIVec2(512, 256));
 
 	// Mesh objects
 	{
@@ -274,6 +282,7 @@ void PlayScreen::update(void* utilObjs)
 
 	// HUD objects
 	m_miniMap.update(*globalUtilObjs->userInput);
+	m_spriteSheet_dump.update(*globalUtilObjs->timer);
 
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
@@ -322,4 +331,5 @@ void PlayScreen::render(void* utilObjs)
 		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer + MyVec3(-1, 2.5, 0), health);
 	}
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
+	m_spriteSheet_dump.render2D(*globalUtilObjs->spriteBatch, MyVec2(100));
 }

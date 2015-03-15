@@ -107,6 +107,7 @@
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySpriteBatch.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MySpriteSheet.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyTexture.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyVertex.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh1.h" />
     <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh2.h" />
     <ClInclude Include="MyFramework\OpenGLES\MySpriteBatch.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MySpriteSheet.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyTexture.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyVertex.h" />
     <ClInclude Include="MyFramework\Win32\MyGameServer.h" />

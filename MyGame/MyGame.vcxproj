@@ -134,6 +134,7 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteBatch.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteSheet.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyTexture.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp" />

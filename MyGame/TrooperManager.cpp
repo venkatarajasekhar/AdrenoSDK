@@ -66,7 +66,7 @@ void TrooperManager::update(Timer& timer)
 			if (i->second->getIsDeleted() == true)
 			{
 
-				m_trooper.removeInstance(i->second->m_instance);
+				m_trooper.removeInstance(i->second->getTrooper());
 				removeTrooperFromList(i->second);
 			}
 
@@ -106,4 +106,23 @@ void TrooperManager::render(Camera& camera, Light& light, SpriteBatch& spriteBat
 int TrooperManager::getNTrooper()
 {
 	return m_listTroopers.size();
+}
+
+Trooper* TrooperManager::getTrooperById(int id)
+{
+	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
+		if (i->second->getId() == id)
+		{
+			return i->second;
+		}
+}
+
+int TrooperManager::getIdTrooperToBeat(MyVec3 positionPlayer)
+{
+	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
+		if (distance(positionPlayer, i->second->getTrooper()->Position) < 2.0f)
+		{
+			return i->second->getId();
+		}
+	return -1;
 }

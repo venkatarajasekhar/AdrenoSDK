@@ -5,11 +5,11 @@
 #include <MyTexture.h>
 #include <MyBloodBar.h>
 
-const int MaxHealth = 1000;
+const int MaxHealth = 100;
 
 class Trooper
 {
-public:
+private:
 	SkinnedMesh2::Instance* m_instance;
 	EnemyAI m_ai;
 	BloodBar* m_bloodBar;

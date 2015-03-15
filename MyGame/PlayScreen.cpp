@@ -325,5 +325,5 @@ void PlayScreen::render(void* utilObjs)
 	}
 		
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
-	m_spriteSheet_dump.render2D(*globalUtilObjs->spriteBatch, MyVec2(100));
+	//m_spriteSheet_dump.render2D(*globalUtilObjs->spriteBatch, MyVec2(100));
 }

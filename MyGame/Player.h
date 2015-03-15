@@ -17,6 +17,7 @@ private:
 	MyVec3 m_direction = MyVec3(0, 0, 0);
 	int m_health;
 	int m_dam;
+	float m_countTime = 0;
 public:
 
 	void init(

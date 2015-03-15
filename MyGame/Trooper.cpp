@@ -33,8 +33,6 @@ void Trooper::update(Timer& timer)
 	m_ai.update(timer);
 	copyAllProperties();
 	PositionTrooper = m_instance->Position;
-	
-	m_health -= 1;
 
 	/*float e = 0.1f;
 	if (m_type == 0)

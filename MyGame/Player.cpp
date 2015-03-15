@@ -21,7 +21,7 @@ void Player::init(
 	};
 
 	m_health = MaxHealthPlayer;
-	m_dam = 70;
+	m_dam = 20;
 	m_pointTouch = pos;
 
 	{
@@ -79,8 +79,15 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 		int id = findTrooperToBeat();
 		if (id != -1)
 		{
-			rotatePlayer(g_dmanManager.m_listTroopers[id]->m_instance->Position);
+			rotatePlayer(g_dmanManager.getTrooperById(id)->getTrooper()->Position);
 			m_instance->CurrentAction = "Beat";
+			m_countTime += timer.getElapsedTime();
+			if (m_countTime >= 1.5)
+			{
+				Trooper* trooper = g_dmanManager.getTrooperById(id);
+				trooper->setHealth(trooper->getHealth() - m_dam);
+				m_countTime = 0;
+			}
 		}
 	}
 	m_instance->Position = position; 
@@ -92,12 +99,13 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 int Player::findTrooperToBeat()
 {
 	MyVec3 position = m_instance->Position;
-	for (auto i = g_dmanManager.m_listTroopers.begin(); i != g_dmanManager.m_listTroopers.end(); i++)
+	int idTrooper = g_dmanManager.getIdTrooperToBeat(position);
+	/*for (auto i = g_dmanManager.m_listTroopers.begin(); i != g_dmanManager.m_listTroopers.end(); i++)
 		if (distance(position, i->second->m_instance->Position) < 2.0f)
 		{
 			return i->second->m_id;
-		}
-	return -1;
+		}*/
+	return idTrooper;
 }
 
 void Player::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)

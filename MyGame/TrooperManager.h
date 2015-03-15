@@ -5,7 +5,7 @@
 
 class TrooperManager
 {
-public:
+private:
 	SkinnedMesh2 m_trooper;
 	std::map<int, Trooper*> m_listTroopers;
 public:
@@ -21,4 +21,6 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light, SpriteBatch& spriteBatch);
 	int getNTrooper();
+	Trooper* getTrooperById(int id);
+	int getIdTrooperToBeat(MyVec3 positionPlayer);
 };

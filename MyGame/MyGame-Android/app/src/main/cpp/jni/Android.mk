@@ -77,6 +77,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh2.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySpriteBatch.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MySpriteSheet.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyTexture.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyUtilsGLES.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \

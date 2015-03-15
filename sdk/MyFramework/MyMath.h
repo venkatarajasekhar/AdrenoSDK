@@ -19,6 +19,10 @@ typedef glm::vec2 MyVec2;
 typedef glm::vec3 MyVec3;
 typedef glm::vec4 MyVec4;
 
+typedef glm::highp_ivec2 MyIVec2;
+typedef glm::highp_ivec3 MyIVec3;
+typedef glm::highp_ivec4 MyIVec4;
+
 typedef glm::mat3 MyMat3;
 typedef glm::mat4 MyMat4;
 

@@ -10,7 +10,8 @@ void Player::init(
 	Shader& shader,
 	const MyVec3& pos,
 	const MyVec3& rot,
-	const MyVec3& scale)
+	const MyVec3& scale,
+	BloodBar* bloodBar)
 {
 	std::map<MyString, SkinnedMesh2::AnimAction> animationPose =
 	{
@@ -19,7 +20,7 @@ void Player::init(
 		{ "Beat", { 3.5f, 7.3f } }, // Beat
 	};
 
-	m_helth = 5000;
+	m_health = MaxHealthPlayer;
 	m_dam = 70;
 	m_pointTouch = pos;
 
@@ -38,6 +39,7 @@ void Player::init(
 		m_player.addInstance(m_instance);
 	}
 
+	m_bloodBar = bloodBar;
 }
 
 void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
@@ -98,9 +100,10 @@ int Player::findTrooperToBeat()
 	return -1;
 }
 
-void Player::render(Camera& camera, Light& light)
+void Player::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	m_player.render(camera, &light);
+	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health / (float)MaxHealthPlayer);
 }
 
 void Player::rotatePlayer(MyVec3 pointDestination)
@@ -126,14 +129,14 @@ void Player::rotatePlayer(MyVec3 pointDestination)
 	m_instance->Rotation.y = angle - 10;
 }
 
-void Player::setHelth(int helth)
+void Player::setHealth(int helth)
 {
-	m_helth = helth;
+	m_health = helth;
 }
 
-int Player::getHelth()
+int Player::getHealth()
 {
-	return m_helth;
+	return m_health;
 }
 
 void Player::setDam(int dam)

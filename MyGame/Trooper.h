@@ -5,7 +5,7 @@
 #include <MyTexture.h>
 #include <MyBloodBar.h>
 
-const int MaxHealth = 100;
+const int MaxHealth = 1000;
 
 class Trooper
 {

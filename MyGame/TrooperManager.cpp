@@ -44,9 +44,51 @@ void TrooperManager::removeTrooperFromList(Trooper* trooper)
 
 void TrooperManager::update(Timer& timer)
 {
+	auto i = m_listTroopers.end();
+	if (i != m_listTroopers.begin())
+	{
+		i--;
+		while (true)
+		{
+			bool flag = false;
+			std::map<int, Trooper*>::iterator j;
+
+			if (i == m_listTroopers.begin())
+			{
+				flag = true;
+			}
+			else
+			{
+				j = i;
+				j--;
+			}
+
+			if (i->second->getIsDeleted() == true)
+			{
+
+				m_trooper.removeInstance(i->second->m_instance);
+				removeTrooperFromList(i->second);
+			}
+
+			if (flag)
+			{
+				break;
+			}
+			else
+			{
+				i = j;
+			}
+		}
+	}
+	
+	/*
 	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
 		if (i->second->getIsDeleted() == true)
+		{
+			m_trooper.removeInstance(i->second->m_instance);
 			removeTrooperFromList(i->second);
+		}
+	/**/
 
 	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
 		i->second->update(timer);

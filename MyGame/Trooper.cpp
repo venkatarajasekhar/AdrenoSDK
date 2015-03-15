@@ -34,6 +34,8 @@ void Trooper::update(Timer& timer)
 	copyAllProperties();
 	PositionTrooper = m_instance->Position;
 	
+	m_health -= 1;
+
 	/*float e = 0.1f;
 	if (m_type == 0)
 	{
@@ -48,9 +50,9 @@ void Trooper::update(Timer& timer)
 		{
 			m_isDeleted = true;
 		}
-	}
+	}*/
 
-	if (m_health <= 0) m_isDeleted = true;*/
+	if (m_health <= 0) m_isDeleted = true;
 }
 
 void Trooper::copyAllProperties()

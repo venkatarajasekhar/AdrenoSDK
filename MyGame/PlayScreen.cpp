@@ -208,7 +208,7 @@ void PlayScreen::init()
 		m_player.init(m_mesh2Datas[MESH_2_DATA_BOY],
 			m_anim2Datas[ANIM_2_DATA_BOY],
 			resource,
-			m_shaders[SHADER_SKINNED_MESH_2], MyVec3(0), MyVec3(0), MyVec3(1));
+			m_shaders[SHADER_SKINNED_MESH_2], MyVec3(0), MyVec3(0), MyVec3(1), &m_bloodbar_green);
 	}
 
 	{
@@ -310,16 +310,10 @@ void PlayScreen::render(void* utilObjs)
 
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
-		m_player.render(m_camera_main, light);
+		m_player.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		g_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
-
-	// HUD objects
-	{
-		static float health = 1.0f;
-		health *= 0.999f;
-		m_bloodbar_green.render(*globalUtilObjs->spriteBatch, m_camera_main, PositionPlayer + MyVec3(-1, 2.5, 0), health);
-	}
+		
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
 }

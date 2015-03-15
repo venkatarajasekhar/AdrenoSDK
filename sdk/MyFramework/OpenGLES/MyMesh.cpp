@@ -113,6 +113,19 @@ void Mesh::addInstance(Instance* instance)
 	m_instances.push_back(instance);
 }
 
+void Mesh::removeInstance(Instance* instance)
+{
+	for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
+	{
+		if (*i == instance)
+		{
+			m_instances.erase(i);
+			delete instance;
+			break;
+		}
+	}
+}
+
 void Mesh::enableLighting()
 {
 	m_lightingEnabled = true;

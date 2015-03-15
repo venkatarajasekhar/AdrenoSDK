@@ -17,7 +17,7 @@ public:
 	MyVec2 convertToWorld(const MyVec2& screenPos);
 
 	void renderTexture2D(Texture& texture, const MyVec2& pos, float rot = 0.0f, const MyVec2& scale = MyVec2(1.0f));
-	void renderTexture2D(Texture& texture, const Rect2D& dest, float rot = 0.0f);
+	void renderTexture2D(Texture& texture, const Rect2D& dest, const Rect2D* src = nullptr, float rot = 0.0f);
 
 private:
 	Camera2D m_camera2D;

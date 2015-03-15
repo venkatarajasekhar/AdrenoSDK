@@ -61,11 +61,12 @@ void SpriteBatch::renderTexture2D(Texture& texture, const MyVec2& pos, float rot
 		MyVec2(scale.x * texture.getWidth(), scale.y * texture.getHeight())
 	};
 
-	renderTexture2D(texture, dest, rot);
+	renderTexture2D(texture, dest, nullptr, rot);
 }
 
-void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, float rot)
+void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, const Rect2D* src, float rot)
 {
+	// Compute transformation of texture mesh
 	MyVec2 pos2 = convertToWorld(dest.Pos);
 	MyVec3 pos3 = MyVec3(pos2.x + dest.Size.x / 2.0f, pos2.y - dest.Size.y / 2.0f, 0);
 	MyVec3 rot3 = MyVec3(0, 0, -rot);
@@ -76,6 +77,22 @@ void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, float ro
 	m_squad.setScale(scale3);
 	m_squad.setDiffuseMap(&texture);
 
+	// Compute transformation of texture coordinate
+	Rect2D defaultRect(MyVec2(0), MyVec2(texture.getWidth(), texture.getHeight()));
+	if (src == nullptr) src = &defaultRect;
+
+	float x = src->Pos.x, y = src->Pos.y;
+	float w = src->Size.x, h = src->Size.y;
+	float wt = texture.getWidth(), ht = texture.getHeight();
+
+	MyMat4 mat = createTranslationMatrix(MyVec3(x / wt, y / ht, 0.0f));
+	mat *= createScaleMatrix(MyVec3(w / wt, h / ht, 1.0f));
+
+	Shader* shader = m_squad.getShader();
+	shader->apply();
+	shader->setUniform("u_texMat", mat);
+
+	// Render texture
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);

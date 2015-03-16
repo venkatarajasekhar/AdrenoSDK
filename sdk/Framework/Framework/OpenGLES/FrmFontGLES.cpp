@@ -332,6 +332,7 @@ VOID CFrmFontGLES::Begin()
 // Name: DrawText()
 // Desc: 
 //--------------------------------------------------------------------------------------
+/*
 VOID CFrmFontGLES::DrawText( FLOAT32 sx, FLOAT32 sy, FRMCOLOR nColor, const CHAR* strText,
                          UINT32 nFlags )
 {
@@ -450,7 +451,102 @@ VOID CFrmFontGLES::DrawText( FLOAT32 sx, FLOAT32 sy, FRMCOLOR nColor, const CHAR
         
     End();
 }
+/**/
 
+VOID CFrmFontGLES::DrawText(FLOAT32 sx, FLOAT32 sy, FRMCOLOR nColor, const CHAR* strText,
+	UINT32 nFlags)
+{
+	Begin();
+
+	sx = FrmFloor(sx);
+	sy = FrmFloor(sy);
+
+	if (sx < 0.0f) sx += (FLOAT32)m_nViewportWidth;
+	if (sy < 0.0f) sy += (FLOAT32)m_nViewportHeight - (FLOAT32)m_nGlyphHeight;
+
+	FLOAT32 fOriginX = sx;
+	FLOAT32 fOriginY = sy;
+
+	FRMCOLOR nWhiteColor = 0x00ffffff | (0xff000000 & nColor.v);
+
+	if (nFlags & FRM_FONT_RIGHT)
+		sx -= GetTextWidth(strText);
+	if (nFlags & FRM_FONT_CENTER)
+		sx -= GetTextWidth(strText) / 2;
+
+	// Set the geoemtry
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+
+	glEnableVertexAttribArray(m_locVertexPos);
+	glEnableVertexAttribArray(m_locVertexColor);
+	glEnableVertexAttribArray(m_locVertexTex);
+
+	while (*strText)
+	{
+		BYTE ch = *((BYTE*)strText);
+		strText++;
+
+		if (ch == '\n')
+		{
+			sx = fOriginX;
+			sy += m_fScaleX * m_nGlyphHeight;
+
+			if (nFlags & FRM_FONT_RIGHT)
+				sx -= (FLOAT32)GetTextWidth(strText);
+
+			if (nFlags & FRM_FONT_CENTER)
+				sx -= (FLOAT32)GetTextWidth(strText) / 2;
+
+			continue;
+		}
+
+		FRM_FONT_GLYPH_GLES* pGlyph = &m_pGlyphsGLES[ch];
+		sx += m_fScaleX * pGlyph->nOffset;
+
+		FLOAT32 w = m_fScaleX * (pGlyph->u1 - pGlyph->u0);
+		FLOAT32 h = m_fScaleY * (pGlyph->v1 - pGlyph->v0);
+
+		struct FRM_FONT_VERTEX
+		{
+			FLOAT32 sx, sy;
+			UINT32  nColor;
+			INT16   tu, tv;
+		};
+
+		UINT32 nGlyphColor = (ch >= 128 && ch < 160) ? nWhiteColor.v : nColor.v;
+
+		FRM_FONT_VERTEX vQuad[4] =
+		{
+			{ sx + 0, sy + 0, nGlyphColor, pGlyph->u0, pGlyph->v0 },
+			{ sx + 0, sy + h, nGlyphColor, pGlyph->u0, pGlyph->v1 },
+			{ sx + w, sy + h, nGlyphColor, pGlyph->u1, pGlyph->v1 },
+			{ sx + w, sy + 0, nGlyphColor, pGlyph->u1, pGlyph->v0 },
+		};
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(FRM_FONT_VERTEX) * 4, vQuad, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(m_locVertexPos, 2, GL_FLOAT, FALSE, sizeof(FRM_FONT_VERTEX), 0);
+		glVertexAttribPointer(m_locVertexColor, 4, GL_UNSIGNED_BYTE, TRUE, sizeof(FRM_FONT_VERTEX), (void*)8);
+		glVertexAttribPointer(m_locVertexTex, 2, GL_SHORT, FALSE, sizeof(FRM_FONT_VERTEX), (void*)12);
+
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+		sx += m_fScaleX * pGlyph->nAdvance;
+	}
+
+	glDisableVertexAttribArray(m_locVertexPos);
+	glDisableVertexAttribArray(m_locVertexColor);
+	glDisableVertexAttribArray(m_locVertexTex);
+
+	glDeleteBuffers(1, &vbo);
+
+	m_fCursorX = sx;
+	m_fCursorY = sy;
+
+	End();
+}
 
 //--------------------------------------------------------------------------------------
 // Name: End()

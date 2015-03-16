@@ -70,6 +70,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBloodBar.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFileMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFlatTerrain.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MyFont.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyInputLayout.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyMesh.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyMiniMap.cpp \

@@ -100,6 +100,7 @@
     <ClCompile Include="MyFramework\OpenGLES\MyBloodBar.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyFileMesh1.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyFont.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyInputLayout.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyMesh.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyMiniMap.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="MyFramework\OpenGLES\MyBloodBar.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyFileMesh1.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyFont.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyInputLayout.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyMesh.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyMiniMap.h" />

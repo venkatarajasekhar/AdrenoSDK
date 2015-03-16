@@ -117,6 +117,9 @@
     <ClCompile Include="MyFramework\OpenGLES\MySpriteSheet.cpp">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyFont.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -210,6 +213,9 @@
       <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\OpenGLES\MySpriteSheet.h">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyFont.h">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
   </ItemGroup>

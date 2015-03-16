@@ -223,7 +223,7 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
 
-		g_dmanManager.init(m_mesh2Datas[MESH_2_DATA_DMAN],
+		g_dmanManager.init(g_dman, m_mesh2Datas[MESH_2_DATA_DMAN],
 			m_anim2Datas[ANIM_2_DATA_DMAN],
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2]);
@@ -235,11 +235,11 @@ void PlayScreen::cloneTrooper()
 	if (g_dmanManager.getNTrooper() < 5)
 	{
 		Trooper* dman = new Trooper;
-		dman->init(0, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
+		dman->init(g_dman, 0, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
 		g_dmanManager.insertTrooperToList(dman);
 
 		Trooper* scorpion = new Trooper;
-		scorpion->init(1, MyVec3(20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
+		scorpion->init(g_dman, 1, MyVec3(20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
 		g_dmanManager.insertTrooperToList(scorpion);
 	}
 }

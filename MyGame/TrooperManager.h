@@ -6,12 +6,14 @@
 class TrooperManager
 {
 private:
+	int m_type;
 	SkinnedMesh2 m_trooper;
 	std::map<int, Trooper*> m_listTroopers;
 public:
 	TrooperManager();
 	~TrooperManager();
 	void init(
+		int type,
 		CFrmMesh& mesh,
 		FRM_ANIMATION_SET* animationSet,
 		CFrmPackedResourceGLES& resource,
@@ -23,4 +25,5 @@ public:
 	int getNTrooper();
 	Trooper* getTrooperById(int id);
 	int getIdTrooperToBeat(MyVec3 positionPlayer);
+	bool checkTrooperCanMove(MyVec3 positionTrooper, int type);
 };

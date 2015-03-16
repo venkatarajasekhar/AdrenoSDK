@@ -100,11 +100,6 @@ int Player::findTrooperToBeat()
 {
 	MyVec3 position = m_instance->Position;
 	int idTrooper = g_dmanManager.getIdTrooperToBeat(position);
-	/*for (auto i = g_dmanManager.m_listTroopers.begin(); i != g_dmanManager.m_listTroopers.end(); i++)
-		if (distance(position, i->second->m_instance->Position) < 2.0f)
-		{
-			return i->second->m_id;
-		}*/
 	return idTrooper;
 }
 

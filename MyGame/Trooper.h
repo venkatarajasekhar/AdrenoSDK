@@ -15,6 +15,7 @@ private:
 	BloodBar* m_bloodBar;
 	int m_id;
 	int m_type;
+	int m_team;
 	int m_health;
 	int m_dam;
 	static int m_numIDs;
@@ -23,6 +24,7 @@ public:
 	Trooper();
 	void init(
 		int type,
+		int team,
 		const MyVec3& pos,
 		const MyVec3& rot,
 		const MyVec3& scale,

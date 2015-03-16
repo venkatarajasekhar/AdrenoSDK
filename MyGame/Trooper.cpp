@@ -1,6 +1,6 @@
+#include "Global.h"
 #include "Trooper.h"
 
-extern MyVec3 PositionTrooper;
 int Trooper::m_numIDs = 0;
 
 Trooper::Trooper()
@@ -13,12 +13,14 @@ Trooper::Trooper()
 
 void Trooper::init(
 	int type,
+	int team,
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
 	BloodBar* bloodBar)
 {
 	m_type = type;
+	m_team = team;
 	m_bloodBar = bloodBar;
 	//m_bloodBar.init(tex2DShader, tex2D);
 	m_instance = SkinnedMesh2::buildSkinnedMeshInstance(pos, rot, scale, "");
@@ -32,7 +34,6 @@ void Trooper::update(Timer& timer)
 	m_ai.m_pos = m_instance->Position;
 	m_ai.update(timer);
 	copyAllProperties();
-	PositionTrooper = m_instance->Position;
 
 	/*float e = 0.1f;
 	if (m_type == 0)
@@ -55,7 +56,9 @@ void Trooper::update(Timer& timer)
 
 void Trooper::copyAllProperties()
 {
-	m_instance->Position = m_ai.m_pos;
+	if (g_dmanManager.checkTrooperCanMove(m_ai.m_pos, m_type))
+		m_instance->Position = m_ai.m_pos;
+	else m_ai.m_pos = m_instance->Position;
 	m_instance->Rotation = MyVec3(0, m_ai.m_angle, 0);
 	m_instance->Scale = m_ai.m_scale;
 

@@ -234,3 +234,14 @@ Ray createRayInWorld(const MyVec2& screenPos, int w, int h, const MyMat4& view, 
 
 	return{ P1 - P0, P0 };
 }
+
+//===========================================================================================================
+//
+// 2 point contact
+//
+//===========================================================================================================
+
+bool twoPointIsContact(MyVec3 point1, MyVec3 point2, float r)
+{
+	return ((fabs(point1.x - point2.x) < r) && (fabs(point1.y - point2.y) < r) && (fabs(point1.z - point2.z) < r));
+}

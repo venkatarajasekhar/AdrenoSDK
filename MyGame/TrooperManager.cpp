@@ -11,11 +11,14 @@ TrooperManager::~TrooperManager()
 }
 
 void TrooperManager::init(
+	int type,
 	CFrmMesh& mesh,
 	FRM_ANIMATION_SET* animationSet,
 	CFrmPackedResourceGLES& resource,
 	Shader& shader)
 {
+	m_type = type;
+
 	Material material;
 
 	material.Ambient = MyVec3(0.1f, 0.1f, 0.1f);
@@ -80,15 +83,6 @@ void TrooperManager::update(Timer& timer)
 			}
 		}
 	}
-	
-	/*
-	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
-		if (i->second->getIsDeleted() == true)
-		{
-			m_trooper.removeInstance(i->second->m_instance);
-			removeTrooperFromList(i->second);
-		}
-	/**/
 
 	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
 		i->second->update(timer);
@@ -125,4 +119,27 @@ int TrooperManager::getIdTrooperToBeat(MyVec3 positionPlayer)
 			return i->second->getId();
 		}
 	return -1;
+}
+
+bool TrooperManager::checkTrooperCanMove(MyVec3 positionTrooper, int type)
+{
+	if (type != m_type)
+	{
+		for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
+			if (twoPointIsContact(positionTrooper, i->second->getTrooper()->Position, 1))
+				return false;
+	}
+	else
+	{
+		int count = 0;
+		for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
+			if (twoPointIsContact(positionTrooper, i->second->getTrooper()->Position, 1))
+			{
+				count++;
+				if (count == 2)
+					return false;
+			}
+	}
+
+	return true;
 }

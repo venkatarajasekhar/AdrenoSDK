@@ -97,6 +97,7 @@
     <ClCompile Include="MyFramework\MyUIWidget.cpp" />
     <ClCompile Include="MyFramework\MyUtils.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyBasicMesh.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyBillboard.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyBloodBar.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyFileMesh1.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="MyFramework\MyUIWidget.h" />
     <ClInclude Include="MyFramework\MyUtils.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyBillboard.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyBloodBar.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyFileMesh1.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h" />

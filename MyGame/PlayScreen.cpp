@@ -111,7 +111,7 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheets.pak").c_str());
 
-		m_textures[TEXTURE_SPRITE_SHEET_DUMP].init(resource.GetTexture("runningcat"));
+		m_textures[TEXTURE_SPRITE_SHEET_DUMP].init(resource.GetTexture("fireball"));
 	}
 
 	// Assets mesh 1 datas
@@ -153,7 +153,7 @@ void PlayScreen::init()
 		m_textures[TEXTURE_MINIMAP_CLOSE_BTN],
 		MyVec3(),
 		MyVec2(100));
-	m_spriteSheet_dump.init(m_textures[TEXTURE_SPRITE_SHEET_DUMP], 10, MyIVec2(2, 4), MyIVec2(512, 256));
+	m_spriteSheet_dump.init(m_textures[TEXTURE_SPRITE_SHEET_DUMP], 10, MyIVec2(3, 2), MyIVec2(128, 128));
 
 	// Mesh objects
 	{
@@ -325,5 +325,5 @@ void PlayScreen::render(void* utilObjs)
 	}
 		
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
-	//m_spriteSheet_dump.render2D(*globalUtilObjs->spriteBatch, MyVec2(100));
+	m_spriteSheet_dump.render2D(*globalUtilObjs->spriteBatch, MyVec2(100), -45);
 }

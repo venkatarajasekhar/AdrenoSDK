@@ -38,8 +38,13 @@ private:
 		TEXTURE_MINIMAP_BACKGROUND,
 		TEXTURE_MINIMAP_CLOSE_BTN,
 		TEXTURE_MINIMAP_PLAYER,
-		TEXTURE_SPRITE_SHEET_DUMP,
 		NUM_TEXTURES,
+	};
+
+	enum
+	{
+		SPRITE_SHEET_DUMP,
+		NUM_SPRITE_SHEETS,
 	};
 
 	enum
@@ -96,6 +101,7 @@ private:
 	// Assets
 	Shader                  m_shaders[NUM_SHADERS];
 	Texture                 m_textures[NUM_TEXTURES];
+	SpriteSheet             m_spriteSheets[NUM_SPRITE_SHEETS];
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
 	Adreno::Model*          m_mesh1Datas[NUM_MESH_1_DATAS];
 	CFrmMesh                m_mesh2Datas[NUM_MESH_2_DATAS];
@@ -106,7 +112,6 @@ private:
 	BloodBar m_bloodbar_green;
 	BloodBar m_bloodbar_red;
 	MiniMap  m_miniMap;
-	SpriteSheet m_spriteSheet_dump;
 
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;

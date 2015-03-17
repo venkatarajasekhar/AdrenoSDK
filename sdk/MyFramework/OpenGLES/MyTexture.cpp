@@ -37,6 +37,8 @@ int Texture::bind()
 	return m_textureSlot;
 }
 
+// Getter
+
 int Texture::getWidth()
 {
 	return m_frmTexture->m_nWidth;
@@ -45,4 +47,21 @@ int Texture::getWidth()
 int Texture::getHeight()
 {
 	return m_frmTexture->m_nHeight;
+}
+
+MyMat4& Texture::getTexMat()
+{
+	return m_texMat;
+}
+
+// Setter
+
+void Texture::setSrcTex(const Rect2D& src)
+{
+	float x = src.Pos.x, y = src.Pos.y;
+	float w = src.Size.x, h = src.Size.y;
+	float wt = m_frmTexture->m_nWidth, ht = m_frmTexture->m_nHeight;
+
+	m_texMat = createTranslationMatrix(MyVec3(x / wt, y / ht, 0.0f));
+	m_texMat *= createScaleMatrix(MyVec3(w / wt, h / ht, 1.0f));
 }

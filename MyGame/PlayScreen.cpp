@@ -107,11 +107,12 @@ void PlayScreen::init()
 		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("player"));
 	}
 
+	// Assets sprite sheets
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheets.pak").c_str());
 
-		m_textures[TEXTURE_SPRITE_SHEET_DUMP].init(resource.GetTexture("fireball"));
+		m_spriteSheets[SPRITE_SHEET_DUMP].init(resource.GetTexture("fireball"), 10, MyIVec2(3, 2), MyIVec2(128, 128));
 	}
 
 	// Assets mesh 1 datas
@@ -153,7 +154,6 @@ void PlayScreen::init()
 		m_textures[TEXTURE_MINIMAP_CLOSE_BTN],
 		MyVec3(),
 		MyVec2(100));
-	m_spriteSheet_dump.init(m_textures[TEXTURE_SPRITE_SHEET_DUMP], 10, MyIVec2(3, 2), MyIVec2(128, 128));
 
 	// Mesh objects
 	{
@@ -280,9 +280,14 @@ void PlayScreen::update(void* utilObjs)
 		m_camera_main.update();
 	}
 
+	// Assets sprite sheets
+	for (int i = 0; i < NUM_SPRITE_SHEETS; i++)
+	{
+		m_spriteSheets[i].update(*globalUtilObjs->timer);
+	}
+
 	// HUD objects
 	m_miniMap.update(*globalUtilObjs->userInput);
-	m_spriteSheet_dump.update(*globalUtilObjs->timer);
 
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
@@ -325,5 +330,6 @@ void PlayScreen::render(void* utilObjs)
 	}
 		
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
-	m_spriteSheet_dump.render2D(*globalUtilObjs->spriteBatch, MyVec2(100), -45);
+	globalUtilObjs->spriteBatch->renderTexture2D(&m_spriteSheets[SPRITE_SHEET_DUMP], MyVec2(100));
+	
 }

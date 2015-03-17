@@ -1,9 +1,30 @@
 
 #include "MySpriteSheet.h"
 
+//======================================================================================================
+//
+// SpriteSheet Helpers
+//
+//======================================================================================================
+
+Rect2D SpriteSheet::computingSrc(int spriteIndex)
+{
+	int nw = m_numSprites.x, nh = m_numSprites.y;
+
+	int x = (m_orientation == HORIZONTAL ? spriteIndex % nw : spriteIndex / nh);
+	int y = (m_orientation == HORIZONTAL ? spriteIndex / nw : spriteIndex % nh);
+
+	return Rect2D(m_offsetSprites + m_sizeSprite * MyIVec2(x, y), m_sizeSprite);
+}
+
+//======================================================================================================
+//
+// SpriteSheet class
+//
+//======================================================================================================
+
 SpriteSheet::SpriteSheet()
-	: m_texture(nullptr),
-	m_elapsedTime(0),
+	: m_elapsedTime(0),
 	m_currSprite(0),
 	m_spf(1.0f)
 {
@@ -14,14 +35,13 @@ SpriteSheet::~SpriteSheet()
 }
 
 void SpriteSheet::init(
-	Texture& texture,
+	CFrmTexture* frmTexture,
 	int fps,
 	const MyIVec2& numSprites,
 	const MyIVec2& sizeSprite,
 	const MyIVec2& offsetSprites,
 	Orientation orientation)
 {
-	m_texture = &texture;
 	m_numSprites = numSprites;
 	m_sizeSprite = sizeSprite;
 	m_offsetSprites = offsetSprites;
@@ -31,6 +51,10 @@ void SpriteSheet::init(
 	{
 		m_spf = 1.0f / (float)fps;
 	}
+
+	Texture::init(frmTexture);
+
+	setSrcTex(computingSrc(m_currSprite));
 }
 
 void SpriteSheet::update(Timer& timer)
@@ -40,25 +64,23 @@ void SpriteSheet::update(Timer& timer)
 	{
 		int nw = m_numSprites.x, nh = m_numSprites.y;
 
+		// Computing index of current sprite
 		m_currSprite = (m_currSprite + 1 >= nw * nh ? 0 : m_currSprite + 1);
 
+		// Computing source texture according to index of current sprite
+		setSrcTex(computingSrc(m_currSprite));
+
+		// Reset elapsed time
 		m_elapsedTime -= m_spf;
 	}
 }
 
-void SpriteSheet::render2D(SpriteBatch& spriteBatch, const MyVec2& pos, float rot, const MyVec2& scale)
+int SpriteSheet::getWidth()
 {
-	Rect2D dest(pos, MyVec2(scale.x * m_sizeSprite.x, scale.y * m_sizeSprite.y));
-	render2D(spriteBatch, dest, rot);
+	return m_sizeSprite.x;
 }
 
-void SpriteSheet::render2D(SpriteBatch& spriteBatch, const Rect2D& dest, float rot)
+int SpriteSheet::getHeight()
 {
-	int nw = m_numSprites.x, nh = m_numSprites.y;
-
-	int x = (m_orientation == HORIZONTAL ? m_currSprite % nw : m_currSprite / nh);
-	int y = (m_orientation == HORIZONTAL ? m_currSprite / nw : m_currSprite % nh);
-
-	Rect2D src(m_offsetSprites + m_sizeSprite * MyIVec2(x, y), m_sizeSprite);
-	spriteBatch.renderTexture2D(*m_texture, dest, &src, rot);
+	return m_sizeSprite.y;
 }

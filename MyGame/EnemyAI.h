@@ -7,6 +7,7 @@ class EnemyAI
 {
 public:
 	int m_type;
+	int m_team;
 	MyVec3 m_pos;
 	MyVec3 m_scale;
 	MyVec3 m_vectorRotation;
@@ -39,6 +40,7 @@ public:
 public:
 	void init(
 		int type,
+		int team,
 		MyVec3 pos,
 		MyVec3 vectorRotation,
 		float angle,

@@ -4,6 +4,7 @@ extern MyVec3 PositionPlayer;
 
 void EnemyAI::init(
 	int type,
+	int team,
 	MyVec3 pos,
 	MyVec3 vectorRotation,
 	float angle,
@@ -11,6 +12,7 @@ void EnemyAI::init(
 	)
 {
 	m_type = type;
+	m_team = team;
 	m_pos = pos;
 	m_vectorRotation = vectorRotation;
 	m_angle = angle;
@@ -143,8 +145,8 @@ void EnemyAI::Wanders(MyVec3 position, float& orientation, float turnSpeed)
 	else
 	{
 		MyVec3 positionNext;
-		if (m_type == 0) positionNext = MyVec3(50, 0, 0);
-		else positionNext = MyVec3(-50, 0, 0);
+		if (m_team == 0) positionNext = MyVec3(20, 0, 0);
+		else positionNext = MyVec3(-20, 0, 0);
 		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}
 }

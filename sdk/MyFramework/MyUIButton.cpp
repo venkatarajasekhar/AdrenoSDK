@@ -23,5 +23,5 @@ void UIButton::render(SpriteBatch& spriteBatch)
 		return;
 	}
 
-	spriteBatch.renderTexture2D(*m_texture, m_rect);
+	spriteBatch.renderTexture2D(m_texture, m_rect);
 }

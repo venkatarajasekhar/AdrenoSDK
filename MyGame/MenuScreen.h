@@ -4,6 +4,7 @@
 #include <MyScreen.h>
 
 #include <MyUIButton.h>
+#include <MyFont.h>
 
 class MenuScreen : public Screen
 {
@@ -27,4 +28,6 @@ private:
 
 	// Buttons
 	UIButton m_btns[NUM_BUTTONS];
+
+	Font m_font;
 };

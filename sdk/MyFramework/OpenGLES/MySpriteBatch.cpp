@@ -53,18 +53,18 @@ MyVec2 SpriteBatch::convertToWorld(const MyVec2& screenPos)
 	return MyVec2(screenPos.x - (float)m_scrWidth / 2, (float)m_scrHeight / 2 - screenPos.y);
 }
 
-void SpriteBatch::renderTexture2D(Texture& texture, const MyVec2& pos, float rot, const MyVec2& scale)
+void SpriteBatch::renderTexture2D(Texture* texture, const MyVec2& pos, float rot, const MyVec2& scale, MyColor color)
 {
 	Rect2D dest = 
 	{
 		pos,
-		MyVec2(scale.x * texture.getWidth(), scale.y * texture.getHeight())
+		MyVec2(scale.x * texture->getWidth(), scale.y * texture->getHeight())
 	};
 
-	renderTexture2D(texture, dest, nullptr, rot);
+	renderTexture2D(texture, dest, nullptr, rot, color);
 }
 
-void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, const Rect2D* src, float rot)
+void SpriteBatch::renderTexture2D(Texture* texture, const Rect2D& dest, const Rect2D* src, float rot, MyColor color)
 {
 	// Compute transformation of texture mesh
 	MyVec2 pos2 = convertToWorld(dest.Pos);
@@ -75,22 +75,16 @@ void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, const Re
 	m_squad.setPos(pos3);
 	m_squad.setRot(rot3);
 	m_squad.setScale(scale3);
-	m_squad.setDiffuseMap(&texture);
+	m_squad.setDiffuseMap(texture);
 
 	// Compute transformation of texture coordinate
-	Rect2D defaultRect(MyVec2(0), MyVec2(texture.getWidth(), texture.getHeight()));
-	if (src == nullptr) src = &defaultRect;
 
-	float x = src->Pos.x, y = src->Pos.y;
-	float w = src->Size.x, h = src->Size.y;
-	float wt = texture.getWidth(), ht = texture.getHeight();
-
-	MyMat4 mat = createTranslationMatrix(MyVec3(x / wt, y / ht, 0.0f));
-	mat *= createScaleMatrix(MyVec3(w / wt, h / ht, 1.0f));
+	if (src != nullptr) texture->setSrcTex(*src);
 
 	Shader* shader = m_squad.getShader();
 	shader->apply();
-	shader->setUniform("u_texMat", mat);
+	shader->setUniform("u_texMat", texture->getTexMat());
+	shader->setUniform("u_color", MyVec4(color.r, color.g, color.b, 1.0f));
 
 	// Render texture
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -101,4 +95,37 @@ void SpriteBatch::renderTexture2D(Texture& texture, const Rect2D& dest, const Re
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+}
+
+void SpriteBatch::renderText2D(Font& font, const MyString& text, const MyVec2& pos, float rot, MyColor color)
+{
+	FLOAT32 sx = pos.x, sy = pos.y;
+
+	for (auto i = text.begin(); i != text.end(); ++i)
+	{
+		BYTE ch = (*i);
+
+		if (ch == '\n')
+		{
+			sx = pos.x;
+			sy += font.getTextHeight();
+
+			continue;
+		}
+
+		Font::FONT_GLYPH* pGlyph = font.getGlyph(ch);
+
+		sx += font.getScale().x * pGlyph->nOffset;
+
+		FLOAT32 w = font.getScale().x * (pGlyph->u1 - pGlyph->u0);
+		FLOAT32 h = font.getScale().y * (pGlyph->v1 - pGlyph->v0);
+
+		// Draw
+		Rect2D dest(MyVec2(sx, sy), MyVec2(w, h));
+		Rect2D src(MyVec2(pGlyph->u0, pGlyph->v0), MyVec2(pGlyph->u1 - pGlyph->u0, pGlyph->v1 - pGlyph->v0));
+
+		renderTexture2D(&font.getTexture(), dest, &src, rot, color);
+
+		sx += font.getScale().x * pGlyph->nAdvance;
+	}
 }

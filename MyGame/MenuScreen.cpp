@@ -36,6 +36,8 @@ void MenuScreen::init()
 	{
 		m_btns[i].init(MyVec2(0), m_texture_btns[i]);
 	}
+
+	m_font.init(resolveAssetsPath("Fonts/Rosewood48.pak"));
 }
 
 void MenuScreen::resize(int width, int height)
@@ -102,5 +104,13 @@ void MenuScreen::render(void* utilObjs)
 		m_btns[i].render(*globalUtilObjs->spriteBatch);
 
 		yCoor += m_texture_btns[i].getHeight() + vDis;
+	}
+
+	{
+		MyVec2 pos((m_width - m_font.getTextWidth("Heroes World")) / 2, 5);
+		float totalTimer = globalUtilObjs->timer->getTotalTime();
+		globalUtilObjs->spriteBatch->renderText2D(m_font, "Heroes World", pos, 
+			50 * totalTimer, 
+			MyColor(dCos(totalTimer * 50), dSin(totalTimer * 70), dCos(totalTimer * 40)));
 	}
 }

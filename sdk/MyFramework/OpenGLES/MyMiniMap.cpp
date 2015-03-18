@@ -61,7 +61,7 @@ void MiniMap::update(UserInput& userInput)
 void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 {
 	// Render background
-	spriteBatch.renderTexture2D(*m_background, m_miniMapRect);
+	spriteBatch.renderTexture2D(m_background, m_miniMapRect);
 
 	// Render player
 	{
@@ -73,7 +73,7 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 			MyVec2 relativePos(
 				pos.x / m_mapSize.x * m_miniMapRect.Size.x,
 				pos.z / m_mapSize.y * m_miniMapRect.Size.y);
-			spriteBatch.renderTexture2D(*m_player, m_miniMapRect.Pos + relativePos - 0.5f * MyVec2(m_player->getWidth(), m_player->getHeight()));
+			spriteBatch.renderTexture2D(m_player, m_miniMapRect.Pos + relativePos - 0.5f * MyVec2(m_player->getWidth(), m_player->getHeight()));
 		}
 	}
 	

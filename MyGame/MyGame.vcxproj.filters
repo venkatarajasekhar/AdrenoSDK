@@ -168,7 +168,6 @@
     <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyInput.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
@@ -212,9 +211,12 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteSheet.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFont.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainGame.h" />
     <ClInclude Include="MenuScreen.h" />
     <ClInclude Include="PlayScreen.h" />
     <ClInclude Include="Utils.h" />
@@ -223,5 +225,6 @@
     <ClInclude Include="Trooper.h" />
     <ClInclude Include="TrooperManager.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="MainGame.h" />
   </ItemGroup>
 </Project>

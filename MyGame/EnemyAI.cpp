@@ -17,6 +17,7 @@ void EnemyAI::init(
 	m_vectorRotation = vectorRotation;
 	m_angle = angle;
 	m_scale = scale;
+	m_enemyOrientation = m_angle;
 }
 
 

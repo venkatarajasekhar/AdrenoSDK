@@ -239,7 +239,7 @@ void PlayScreen::cloneTrooper()
 		g_dmanManager.insertTrooperToList(dman);
 
 		Trooper* scorpion = new Trooper;
-		scorpion->init(g_dman, 1, MyVec3(20, 0, 0), MyVec3(0), MyVec3(0.7), &m_bloodbar_red);
+		scorpion->init(g_dman, 1, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.7), &m_bloodbar_red);
 		g_dmanManager.insertTrooperToList(scorpion);
 	}
 }

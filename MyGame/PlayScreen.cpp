@@ -104,15 +104,6 @@ void PlayScreen::init()
 		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("red_back_bloodbar"));
 	}
 
-	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/minimap.pak").c_str());
-
-		m_textures[TEXTURE_MINIMAP_BACKGROUND].init(resource.GetTexture("minimap"));
-		m_textures[TEXTURE_MINIMAP_CLOSE_BTN].init(resource.GetTexture("close_button"));
-		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("player"));
-	}
-	
 	// Assets sprite sheets
 	{
 		CFrmPackedResourceGLES resource;
@@ -154,13 +145,8 @@ void PlayScreen::init()
 	// HUD objects
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodbar_red.init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
-	m_miniMap.init(
-		m_textures[TEXTURE_MINIMAP_BACKGROUND],
-		m_textures[TEXTURE_MINIMAP_PLAYER],
-		m_textures[TEXTURE_MINIMAP_CLOSE_BTN],
-		MyVec3(),
-		MyVec2(100));
-
+	m_hud.init();
+	
 	// Mesh objects
 	{
 		FlatTerrainProperties properties =
@@ -259,12 +245,13 @@ void PlayScreen::resize(int width, int height)
 	m_camera_main.resize(width, height);
 
 	// HUD objects
-	m_miniMap.resize(width, height);
+	m_hud.resize(width, height);
 }
 
 void PlayScreen::update(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+	bool hudClicked(false);
 
 	// Core objects
 	{
@@ -296,7 +283,7 @@ void PlayScreen::update(void* utilObjs)
 	}
 
 	// HUD objects
-	m_miniMap.update(*globalUtilObjs->userInput);
+	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput, hudClicked);
 
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
@@ -312,10 +299,13 @@ void PlayScreen::update(void* utilObjs)
 		m_countTime -= 4;
 	}
 
-	m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
-	g_dmanManager.update(*globalUtilObjs->timer);
-	//m_scorpionManager.update(*globalUtilObjs->timer);
-
+	if (!hudClicked)
+	{
+		m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+		g_dmanManager.update(*globalUtilObjs->timer);
+		//m_scorpionManager.update(*globalUtilObjs->timer);
+	}
+	
 	// Effects objects
 	{
 		MyVec3 offset(0, 2, 1);
@@ -350,5 +340,5 @@ void PlayScreen::render(void* utilObjs)
 	m_billboard.render(m_camera_main);
 		
 	// HUD objects
-	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
+	m_hud.render(*globalUtilObjs->spriteBatch);
 }

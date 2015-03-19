@@ -35,8 +35,10 @@ void MiniMap::resize(int width, int height)
 	updateRect();
 }
 
-void MiniMap::update(UserInput& userInput)
+void MiniMap::update(UserInput& userInput, bool& isClicked)
 {
+	isClicked = false;
+
 	if (m_status == SMALL)
 	{
 		MyVec2 pos;
@@ -45,6 +47,7 @@ void MiniMap::update(UserInput& userInput)
 			if (isInside(pos, m_miniMapRect))
 			{
 				setStatus(LARGE);
+				isClicked = true;
 			}
 		}
 	}
@@ -54,6 +57,7 @@ void MiniMap::update(UserInput& userInput)
 		if (m_closeButton.isPressing())
 		{
 			setStatus(SMALL);
+			isClicked = true;
 		}
 	}
 }

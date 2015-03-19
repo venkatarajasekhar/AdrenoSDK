@@ -5,7 +5,6 @@
 
 #include <MyPerspectiveCamera.h>
 #include <MyBloodBar.h>
-#include <MyMiniMap.h>
 #include <MySpriteSheet.h>
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
@@ -13,6 +12,7 @@
 #include <MyBillboard.h>
 #include "Player.h"
 #include "Global.h"
+#include "HUD.h"
 
 class PlayScreen : public Screen
 {
@@ -37,9 +37,6 @@ private:
 		TEXTURE_BLOODBAR_GREEN_BACK,
 		TEXTURE_BLOODBAR_RED_FORE,
 		TEXTURE_BLOODBAR_RED_BACK,
-		TEXTURE_MINIMAP_BACKGROUND,
-		TEXTURE_MINIMAP_CLOSE_BTN,
-		TEXTURE_MINIMAP_PLAYER,
 		NUM_TEXTURES,
 	};
 
@@ -113,8 +110,8 @@ private:
 	// HUD objects
 	BloodBar m_bloodbar_green;
 	BloodBar m_bloodbar_red;
-	MiniMap  m_miniMap;
-
+	HUD m_hud;
+	
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
 

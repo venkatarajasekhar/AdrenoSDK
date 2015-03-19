@@ -24,7 +24,7 @@ public:
 		const MyVec3& mapCenter, 
 		const MyVec2& mapSize);
 	void resize(int width, int height);
-	void update(UserInput& userInput);
+	void update(UserInput& userInput, bool& isClicked);
 	void render(SpriteBatch& spriteBatch, const MyVec3& playerPos);
 
 private:

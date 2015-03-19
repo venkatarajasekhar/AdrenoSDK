@@ -47,7 +47,7 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 	MyVec3 position = m_instance->Position; 
 
 	MyVec2 pointTouch;
-	if (userInput.pointer_Pressing(pointTouch))
+	if (userInput.pointer_Releasing(pointTouch))
 	{
 		Plane terrainPlane = { 0.0f, MyVec3(0, 1, 0) };
 		Ray ray = createRayInWorld(pointTouch, width, height, camera.getView(), camera.getProj());

@@ -59,7 +59,7 @@ void PlayScreen::init()
 		resolveAssetsPath("Shaders/terrain.fs"),
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
-
+		
 	m_shaders[SHADER_MESH].init(
 		resolveAssetsPath("Shaders/mesh.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
@@ -77,7 +77,7 @@ void PlayScreen::init()
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
-
+		
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
@@ -106,7 +106,7 @@ void PlayScreen::init()
 		m_textures[TEXTURE_MINIMAP_CLOSE_BTN].init(resource.GetTexture("close_button"));
 		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("player"));
 	}
-
+	
 	// Assets sprite sheets
 	{
 		CFrmPackedResourceGLES resource;
@@ -144,7 +144,7 @@ void PlayScreen::init()
 
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], resource);
 	}
-
+	
 	// HUD objects
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodbar_red.init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
@@ -331,5 +331,4 @@ void PlayScreen::render(void* utilObjs)
 		
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
 	globalUtilObjs->spriteBatch->renderTexture2D(&m_spriteSheets[SPRITE_SHEET_DUMP], MyVec2(100));
-	
 }

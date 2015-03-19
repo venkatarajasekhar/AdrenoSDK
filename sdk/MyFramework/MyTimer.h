@@ -13,6 +13,7 @@ public:
 
 	float getElapsedTime();
 	float getTotalTime();
+	float getFPS();
 
 private:
 	CFrmTimer m_frmTimer;

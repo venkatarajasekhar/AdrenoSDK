@@ -23,3 +23,8 @@ float Timer::getTotalTime()
 {
 	return m_frmTimer.GetFrameTime();
 }
+
+float Timer::getFPS()
+{
+	return m_frmTimer.GetFrameRate();
+}

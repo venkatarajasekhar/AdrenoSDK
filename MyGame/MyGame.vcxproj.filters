@@ -215,6 +215,9 @@
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBillboard.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuScreen.h" />

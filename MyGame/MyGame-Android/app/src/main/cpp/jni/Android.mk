@@ -67,6 +67,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyJNIBridge.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyUtils_Platform.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBasicMesh.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MyBillboard.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBloodBar.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFileMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFlatTerrain.cpp \

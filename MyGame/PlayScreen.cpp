@@ -77,6 +77,12 @@ void PlayScreen::init()
 		resolveAssetsPath("Shaders/PhongShading.fs"),
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
+
+	m_shaders[SHADER_BILLBOARD].init(
+		resolveAssetsPath("Shaders/billboard.vs"),
+		resolveAssetsPath("Shaders/billboard.fs"),
+		PosTexVertex::ShaderAttribsDesc,
+		PosTexVertex::NumShaderAttribsDesc);
 		
 	// Assets textures
 	{
@@ -228,6 +234,9 @@ void PlayScreen::init()
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2]);
 	}
+
+	// Effects objects
+	m_billboard.init(&m_spriteSheets[SPRITE_SHEET_DUMP], m_shaders[SHADER_BILLBOARD], MyVec3(0, 2, 2), MyVec2(3), 0);
 }
 
 void PlayScreen::cloneTrooper()
@@ -306,6 +315,9 @@ void PlayScreen::update(void* utilObjs)
 	m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 	g_dmanManager.update(*globalUtilObjs->timer);
 	//m_scorpionManager.update(*globalUtilObjs->timer);
+
+	// Effects objects
+	m_billboard.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -328,7 +340,10 @@ void PlayScreen::render(void* utilObjs)
 		g_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
+
+	// Effects objects
+	m_billboard.render(m_camera_main);
 		
+	// HUD objects
 	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
-	globalUtilObjs->spriteBatch->renderTexture2D(&m_spriteSheets[SPRITE_SHEET_DUMP], MyVec2(100));
 }

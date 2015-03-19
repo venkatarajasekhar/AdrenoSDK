@@ -10,6 +10,7 @@
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
+#include <MyBillboard.h>
 #include "Player.h"
 #include "Global.h"
 
@@ -23,6 +24,7 @@ private:
 		SHADER_MESH,
 		SHADER_SKINNED_MESH_1,
 		SHADER_SKINNED_MESH_2,
+		SHADER_BILLBOARD,
 		NUM_SHADERS,
 	};
 
@@ -122,6 +124,9 @@ private:
 	Player m_player;
 	//TrooperManager m_dmanManager;
 	//TrooperManager m_scorpionManager;
+
+	// Effects objects
+	Billboard m_billboard;
 
 	float m_countTime = 2;
 };

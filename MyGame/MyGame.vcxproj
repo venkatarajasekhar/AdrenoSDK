@@ -124,6 +124,7 @@
     <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBasicMesh.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBillboard.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFileMesh1.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp" />

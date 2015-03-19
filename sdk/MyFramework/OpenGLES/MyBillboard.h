@@ -13,6 +13,8 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera);
 
+	void setPos(const MyVec3& pos);
+
 private:
 	BasicMesh m_mesh;
 	Texture* m_texture;

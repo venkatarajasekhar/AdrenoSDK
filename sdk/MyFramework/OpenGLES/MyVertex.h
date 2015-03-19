@@ -86,3 +86,22 @@ struct SkinnedVertex
 	static const int NumShaderAttribsDesc = 5;
 	static const SHADER_ATTRIBUTE_DESC ShaderAttribsDesc[NumShaderAttribsDesc];
 };
+
+struct BillboardVertex
+{
+	BillboardVertex()
+	{}
+
+	BillboardVertex(float u, float v)
+		: tex(u, v)
+	{}
+
+	BillboardVertex(MyVec2 _tex)
+		: tex(_tex)
+	{}
+
+	MyVec2 tex;
+
+	static const int NumShaderAttribsDesc = 1;
+	static const SHADER_ATTRIBUTE_DESC ShaderAttribsDesc[NumShaderAttribsDesc];
+};

@@ -317,6 +317,11 @@ void PlayScreen::update(void* utilObjs)
 	//m_scorpionManager.update(*globalUtilObjs->timer);
 
 	// Effects objects
+	{
+		MyVec3 offset(0, 2, 1);
+		m_billboard.setPos(PositionPlayer + offset);
+	}
+	
 	m_billboard.update(*globalUtilObjs->timer);
 }
 

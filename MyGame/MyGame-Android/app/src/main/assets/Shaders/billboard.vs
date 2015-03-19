@@ -1,5 +1,4 @@
 
-attribute vec3 a_posL;
 attribute vec2 a_texC;
 
 varying vec2 v_texC;
@@ -16,7 +15,7 @@ uniform vec3 u_eye;
 void main()
 {
 	vec2 cornerIndex = -a_texC * 2.0 + 1.0;
-	vec3 center = a_posL;
+	vec3 center = u_world[3].xyz;
 	vec3 up = vec3(0.0, 1.0, 0.0);
 	vec2 halfSize = u_billboardSize / 2.0;
 	
@@ -24,13 +23,10 @@ void main()
 	vec3 CKv = normalize( cross(CEv, up) );
 	vec3 KMv = normalize( cross(CKv, CEv) );
 	
-	vec3 posW = center + halfSize.x * cornerIndex.x * CKv + halfSize.y * cornerIndex.y * KMv;
+	vec3 posW = halfSize.x * cornerIndex.x * CKv + halfSize.y * cornerIndex.y * KMv;
 
-	/*
 	mat4 wvp = u_proj * u_view * u_world;
-    gl_Position = wvp * vec4( a_posL, 1.0 );
-	*/
-    gl_Position = u_proj * u_view * vec4( posW, 1.0 );
+    gl_Position = wvp * vec4( posW, 1.0 );
 	
     v_texC = (u_texMat * vec4(a_texC, 0.0, 1.0)).xy;
 }

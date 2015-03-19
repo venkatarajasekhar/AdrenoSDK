@@ -17,13 +17,13 @@ void Billboard::init(Texture* texture, Shader& shader, const MyVec3& pos, const 
 	m_billboardSize = size;
 	{
 		// Init mesh
-		std::vector<PosTexVertex> vertices;
+		std::vector<BillboardVertex> vertices;
 		vertices.resize(4);
 		
-		vertices[0] = PosTexVertex(pos, MyVec2(0, 0));
-		vertices[1] = PosTexVertex(pos, MyVec2(0, 1));
-		vertices[2] = PosTexVertex(pos, MyVec2(1, 1));
-		vertices[3] = PosTexVertex(pos, MyVec2(1, 0));
+		vertices[0] = BillboardVertex(MyVec2(0, 0));
+		vertices[1] = BillboardVertex(MyVec2(0, 1));
+		vertices[2] = BillboardVertex(MyVec2(1, 1));
+		vertices[3] = BillboardVertex(MyVec2(1, 0));
 
 		UIntArray indices;
 		indices.resize(6);
@@ -35,7 +35,7 @@ void Billboard::init(Texture* texture, Shader& shader, const MyVec3& pos, const 
 		indices[4] = 2;
 		indices[5] = 3;
 
-		m_mesh.init(vertices, indices, shader, texture, MyVec3(0), MyVec3(0), MyVec3(1));
+		m_mesh.init(vertices, indices, shader, texture, pos, MyVec3(0), MyVec3(1));
 	}
 }
 
@@ -60,4 +60,9 @@ void Billboard::render(Camera& camera)
 	m_mesh.render(camera);
 
 	glDisable(GL_BLEND);
+}
+
+void Billboard::setPos(const MyVec3& pos)
+{
+	m_mesh.setPos(pos);
 }

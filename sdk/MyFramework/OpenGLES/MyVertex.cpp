@@ -42,3 +42,8 @@ const SHADER_ATTRIBUTE_DESC SkinnedVertex::ShaderAttribsDesc[] =
 	{ NORMAL_SEMANTIC,       FRM_VERTEX_NORMAL,      0, GL_FLOAT, sizeof(SkinnedVertex), 0 },
 	{ TEXTURE_SEMANTIC,      FRM_VERTEX_TEXCOORD0,   0, GL_FLOAT, sizeof(SkinnedVertex), 0 },
 };
+
+const SHADER_ATTRIBUTE_DESC BillboardVertex::ShaderAttribsDesc[] =
+{
+	{ TEXTURE_SEMANTIC, FRM_VERTEX_TEXCOORD0, 2, GL_FLOAT, sizeof(BillboardVertex), 0 },
+};

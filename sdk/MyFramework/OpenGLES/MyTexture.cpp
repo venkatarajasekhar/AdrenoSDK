@@ -28,6 +28,10 @@ Texture::~Texture()
 
 void Texture::init(CFrmTexture* frmTexture)
 {
+	if (frmTexture == nullptr)
+	{
+		smartLog("ERROR: Init Texture class - CFrmTexture is null");
+	}
 	m_frmTexture = frmTexture;
 }
 

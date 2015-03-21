@@ -85,6 +85,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \
 				   $(GAME_PATH)/EnemyAI.cpp \
 				   $(GAME_PATH)/Global.cpp \
+				   $(GAME_PATH)/HUD.cpp \
 				   $(GAME_PATH)/MainGame.cpp \
 				   $(GAME_PATH)/MenuScreen.cpp \
 				   $(GAME_PATH)/Player.cpp \

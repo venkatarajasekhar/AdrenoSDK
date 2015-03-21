@@ -22,7 +22,7 @@
 class SkinnedMesh1 : public FileMesh1
 {
 public:
-	static const UINT32 MAX_BONES = 50;
+	static const UINT32 MAX_BONES = 60;
 	static const UINT32 TOTAL_BONES = 256;
 	static const UINT32 TICKS_PER_FRAME = 150;
 

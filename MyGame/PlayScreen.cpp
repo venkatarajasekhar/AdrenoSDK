@@ -113,7 +113,7 @@ void PlayScreen::init()
 	}
 
 	// Assets mesh 1 datas
-	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
+	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/Cubix.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/india_tower_of_victory.model").c_str());
 
 	// Assets mesh 2 datas
@@ -121,7 +121,7 @@ void PlayScreen::init()
 	m_mesh2Datas[MESH_2_DATA_DMAN].Load(resolveAssetsPath("Meshes/Dman.mesh").c_str());
 
 	// Assets anim 1 datas
-	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
+	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/Cubix.anim").c_str());
 
 	// Assets anim 2 datas
 	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_BOY]);
@@ -130,7 +130,7 @@ void PlayScreen::init()
 	// Assets mesh textures
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/Scorpion.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/Cubix.pak").c_str());
 
 		m_meshTextures[TEXTURES_MESH_SCORPION].init(m_mesh1Datas[MESH_1_DATA_SCORPION], resource);
 	}
@@ -179,9 +179,9 @@ void PlayScreen::init()
 			m_shaders[SHADER_SKINNED_MESH_1],
 			&material);
 
-		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
-		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
-		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
+		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(180), MyVec3(2.0f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
 	}
 
 	{
@@ -192,13 +192,21 @@ void PlayScreen::init()
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
-		m_mesh_indiaTowerOfVictory.init(
+		/*m_mesh_indiaTowerOfVictory.init(
 			m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
 			m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].Textures,
 			m_shaders[SHADER_MESH],
 			&material);
 
-		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.4f)));
+		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.4f)));*/
+
+		m_mesh_indiaTowerOfVictory.init(
+			m_mesh1Datas[MESH_1_DATA_SCORPION],
+			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
+			m_shaders[SHADER_MESH],
+			&material);
+
+		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(2.0f)));
 	}
 
 	{

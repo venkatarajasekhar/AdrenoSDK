@@ -9,8 +9,9 @@ private:
 	enum
 	{
 		TEXTURE_MINIMAP_BACKGROUND,
-		TEXTURE_MINIMAP_CLOSE_BTN,
+		TEXTURE_MINIMAP_BTN_CLOSE,
 		TEXTURE_MINIMAP_PLAYER,
+		TEXTURE_BTN_FIGHTING,
 		NUM_TEXTURES,
 	};
 
@@ -25,5 +26,7 @@ public:
 
 private:
 	Texture m_textures[NUM_TEXTURES];
+
 	MiniMap m_miniMap;
+	UIButton m_btn_fighting;
 };

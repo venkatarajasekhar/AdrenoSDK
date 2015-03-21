@@ -22,7 +22,7 @@ void MenuScreen::init()
 	// Texture resources
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/GUI.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/gui_menu.pak").c_str());
 
 		m_texture_btns[0].init(resource.GetTexture("btn_start_game"));
 		m_texture_btns[1].init(resource.GetTexture("btn_sign_in"));

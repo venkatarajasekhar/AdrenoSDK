@@ -96,12 +96,12 @@ void PlayScreen::init()
 
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/HUD.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/gui_play.pak").c_str());
 
-		m_textures[TEXTURE_BLOODBAR_GREEN_FORE].init(resource.GetTexture("green_fore_bloodbar"));
-		m_textures[TEXTURE_BLOODBAR_GREEN_BACK].init(resource.GetTexture("green_back_bloodbar"));
-		m_textures[TEXTURE_BLOODBAR_RED_FORE].init(resource.GetTexture("red_fore_bloodbar"));
-		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("red_back_bloodbar"));
+		m_textures[TEXTURE_BLOODBAR_GREEN_FORE].init(resource.GetTexture("bloodbar_foreground"));
+		m_textures[TEXTURE_BLOODBAR_GREEN_BACK].init(resource.GetTexture("bloodbar_background"));
+		m_textures[TEXTURE_BLOODBAR_RED_FORE].init(resource.GetTexture("bloodbar_enemy_foreground"));
+		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("bloodbar_enemy_background"));
 	}
 
 	// Assets sprite sheets

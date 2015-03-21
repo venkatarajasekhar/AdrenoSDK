@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Command: ResourcePacker ../textures/gui/gui_play.xml ../textures/gui/gui_play.pak
+ -->
+
+<Texture
+    ResourceID  = "bloodbar_foreground"
+    SrcFileName = "bloodbar_foreground.png"
+/>
+
+<Texture
+    ResourceID  = "bloodbar_background"
+    SrcFileName = "bloodbar_background.png"
+/>
+
+<Texture
+    ResourceID  = "bloodbar_enemy_foreground"
+    SrcFileName = "bloodbar_enemy_foreground.png"
+/>
+
+<Texture
+    ResourceID  = "bloodbar_enemy_background"
+    SrcFileName = "bloodbar_enemy_background.png"
+/>

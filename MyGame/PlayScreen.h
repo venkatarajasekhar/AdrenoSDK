@@ -5,13 +5,14 @@
 
 #include <MyPerspectiveCamera.h>
 #include <MyBloodBar.h>
-#include <MyMiniMap.h>
 #include <MySpriteSheet.h>
 #include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
+#include <MyBillboard.h>
 #include "Player.h"
 #include "Global.h"
+#include "HUD.h"
 
 class PlayScreen : public Screen
 {
@@ -23,6 +24,7 @@ private:
 		SHADER_MESH,
 		SHADER_SKINNED_MESH_1,
 		SHADER_SKINNED_MESH_2,
+		SHADER_BILLBOARD,
 		NUM_SHADERS,
 	};
 
@@ -35,9 +37,6 @@ private:
 		TEXTURE_BLOODBAR_GREEN_BACK,
 		TEXTURE_BLOODBAR_RED_FORE,
 		TEXTURE_BLOODBAR_RED_BACK,
-		TEXTURE_MINIMAP_BACKGROUND,
-		TEXTURE_MINIMAP_CLOSE_BTN,
-		TEXTURE_MINIMAP_PLAYER,
 		NUM_TEXTURES,
 	};
 
@@ -111,8 +110,8 @@ private:
 	// HUD objects
 	BloodBar m_bloodbar_green;
 	BloodBar m_bloodbar_red;
-	MiniMap  m_miniMap;
-
+	HUD m_hud;
+	
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
 
@@ -122,6 +121,9 @@ private:
 	Player m_player;
 	//TrooperManager m_dmanManager;
 	//TrooperManager m_scorpionManager;
+
+	// Effects objects
+	Billboard m_billboard;
 
 	float m_countTime = 2;
 };

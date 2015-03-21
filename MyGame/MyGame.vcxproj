@@ -124,6 +124,7 @@
     <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBasicMesh.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBillboard.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFileMesh1.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Trooper.cpp" />
     <ClCompile Include="TrooperManager.cpp" />
@@ -153,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Trooper.h" />
     <ClInclude Include="TrooperManager.h" />

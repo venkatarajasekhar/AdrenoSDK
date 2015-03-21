@@ -59,7 +59,7 @@ void PlayScreen::init()
 		resolveAssetsPath("Shaders/terrain.fs"),
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
-
+		
 	m_shaders[SHADER_MESH].init(
 		resolveAssetsPath("Shaders/mesh.vs"),
 		resolveAssetsPath("Shaders/PhongShading.fs"),
@@ -78,6 +78,12 @@ void PlayScreen::init()
 		SkinnedVertex::ShaderAttribsDesc,
 		SkinnedVertex::NumShaderAttribsDesc);
 
+	m_shaders[SHADER_BILLBOARD].init(
+		resolveAssetsPath("Shaders/billboard.vs"),
+		resolveAssetsPath("Shaders/billboard.fs"),
+		PosTexVertex::ShaderAttribsDesc,
+		PosTexVertex::NumShaderAttribsDesc);
+		
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
@@ -90,21 +96,12 @@ void PlayScreen::init()
 
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/HUD.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/gui_play.pak").c_str());
 
-		m_textures[TEXTURE_BLOODBAR_GREEN_FORE].init(resource.GetTexture("green_fore_bloodbar"));
-		m_textures[TEXTURE_BLOODBAR_GREEN_BACK].init(resource.GetTexture("green_back_bloodbar"));
-		m_textures[TEXTURE_BLOODBAR_RED_FORE].init(resource.GetTexture("red_fore_bloodbar"));
-		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("red_back_bloodbar"));
-	}
-
-	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/minimap.pak").c_str());
-
-		m_textures[TEXTURE_MINIMAP_BACKGROUND].init(resource.GetTexture("minimap"));
-		m_textures[TEXTURE_MINIMAP_CLOSE_BTN].init(resource.GetTexture("close_button"));
-		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("player"));
+		m_textures[TEXTURE_BLOODBAR_GREEN_FORE].init(resource.GetTexture("bloodbar_foreground"));
+		m_textures[TEXTURE_BLOODBAR_GREEN_BACK].init(resource.GetTexture("bloodbar_background"));
+		m_textures[TEXTURE_BLOODBAR_RED_FORE].init(resource.GetTexture("bloodbar_enemy_foreground"));
+		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("bloodbar_enemy_background"));
 	}
 
 	// Assets sprite sheets
@@ -144,17 +141,12 @@ void PlayScreen::init()
 
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], resource);
 	}
-
+	
 	// HUD objects
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodbar_red.init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
-	m_miniMap.init(
-		m_textures[TEXTURE_MINIMAP_BACKGROUND],
-		m_textures[TEXTURE_MINIMAP_PLAYER],
-		m_textures[TEXTURE_MINIMAP_CLOSE_BTN],
-		MyVec3(),
-		MyVec2(100));
-
+	m_hud.init();
+	
 	// Mesh objects
 	{
 		FlatTerrainProperties properties =
@@ -236,6 +228,9 @@ void PlayScreen::init()
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2]);
 	}
+
+	// Effects objects
+	m_billboard.init(&m_spriteSheets[SPRITE_SHEET_DUMP], m_shaders[SHADER_BILLBOARD], MyVec3(0, 2, 2), MyVec2(3), 0);
 }
 
 void PlayScreen::cloneTrooper()
@@ -258,12 +253,13 @@ void PlayScreen::resize(int width, int height)
 	m_camera_main.resize(width, height);
 
 	// HUD objects
-	m_miniMap.resize(width, height);
+	m_hud.resize(width, height);
 }
 
 void PlayScreen::update(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+	bool hudClicked(false);
 
 	// Core objects
 	{
@@ -295,7 +291,7 @@ void PlayScreen::update(void* utilObjs)
 	}
 
 	// HUD objects
-	m_miniMap.update(*globalUtilObjs->userInput);
+	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput, hudClicked);
 
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
@@ -311,9 +307,20 @@ void PlayScreen::update(void* utilObjs)
 		m_countTime -= 4;
 	}
 
-	m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
-	g_dmanManager.update(*globalUtilObjs->timer);
-	//m_scorpionManager.update(*globalUtilObjs->timer);
+	if (!hudClicked)
+	{
+		m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+		g_dmanManager.update(*globalUtilObjs->timer);
+		//m_scorpionManager.update(*globalUtilObjs->timer);
+	}
+	
+	// Effects objects
+	{
+		MyVec3 offset(0, 2, 1);
+		m_billboard.setPos(PositionPlayer + offset);
+	}
+	
+	m_billboard.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -336,8 +343,10 @@ void PlayScreen::render(void* utilObjs)
 		g_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
+
+	// Effects objects
+	m_billboard.render(m_camera_main);
 		
-	m_miniMap.render(*globalUtilObjs->spriteBatch, PositionPlayer);
-	globalUtilObjs->spriteBatch->renderTexture2D(&m_spriteSheets[SPRITE_SHEET_DUMP], MyVec2(100));
-	
+	// HUD objects
+	m_hud.render(*globalUtilObjs->spriteBatch);
 }

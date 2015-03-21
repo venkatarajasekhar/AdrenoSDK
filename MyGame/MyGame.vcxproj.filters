@@ -215,6 +215,10 @@
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBillboard.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuScreen.h" />
@@ -226,5 +230,6 @@
     <ClInclude Include="TrooperManager.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="HUD.h" />
   </ItemGroup>
 </Project>

@@ -115,6 +115,7 @@ void PlayScreen::init()
 	// Assets mesh 1 datas
 	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/india_tower_of_victory.model").c_str());
+	m_mesh1Datas[MESH_1_DATA_DUDE] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/dude.model").c_str());
 
 	// Assets mesh 2 datas
 	m_mesh2Datas[MESH_2_DATA_BOY].Load(resolveAssetsPath("Meshes/Boy03.mesh").c_str());
@@ -122,6 +123,7 @@ void PlayScreen::init()
 
 	// Assets anim 1 datas
 	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
+	m_anim1Datas[ANIM_1_DATA_DUDE] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/dude.anim").c_str());
 
 	// Assets anim 2 datas
 	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_BOY]);
@@ -140,6 +142,13 @@ void PlayScreen::init()
 		resource.LoadFromFile(resolveAssetsPath("Textures/india_tower_of_victory.pak").c_str());
 
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY].init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY], resource);
+	}
+
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/dude.pak").c_str());
+
+		m_meshTextures[TEXTURES_MESH_DUDE].init(m_mesh1Datas[MESH_1_DATA_DUDE], resource);
 	}
 	
 	// HUD objects
@@ -179,9 +188,27 @@ void PlayScreen::init()
 			m_shaders[SHADER_SKINNED_MESH_1],
 			&material);
 
-		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(180), MyVec3(0.2f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
 		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
 		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
+	}
+
+	{
+		Material material;
+
+		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+		material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+		material.Shininess = 16.0f;
+
+		m_skinnedMesh_dude.init(
+			m_mesh1Datas[MESH_1_DATA_DUDE],
+			m_anim1Datas[ANIM_1_DATA_DUDE],
+			m_meshTextures[TEXTURES_MESH_DUDE].Textures,
+			m_shaders[SHADER_SKINNED_MESH_1],
+			&material);
+
+		m_skinnedMesh_dude.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0, 180, 0), MyVec3(0.07f), ""));
 	}
 
 	{
@@ -288,6 +315,7 @@ void PlayScreen::update(void* utilObjs)
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
 	m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
+	m_skinnedMesh_dude.update(*globalUtilObjs->timer);
 
 	int width, height;
 	getWindowDimension(width, height);
@@ -328,6 +356,7 @@ void PlayScreen::render(void* utilObjs)
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
 		m_skinnedMesh_scorpion.render(m_camera_main, &light);
+		m_skinnedMesh_dude.render(m_camera_main, &light);
 
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 

@@ -50,6 +50,7 @@ private:
 	{
 		TEXTURES_MESH_SCORPION,
 		TEXTURES_MESH_INDIA_TOWER_OF_VICTORY,
+		TEXTURES_MESH_DUDE,
 		NUM_TEXTURES_MESHES,
 	};
 
@@ -57,6 +58,7 @@ private:
 	{
 		MESH_1_DATA_SCORPION,
 		MESH_1_DATA_INDIA_TOWER_OF_VICTORY,
+		MESH_1_DATA_DUDE,
 		NUM_MESH_1_DATAS,
 	};
 
@@ -70,6 +72,7 @@ private:
 	enum
 	{
 		ANIM_1_DATA_SCORPION,
+		ANIM_1_DATA_DUDE,
 		NUM_ANIM_1_DATAS,
 	};
 
@@ -117,6 +120,7 @@ private:
 
 	FileMesh1 m_mesh_indiaTowerOfVictory;
 	SkinnedMesh1 m_skinnedMesh_scorpion;
+	SkinnedMesh1 m_skinnedMesh_dude;
 
 	Player m_player;
 	//TrooperManager m_dmanManager;

@@ -148,6 +148,9 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 			FLOAT32* pBoneWeight = (FLOAT32*)(pMesh->Vertices.Buffer + vertexOffset + pMesh->Vertices.Format.Properties[skinWeightProperty].Offset);
 
 			// Add each bone that transform vertices to the table
+			FLOAT32 maxBoneWeight = -1;
+			UINT32 maxBoneIndex = 0;
+
 			for (UINT32 boneCount = 0; boneCount < numberOfBones; ++boneCount)
 			{
 				UINT32 boneIndex = *(pBoneIndex + boneCount);
@@ -169,7 +172,18 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 
 					*(pBoneIndex + boneCount) = processedBone[boneIndex];
 				}
+
+				// Determine max bone weight
+				if (boneWeight > maxBoneWeight)
+				{
+					maxBoneWeight = boneWeight;
+					maxBoneIndex = *(pBoneIndex + boneCount);
+				}
 			}
+
+			// It's only support that a vertex is affected by a bone
+			(*pBoneWeight) = 1.0;
+			(*pBoneIndex) = maxBoneIndex;
 		}
 	}
 

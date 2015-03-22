@@ -108,10 +108,13 @@ void SkinnedMesh2::init(
 {
 	m_mesh = &mesh;
 	m_animationSet = animationSet;
-	m_animActions.clear();
+
 	if (animActions != nullptr)
 	{
-		m_animActions = (*animActions);
+		for (auto i = animActions->begin(); i != animActions->end(); ++i)
+		{
+			m_animActions.insert(std::pair<MyString, AnimAction>(i->first, i->second));
+		}
 	}
 
 	m_mesh->MakeDrawable(&resource);

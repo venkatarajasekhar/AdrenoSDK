@@ -9,7 +9,7 @@ public:
 	UIButton();
 	~UIButton();
 
-	void init(const MyVec2& pos, Texture& texture);
+	void init(const MyString& id, const MyVec2& pos, Texture& texture);
 	void render(SpriteBatch& spriteBatch);
 
 private:

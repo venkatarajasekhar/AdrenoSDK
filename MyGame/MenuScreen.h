@@ -6,7 +6,7 @@
 #include <MyUIButton.h>
 #include <MyFont.h>
 
-class MenuScreen : public Screen
+class MenuScreen : public Screen, IOnPressListener
 {
 public:
 	MenuScreen(ScreenManager* screenManager);
@@ -16,6 +16,8 @@ public:
 	void resize(int width, int height);
 	void update(void* utilObjs);
 	void render(void* utilObjs);
+
+	void OnPress(const IOnPressListener::Data& data);
 
 private:
 	static const int NUM_BUTTONS = 5;

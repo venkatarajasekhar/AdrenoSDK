@@ -32,9 +32,15 @@ void MenuScreen::init()
 	}
 
 	// Buttons
+	m_btns[0].init("btn_menu_start_game", MyVec2(0), m_texture_btns[0]);
+	m_btns[1].init("btn_menu_sign_in", MyVec2(0), m_texture_btns[1]);
+	m_btns[2].init("btn_menu_sign_out", MyVec2(0), m_texture_btns[2]);
+	m_btns[3].init("btn_menu_achievements", MyVec2(0), m_texture_btns[3]);
+	m_btns[4].init("btn_menu_leaderboard", MyVec2(0), m_texture_btns[4]);
+
 	for (int i = 0; i < NUM_BUTTONS; i++)
 	{
-		m_btns[i].init(MyVec2(0), m_texture_btns[i]);
+		m_btns[i].addListener(this);
 	}
 
 	m_font.init(resolveAssetsPath("Fonts/Rosewood48.pak"));
@@ -54,30 +60,6 @@ void MenuScreen::update(void* utilObjs)
 	for (int i = 0; i < NUM_BUTTONS; i++)
 	{
 		m_btns[i].update(*globalUtilObjs->userInput);
-	}
-
-	if (m_btns[0].isPressing())
-	{
-		m_screenManager->activeScreen("PlayScreen");
-	}
-
-	if (m_btns[1].isPressing())
-	{
-		//globalUtilObjs->gameServer->beginUserInitiatedSignIn();
-	}
-
-	if (m_btns[2].isPressing())
-	{
-		//globalUtilObjs->gameServer->signOut();
-	}
-
-	if (m_btns[3].isPressing())
-	{
-		//globalUtilObjs->gameServer->showAchievements();
-	}
-
-	if (m_btns[4].isPressing())
-	{
 	}
 }
 
@@ -112,5 +94,29 @@ void MenuScreen::render(void* utilObjs)
 		globalUtilObjs->spriteBatch->renderText2D(m_font, "Heroes World", pos, 
 			50 * totalTimer, 
 			MyColor(dCos(totalTimer * 50), dSin(totalTimer * 70), dCos(totalTimer * 40)));
+	}
+}
+
+void MenuScreen::OnPress(const IOnPressListener::Data& data)
+{
+	if (data.Id == "btn_menu_start_game")
+	{
+		m_screenManager->activeScreen("PlayScreen");
+	}
+	else if (data.Id == "btn_menu_sign_in")
+	{
+		//globalUtilObjs->gameServer->beginUserInitiatedSignIn();
+	}
+	else if (data.Id == "btn_menu_sign_out")
+	{
+		//globalUtilObjs->gameServer->signOut();
+	}
+	else if (data.Id == "btn_menu_achievements")
+	{
+		//globalUtilObjs->gameServer->showAchievements();
+	}
+	else if (data.Id == "btn_menu_leaderboard")
+	{
+
 	}
 }

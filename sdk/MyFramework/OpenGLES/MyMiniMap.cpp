@@ -23,9 +23,11 @@ void MiniMap::init(
 {
 	m_background = &background;
 	m_player = &player;
-	m_closeButton.init(MyVec2(), closeButton);
+	m_closeButton.init("", MyVec2(), closeButton);
 	m_mapCenter = mapCenter;
 	m_mapSize = mapSize;
+
+	m_closeButton.addListener(this);
 }
 
 void MiniMap::resize(int width, int height)
@@ -54,11 +56,13 @@ void MiniMap::update(UserInput& userInput, bool& isClicked)
 	else
 	{
 		m_closeButton.update(userInput);
+		/*
 		if (m_closeButton.isPressing())
 		{
 			setStatus(SMALL);
 			isClicked = true;
 		}
+		/**/
 	}
 }
 
@@ -88,6 +92,11 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 
 	m_closeButton.setPos(closeBtnPos);
 	m_closeButton.render(spriteBatch);
+}
+
+void MiniMap::OnPress(const IOnPressListener::Data& data)
+{
+	setStatus(SMALL);
 }
 
 void MiniMap::setStatus(Status status)

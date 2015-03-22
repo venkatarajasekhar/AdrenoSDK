@@ -4,7 +4,7 @@
 #include "MySpriteBatch.h"
 #include "MyUIButton.h"
 
-class MiniMap
+class MiniMap : public IOnPressListener
 {
 private:
 	enum Status
@@ -26,6 +26,8 @@ public:
 	void resize(int width, int height);
 	void update(UserInput& userInput, bool& isClicked);
 	void render(SpriteBatch& spriteBatch, const MyVec3& playerPos);
+
+	void OnPress(const IOnPressListener::Data& data);
 
 private:
 	void setStatus(Status status);

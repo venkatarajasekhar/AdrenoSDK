@@ -110,7 +110,7 @@ void PlayScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheets.pak").c_str());
 
-		m_spriteSheets[SPRITE_SHEET_DUMP].init(resource.GetTexture("fireball"), 10, MyIVec2(3, 2), MyIVec2(128, 128));
+		m_spriteSheets[SPRITE_SHEET_FIREBALL].init(resource.GetTexture("fireball"), 10, MyIVec2(3, 2), MyIVec2(128, 128));
 	}
 
 	// Assets mesh 1 datas
@@ -151,6 +151,10 @@ void PlayScreen::init()
 
 		m_meshTextures[TEXTURES_MESH_DUDE].init(m_mesh1Datas[MESH_1_DATA_DUDE], resource);
 	}
+
+	// Effects
+	m_billboards[BILLBOARD_FIREBALL].init(&m_spriteSheets[SPRITE_SHEET_FIREBALL], m_shaders[SHADER_BILLBOARD], MyVec3(0), MyVec2(2), 0);
+	m_projectile.init(m_billboards[BILLBOARD_FIREBALL]);
 	
 	// HUD objects
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
@@ -251,9 +255,6 @@ void PlayScreen::init()
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2]);
 	}
-
-	// Effects objects
-	m_billboard.init(&m_spriteSheets[SPRITE_SHEET_DUMP], m_shaders[SHADER_BILLBOARD], MyVec3(0, 2, 2), MyVec2(3), 0);
 }
 
 void PlayScreen::cloneTrooper()
@@ -314,6 +315,13 @@ void PlayScreen::update(void* utilObjs)
 		m_spriteSheets[i].update(*globalUtilObjs->timer);
 	}
 
+	// Effects
+	for (int i = 0; i < NUM_BILLBOARDS; i++)
+	{
+		m_billboards[i].update(*globalUtilObjs->timer);
+	}
+	m_projectile.update(*globalUtilObjs->timer);
+
 	// HUD objects
 	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
@@ -338,14 +346,6 @@ void PlayScreen::update(void* utilObjs)
 		g_dmanManager.update(*globalUtilObjs->timer);
 		//m_scorpionManager.update(*globalUtilObjs->timer);
 	}
-	
-	// Effects objects
-	{
-		MyVec3 offset(0, 2, 1);
-		m_billboard.setPos(PositionPlayer + offset);
-	}
-	
-	m_billboard.update(*globalUtilObjs->timer);
 }
 
 void PlayScreen::render(void* utilObjs)
@@ -371,7 +371,7 @@ void PlayScreen::render(void* utilObjs)
 	}
 
 	// Effects objects
-	m_billboard.render(m_camera_main);
+	m_projectile.render(m_camera_main);
 		
 	// HUD objects
 	m_hud.render(*globalUtilObjs->spriteBatch);
@@ -385,6 +385,14 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "btn_hud_fighting")
 	{
-		smartLog("Fighting.................");
+		{
+			MyVec3 offset(0, 1.5, 0);
+			m_projectile.setPos(PositionPlayer + offset);
+		}
+		
+		{
+			MyVec3 vel = normalize(-PositionPlayer) * 7.0f;
+			m_projectile.setVelocity(vel);
+		}
 	}
 }

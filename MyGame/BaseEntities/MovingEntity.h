@@ -17,6 +17,7 @@ public:
 
 	// Setter
 
+	void setPos(const MyVec3& pos);
 	void setVelocity(const MyVec3& velocity);
 
 protected:

@@ -41,11 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>GraphicsObjects;Core;GameObjects;GameObjectsManagers;Screens;Utils;../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;AI;$(IncludePath)</IncludePath>
+    <IncludePath>BaseEntities;GraphicsObjects;Core;GameObjects;GameObjectsManagers;Screens;Utils;../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;AI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>GraphicsObjects;Core;GameObjects;GameObjectsManagers;Screens;Utils;../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;AI;$(IncludePath)</IncludePath>
+    <IncludePath>BaseEntities;GraphicsObjects;Core;GameObjects;GameObjectsManagers;Screens;Utils;../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;AI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

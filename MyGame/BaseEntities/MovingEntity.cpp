@@ -23,6 +23,11 @@ MyVec3 MovingEntity::getPos()
 
 // Setter
 
+void MovingEntity::setPos(const MyVec3& pos)
+{
+	m_position = pos;
+}
+
 void MovingEntity::setVelocity(const MyVec3& velocity)
 {
 	m_velocity = velocity;

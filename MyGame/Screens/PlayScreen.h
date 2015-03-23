@@ -7,17 +7,19 @@
 #include <MySpriteSheet.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
-#include <MyBillboard.h>
+
 #include "BloodBar.h"
 #include "FlatTerrain.h"
 #include "Player.h"
 #include "Global.h"
 #include "HUD.h"
+#include "Projectile.h"
 
 class PlayScreen : public Screen, public IOnPressListener
 {
 private:
 
+	// Assets
 	enum
 	{
 		SHADER_TERRAIN,
@@ -42,7 +44,7 @@ private:
 
 	enum
 	{
-		SPRITE_SHEET_DUMP,
+		SPRITE_SHEET_FIREBALL,
 		NUM_SPRITE_SHEETS,
 	};
 
@@ -83,6 +85,13 @@ private:
 		NUM_ANIM_2_DATAS,
 	};
 
+	// Effects
+	enum
+	{
+		BILLBOARD_FIREBALL,
+		NUM_BILLBOARDS,
+	};
+
 public:
 	PlayScreen(ScreenManager* screenManager);
 	~PlayScreen();
@@ -112,6 +121,9 @@ private:
 	Adreno::Animation*      m_anim1Datas[NUM_ANIM_1_DATAS];
 	FRM_ANIMATION_SET*      m_anim2Datas[NUM_ANIM_2_DATAS];
 
+	// Effects
+	Billboard               m_billboards[NUM_BILLBOARDS];
+
 	// HUD objects
 	BloodBar m_bloodbar_green;
 	BloodBar m_bloodbar_red;
@@ -129,7 +141,7 @@ private:
 	//TrooperManager m_scorpionManager;
 
 	// Effects objects
-	Billboard m_billboard;
+	Projectile m_projectile;
 
 	float m_countTime = 2;
 	bool m_lockedUserInput;

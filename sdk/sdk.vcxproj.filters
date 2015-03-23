@@ -102,17 +102,8 @@
     <ClCompile Include="MyFramework\Android\MyJNIBridge.cpp">
       <Filter>MyFramework\Android</Filter>
     </ClCompile>
-    <ClCompile Include="MyFramework\OpenGLES\MyFlatTerrain.cpp">
-      <Filter>MyFramework\OpenGLES</Filter>
-    </ClCompile>
-    <ClCompile Include="MyFramework\OpenGLES\MyBloodBar.cpp">
-      <Filter>MyFramework\OpenGLES</Filter>
-    </ClCompile>
     <ClCompile Include="MyFramework\MyInitFile.cpp">
       <Filter>MyFramework</Filter>
-    </ClCompile>
-    <ClCompile Include="MyFramework\OpenGLES\MyMiniMap.cpp">
-      <Filter>MyFramework\OpenGLES</Filter>
     </ClCompile>
     <ClCompile Include="MyFramework\OpenGLES\MySpriteSheet.cpp">
       <Filter>MyFramework\OpenGLES</Filter>
@@ -206,17 +197,8 @@
     <ClInclude Include="MyFramework\MyMaterial.h">
       <Filter>MyFramework</Filter>
     </ClInclude>
-    <ClInclude Include="MyFramework\OpenGLES\MyFlatTerrain.h">
-      <Filter>MyFramework\OpenGLES</Filter>
-    </ClInclude>
-    <ClInclude Include="MyFramework\OpenGLES\MyBloodBar.h">
-      <Filter>MyFramework\OpenGLES</Filter>
-    </ClInclude>
     <ClInclude Include="MyFramework\MyInitFile.h">
       <Filter>MyFramework</Filter>
-    </ClInclude>
-    <ClInclude Include="MyFramework\OpenGLES\MyMiniMap.h">
-      <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\OpenGLES\MySpriteSheet.h">
       <Filter>MyFramework\OpenGLES</Filter>

@@ -1,5 +1,5 @@
 
-#include "MyMiniMap.h"
+#include "MiniMap.h"
 
 #pragma region MiniMap helpers
 

@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "MySpriteBatch.h"
-#include "MyUIButton.h"
+#include <MySpriteBatch.h>
+#include <MyUIButton.h>
 
 class MiniMap : public IOnPressListener, public OnPressListenee
 {

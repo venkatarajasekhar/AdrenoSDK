@@ -43,6 +43,9 @@
     <Filter Include="AI">
       <UniqueIdentifier>{14574c00-0976-409e-9308-052f66b71e9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GraphicsObjects">
+      <UniqueIdentifier>{ee18e6c3-1531-413d-9a56-980f71888987}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimation.cpp">
@@ -207,17 +210,8 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp">
       <Filter>sdk\MyFramework\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp">
-      <Filter>sdk\MyFramework\OpenGLES</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp">
-      <Filter>sdk\MyFramework\OpenGLES</Filter>
-    </ClCompile>
     <ClCompile Include="..\sdk\MyFramework\MyInitFile.cpp">
       <Filter>sdk\MyFramework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyMiniMap.cpp">
-      <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteSheet.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
@@ -258,6 +252,15 @@
     <ClCompile Include="AI\EnemyAI.cpp">
       <Filter>AI</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsObjects\BloodBar.cpp">
+      <Filter>GraphicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObjects\FlatTerrain.cpp">
+      <Filter>GraphicsObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObjects\MiniMap.cpp">
+      <Filter>GraphicsObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsManagers\TrooperManager.h">
@@ -289,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="AI\EnemyAI.h">
       <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObjects\BloodBar.h">
+      <Filter>GraphicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObjects\FlatTerrain.h">
+      <Filter>GraphicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObjects\MiniMap.h">
+      <Filter>GraphicsObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

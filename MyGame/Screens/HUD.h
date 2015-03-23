@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <MyMiniMap.h>
+#include "MiniMap.h"
 
 class HUD : public IOnPressListener, public OnPressListenee
 {

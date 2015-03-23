@@ -1,9 +1,9 @@
 #pragma once
 
 #include <MySkinnedMesh2.h>
-#include "EnemyAI.h"
 #include <MyTexture.h>
-#include <MyBloodBar.h>
+#include "EnemyAI.h"
+#include "BloodBar.h"
 
 const int MaxHealth = 100;
 

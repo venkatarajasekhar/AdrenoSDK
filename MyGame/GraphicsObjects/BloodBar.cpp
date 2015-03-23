@@ -1,5 +1,5 @@
 
-#include "MyBloodBar.h"
+#include "BloodBar.h"
 
 BloodBar::BloodBar()
 	: m_foreground(nullptr),

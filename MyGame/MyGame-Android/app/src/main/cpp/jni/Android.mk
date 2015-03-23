@@ -21,6 +21,7 @@ GAME_AI_PATH             := $(GAME_PATH)/AI
 GAME_CORE_PATH           := $(GAME_PATH)/Core
 GAME_GAME_OBJS_PATH      := $(GAME_PATH)/GameObjects
 GAME_GAME_OBJS_MNG_PATH  := $(GAME_PATH)/GameObjectsManagers
+GAME_GRAPHICS_OBJS_PATH  := $(GAME_PATH)/GraphicsObjects
 GAME_SCREENS_PATH        := $(GAME_PATH)/Screens
 GAME_UTILS_PATH          := $(GAME_PATH)/Utils
 
@@ -76,13 +77,10 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyUtils_Platform.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBasicMesh.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBillboard.cpp \
-				   $(SDK_MY_FRM_OPENGL_PATH)/MyBloodBar.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFileMesh1.cpp \
-				   $(SDK_MY_FRM_OPENGL_PATH)/MyFlatTerrain.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFont.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyInputLayout.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyMesh.cpp \
-				   $(SDK_MY_FRM_OPENGL_PATH)/MyMiniMap.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyShader.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh2.cpp \
@@ -96,6 +94,9 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Player.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Trooper.cpp \
 				   $(GAME_GAME_OBJS_MNG_PATH)/TrooperManager.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
 				   $(GAME_SCREENS_PATH)/HUD.cpp \
 				   $(GAME_SCREENS_PATH)/MenuScreen.cpp \
 				   $(GAME_SCREENS_PATH)/PlayScreen.cpp \
@@ -115,6 +116,7 @@ LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(GAME_CORE_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_MNG_PATH) \
+					   $(LOCAL_PATH)/$(GAME_GRAPHICS_OBJS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_SCREENS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_UTILS_PATH)
 				   

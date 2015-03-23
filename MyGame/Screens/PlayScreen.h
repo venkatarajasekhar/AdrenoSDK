@@ -4,12 +4,12 @@
 #include <MyScreen.h>
 
 #include <MyPerspectiveCamera.h>
-#include <MyBloodBar.h>
 #include <MySpriteSheet.h>
-#include <MyFlatTerrain.h>
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
 #include <MyBillboard.h>
+#include "BloodBar.h"
+#include "FlatTerrain.h"
 #include "Player.h"
 #include "Global.h"
 #include "HUD.h"

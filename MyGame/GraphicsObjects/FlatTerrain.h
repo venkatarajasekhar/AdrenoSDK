@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "MyBasicMesh.h"
+#include <MyBasicMesh.h>
 
 struct FlatTerrainProperties
 {

@@ -1,5 +1,5 @@
 
-#include "MyFlatTerrain.h"
+#include "FlatTerrain.h"
 
 FlatTerrain::FlatTerrain()
 	: m_diffuseMap1(nullptr),

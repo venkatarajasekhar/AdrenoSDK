@@ -41,11 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;$(IncludePath)</IncludePath>
+    <IncludePath>Core;GameObjects;GameObjectsManagers;Screens;Utils;../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;AI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;$(IncludePath)</IncludePath>
+    <IncludePath>Core;GameObjects;GameObjectsManagers;Screens;Utils;../sdk/External;../sdk/Framework/Inc;../sdk/Framework/Framework;../sdk/Framework/Framework/OpenGLES;../sdk/Framework/Framework/Win32;../sdk/MyFramework;../sdk/MyFramework/OpenGLES;../sdk/MyFramework/Win32;AI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -144,27 +144,27 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
-    <ClCompile Include="Global.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="Trooper.cpp" />
-    <ClCompile Include="TrooperManager.cpp" />
-    <ClCompile Include="EnemyAI.cpp" />
-    <ClCompile Include="MenuScreen.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayScreen.cpp" />
+    <ClCompile Include="AI\EnemyAI.cpp" />
+    <ClCompile Include="Core\MainGame.cpp" />
+    <ClCompile Include="GameObjectsManagers\TrooperManager.cpp" />
+    <ClCompile Include="GameObjects\Player.cpp" />
+    <ClCompile Include="GameObjects\Trooper.cpp" />
+    <ClCompile Include="Screens\HUD.cpp" />
+    <ClCompile Include="Screens\MenuScreen.cpp" />
+    <ClCompile Include="Screens\PlayScreen.cpp" />
+    <ClCompile Include="Utils\Global.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Global.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="MainGame.h" />
-    <ClInclude Include="Trooper.h" />
-    <ClInclude Include="TrooperManager.h" />
-    <ClInclude Include="EnemyAI.h" />
-    <ClInclude Include="MenuScreen.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayScreen.h" />
-    <ClInclude Include="Utils.h" />
+    <ClInclude Include="AI\EnemyAI.h" />
+    <ClInclude Include="Core\MainGame.h" />
+    <ClInclude Include="GameObjectsManagers\TrooperManager.h" />
+    <ClInclude Include="GameObjects\Player.h" />
+    <ClInclude Include="GameObjects\Trooper.h" />
+    <ClInclude Include="Screens\HUD.h" />
+    <ClInclude Include="Screens\MenuScreen.h" />
+    <ClInclude Include="Screens\PlayScreen.h" />
+    <ClInclude Include="Utils\Global.h" />
+    <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

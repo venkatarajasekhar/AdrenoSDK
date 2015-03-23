@@ -17,6 +17,13 @@ SDK_MY_FRM_ANDROID_PATH  := $(SDK_MY_FRM_PATH)/Android
 SDK_MY_FRM_OPENGL_PATH   := $(SDK_MY_FRM_PATH)/OpenGLES
 
 GAME_PATH                := ../../../../../../
+GAME_AI_PATH             := $(GAME_PATH)/AI
+GAME_CORE_PATH           := $(GAME_PATH)/Core
+GAME_GAME_OBJS_PATH      := $(GAME_PATH)/GameObjects
+GAME_GAME_OBJS_MNG_PATH  := $(GAME_PATH)/GameObjectsManagers
+GAME_SCREENS_PATH        := $(GAME_PATH)/Screens
+GAME_UTILS_PATH          := $(GAME_PATH)/Utils
+
 
 include $(CLEAR_VARS)
 
@@ -52,6 +59,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmUtilsGLES.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera2D.cpp \
+				   $(SDK_MY_FRM_PATH)/MyEventListener.cpp \
 				   $(SDK_MY_FRM_PATH)/MyInitFile.cpp \
 				   $(SDK_MY_FRM_PATH)/MyInput.cpp \
 				   $(SDK_MY_FRM_PATH)/MyMath.cpp \
@@ -83,15 +91,16 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyTexture.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyUtilsGLES.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \
-				   $(GAME_PATH)/EnemyAI.cpp \
-				   $(GAME_PATH)/Global.cpp \
-				   $(GAME_PATH)/HUD.cpp \
-				   $(GAME_PATH)/MainGame.cpp \
-				   $(GAME_PATH)/MenuScreen.cpp \
-				   $(GAME_PATH)/Player.cpp \
-				   $(GAME_PATH)/PlayScreen.cpp \
-				   $(GAME_PATH)/Trooper.cpp \
-				   $(GAME_PATH)/TrooperManager.cpp
+				   $(GAME_AI_PATH)/EnemyAI.cpp \
+				   $(GAME_CORE_PATH)/MainGame.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Player.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Trooper.cpp \
+				   $(GAME_GAME_OBJS_MNG_PATH)/TrooperManager.cpp \
+				   $(GAME_SCREENS_PATH)/HUD.cpp \
+				   $(GAME_SCREENS_PATH)/MenuScreen.cpp \
+				   $(GAME_SCREENS_PATH)/PlayScreen.cpp \
+				   $(GAME_UTILS_PATH)/Global.cpp
+				   
 				   
 LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_FRM_INC_PATH) \
@@ -101,7 +110,13 @@ LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_FRM_OPENGL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_MY_FRM_PATH)	\
 					   $(LOCAL_PATH)/$(SDK_MY_FRM_ANDROID_PATH) \
-					   $(LOCAL_PATH)/$(SDK_MY_FRM_OPENGL_PATH)
+					   $(LOCAL_PATH)/$(SDK_MY_FRM_OPENGL_PATH) \
+					   $(LOCAL_PATH)/$(GAME_AI_PATH) \
+					   $(LOCAL_PATH)/$(GAME_CORE_PATH) \
+					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_PATH) \
+					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_MNG_PATH) \
+					   $(LOCAL_PATH)/$(GAME_SCREENS_PATH) \
+					   $(LOCAL_PATH)/$(GAME_UTILS_PATH)
 				   
 LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -lOpenSLES -lz
 

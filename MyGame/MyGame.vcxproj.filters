@@ -25,6 +25,24 @@
     <Filter Include="sdk\MyFramework\Win32">
       <UniqueIdentifier>{ee9afe6e-d3b5-46ca-bf97-cf20ac6e59b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{1966a6da-b2ed-429c-a215-79c196c0be6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screens">
+      <UniqueIdentifier>{3fb4a543-e031-4dfb-8d78-01c73ce14c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjectsManagers">
+      <UniqueIdentifier>{0c18aaf2-e8ea-4114-a2d4-7d330ba47d70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{07a7f2fe-0283-4959-8321-d663e229af48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{3eee4ca5-aa9b-4219-9e04-29197f6f0345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{14574c00-0976-409e-9308-052f66b71e9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimation.cpp">
@@ -177,8 +195,6 @@
     <ClCompile Include="..\sdk\MyFramework\MyUIWidget.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
-    <ClCompile Include="MenuScreen.cpp" />
-    <ClCompile Include="PlayScreen.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyScreen.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
@@ -194,14 +210,9 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFlatTerrain.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBloodBar.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
-    <ClCompile Include="Trooper.cpp" />
-    <ClCompile Include="TrooperManager.cpp" />
-    <ClCompile Include="Global.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyInitFile.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
@@ -214,25 +225,70 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFont.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBillboard.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectsManagers\TrooperManager.cpp">
+      <Filter>GameObjectsManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Player.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Trooper.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\MainGame.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\HUD.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\MenuScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\PlayScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Global.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\EnemyAI.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MenuScreen.h" />
-    <ClInclude Include="PlayScreen.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="EnemyAI.h" />
-    <ClInclude Include="Trooper.h" />
-    <ClInclude Include="TrooperManager.h" />
-    <ClInclude Include="Global.h" />
-    <ClInclude Include="MainGame.h" />
-    <ClInclude Include="HUD.h" />
+    <ClInclude Include="GameObjectsManagers\TrooperManager.h">
+      <Filter>GameObjectsManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Player.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Trooper.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MainGame.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\HUD.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\MenuScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\PlayScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Global.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\EnemyAI.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

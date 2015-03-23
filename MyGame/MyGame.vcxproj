@@ -142,9 +142,11 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
     <ClCompile Include="AI\EnemyAI.cpp" />
+    <ClCompile Include="BaseEntities\MovingEntity.cpp" />
     <ClCompile Include="Core\MainGame.cpp" />
     <ClCompile Include="GameObjectsManagers\TrooperManager.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
+    <ClCompile Include="GameObjects\Projectile.cpp" />
     <ClCompile Include="GameObjects\Trooper.cpp" />
     <ClCompile Include="GraphicsObjects\BloodBar.cpp" />
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
@@ -156,9 +158,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI\EnemyAI.h" />
+    <ClInclude Include="BaseEntities\MovingEntity.h" />
     <ClInclude Include="Core\MainGame.h" />
     <ClInclude Include="GameObjectsManagers\TrooperManager.h" />
     <ClInclude Include="GameObjects\Player.h" />
+    <ClInclude Include="GameObjects\Projectile.h" />
     <ClInclude Include="GameObjects\Trooper.h" />
     <ClInclude Include="GraphicsObjects\BloodBar.h" />
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />

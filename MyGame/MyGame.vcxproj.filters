@@ -46,6 +46,9 @@
     <Filter Include="GraphicsObjects">
       <UniqueIdentifier>{ee18e6c3-1531-413d-9a56-980f71888987}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BaseEntities">
+      <UniqueIdentifier>{a1155c06-aa34-4374-a173-d80f5b1ec759}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sdk\Framework\Framework\Model\FrmAnimation.cpp">
@@ -261,6 +264,12 @@
     <ClCompile Include="GraphicsObjects\MiniMap.cpp">
       <Filter>GraphicsObjects</Filter>
     </ClCompile>
+    <ClCompile Include="BaseEntities\MovingEntity.cpp">
+      <Filter>BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Projectile.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsManagers\TrooperManager.h">
@@ -301,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="GraphicsObjects\MiniMap.h">
       <Filter>GraphicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\MovingEntity.h">
+      <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Projectile.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

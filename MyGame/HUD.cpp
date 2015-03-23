@@ -53,8 +53,6 @@ void HUD::update(Timer& timer, UserInput& userInput)
 {
 	m_miniMap.update(userInput);
 	m_btn_fighting.update(userInput);
-
-	//isClicked |= m_btn_fighting.isPressing();
 }
 
 void HUD::render(SpriteBatch& spriteBatch)

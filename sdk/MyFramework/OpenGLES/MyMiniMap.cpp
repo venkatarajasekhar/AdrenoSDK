@@ -1,6 +1,49 @@
 
 #include "MyMiniMap.h"
 
+#pragma region MiniMap helpers
+
+//=====================================================================================================
+//
+// MiniMap helpers
+//
+//=====================================================================================================
+
+void MiniMap::setStatus(Status status)
+{
+	m_status = status;
+
+	if (m_status == SMALL)
+	{
+		m_closeButton.setStatus(UIWidget::HIDDEN);
+	}
+	else
+	{
+		m_closeButton.setStatus(UIWidget::ACTIVE);
+	}
+
+	updateBounding();
+}
+
+void MiniMap::updateBounding()
+{
+	float scale = (m_status == SMALL ? 0.5f : 1.0f);
+
+	if (m_background != nullptr)
+	{
+		m_bounding.Size = scale * MyVec2(m_background->getWidth(), m_background->getHeight());
+		m_bounding.Pos = MyVec2(m_widthWnd - PADDING_MINI_MAP - m_bounding.Size.x, PADDING_MINI_MAP);
+	}
+}
+
+#pragma endregion
+
+//=====================================================================================================
+//
+// MiniMap class
+//
+//=====================================================================================================
+
 MiniMap::MiniMap()
 	: m_background(nullptr),
 	m_player(nullptr),
@@ -34,13 +77,13 @@ void MiniMap::resize(int width, int height)
 {
 	m_widthWnd = width;
 	m_heightWnd = height;
-	updateRect();
+	updateBounding();
 }
 
 void MiniMap::update(UserInput& userInput)
 {
 	MyVec2 pos;
-	if (userInput.pointer_Releasing(pos) && isInside(pos, m_miniMapRect))
+	if (userInput.pointer_Releasing(pos) && isInside(pos, m_bounding))
 	{
 		IOnPressListener::Data data =
 		{
@@ -54,38 +97,12 @@ void MiniMap::update(UserInput& userInput)
 		if (m_status == SMALL) setStatus(LARGE);
 		else m_closeButton.update(userInput);
 	}
-
-	/*
-	isClicked = false;
-
-	if (m_status == SMALL)
-	{
-		MyVec2 pos;
-		if (userInput.pointer_Releasing(pos))
-		{
-			if (isInside(pos, m_miniMapRect))
-			{
-				setStatus(LARGE);
-				isClicked = true;
-			}
-		}
-	}
-	else
-	{
-		m_closeButton.update(userInput);
-		if (m_closeButton.isPressing())
-		{
-			setStatus(SMALL);
-			isClicked = true;
-		}
-	}
-	/**/
 }
 
 void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 {
 	// Render background
-	spriteBatch.renderTexture2D(m_background, m_miniMapRect);
+	spriteBatch.renderTexture2D(m_background, m_bounding);
 
 	// Render player
 	{
@@ -95,9 +112,9 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 		if (isInside(MyVec2(pos.x, pos.z), Rect2D(MyVec2(0, 0), m_mapSize)))
 		{
 			MyVec2 relativePos(
-				pos.x / m_mapSize.x * m_miniMapRect.Size.x,
-				pos.z / m_mapSize.y * m_miniMapRect.Size.y);
-			spriteBatch.renderTexture2D(m_player, m_miniMapRect.Pos + relativePos - 0.5f * MyVec2(m_player->getWidth(), m_player->getHeight()));
+				pos.x / m_mapSize.x * m_bounding.Size.x,
+				pos.z / m_mapSize.y * m_bounding.Size.y);
+			spriteBatch.renderTexture2D(m_player, m_bounding.Pos + relativePos - 0.5f * MyVec2(m_player->getWidth(), m_player->getHeight()));
 		}
 	}
 	
@@ -113,31 +130,4 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 void MiniMap::OnPress(const IOnPressListener::Data& data)
 {
 	setStatus(SMALL);
-}
-
-void MiniMap::setStatus(Status status)
-{
-	m_status = status;
-
-	if (m_status == SMALL)
-	{
-		m_closeButton.setStatus(UIWidget::HIDDEN);
-	}
-	else
-	{
-		m_closeButton.setStatus(UIWidget::ACTIVE);
-	}
-
-	updateRect();
-}
-
-void MiniMap::updateRect()
-{
-	float scale = (m_status == SMALL ? 0.5f : 1.0f);
-
-	if (m_background != nullptr)
-	{
-		m_miniMapRect.Size = scale * MyVec2(m_background->getWidth(), m_background->getHeight());
-		m_miniMapRect.Pos = MyVec2(m_widthWnd - PADDING_MINI_MAP - m_miniMapRect.Size.x, PADDING_MINI_MAP);
-	}
 }

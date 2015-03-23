@@ -31,14 +31,14 @@ public:
 
 private:
 	void setStatus(Status status);
-	void updateRect();
+	void updateBounding();
 
 private:
 	Texture* m_background;
 	Texture* m_player;
 	UIButton m_closeButton;
 
-	Rect2D m_miniMapRect;
+	Rect2D m_bounding;
 
 	MyVec3 m_mapCenter;
 	MyVec2 m_mapSize;

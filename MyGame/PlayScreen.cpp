@@ -23,7 +23,8 @@ extern MyVec3 PositionPlayer;
 //========================================================================================================
 
 PlayScreen::PlayScreen(ScreenManager* screenManager)
-	: Screen(screenManager)
+	: Screen(screenManager),
+	m_lockedUserInput(false)
 {
 }
 
@@ -155,6 +156,7 @@ void PlayScreen::init()
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodbar_red.init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
 	m_hud.init();
+	m_hud.addPressListener(this);
 	
 	// Mesh objects
 	{
@@ -278,7 +280,8 @@ void PlayScreen::resize(int width, int height)
 void PlayScreen::update(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
-	bool hudClicked(false);
+
+	m_lockedUserInput = false;
 
 	// Core objects
 	{
@@ -310,7 +313,7 @@ void PlayScreen::update(void* utilObjs)
 	}
 
 	// HUD objects
-	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput, hudClicked);
+	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
 	// Mesh objects
 	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
@@ -327,7 +330,7 @@ void PlayScreen::update(void* utilObjs)
 		m_countTime -= 4;
 	}
 
-	if (!hudClicked)
+	if (!m_lockedUserInput)
 	{
 		m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 		g_dmanManager.update(*globalUtilObjs->timer);
@@ -370,4 +373,16 @@ void PlayScreen::render(void* utilObjs)
 		
 	// HUD objects
 	m_hud.render(*globalUtilObjs->spriteBatch);
+}
+
+void PlayScreen::OnPress(const IOnPressListener::Data& data)
+{
+	if (data.Id == "hud")
+	{
+		m_lockedUserInput = true;
+	}
+	else if (data.Id == "btn_hud_fighting")
+	{
+		smartLog("Fighting.................");
+	}
 }

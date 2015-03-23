@@ -27,7 +27,7 @@ void MiniMap::init(
 	m_mapCenter = mapCenter;
 	m_mapSize = mapSize;
 
-	m_closeButton.addListener(this);
+	m_closeButton.addPressListener(this);
 }
 
 void MiniMap::resize(int width, int height)
@@ -37,8 +37,25 @@ void MiniMap::resize(int width, int height)
 	updateRect();
 }
 
-void MiniMap::update(UserInput& userInput, bool& isClicked)
+void MiniMap::update(UserInput& userInput)
 {
+	MyVec2 pos;
+	if (userInput.pointer_Releasing(pos) && isInside(pos, m_miniMapRect))
+	{
+		IOnPressListener::Data data =
+		{
+			"hud_minimap",
+			pos.x,
+			pos.y
+		};
+
+		throwPressEvent(data);
+
+		if (m_status == SMALL) setStatus(LARGE);
+		else m_closeButton.update(userInput);
+	}
+
+	/*
 	isClicked = false;
 
 	if (m_status == SMALL)
@@ -56,14 +73,13 @@ void MiniMap::update(UserInput& userInput, bool& isClicked)
 	else
 	{
 		m_closeButton.update(userInput);
-		/*
 		if (m_closeButton.isPressing())
 		{
 			setStatus(SMALL);
 			isClicked = true;
 		}
-		/**/
 	}
+	/**/
 }
 
 void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)

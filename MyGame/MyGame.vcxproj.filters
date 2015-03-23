@@ -219,6 +219,9 @@
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuScreen.h" />

@@ -32,9 +32,10 @@ void HUD::init()
 		m_textures[TEXTURE_MINIMAP_BTN_CLOSE],
 		MyVec3(0),
 		MyVec2(100));
+	m_miniMap.addPressListener(this);
 
 	m_btn_fighting.init("btn_hud_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
-	m_btn_fighting.addListener(this);
+	m_btn_fighting.addPressListener(this);
 }
 
 void HUD::resize(int width, int height)
@@ -48,9 +49,9 @@ void HUD::resize(int width, int height)
 	}
 }
 
-void HUD::update(Timer& timer, UserInput& userInput, bool& isClicked)
+void HUD::update(Timer& timer, UserInput& userInput)
 {
-	m_miniMap.update(userInput, isClicked);
+	m_miniMap.update(userInput);
 	m_btn_fighting.update(userInput);
 
 	//isClicked |= m_btn_fighting.isPressing();
@@ -64,5 +65,17 @@ void HUD::render(SpriteBatch& spriteBatch)
 
 void HUD::OnPress(const IOnPressListener::Data& data)
 {
+	IOnPressListener::Data hudData =
+	{
+		"hud",
+		data.x,
+		data.y,
+	};
+	throwPressEvent(hudData);
+}
 
+void HUD::addPressListener(IOnPressListener* listener)
+{
+	m_btn_fighting.addPressListener(listener);
+	OnPressListenee::addPressListener(listener);
 }

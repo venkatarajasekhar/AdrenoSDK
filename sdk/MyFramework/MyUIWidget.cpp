@@ -31,10 +31,7 @@ void UIWidget::update(UserInput& userInput)
 				pos.y
 			};
 
-			for (auto i = m_pressListeners.begin(); i != m_pressListeners.end(); ++i)
-			{
-				(*i)->OnPress(data);
-			}
+			throwPressEvent(data);
 		}
 	}
 }
@@ -66,21 +63,4 @@ void UIWidget::setPos(const MyVec2& pos)
 void UIWidget::setStatus(Status status)
 {
 	m_status = status;
-}
-
-void UIWidget::addListener(IOnPressListener* listener)
-{
-	bool existed(false);
-	for (auto i = m_pressListeners.begin(); i != m_pressListeners.end(); ++i)
-	{
-		if ((*i) == listener)
-		{
-			existed = true;
-			break;
-		}
-	}
-	if (!existed)
-	{
-		m_pressListeners.push_back(listener);
-	}
 }

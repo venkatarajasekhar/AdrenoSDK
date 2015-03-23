@@ -14,7 +14,7 @@
 #include "Global.h"
 #include "HUD.h"
 
-class PlayScreen : public Screen
+class PlayScreen : public Screen, public IOnPressListener
 {
 private:
 
@@ -92,6 +92,8 @@ public:
 	void update(void* utilObjs);
 	void render(void* utilObjs);
 
+	void OnPress(const IOnPressListener::Data& data);
+
 private:
 	void cloneTrooper();
 
@@ -130,4 +132,5 @@ private:
 	Billboard m_billboard;
 
 	float m_countTime = 2;
+	bool m_lockedUserInput;
 };

@@ -3,34 +3,9 @@
 
 #include "MyInput.h"
 #include "MySpriteBatch.h"
+#include "MyEventListener.h"
 
-//======================================================================================================
-//
-// IOnPressListener interface
-//
-//======================================================================================================
-
-class IOnPressListener
-{
-public:
-	struct Data
-	{
-		MyString Id;
-		int x;
-		int y;
-	};
-
-public:
-	virtual void OnPress(const Data& data) = 0;
-};
-
-//======================================================================================================
-//
-// UIWidget class
-//
-//======================================================================================================
-
-class UIWidget
+class UIWidget : public OnPressListenee
 {
 public:
 	enum Status
@@ -59,12 +34,8 @@ public:
 	void setPos(const MyVec2& pos);
 	void setStatus(Status status);
 
-	void addListener(IOnPressListener* listener);
-
 protected:
 	MyString m_id;
 	Rect2D m_bounding;
 	Status m_status;
-
-	std::vector<IOnPressListener*> m_pressListeners;
 };

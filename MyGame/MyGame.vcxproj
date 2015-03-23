@@ -112,6 +112,7 @@
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmUtils_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera2D.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyInitFile.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyInput.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyMath.cpp" />

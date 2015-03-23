@@ -85,6 +85,7 @@
     <ClCompile Include="MyFramework\Android\MyUtils_Platform.cpp" />
     <ClCompile Include="MyFramework\MyCamera.cpp" />
     <ClCompile Include="MyFramework\MyCamera2D.cpp" />
+    <ClCompile Include="MyFramework\MyEventListener.cpp" />
     <ClCompile Include="MyFramework\MyInitFile.cpp" />
     <ClCompile Include="MyFramework\MyInput.cpp" />
     <ClCompile Include="MyFramework\MyMath.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="MyFramework\Android\MyGameServer.h" />
     <ClInclude Include="MyFramework\MyCamera.h" />
     <ClInclude Include="MyFramework\MyCamera2D.h" />
+    <ClInclude Include="MyFramework\MyEventListener.h" />
     <ClInclude Include="MyFramework\MyInitFile.h" />
     <ClInclude Include="MyFramework\MyInput.h" />
     <ClInclude Include="MyFramework\MyLight.h" />

@@ -40,7 +40,7 @@ void MenuScreen::init()
 
 	for (int i = 0; i < NUM_BUTTONS; i++)
 	{
-		m_btns[i].addListener(this);
+		m_btns[i].addPressListener(this);
 	}
 
 	m_font.init(resolveAssetsPath("Fonts/Rosewood48.pak"));

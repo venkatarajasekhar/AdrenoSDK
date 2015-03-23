@@ -3,7 +3,7 @@
 
 #include <MyMiniMap.h>
 
-class HUD : public IOnPressListener
+class HUD : public IOnPressListener, public OnPressListenee
 {
 private:
 	enum
@@ -21,10 +21,11 @@ public:
 
 	void init();
 	void resize(int width, int height);
-	void update(Timer& timer, UserInput& userInput, bool& isClicked);
+	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch);
 
 	void OnPress(const IOnPressListener::Data& data);
+	void addPressListener(IOnPressListener* listener);
 
 private:
 	Texture m_textures[NUM_TEXTURES];

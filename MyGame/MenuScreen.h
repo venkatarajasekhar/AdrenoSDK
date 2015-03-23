@@ -6,7 +6,7 @@
 #include <MyUIButton.h>
 #include <MyFont.h>
 
-class MenuScreen : public Screen, IOnPressListener
+class MenuScreen : public Screen, public IOnPressListener
 {
 public:
 	MenuScreen(ScreenManager* screenManager);

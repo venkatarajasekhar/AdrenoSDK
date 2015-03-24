@@ -1,50 +1,55 @@
-#include "Player.h"
+#include "ScorpionHero.h"
 
-//MyVec3 PositionTrooper;
-//MyVec3 PositionPlayer;
+MyVec3 PositionPlayer;
 
-void Player::init(
-	CFrmMesh& mesh,
-	FRM_ANIMATION_SET* animationSet,
-	CFrmPackedResourceGLES& resource,
+void ScorpionHero::init(
+	Adreno::Model* model,
+	Adreno::Animation* animation,
+	FileMesh1::MeshTextures& textures,
 	Shader& shader,
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
-	BloodBar* bloodBar)
+	BloodBar* bloodBar,
+	Billboard& billboard)
 {
-	std::map<MyString, SkinnedMesh2::AnimAction> animationPose =
+	std::map<MyString, SkinnedMesh1::AnimAction> animationPose =
 	{
-		{ "Stand", { 0.0f, 0.8f } }, // Stand
-		{ "Run", { 1.8f, 2.5f } }, // Run
-		{ "Beat", { 3.5f, 7.3f } }, // Beat
+		{ "Stand", { 85, 65 } }, // Stand
+		{ "Run", { 10, 25 } }, // Run
+		{ "Beat1", { 35, 60 } }, // Beat1
+		{ "Beat2", { 150, 55 } }, // Beat2
+		{ "Defence", { 195, 50 } }, // Defence
+		{ "Dead", { 245, 0 } }, // Dead
 	};
 
-	m_health = MaxHealthPlayer;
+	m_health = MaxHealthScorpion;
 	m_dam = 20;
 	m_pointTouch = pos;
 
 	{
 		Material material;
 
-		material.Ambient = MyVec3(0.1f, 0.1f, 0.1f);
-		material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-		material.Specular = MyVec4(0.4f, 0.4f, 0.4f, 1.0f);
+		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
+		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
-		m_player.init(mesh, animationSet, resource, shader, &material, &animationPose);
+		m_player.init(model, animation, textures.Textures, shader, &material, &animationPose);
 
-		m_instance = SkinnedMesh2::buildSkinnedMeshInstance(pos, rot, scale, "Stand");
+		m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "Stand");
 
 		m_player.addInstance(m_instance);
 	}
 
 	m_bloodBar = bloodBar;
+
+	m_projectile.init(billboard);
 }
 
-void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
+void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
-	MyVec3 position = m_instance->Position; 
+	MyVec3 position = m_instance->Position;
 
 	MyVec2 pointTouch;
 	if (userInput.pointer_Releasing(pointTouch))
@@ -69,18 +74,18 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 	float e = 0.1f;
 	if ((fabs(position.x - m_pointTouch.x) > e) || (fabs(position.z - m_pointTouch.z) > e))
 	{
-		m_instance->CurrentAction = "Run"; 
+		m_instance->CurrentAction = "Run";
 		position.x += m_direction.x * timer.getElapsedTime() * moveFactor;
 		position.z += m_direction.z * timer.getElapsedTime() * moveFactor;
 	}
 	else
 	{
-		m_instance->CurrentAction = "Stand"; 
+		m_instance->CurrentAction = "Stand";
 		int id = findTrooperToBeat();
 		if (id != -1)
 		{
 			rotatePlayer(g_dmanManager.getTrooperById(id)->getTrooper()->Position);
-			m_instance->CurrentAction = "Beat";
+			m_instance->CurrentAction = "Beat1";
 			m_countTime += timer.getElapsedTime();
 			if (m_countTime >= 1.5)
 			{
@@ -90,26 +95,28 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 			}
 		}
 	}
-	m_instance->Position = position; 
-	//PositionPlayer = m_instance->Position;
+	m_instance->Position = position;
+	PositionPlayer = m_instance->Position;
 
 	m_player.update(timer);
+	m_projectile.update(timer);
 }
 
-int Player::findTrooperToBeat()
+int ScorpionHero::findTrooperToBeat()
 {
 	MyVec3 position = m_instance->Position;
 	int idTrooper = g_dmanManager.getIdTrooperToBeat(position);
 	return idTrooper;
 }
 
-void Player::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
+void ScorpionHero::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	m_player.render(camera, &light);
-	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health / (float)MaxHealthPlayer);
+	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health / (float)MaxHealthScorpion);
+	m_projectile.render(camera);
 }
 
-void Player::rotatePlayer(MyVec3 pointDestination)
+void ScorpionHero::rotatePlayer(MyVec3 pointDestination)
 {
 	MyVec3 position = m_instance->Position;
 	MyVec3 dir = position - pointDestination;
@@ -129,25 +136,40 @@ void Player::rotatePlayer(MyVec3 pointDestination)
 		angle = -angle;
 	}
 
-	m_instance->Rotation.y = angle - 10;
+	m_instance->Rotation.y = angle - 0;
 }
 
-void Player::setHealth(int helth)
+void ScorpionHero::setHealth(int helth)
 {
 	m_health = helth;
 }
 
-int Player::getHealth()
+int ScorpionHero::getHealth()
 {
 	return m_health;
 }
 
-void Player::setDam(int dam)
+void ScorpionHero::setDam(int dam)
 {
 	m_dam = dam;
 }
 
-int Player::getDam()
+int ScorpionHero::getDam()
 {
 	return m_dam;
+}
+
+void ScorpionHero::projectile()
+{
+	{
+		MyVec3 offset(0, 1.5, 0);
+		m_projectile.setPos(PositionPlayer + offset);
+	}
+
+	{
+		MyVec3 vel = normalize(-PositionPlayer) * 7.0f;
+		m_projectile.setVelocity(vel);
+	}
+
+	m_instance->CurrentAction = "Beat2";
 }

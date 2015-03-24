@@ -270,6 +270,9 @@
     <ClCompile Include="GameObjects\Projectile.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\ScorpionHero.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsManagers\TrooperManager.h">
@@ -315,6 +318,9 @@
       <Filter>BaseEntities</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Projectile.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\ScorpionHero.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

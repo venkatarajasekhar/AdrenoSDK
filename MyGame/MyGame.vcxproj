@@ -147,6 +147,7 @@
     <ClCompile Include="GameObjectsManagers\TrooperManager.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
     <ClCompile Include="GameObjects\Projectile.cpp" />
+    <ClCompile Include="GameObjects\ScorpionHero.cpp" />
     <ClCompile Include="GameObjects\Trooper.cpp" />
     <ClCompile Include="GraphicsObjects\BloodBar.cpp" />
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="GameObjectsManagers\TrooperManager.h" />
     <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="GameObjects\Projectile.h" />
+    <ClInclude Include="GameObjects\ScorpionHero.h" />
     <ClInclude Include="GameObjects\Trooper.h" />
     <ClInclude Include="GraphicsObjects\BloodBar.h" />
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />

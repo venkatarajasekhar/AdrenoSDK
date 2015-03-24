@@ -22,10 +22,7 @@ void Trooper::init(
 	m_type = type;
 	m_team = team;
 	m_bloodBar = bloodBar;
-	//m_bloodBar.init(tex2DShader, tex2D);
 	m_instance = SkinnedMesh2::buildSkinnedMeshInstance(pos, rot, scale, "");
-	//m_player.addInstance(m_instance);
-	//m_dman.init(mesh, animationSet, resource, shader, pos, rot, scale);
 	m_ai.init(m_type, m_team, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale);
 }
 
@@ -34,22 +31,6 @@ void Trooper::update(Timer& timer)
 	m_ai.m_pos = m_instance->Position;
 	m_ai.update(timer);
 	copyAllProperties();
-
-	/*float e = 0.1f;
-	if (m_type == 0)
-	{
-		if ((fabs(m_instance->Position.x - 20) < e) && (fabs(m_instance->Position.z + 20) < e))
-		{
-			m_isDeleted = true;
-		}
-	}
-	else
-	{
-		if ((fabs(m_instance->Position.x + 20) < e) && (fabs(m_instance->Position.z - 20) < e))
-		{
-			m_isDeleted = true;
-		}
-	}*/
 
 	if (m_health <= 0) m_isDeleted = true;
 }

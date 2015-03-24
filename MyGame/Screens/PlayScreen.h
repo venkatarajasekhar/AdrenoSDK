@@ -11,9 +11,9 @@
 #include "BloodBar.h"
 #include "FlatTerrain.h"
 #include "Player.h"
+#include "ScorpionHero.h"
 #include "Global.h"
 #include "HUD.h"
-#include "Projectile.h"
 
 class PlayScreen : public Screen, public IOnPressListener
 {
@@ -133,15 +133,12 @@ private:
 	FlatTerrain m_mesh_terrain;
 
 	FileMesh1 m_mesh_indiaTowerOfVictory;
-	SkinnedMesh1 m_skinnedMesh_scorpion;
 	SkinnedMesh1 m_skinnedMesh_dude;
 
 	Player m_player;
+	ScorpionHero m_scorpion;
 	//TrooperManager m_dmanManager;
 	//TrooperManager m_scorpionManager;
-
-	// Effects objects
-	Projectile m_projectile;
 
 	float m_countTime = 2;
 	bool m_lockedUserInput;

@@ -154,7 +154,6 @@ void PlayScreen::init()
 
 	// Effects
 	m_billboards[BILLBOARD_FIREBALL].init(&m_spriteSheets[SPRITE_SHEET_FIREBALL], m_shaders[SHADER_BILLBOARD], MyVec3(0), MyVec2(2), 0);
-	m_projectile.init(m_billboards[BILLBOARD_FIREBALL]);
 	
 	// HUD objects
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
@@ -182,23 +181,18 @@ void PlayScreen::init()
 	}
 
 	{
-		Material material;
-
-		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
-		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-		material.Shininess = 16.0f;
-
-		m_skinnedMesh_scorpion.init(
+		m_scorpion.init(
 			m_mesh1Datas[MESH_1_DATA_SCORPION],
 			m_anim1Datas[ANIM_1_DATA_SCORPION],
-			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
+			m_meshTextures[TEXTURES_MESH_SCORPION],
 			m_shaders[SHADER_SKINNED_MESH_1],
-			&material);
+			MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f),
+			&m_bloodbar_red,
+			m_billboards[BILLBOARD_FIREBALL]);
 
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
-		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
-		m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
 	}
 
 	{
@@ -320,13 +314,13 @@ void PlayScreen::update(void* utilObjs)
 	{
 		m_billboards[i].update(*globalUtilObjs->timer);
 	}
-	m_projectile.update(*globalUtilObjs->timer);
+	//m_projectile.update(*globalUtilObjs->timer);
 
 	// HUD objects
 	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
 	// Mesh objects
-	m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
+	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
 	m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
 	m_skinnedMesh_dude.update(*globalUtilObjs->timer);
 
@@ -342,7 +336,8 @@ void PlayScreen::update(void* utilObjs)
 
 	if (!m_lockedUserInput)
 	{
-		m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+		//m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+		m_scorpion.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 		g_dmanManager.update(*globalUtilObjs->timer);
 		//m_scorpionManager.update(*globalUtilObjs->timer);
 	}
@@ -360,18 +355,19 @@ void PlayScreen::render(void* utilObjs)
 		Light light;
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		m_skinnedMesh_scorpion.render(m_camera_main, &light);
+		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
 		m_skinnedMesh_dude.render(m_camera_main, &light);
 
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
-		m_player.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		//m_player.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		m_scorpion.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		g_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
 
 	// Effects objects
-	m_projectile.render(m_camera_main);
+	//m_projectile.render(m_camera_main);
 		
 	// HUD objects
 	m_hud.render(*globalUtilObjs->spriteBatch);
@@ -385,14 +381,6 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "btn_hud_fighting")
 	{
-		{
-			MyVec3 offset(0, 1.5, 0);
-			m_projectile.setPos(PositionPlayer + offset);
-		}
-		
-		{
-			MyVec3 vel = normalize(-PositionPlayer) * 7.0f;
-			m_projectile.setVelocity(vel);
-		}
+		m_scorpion.projectile();
 	}
 }

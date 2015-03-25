@@ -45,6 +45,12 @@ public:
 
 		MyString CurrentAction;
 		UINT32   TotalTicks;
+
+		void setActionAndReset(const MyString& action)
+		{
+			CurrentAction = action;
+			TotalTicks = 0;
+		}
 	};
 
 public:

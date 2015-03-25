@@ -270,7 +270,7 @@ void SkinnedMesh1::update(Timer& timer)
 			frameLength = (frameLength == 0) ? m_anim->NumFrames - frameStart : frameLength;
 
 			UINT32 totalFrames = instance->TotalTicks / ticksPerFrame;
-
+			
 			instance->LeftFrame = frameStart + totalFrames % frameLength;
 			instance->RightFrame = (instance->LeftFrame != frameStart + frameLength - 1) ? instance->LeftFrame + 1 : frameStart;
 			instance->FrameWeight = (FLOAT32)(instance->TotalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;

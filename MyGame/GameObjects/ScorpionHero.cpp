@@ -49,6 +49,30 @@ void ScorpionHero::init(
 
 void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
+	if (m_isUsingSkill)
+	{
+		smartLog(toString(m_projectile.getPos().x));
+		g_dmanManager.beatTroopers(m_projectile.getPos(), 3*m_dam);
+
+		int nFrame = m_instance->LeftFrame;
+		if (nFrame - 150 == 34)
+		{
+			MyVec3 dir(dSin(m_instance->Rotation.y), 0, dCos(m_instance->Rotation.y));
+			{
+				MyVec3 offset = normalize(dir) + MyVec3(0, 3, 0);
+				m_projectile.setPos(PositionPlayer + 0.5f*offset);
+			}
+
+			{
+				MyVec3 vel = normalize(dir) * 7.0f;
+				m_projectile.setVelocity(vel);
+			}
+		}
+
+		if (nFrame - 150 == 53)
+			m_isUsingSkill = false;
+	}
+	
 	MyVec3 position = m_instance->Position;
 
 	MyVec2 pointTouch;
@@ -74,23 +98,27 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	float e = 0.1f;
 	if ((fabs(position.x - m_pointTouch.x) > e) || (fabs(position.z - m_pointTouch.z) > e))
 	{
-		m_instance->CurrentAction = "Run";
+		if (!m_isUsingSkill) m_instance->CurrentAction = "Run";
 		position.x += m_direction.x * timer.getElapsedTime() * moveFactor;
 		position.z += m_direction.z * timer.getElapsedTime() * moveFactor;
 	}
 	else
 	{
-		m_instance->CurrentAction = "Stand";
-		int id = findTrooperToBeat();
-		if (id != -1)
+		if (!m_isUsingSkill) m_instance->CurrentAction = "Stand";
+		//if (m_idEmemy == -1) 
+		m_idEmemy = findTrooperToBeat();
+		if (m_idEmemy != -1)
 		{
-			rotatePlayer(g_dmanManager.getTrooperById(id)->getTrooper()->Position);
-			m_instance->CurrentAction = "Beat1";
+			rotatePlayer(g_dmanManager.getTrooperById(m_idEmemy)->getTrooper()->Position);
+			if (!m_isUsingSkill) m_instance->CurrentAction = "Beat1";
 			m_countTime += timer.getElapsedTime();
-			if (m_countTime >= 1.5)
+
+			if (m_countTime >= 1.5f)
 			{
-				Trooper* trooper = g_dmanManager.getTrooperById(id);
+				Trooper* trooper = g_dmanManager.getTrooperById(m_idEmemy);
 				trooper->setHealth(trooper->getHealth() - m_dam);
+				if (trooper->getHealth() <= 0) m_idEmemy = -1;
+				smartLog(toString(m_idEmemy));
 				m_countTime = 0;
 			}
 		}
@@ -161,15 +189,6 @@ int ScorpionHero::getDam()
 
 void ScorpionHero::projectile()
 {
-	{
-		MyVec3 offset(0, 1.5, 0);
-		m_projectile.setPos(PositionPlayer + offset);
-	}
-
-	{
-		MyVec3 vel = normalize(-PositionPlayer) * 7.0f;
-		m_projectile.setVelocity(vel);
-	}
-
-	m_instance->CurrentAction = "Beat2";
+	m_instance->setActionAndReset("Beat2");
+	m_isUsingSkill = true;
 }

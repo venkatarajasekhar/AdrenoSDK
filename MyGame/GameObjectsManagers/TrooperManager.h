@@ -26,4 +26,5 @@ public:
 	Trooper* getTrooperById(int id);
 	int getIdTrooperToBeat(MyVec3 positionPlayer);
 	bool checkTrooperCanMove(MyVec3 positionTrooper, int type);
+	void beatTroopers(MyVec3 positionBeat, int dam);
 };

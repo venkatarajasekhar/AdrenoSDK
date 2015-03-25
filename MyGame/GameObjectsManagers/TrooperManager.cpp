@@ -143,3 +143,13 @@ bool TrooperManager::checkTrooperCanMove(MyVec3 positionTrooper, int type)
 
 	return true;
 }
+
+void TrooperManager::beatTroopers(MyVec3 positionBeat, int dam)
+{
+	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
+		if (distance(positionBeat, i->second->getTrooper()->Position) < 2.0f)
+		{
+			smartLog(toString(i->second->getId()) + " " + toString(dam));
+			i->second->setHealth(i->second->getHealth() - dam);
+		}
+}

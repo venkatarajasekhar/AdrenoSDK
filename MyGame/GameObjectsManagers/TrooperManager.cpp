@@ -22,7 +22,7 @@ void TrooperManager::init(
 	Material material;
 
 	material.Ambient = MyVec3(0.1f, 0.1f, 0.1f);
-	material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	material.Diffuse = MyVec4(1.0f, 0.0f, 0.0f, 1.0f);
 	material.Specular = MyVec4(0.4f, 0.4f, 0.4f, 1.0f);
 	material.Shininess = 16.0f;
 
@@ -114,8 +114,9 @@ Trooper* TrooperManager::getTrooperById(int id)
 int TrooperManager::getIdTrooperToBeat(MyVec3 positionPlayer)
 {
 	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
-		if (distance(positionPlayer, i->second->getTrooper()->Position) < 2.0f)
+		if ((distance(positionPlayer, i->second->getTrooper()->Position) < 2.0f) && (!i->second->getIsDeleted()))
 		{
+			smartLog(toString(i->second->getId()));
 			return i->second->getId();
 		}
 	return -1;
@@ -147,7 +148,7 @@ bool TrooperManager::checkTrooperCanMove(MyVec3 positionTrooper, int type)
 void TrooperManager::beatTroopers(MyVec3 positionBeat, int dam)
 {
 	for (auto i = m_listTroopers.begin(); i != m_listTroopers.end(); i++)
-		if (distance(positionBeat, i->second->getTrooper()->Position) < 2.0f)
+		if ((!i->second->getIsDeleted()) && (distance(positionBeat, i->second->getTrooper()->Position) < 2.0f))
 		{
 			smartLog(toString(i->second->getId()) + " " + toString(dam));
 			i->second->setHealth(i->second->getHealth() - dam);

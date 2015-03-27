@@ -1,5 +1,4 @@
 #include "ScorpionHero.h"
-
 MyVec3 PositionPlayer;
 
 void ScorpionHero::init(
@@ -49,9 +48,11 @@ void ScorpionHero::init(
 
 void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
+	if (m_idEmemy != -1)
+		if (g_dmanManager.getTrooperById(m_idEmemy)->getIsDeleted()) m_idEmemy = -1;
+
 	if (m_isUsingSkill)
 	{
-		smartLog(toString(m_projectile.getPos().x));
 		g_dmanManager.beatTroopers(m_projectile.getPos(), 3*m_dam);
 
 		int nFrame = m_instance->LeftFrame;
@@ -67,6 +68,8 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 				MyVec3 vel = normalize(dir) * 7.0f;
 				m_projectile.setVelocity(vel);
 			}
+
+			m_projectile.setActive(true);
 		}
 
 		if (nFrame - 150 == 53)
@@ -105,8 +108,7 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	else
 	{
 		if (!m_isUsingSkill) m_instance->CurrentAction = "Stand";
-		//if (m_idEmemy == -1) 
-		m_idEmemy = findTrooperToBeat();
+		if (m_idEmemy == -1) m_idEmemy = findTrooperToBeat();
 		if (m_idEmemy != -1)
 		{
 			rotatePlayer(g_dmanManager.getTrooperById(m_idEmemy)->getTrooper()->Position);
@@ -117,8 +119,6 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 			{
 				Trooper* trooper = g_dmanManager.getTrooperById(m_idEmemy);
 				trooper->setHealth(trooper->getHealth() - m_dam);
-				if (trooper->getHealth() <= 0) m_idEmemy = -1;
-				smartLog(toString(m_idEmemy));
 				m_countTime = 0;
 			}
 		}

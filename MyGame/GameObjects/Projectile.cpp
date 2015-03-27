@@ -22,8 +22,11 @@ void Projectile::update(Timer& timer)
 
 void Projectile::render(Camera& camera)
 {
-	m_billboard->setPos(m_movingEntity.getPos());
-	m_billboard->render(camera);
+	if (m_active)
+	{
+		m_billboard->setPos(m_movingEntity.getPos());
+		m_billboard->render(camera);
+	}
 }
 
 // Setter
@@ -41,4 +44,9 @@ MyVec3 Projectile::getPos()
 void Projectile::setVelocity(const MyVec3& velocity)
 {
 	m_movingEntity.setVelocity(velocity);
+}
+
+void Projectile::setActive(bool active)
+{
+	m_active = active;
 }

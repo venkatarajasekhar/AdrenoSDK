@@ -32,7 +32,8 @@ void Trooper::update(Timer& timer)
 	m_ai.update(timer);
 	copyAllProperties();
 
-	if (m_health <= 0) m_isDeleted = true;
+	if (m_health <= 0) 
+		m_isDeleted = true;
 }
 
 void Trooper::copyAllProperties()

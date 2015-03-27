@@ -273,6 +273,21 @@
     <ClCompile Include="GameObjects\ScorpionHero.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="BaseEntities\BaseEntity.cpp">
+      <Filter>BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEntities\LivingEntity.cpp">
+      <Filter>BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Hero.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Pawn.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Tower.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsManagers\TrooperManager.h">
@@ -321,6 +336,30 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\ScorpionHero.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\BaseEntity.h">
+      <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\LivingEntity.h">
+      <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\IRenderableEntity.h">
+      <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\State.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\StateMachine.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Hero.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Pawn.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Tower.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

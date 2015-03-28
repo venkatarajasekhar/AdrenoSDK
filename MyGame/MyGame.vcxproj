@@ -146,7 +146,7 @@
     <ClCompile Include="BaseEntities\LivingEntity.cpp" />
     <ClCompile Include="BaseEntities\MovingEntity.cpp" />
     <ClCompile Include="Core\MainGame.cpp" />
-    <ClCompile Include="GameObjectsManagers\TrooperManager.cpp" />
+    <ClCompile Include="GameObjectsManagers\LivingEntityManager.cpp" />
     <ClCompile Include="GameObjects\Hero.cpp" />
     <ClCompile Include="GameObjects\Pawn.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="BaseEntities\MovingEntity.h" />
     <ClInclude Include="BaseEntities\IRenderableEntity.h" />
     <ClInclude Include="Core\MainGame.h" />
-    <ClInclude Include="GameObjectsManagers\TrooperManager.h" />
+    <ClInclude Include="GameObjectsManagers\LivingEntityManager.h" />
     <ClInclude Include="GameObjects\Hero.h" />
     <ClInclude Include="GameObjects\Pawn.h" />
     <ClInclude Include="GameObjects\Player.h" />

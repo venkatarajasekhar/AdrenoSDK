@@ -6,9 +6,7 @@
 #include "Global.h"
 #include "Projectile.h"
 
-const int MaxHealthScorpion = 1000;
-
-class ScorpionHero
+class ScorpionHero : public LivingEntity
 {
 private:
 	SkinnedMesh1 m_player;
@@ -20,8 +18,6 @@ private:
 	MyVec3 m_direction = MyVec3(0, 0, 0);
 	int m_idEmemy = -1;
 	float m_range = 2.0f;
-	int m_health;
-	int m_dam;
 	float m_countTime = 0;
 	bool m_isUsingSkill = false;
 	float m_countTimeSkill = 0;
@@ -41,10 +37,6 @@ public:
 	void update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height);
 	void render(Camera& camera, Light& light, SpriteBatch& spriteBatch);
 	void rotatePlayer(MyVec3 pointDestination);
-	void setHealth(int health);
-	int getHealth();
-	void setDam(int dam);
-	int getDam();
-	int findTrooperToBeat();
+	int findLivingEntityToBeat();
 	void projectile();
 };

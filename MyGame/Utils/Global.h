@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TrooperManager.h"
+#include "LivingEntityManager.h"
 
-extern TrooperManager g_dmanManager;
-
-const int g_dman = 1;
+extern LivingEntityManager g_livingEntityManager;
+const int TROOPER_SCORPION = 0;
+const int N_TROOPER_TYPE = 1;

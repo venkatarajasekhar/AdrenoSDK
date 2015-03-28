@@ -1,29 +1,22 @@
-#include "Global.h"
 #include "Trooper.h"
-
-int Trooper::m_numIDs = 0;
 
 Trooper::Trooper()
 {
-	m_id = m_numIDs++;
-	m_isDeleted = false;
-	m_health = MaxHealth;
-	m_dam = 50;
+
 }
 
 void Trooper::init(
-	int type,
-	int team,
+	int trooperType,
+	TEAM_TYPE teamType,
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
 	BloodBar* bloodBar)
 {
-	m_type = type;
-	m_team = team;
 	m_bloodBar = bloodBar;
-	m_instance = SkinnedMesh2::buildSkinnedMeshInstance(pos, rot, scale, "");
-	m_ai.init(m_type, m_team, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale);
+	
+	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "");
+	m_ai.init(trooperType, teamType, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale);
 }
 
 void Trooper::update(Timer& timer)
@@ -31,14 +24,11 @@ void Trooper::update(Timer& timer)
 	m_ai.m_pos = m_instance->Position;
 	m_ai.update(timer);
 	copyAllProperties();
-
-	if (m_health <= 0) 
-		m_isDeleted = true;
 }
 
 void Trooper::copyAllProperties()
 {
-	if (g_dmanManager.checkTrooperCanMove(m_ai.m_pos, m_type))
+	if (g_livingEntityManager.checkLivingEntityCanMove(m_ai.m_pos, m_teamType))
 		m_instance->Position = m_ai.m_pos;
 	else m_ai.m_pos = m_instance->Position;
 	m_instance->Rotation = MyVec3(0, m_ai.m_angle, 0);
@@ -49,40 +39,15 @@ void Trooper::copyAllProperties()
 void Trooper::render(Camera& camera, SpriteBatch& spriteBatch)
 {
 	MyVec3 pos = m_instance->Position + MyVec3(-0.8, 2.3, 0);
-	m_bloodBar->render(spriteBatch, camera, pos, m_health/(float)MaxHealth);
+	m_bloodBar->render(spriteBatch, camera, pos, m_health/(float)m_maxHealth);
 }
 
-SkinnedMesh2::Instance* Trooper::getTrooper()
+SkinnedMesh1::Instance* Trooper::getInstance()
 {
 	return m_instance;
 }
 
-int Trooper::getId()
+int Trooper::getTrooperType()
 {
-	return m_id;
-}
-
-bool Trooper::getIsDeleted()
-{
-	return m_isDeleted;
-}
-
-void Trooper::setHealth(int health)
-{
-	m_health = health;
-}
-
-int Trooper::getHealth()
-{
-	return m_health;
-}
-
-void Trooper::setDam(int dam)
-{
-	m_dam = dam;
-}
-
-int Trooper::getDam()
-{
-	return m_dam;
+	return m_trooperType;
 }

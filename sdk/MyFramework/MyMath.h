@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/random.hpp>
+#include <glm/gtx/fast_trigonometry.hpp>
 
 //===========================================================================================================
 //
@@ -130,6 +131,12 @@ inline T lerp(T start, T end, float f)
 	return (start * (1.0f - f) + end * f);
 }
 
+//===========================================================================================================
+//
+// Trigonometric functions
+//
+//===========================================================================================================
+
 float dSin(float angleInDeg);
 float dCos(float angleInDeg);
 float dTan(float angleInDeg);
@@ -148,6 +155,17 @@ float dATan(float x);
 // x: adjacent
 float dATan2(float y, float x);
 
+// Faster, but less accurate
+float dSin_optimized(float angleInDeg);
+float dCos_optimized(float angleInDeg);
+float dTan_optimized(float angleInDeg);
+
+float dASin_optimized(float x);
+float dACos_optimized(float x);
+
+// Returns the angle expressed in degree between min and max.
+float wrapAngle(float angleInDeg, float min = -180.f, float max = 180.0f);
+
 //===========================================================================================================
 //
 // Vector computing functions
@@ -157,6 +175,9 @@ float dATan2(float y, float x);
 MyVec3 normalize(const MyVec3& v);
 MyVec3 cross(const MyVec3& v1, const MyVec3& v2);
 float dot(const MyVec3& v1, const MyVec3& v2);
+
+// Faster, but less accurate
+MyVec3 normalize_optimized(const MyVec3& v);
 
 //===========================================================================================================
 //
@@ -199,6 +220,9 @@ MyVec2 project(const MyVec3& posW, int w, int h, const MyMat4& view, const MyMat
 MyVec3 unProject(const MyVec2& screenPos, int w, int h, const MyMat4& view, const MyMat4& proj, float depth);
 
 Ray createRayInWorld(const MyVec2& screenPos, int w, int h, const MyMat4& view, const MyMat4& proj);
+
+// Faster, but less accurate
+float distance_optimized(const MyVec3& p1, const MyVec3& p2);
 
 //===========================================================================================================
 //

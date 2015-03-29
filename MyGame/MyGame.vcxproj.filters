@@ -246,9 +246,6 @@
     <ClCompile Include="Screens\MenuScreen.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
-    <ClCompile Include="Screens\PlayScreen.cpp">
-      <Filter>Screens</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Global.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -288,6 +285,9 @@
     <ClCompile Include="GameObjects\Tower.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Screens\PlayScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectsManagers\TrooperManager.h">
@@ -306,9 +306,6 @@
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="Screens\MenuScreen.h">
-      <Filter>Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens\PlayScreen.h">
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Global.h">
@@ -361,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Tower.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\PlayScreen.h">
+      <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

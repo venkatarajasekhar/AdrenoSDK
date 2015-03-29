@@ -3,7 +3,7 @@
 
 //===========================================================================================================
 //
-// Algebraic functions
+// Trigonometric functions
 //
 //===========================================================================================================
 
@@ -34,7 +34,6 @@ float dTan(float angleInDeg)
 #endif
 }
 
-// Return angle in degree
 float dASin(float x)
 {
 #ifdef GLM_FORCE_RADIANS
@@ -44,7 +43,6 @@ float dASin(float x)
 #endif
 }
 
-// Return angle in degree
 float dACos(float x)
 {
 #ifdef GLM_FORCE_RADIANS
@@ -54,7 +52,6 @@ float dACos(float x)
 #endif
 }
 
-// Return angle in degree
 float dATan(float x)
 {
 #ifdef GLM_FORCE_RADIANS
@@ -64,9 +61,6 @@ float dATan(float x)
 #endif
 }
 
-// Return angle in degree
-// y: opposite
-// x: adjacent
 float dATan2(float y, float x)
 {
 #ifdef GLM_FORCE_RADIANS
@@ -74,6 +68,65 @@ float dATan2(float y, float x)
 #else
 	return glm::atan(y, x);
 #endif
+}
+
+// Faster, but less accurate
+float dSin_optimized(float angleInDeg)
+{
+#ifdef GLM_FORCE_RADIANS
+	return glm::fastSin(glm::radians(angleInDeg));
+#else
+	return glm::fastSin(angleInDeg);
+#endif
+}
+
+float dCos_optimized(float angleInDeg)
+{
+#ifdef GLM_FORCE_RADIANS
+	return glm::fastCos(glm::radians(angleInDeg));
+#else
+	return glm::fastCos(angleInDeg);
+#endif
+}
+
+float dTan_optimized(float angleInDeg)
+{
+#ifdef GLM_FORCE_RADIANS
+	return glm::fastTan(glm::radians(angleInDeg));
+#else
+	return glm::fastTan(angleInDeg);
+#endif
+}
+
+float dASin_optimized(float x)
+{
+#ifdef GLM_FORCE_RADIANS
+	return glm::degrees(glm::fastAsin(x));
+#else
+	return glm::fastAsin(x);
+#endif
+}
+
+float dACos_optimized(float x)
+{
+#ifdef GLM_FORCE_RADIANS
+	return glm::degrees(glm::fastAcos(x));
+#else
+	return glm::fastAcos(x);
+#endif
+}
+
+float wrapAngle(float angleInDeg, float min, float max)
+{
+	while (angleInDeg < min)
+	{
+		angleInDeg += (max - min);
+	}
+	while (angleInDeg > max)
+	{
+		angleInDeg -= (max - min);
+	}
+	return angleInDeg;
 }
 
 //===========================================================================================================
@@ -95,6 +148,14 @@ MyVec3 cross(const MyVec3& v1, const MyVec3& v2)
 float dot(const MyVec3& v1, const MyVec3& v2)
 {
 	return glm::dot(v1, v2);
+}
+
+MyVec3 normalize_optimized(const MyVec3& v)
+{
+	float t = fabsf(v.x) + fabsf(v.y) + fabsf(v.z);
+	if (t == 0) t = 1.0f;
+
+	return v / t;
 }
 
 //===========================================================================================================
@@ -233,6 +294,11 @@ Ray createRayInWorld(const MyVec2& screenPos, int w, int h, const MyMat4& view, 
 	MyVec3 P1 = unProject(screenPos, w, h, view, proj, 10.0f);
 
 	return{ P1 - P0, P0 };
+}
+
+float distance_optimized(const MyVec3& p1, const MyVec3& p2)
+{
+	return (fabsf(p1.x - p2.x) + fabsf(p1.y - p2.y) + fabsf(p1.z - p2.z));
 }
 
 //===========================================================================================================

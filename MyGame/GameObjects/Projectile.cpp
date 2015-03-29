@@ -40,5 +40,5 @@ MyVec3 Projectile::getPos()
 
 void Projectile::setVelocity(const MyVec3& velocity)
 {
-	m_movingEntity.setVelocity(velocity);
+	//m_movingEntity.setVelocity(velocity);
 }

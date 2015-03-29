@@ -79,12 +79,12 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 		int id = findTrooperToBeat();
 		if (id != -1)
 		{
-			rotatePlayer(g_dmanManager.getTrooperById(id)->getTrooper()->Position);
+			rotatePlayer(g_livingEntityManager.getLivingEntityById(id)->getInstance()->Position);
 			m_instance->CurrentAction = "Beat";
 			m_countTime += timer.getElapsedTime();
 			if (m_countTime >= 1.5)
 			{
-				Trooper* trooper = g_dmanManager.getTrooperById(id);
+				Trooper* trooper = (Trooper*)(g_livingEntityManager.getLivingEntityById(id));
 				trooper->setHealth(trooper->getHealth() - m_dam);
 				m_countTime = 0;
 			}
@@ -99,7 +99,7 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 int Player::findTrooperToBeat()
 {
 	MyVec3 position = m_instance->Position;
-	int idTrooper = g_dmanManager.getIdTrooperToBeat(position);
+	int idTrooper = g_livingEntityManager.getIdLivingEntityToBeat(position);
 	return idTrooper;
 }
 

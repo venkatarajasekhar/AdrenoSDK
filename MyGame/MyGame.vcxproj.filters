@@ -228,9 +228,6 @@
     <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectsManagers\TrooperManager.cpp">
-      <Filter>GameObjectsManagers</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Player.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -244,6 +241,9 @@
       <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="Screens\MenuScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\PlayScreen.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="Utils\Global.cpp">
@@ -285,14 +285,11 @@
     <ClCompile Include="GameObjects\Tower.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Screens\PlayScreen.cpp">
-      <Filter>Screens</Filter>
+    <ClCompile Include="GameObjectsManagers\LivingEntityManager.cpp">
+      <Filter>GameObjectsManagers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjectsManagers\TrooperManager.h">
-      <Filter>GameObjectsManagers</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects\Player.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
@@ -306,6 +303,9 @@
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="Screens\MenuScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\PlayScreen.h">
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Global.h">
@@ -359,8 +359,8 @@
     <ClInclude Include="GameObjects\Tower.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Screens\PlayScreen.h">
-      <Filter>Screens</Filter>
+    <ClInclude Include="GameObjectsManagers\LivingEntityManager.h">
+      <Filter>GameObjectsManagers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

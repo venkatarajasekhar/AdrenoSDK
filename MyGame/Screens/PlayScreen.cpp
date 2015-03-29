@@ -230,7 +230,7 @@ void PlayScreen::init()
 		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.4f)));
 	}
 	
-	{
+	/*{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/Boy03.pak").c_str());
 
@@ -238,30 +238,47 @@ void PlayScreen::init()
 			m_anim2Datas[ANIM_2_DATA_BOY],
 			resource,
 			m_shaders[SHADER_SKINNED_MESH_2], MyVec3(0), MyVec3(0), MyVec3(1), &m_bloodbar_green);
-	}
+	}*/
 	
 	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
+		//CFrmPackedResourceGLES resource;
+		//resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
 
-		g_dmanManager.init(g_dman, m_mesh2Datas[MESH_2_DATA_DMAN],
-			m_anim2Datas[ANIM_2_DATA_DMAN],
-			resource,
-			m_shaders[SHADER_SKINNED_MESH_2]);
+		Material material;
+
+		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
+		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+		material.Shininess = 16.0f;
+
+		m_skinnedMesh_scorpion.init(
+			m_mesh1Datas[MESH_1_DATA_SCORPION],
+			m_anim1Datas[ANIM_1_DATA_SCORPION],
+			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
+			m_shaders[SHADER_SKINNED_MESH_1],
+			&material);
+
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
+		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
+
+		g_livingEntityManager.init(&m_skinnedMesh_scorpion);
 	}
 }
 
 void PlayScreen::cloneTrooper()
 {
-	if (g_dmanManager.getNTrooper() < 5)
+	if (g_livingEntityManager.getNEntity() < 10)
 	{
-		Trooper* dman = new Trooper;
-		dman->init(g_dman, 0, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.7f), &m_bloodbar_red);
-		g_dmanManager.insertTrooperToList(dman);
+		Trooper* scorpion1 = new Trooper;
+		scorpion1->init(TROOPER_SCORPION, MY_TEAM, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.15f), &m_bloodbar_red);
+		//scorpion1->init(MY_TEAM, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.15f), &m_bloodbar_red);
+		g_livingEntityManager.insertLivingEntityToList(scorpion1, TROOPER_SCORPION);
 
-		Trooper* scorpion = new Trooper;
-		scorpion->init(g_dman, 1, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.7f), &m_bloodbar_red);
-		g_dmanManager.insertTrooperToList(scorpion);
+		Trooper* scorpion2 = new Trooper;
+		scorpion2->init(TROOPER_SCORPION, ENEMY, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.15f), &m_bloodbar_red);
+		//scorpion2->init(ENEMY, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.15f), &m_bloodbar_red);
+		g_livingEntityManager.insertLivingEntityToList(scorpion2, TROOPER_SCORPION);
 	}
 }
 
@@ -314,13 +331,11 @@ void PlayScreen::update(void* utilObjs)
 	{
 		m_billboards[i].update(*globalUtilObjs->timer);
 	}
-	//m_projectile.update(*globalUtilObjs->timer);
 
 	// HUD objects
 	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
 	// Mesh objects
-	//m_skinnedMesh_scorpion.update(*globalUtilObjs->timer);
 	m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
 	m_skinnedMesh_dude.update(*globalUtilObjs->timer);
 
@@ -336,10 +351,8 @@ void PlayScreen::update(void* utilObjs)
 
 	if (!m_lockedUserInput)
 	{
-		//m_player.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 		m_scorpion.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
-		g_dmanManager.update(*globalUtilObjs->timer);
-		//m_scorpionManager.update(*globalUtilObjs->timer);
+		g_livingEntityManager.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 	}
 }
 
@@ -355,19 +368,12 @@ void PlayScreen::render(void* utilObjs)
 		Light light;
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		//m_skinnedMesh_scorpion.render(m_camera_main, &light);
 		m_skinnedMesh_dude.render(m_camera_main, &light);
-
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
-		//m_player.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		m_scorpion.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
-		g_dmanManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
-		//m_scorpionManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		g_livingEntityManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
-
-	// Effects objects
-	//m_projectile.render(m_camera_main);
 		
 	// HUD objects
 	m_hud.render(*globalUtilObjs->spriteBatch);

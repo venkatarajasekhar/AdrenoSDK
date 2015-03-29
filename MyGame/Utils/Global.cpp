@@ -1,3 +1,3 @@
 #include "Global.h"
 
-TrooperManager g_dmanManager;
+LivingEntityManager g_livingEntityManager;

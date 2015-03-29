@@ -1,5 +1,4 @@
 #include "ScorpionHero.h"
-
 MyVec3 PositionPlayer;
 
 void ScorpionHero::init(
@@ -23,8 +22,8 @@ void ScorpionHero::init(
 		{ "Dead", { 245, 0 } }, // Dead
 	};
 
-	m_health = MaxHealthScorpion;
-	m_dam = 20;
+	m_health = m_maxHealth;
+	m_damage = 20;
 	m_pointTouch = pos;
 
 	{
@@ -49,10 +48,12 @@ void ScorpionHero::init(
 
 void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
+	if (m_idEmemy != -1)
+		if (g_livingEntityManager.getLivingEntityById(m_idEmemy)->isDead()) m_idEmemy = -1;
+
 	if (m_isUsingSkill)
 	{
-		smartLog(toString(m_projectile.getPos().x));
-		g_dmanManager.beatTroopers(m_projectile.getPos(), 3*m_dam);
+		g_livingEntityManager.beatLivingEntitys(m_projectile.getPos(), 3 * m_damage);
 
 		int nFrame = m_instance->LeftFrame;
 		if (nFrame - 150 == 34)
@@ -67,6 +68,8 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 				MyVec3 vel = normalize(dir) * 7.0f;
 				m_projectile.setVelocity(vel);
 			}
+
+			m_projectile.setActive(true);
 		}
 
 		if (nFrame - 150 == 53)
@@ -105,20 +108,17 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	else
 	{
 		if (!m_isUsingSkill) m_instance->CurrentAction = "Stand";
-		//if (m_idEmemy == -1) 
-		m_idEmemy = findTrooperToBeat();
+		if (m_idEmemy == -1) m_idEmemy = findLivingEntityToBeat();
 		if (m_idEmemy != -1)
 		{
-			rotatePlayer(g_dmanManager.getTrooperById(m_idEmemy)->getTrooper()->Position);
+			rotatePlayer(g_livingEntityManager.getLivingEntityById(m_idEmemy)->getInstance()->Position);
 			if (!m_isUsingSkill) m_instance->CurrentAction = "Beat1";
 			m_countTime += timer.getElapsedTime();
 
 			if (m_countTime >= 1.5f)
 			{
-				Trooper* trooper = g_dmanManager.getTrooperById(m_idEmemy);
-				trooper->setHealth(trooper->getHealth() - m_dam);
-				if (trooper->getHealth() <= 0) m_idEmemy = -1;
-				smartLog(toString(m_idEmemy));
+				Trooper* trooper = (Trooper*)(g_livingEntityManager.getLivingEntityById(m_idEmemy));
+				trooper->setHealth(trooper->getHealth() - m_damage);
 				m_countTime = 0;
 			}
 		}
@@ -130,17 +130,17 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	m_projectile.update(timer);
 }
 
-int ScorpionHero::findTrooperToBeat()
+int ScorpionHero::findLivingEntityToBeat()
 {
 	MyVec3 position = m_instance->Position;
-	int idTrooper = g_dmanManager.getIdTrooperToBeat(position);
+	int idTrooper = g_livingEntityManager.getIdLivingEntityToBeat(position);
 	return idTrooper;
 }
 
 void ScorpionHero::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	m_player.render(camera, &light);
-	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health / (float)MaxHealthScorpion);
+	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health / (float)m_maxHealth);
 	m_projectile.render(camera);
 }
 
@@ -165,26 +165,6 @@ void ScorpionHero::rotatePlayer(MyVec3 pointDestination)
 	}
 
 	m_instance->Rotation.y = angle - 0;
-}
-
-void ScorpionHero::setHealth(int helth)
-{
-	m_health = helth;
-}
-
-int ScorpionHero::getHealth()
-{
-	return m_health;
-}
-
-void ScorpionHero::setDam(int dam)
-{
-	m_dam = dam;
-}
-
-int ScorpionHero::getDam()
-{
-	return m_dam;
 }
 
 void ScorpionHero::projectile()

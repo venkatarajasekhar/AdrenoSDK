@@ -134,11 +134,10 @@ private:
 
 	FileMesh1 m_mesh_indiaTowerOfVictory;
 	SkinnedMesh1 m_skinnedMesh_dude;
+	SkinnedMesh1 m_skinnedMesh_scorpion;
 
-	Player m_player;
+	//Player m_player;
 	ScorpionHero m_scorpion;
-	//TrooperManager m_dmanManager;
-	//TrooperManager m_scorpionManager;
 
 	float m_countTime = 2;
 	bool m_lockedUserInput;

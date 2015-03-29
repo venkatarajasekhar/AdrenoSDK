@@ -98,8 +98,7 @@ void Player::update(UserInput& userInput, Timer& timer, Camera& camera, int widt
 
 int Player::findTrooperToBeat()
 {
-	MyVec3 position = m_instance->Position;
-	int idTrooper = g_livingEntityManager.getIdLivingEntityToBeat(position);
+	int idTrooper = g_livingEntityManager.getIdLivingEntityInRange(1, 1.0f);
 	return idTrooper;
 }
 

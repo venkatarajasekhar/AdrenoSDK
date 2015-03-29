@@ -25,13 +25,17 @@ public:
 	void init(
 		int trooperType,
 		TEAM_TYPE teamType,
+		int health,
+		int damage,
+		float range,
 		const MyVec3& pos,
 		const MyVec3& rot,
 		const MyVec3& scale,
-		BloodBar* bloodBar);
+		BloodBar* bloodBarRed,
+		BloodBar* bloodBarGreen);
 
-	void update(Timer& timer);
-	void render(Camera& camera, SpriteBatch& spriteBatch);
+	void update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height);
+	void render(Camera& camera, Light& light, SpriteBatch& spriteBatch);
 	void copyAllProperties();
 
 	SkinnedMesh1::Instance* getInstance();

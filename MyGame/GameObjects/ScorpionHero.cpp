@@ -9,8 +9,13 @@ void ScorpionHero::init(
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
-	BloodBar* bloodBar,
-	Billboard& billboard)
+	BloodBar* bloodBarRed,
+	BloodBar* bloodBarGreen,
+	Billboard& billboard,
+	int health,
+	int damage,
+	float range,
+	TEAM_TYPE teamType)
 {
 	std::map<MyString, SkinnedMesh1::AnimAction> animationPose =
 	{
@@ -22,8 +27,8 @@ void ScorpionHero::init(
 		{ "Dead", { 245, 0 } }, // Dead
 	};
 
-	m_health = m_maxHealth;
-	m_damage = 20;
+	LivingEntity::init(health, damage, range, ENTITY_TYPE_HERO, teamType);
+
 	m_pointTouch = pos;
 
 	{
@@ -41,7 +46,8 @@ void ScorpionHero::init(
 		m_player.addInstance(m_instance);
 	}
 
-	m_bloodBar = bloodBar;
+	if (teamType == MY_TEAM) m_bloodBar = bloodBarGreen;
+	else m_bloodBar = bloodBarRed;
 
 	m_projectile.init(billboard);
 }
@@ -132,15 +138,14 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 
 int ScorpionHero::findLivingEntityToBeat()
 {
-	MyVec3 position = m_instance->Position;
-	int idTrooper = g_livingEntityManager.getIdLivingEntityToBeat(position);
+	int idTrooper = g_livingEntityManager.getIdLivingEntityInRange(m_idEntity, m_range);
 	return idTrooper;
 }
 
 void ScorpionHero::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	m_player.render(camera, &light);
-	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health / (float)m_maxHealth);
+	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health/(float)m_maxHealth);
 	m_projectile.render(camera);
 }
 
@@ -171,4 +176,9 @@ void ScorpionHero::projectile()
 {
 	m_instance->setActionAndReset("Beat2");
 	m_isUsingSkill = true;
+}
+
+SkinnedMesh1::Instance* ScorpionHero::getInstance()
+{
+	return m_instance;
 }

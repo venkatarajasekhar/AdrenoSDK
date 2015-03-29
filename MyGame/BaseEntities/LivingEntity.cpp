@@ -15,11 +15,12 @@ LivingEntity::~LivingEntity()
 {
 }
 
-void LivingEntity::init(int maxHealth, int damage, ENTITY_TYPE entityType, TEAM_TYPE teamType)
+void LivingEntity::init(int maxHealth, int damage, float range, ENTITY_TYPE entityType, TEAM_TYPE teamType)
 {
 	m_maxHealth = maxHealth;
 	m_health = m_maxHealth;
 	m_damage = damage;
+	m_range = range;
 	m_entityType = entityType;
 	m_teamType = teamType;
 }
@@ -49,7 +50,12 @@ bool LivingEntity::isDead()const
 	return (m_health <= 0);
 }
 
-int LivingEntity::getIdEntity()
+int LivingEntity::getIdEntity()const
 {
 	return m_idEntity;
+}
+
+float LivingEntity::getRange()const
+{
+	return m_range;
 }

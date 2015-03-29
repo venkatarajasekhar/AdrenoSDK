@@ -188,8 +188,11 @@ void PlayScreen::init()
 			m_shaders[SHADER_SKINNED_MESH_1],
 			MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f),
 			&m_bloodbar_red,
-			m_billboards[BILLBOARD_FIREBALL]);
+			&m_bloodbar_green,
+			m_billboards[BILLBOARD_FIREBALL],
+			1000, 20, 2.0f, MY_TEAM);
 
+		g_livingEntityManager.insertLivingEntityToList(&m_scorpion, -1);
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
@@ -210,7 +213,7 @@ void PlayScreen::init()
 			m_shaders[SHADER_SKINNED_MESH_1],
 			&material);
 
-		m_skinnedMesh_dude.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0, 180, 0), MyVec3(0.07f), ""));
+		//m_skinnedMesh_dude.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0, 180, 0), MyVec3(0.07f), ""));
 	}
 
 	{
@@ -227,7 +230,7 @@ void PlayScreen::init()
 			m_shaders[SHADER_MESH],
 			&material);
 
-		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0), MyVec3(0), MyVec3(0.4f)));
+		m_mesh_indiaTowerOfVictory.addInstance(Mesh::buildMeshInstance(MyVec3(0, 0, 10), MyVec3(0), MyVec3(0.3f)));
 	}
 	
 	/*{
@@ -244,7 +247,7 @@ void PlayScreen::init()
 		//CFrmPackedResourceGLES resource;
 		//resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
 
-		Material material;
+		/*Material material;
 
 		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
@@ -256,13 +259,13 @@ void PlayScreen::init()
 			m_anim1Datas[ANIM_1_DATA_SCORPION],
 			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
 			m_shaders[SHADER_SKINNED_MESH_1],
-			&material);
+			&material);*/
 
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
 		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
 
-		g_livingEntityManager.init(&m_skinnedMesh_scorpion);
+		g_livingEntityManager.init(&m_skinnedMesh_dude);
 	}
 }
 
@@ -271,13 +274,11 @@ void PlayScreen::cloneTrooper()
 	if (g_livingEntityManager.getNEntity() < 10)
 	{
 		Trooper* scorpion1 = new Trooper;
-		scorpion1->init(TROOPER_SCORPION, MY_TEAM, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.15f), &m_bloodbar_red);
-		//scorpion1->init(MY_TEAM, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.15f), &m_bloodbar_red);
+		scorpion1->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.04f), &m_bloodbar_red, &m_bloodbar_green);
 		g_livingEntityManager.insertLivingEntityToList(scorpion1, TROOPER_SCORPION);
 
 		Trooper* scorpion2 = new Trooper;
-		scorpion2->init(TROOPER_SCORPION, ENEMY, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.15f), &m_bloodbar_red);
-		//scorpion2->init(ENEMY, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.15f), &m_bloodbar_red);
+		scorpion2->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.04f), &m_bloodbar_red, &m_bloodbar_green);
 		g_livingEntityManager.insertLivingEntityToList(scorpion2, TROOPER_SCORPION);
 	}
 }
@@ -337,7 +338,7 @@ void PlayScreen::update(void* utilObjs)
 
 	// Mesh objects
 	m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
-	m_skinnedMesh_dude.update(*globalUtilObjs->timer);
+	//m_skinnedMesh_dude.update(*globalUtilObjs->timer);
 
 	int width, height;
 	getWindowDimension(width, height);
@@ -351,7 +352,7 @@ void PlayScreen::update(void* utilObjs)
 
 	if (!m_lockedUserInput)
 	{
-		m_scorpion.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+		//m_scorpion.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 		g_livingEntityManager.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 	}
 }
@@ -368,10 +369,10 @@ void PlayScreen::render(void* utilObjs)
 		Light light;
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		m_skinnedMesh_dude.render(m_camera_main, &light);
+		//m_skinnedMesh_dude.render(m_camera_main, &light);
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
-		m_scorpion.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		//m_scorpion.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		g_livingEntityManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
 		

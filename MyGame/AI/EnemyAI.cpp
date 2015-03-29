@@ -1,9 +1,8 @@
 #include "EnemyAI.h"
-
-extern MyVec3 PositionPlayer;
+#include "Global.h"
 
 void EnemyAI::init(
-	int type,
+	int idEntity,
 	int team,
 	MyVec3 pos,
 	MyVec3 vectorRotation,
@@ -11,7 +10,7 @@ void EnemyAI::init(
 	MyVec3 scale
 	)
 {
-	m_type = type;
+	m_idEntity = idEntity;
 	m_team = team;
 	m_pos = pos;
 	m_vectorRotation = vectorRotation;
@@ -59,7 +58,8 @@ void EnemyAI::update(Timer& timer)
 			EnemyCaughtThreshold += EnemyHysteresis / 2;
 		}
 
-		float distanceFromCat = distance(m_pos, PositionPlayer);
+    	m_idEnemy = g_livingEntityManager.getIdLivingEntityInRange(m_idEntity, 1000000000.0f);
+		float distanceFromCat = distance(m_pos, g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position);
 		if (distanceFromCat > EnemyChaseThreshold)
 		{
 			//if (m_enemyState != Wander) SetAnim(this, 0);
@@ -87,7 +87,7 @@ void EnemyAI::update(Timer& timer)
 		float currentEnemySpeed;
 		if (m_enemyState == Chasing)
 		{
-			m_enemyOrientation = TurnToFace(m_pos, PositionPlayer, m_enemyOrientation, EnemyTurnSpeed);
+			m_enemyOrientation = TurnToFace(m_pos, g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position, m_enemyOrientation, EnemyTurnSpeed);
 			currentEnemySpeed = MaxEnemySpeed;
 		}
 		else if (m_enemyState == Wander)
@@ -146,7 +146,7 @@ void EnemyAI::Wanders(MyVec3 position, float& orientation, float turnSpeed)
 	else
 	{
 		MyVec3 positionNext;
-		if (m_team == 0) positionNext = MyVec3(20, 0, 0);
+		if (m_team == MY_TEAM) positionNext = MyVec3(20, 0, 0);
 		else positionNext = MyVec3(-20, 0, 0);
 		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}

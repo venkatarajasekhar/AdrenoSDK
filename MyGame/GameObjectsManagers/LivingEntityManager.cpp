@@ -75,7 +75,6 @@ void LivingEntityManager::update(UserInput& userInput, Timer& timer, Camera& cam
 
 			if (i->second->isDead())
 			{
-
 				if (i->second->getEntityType() == ENTITY_TYPE_PAWN) m_troopers[((Trooper*)(i->second))->getTrooperType()]->removeInstance(i->second->getInstance());
 				removeLivingEntityFromList(i->second);
 			}
@@ -118,14 +117,18 @@ LivingEntity* LivingEntityManager::getLivingEntityById(int id)
 		}
 }
 
-int LivingEntityManager::getIdLivingEntityToBeat(MyVec3 positionPlayer)
+int LivingEntityManager::getIdLivingEntityInRange(int idEntity, float range)
 {
+	float minDistance = range;
+	int result = -1;
 	for (auto i = m_listLivingEntitys.begin(); i != m_listLivingEntitys.end(); i++)
-		if ((distance(positionPlayer, i->second->getInstance()->Position) < 2.0f) && (!i->second->isDead()))
-		{
-			return i->second->getIdEntity();
-		}
-	return -1;
+		if ((!i->second->isDead()) && (i->second->getIdEntity() != idEntity) && (m_listLivingEntitys[idEntity]->getTeamType() != i->second->getTeamType()))
+			if (distance(m_listLivingEntitys[idEntity]->getInstance()->Position, i->second->getInstance()->Position) < minDistance)
+			{
+				result = i->second->getIdEntity();
+				minDistance = distance(m_listLivingEntitys[idEntity]->getInstance()->Position, i->second->getInstance()->Position);
+			}
+	return result;
 }
 
 bool LivingEntityManager::checkLivingEntityCanMove(MyVec3 positionTrooper, int type)

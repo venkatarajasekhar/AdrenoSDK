@@ -168,7 +168,7 @@ void PlayScreen::init()
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodbar_red.init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
 	{
-		m_hud.init();
+		m_hud.init(MyVec3(0), MyVec2(100));
 		m_hud.addPressListener(this);
 	}
 	
@@ -185,6 +185,7 @@ void PlayScreen::init()
 			m_textures[TEXTURE_TERRAIN_DIFF_1],
 			m_textures[TEXTURE_TERRAIN_DIFF_2],
 			m_textures[TEXTURE_TERRAIN_BLEND],
+			MyVec3(0),
 			MyVec2(100),
 			properties);
 	}

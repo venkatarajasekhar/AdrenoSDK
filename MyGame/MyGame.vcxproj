@@ -148,6 +148,8 @@
     <ClCompile Include="Core\MainGame.cpp" />
     <ClCompile Include="GameObjectsManagers\LivingEntityManager.cpp" />
     <ClCompile Include="GameObjects\Hero.cpp" />
+    <ClCompile Include="GameObjects\Hero_AI.cpp" />
+    <ClCompile Include="GameObjects\Hero_Controlled.cpp" />
     <ClCompile Include="GameObjects\Pawn.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
     <ClCompile Include="GameObjects\Projectile.cpp" />
@@ -160,6 +162,7 @@
     <ClCompile Include="Screens\HUD.cpp" />
     <ClCompile Include="Screens\MenuScreen.cpp" />
     <ClCompile Include="Screens\PlayScreen.cpp" />
+    <ClCompile Include="Screens\TestScreen.cpp" />
     <ClCompile Include="Utils\Global.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +176,8 @@
     <ClInclude Include="Core\MainGame.h" />
     <ClInclude Include="GameObjectsManagers\LivingEntityManager.h" />
     <ClInclude Include="GameObjects\Hero.h" />
+    <ClInclude Include="GameObjects\Hero_AI.h" />
+    <ClInclude Include="GameObjects\Hero_Controlled.h" />
     <ClInclude Include="GameObjects\Pawn.h" />
     <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="GameObjects\Projectile.h" />
@@ -185,6 +190,7 @@
     <ClInclude Include="Screens\HUD.h" />
     <ClInclude Include="Screens\MenuScreen.h" />
     <ClInclude Include="Screens\PlayScreen.h" />
+    <ClInclude Include="Screens\TestScreen.h" />
     <ClInclude Include="Utils\Global.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>

@@ -85,13 +85,7 @@ void MiniMap::update(UserInput& userInput)
 	MyVec2 pos;
 	if (userInput.pointer_Releasing(pos) && isInside(pos, m_bounding))
 	{
-		IOnPressListener::Data data =
-		{
-			"hud_minimap",
-			pos.x,
-			pos.y
-		};
-
+		IOnPressListener::Data data("hud_minimap", (int)pos.x, (int)pos.y);
 		throwPressEvent(data);
 
 		if (m_status == SMALL) setStatus(LARGE);

@@ -1,7 +1,19 @@
 
 #include "HUD.h"
 
-extern MyVec3 PositionPlayer;
+//==========================================================================================================
+//
+// Constants
+//
+//==========================================================================================================
+
+static const MyVec2 BTN_FIGHTING_MARGIN = MyVec2(30, 20);
+
+//==========================================================================================================
+//
+// HUD class
+//
+//==========================================================================================================
 
 HUD::HUD()
 {
@@ -11,7 +23,9 @@ HUD::~HUD()
 {
 }
 
-void HUD::init()
+#pragma region Core functions
+
+void HUD::init(const MyVec3& mapCenter, const MyVec2& mapSize)
 {
 	// Assets textures
 	{
@@ -25,13 +39,13 @@ void HUD::init()
 		m_textures[TEXTURE_BTN_FIGHTING].init(resource.GetTexture("btn_fighting"));
 	}
 
-	// HUD
+	// Elements of HUD
 	m_miniMap.init(
 		m_textures[TEXTURE_MINIMAP_BACKGROUND],
 		m_textures[TEXTURE_MINIMAP_PLAYER],
 		m_textures[TEXTURE_MINIMAP_BTN_CLOSE],
-		MyVec3(0),
-		MyVec2(100));
+		mapCenter,
+		mapSize);
 	m_miniMap.addPressListener(this);
 
 	m_btn_fighting.init("btn_hud_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
@@ -43,8 +57,7 @@ void HUD::resize(int width, int height)
 	m_miniMap.resize(width, height);
 
 	{
-		MyVec2 offset(30, 20);
-		MyVec2 pos = MyVec2(width, height) - m_btn_fighting.getSize() - offset;
+		MyVec2 pos = MyVec2(width, height) - m_btn_fighting.getSize() - BTN_FIGHTING_MARGIN;
 		m_btn_fighting.setPos(pos);
 	}
 }
@@ -57,9 +70,15 @@ void HUD::update(Timer& timer, UserInput& userInput)
 
 void HUD::render(SpriteBatch& spriteBatch)
 {
-	m_miniMap.render(spriteBatch, PositionPlayer);
+	MyVec3 dumpPlayerPos;
+
+	m_miniMap.render(spriteBatch, dumpPlayerPos);
 	m_btn_fighting.render(spriteBatch);
 }
+
+#pragma endregion
+
+#pragma region Event handling
 
 void HUD::OnPress(const IOnPressListener::Data& data)
 {
@@ -77,3 +96,5 @@ void HUD::addPressListener(IOnPressListener* listener)
 	m_btn_fighting.addPressListener(listener);
 	OnPressListenee::addPressListener(listener);
 }
+
+#pragma endregion

@@ -2,7 +2,8 @@
 // Always including Utils.h on top
 #include "Utils.h"
 
-#include "PlayScreen.h"
+#include "TestScreen.h"
+#include "Hero_Controlled.h"
 
 //========================================================================================================
 //
@@ -21,13 +22,19 @@ static const float MAIN_CAM_FAR = 100.0f;
 //
 //========================================================================================================
 
-PlayScreen::PlayScreen(ScreenManager* screenManager)
+TestScreen::TestScreen(ScreenManager* screenManager)
 	: Screen(screenManager)
 {
 }
 
-PlayScreen::~PlayScreen()
+TestScreen::~TestScreen()
 {
+	// Game objects
+	for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
+	{
+		delete (*i);
+	}
+
 	// Assets mesh 1 datas
 	for (size_t i = 0; i < NUM_MESH_1_DATAS; i++)
 	{
@@ -49,7 +56,7 @@ PlayScreen::~PlayScreen()
 
 #pragma region Init assets
 
-void PlayScreen::initAssets()
+void TestScreen::initAssets()
 {
 	// Assets shaders
 	m_shaders[SHADER_TERRAIN].init(
@@ -152,12 +159,56 @@ void PlayScreen::initAssets()
 
 #pragma endregion
 
-void PlayScreen::init()
+#pragma region Init heroes
+
+void TestScreen::initHeroes()
+{
+	{
+		Hero_Controlled* hero = new Hero_Controlled;
+
+		Material material;
+
+		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
+		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+		material.Shininess = 16.0f;
+
+		std::map<MyString, SkinnedMesh1::AnimAction> actions =
+		{
+			{ "Idle",         { 85 , 65 } },
+			{ "Walk",         { 10 , 25 } },
+			{ "Attack",       { 35 , 60 } },
+			{ "Skill_Attack", { 150, 55 } },
+			{ "Defence",      { 195, 50 } },
+			{ "Die",          { 245, 0  } },
+		};
+
+		hero->init(
+			m_mesh1Datas[MESH_1_DATA_SCORPION],
+			m_anim1Datas[ANIM_1_DATA_SCORPION],
+			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
+			m_shaders[SHADER_SKINNED_MESH_1],
+			material,
+			MyVec3(),
+			MyVec3(),
+			MyVec3(0.2f),
+			actions);
+
+		m_renderableEnts.push_back(hero);
+
+		m_mesh_terrain.addPressListener(hero);
+	}
+}
+
+#pragma endregion
+
+void TestScreen::init()
 {
 	// Core objects
 	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
 
 	initAssets();
+	initHeroes();
 
 	// Mesh objects
 	{
@@ -172,56 +223,29 @@ void PlayScreen::init()
 			m_textures[TEXTURE_TERRAIN_DIFF_1],
 			m_textures[TEXTURE_TERRAIN_DIFF_2],
 			m_textures[TEXTURE_TERRAIN_BLEND],
+			MyVec3(0),
 			MyVec2(100),
 			properties);
 	}
 
-	{
-		Material material;
-
-		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-		material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-		material.Shininess = 16.0f;
-
-		m_testMoving.init(
-			m_mesh1Datas[MESH_1_DATA_DUDE],
-			m_anim1Datas[ANIM_1_DATA_DUDE],
-			m_meshTextures[TEXTURES_MESH_DUDE].Textures,
-			m_shaders[SHADER_SKINNED_MESH_1],
-			material);
-	}
+	m_hud.init(MyVec3(0), MyVec2(100));
 }
 
-void PlayScreen::resize(int width, int height)
+void TestScreen::resize(int width, int height)
 {
 	// Core objects
 	m_camera_main.resize(width, height);
 
 	// HUD objects
+	m_hud.resize(width, height);
 }
 
-void PlayScreen::update(void* utilObjs)
+void TestScreen::update(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	// Core objects
 	{
-		/*
-		MyVec2 delta;
-		MyVec3 eye;
-
-		// dpi-dependence
-		float CAM_MOVE_FACTOR = 0.03F;
-		if (globalUtilObjs->userInput->pointer_Dragging(delta))
-		{
-			eye = m_camera_main.getEye();
-			eye.x -= delta.x * CAM_MOVE_FACTOR;
-			eye.z -= delta.y * CAM_MOVE_FACTOR;
-			m_camera_main.setEye(eye);
-		}
-		/**/
-
 		/*
 		MyVec3 offset = MyVec3(0, 15, 15);
 		MyVec3 eye = PositionPlayer + offset;
@@ -240,31 +264,40 @@ void PlayScreen::update(void* utilObjs)
 	// Effects
 
 	// HUD objects
+	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
 	// Mesh objects
-	m_testMoving.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main);
+	m_mesh_terrain.update(*globalUtilObjs->timer, *globalUtilObjs->userInput, m_camera_main);
+
+	// Game objects
+	for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
+	{
+		(*i)->update(*globalUtilObjs->userInput, *globalUtilObjs->timer);
+	}
 }
 
-void PlayScreen::render(void* utilObjs)
+void TestScreen::render(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	// Mesh objects
 	m_mesh_terrain.render(m_camera_main);
 
-	{
-		Light light;
-		light.PosOrDir = MyVec4(0, -1, -1, 0);
+	// Game objects
+	Light light;
+	light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		m_testMoving.render(m_camera_main, light);
+	for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
+	{
+		(*i)->render(m_camera_main, light);
 	}
-	
 
 	// Effects objects
 		
 	// HUD objects
+	m_hud.render(*globalUtilObjs->spriteBatch);
 }
 
-void PlayScreen::OnPress(const IOnPressListener::Data& data)
+void TestScreen::OnPress(const IOnPressListener::Data& data)
 {
 }

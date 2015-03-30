@@ -2,6 +2,7 @@
 #include "MainGame.h"
 #include "MenuScreen.h"
 #include "PlayScreen.h"
+#include "TestScreen.h"
 
 #pragma region Global implementations
 
@@ -70,9 +71,13 @@ BOOL MainGame::Initialize()
 	//m_gameServer.init();
 
 	// Core objects
+	/*
 	m_screenManager.addScreen("MenuScreen", new MenuScreen(&m_screenManager));
 	m_screenManager.addScreen("PlayScreen", new PlayScreen(&m_screenManager));
 	m_screenManager.activeScreen("MenuScreen");
+	/**/
+	m_screenManager.addScreen("TestScreen", new TestScreen(&m_screenManager));
+	m_screenManager.activeScreen("TestScreen");
 
 	// End init
 	m_initialized = true;

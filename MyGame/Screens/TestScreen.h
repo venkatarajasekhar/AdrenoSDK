@@ -9,10 +9,11 @@
 #include <MySkinnedMesh2.h>
 #include <MyEventListener.h>
 
+#include "HUD.h"
 #include "FlatTerrain.h"
-#include "TestMovingEntity.h"
+#include "IRenderableEntity.h"
 
-class PlayScreen : public Screen, public IOnPressListener
+class TestScreen : public Screen, public IOnPressListener
 {
 private:
 
@@ -90,8 +91,8 @@ private:
 	};
 
 public:
-	PlayScreen(ScreenManager* screenManager);
-	~PlayScreen();
+	TestScreen(ScreenManager* screenManager);
+	~TestScreen();
 
 	void init();
 	void resize(int width, int height);
@@ -102,6 +103,7 @@ public:
 
 private:
 	void initAssets();
+	void initHeroes();
 
 private:
 
@@ -121,8 +123,11 @@ private:
 	// Effects
 
 	// HUD objects
+	HUD m_hud;
 	
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
-	TestMovingEntity m_testMoving;
+
+	// Game objects
+	std::vector<IRenderableEntity*> m_renderableEnts;
 };

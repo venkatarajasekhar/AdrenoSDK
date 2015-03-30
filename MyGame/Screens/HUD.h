@@ -3,6 +3,10 @@
 
 #include "MiniMap.h"
 
+// HUD consists of:
+//	- Minimap
+//	- Fighting button
+
 class HUD : public IOnPressListener, public OnPressListenee
 {
 private:
@@ -19,17 +23,21 @@ public:
 	HUD();
 	~HUD();
 
-	void init();
+	// Core functions
+	void init(const MyVec3& mapCenter, const MyVec2& mapSize);
 	void resize(int width, int height);
 	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch);
 
+	// Event handling
 	void OnPress(const IOnPressListener::Data& data);
 	void addPressListener(IOnPressListener* listener);
 
 private:
+	// Assets
 	Texture m_textures[NUM_TEXTURES];
 
+	// Elements of HUD
 	MiniMap m_miniMap;
 	UIButton m_btn_fighting;
 };

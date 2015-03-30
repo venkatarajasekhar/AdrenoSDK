@@ -4,12 +4,22 @@
 #include "IRenderableEntity.h"
 #include <MySkinnedMesh1.h>
 
+#include "MovingEntity.h"
+
+// Hero consists of state:
+//	- Idle
+//	- Walk
+//	- Attack
+//	- Skill attack
+//	- Die
+
 class Hero : public IRenderableEntity
 {
 public:
 	Hero();
 	virtual ~Hero();
 
+	// Core functions
 	virtual void init(
 		Adreno::Model* model,
 		Adreno::Animation* anim,
@@ -25,6 +35,10 @@ public:
 	virtual void render(Camera& camera, Light& light);
 
 protected:
+	// Mesh/Appearance elements
 	SkinnedMesh1 m_skinnedMesh;
 	SkinnedMesh1::Instance* m_skinnedMeshIns;
+
+	// Moving elements
+	MovingEntity m_movingEnt;
 };

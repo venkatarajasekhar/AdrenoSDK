@@ -42,7 +42,6 @@ void EnemyAI::update(Timer& timer)
 	{
 		float EnemyChaseThreshold = EnemyChaseDistance;
 		float EnemyCaughtThreshold = EnemyCaughtDistance;
-		//m_enemyOrientation = m_angle;
 
 		if (m_enemyState == Wander)
 		{
@@ -63,11 +62,13 @@ void EnemyAI::update(Timer& timer)
 		if (distanceFromCat > EnemyChaseThreshold)
 		{
 			//if (m_enemyState != Wander) SetAnim(this, 0);
+			g_livingEntityManager.getLivingEntityById(m_idEntity)->getInstance()->CurrentAction = "Run";
 			m_enemyState = Wander;
 		}
 		else if (distanceFromCat > EnemyCaughtThreshold)
 		{
 			//if (m_enemyState != Chasing) SetAnim(this, 0);
+			g_livingEntityManager.getLivingEntityById(m_idEntity)->getInstance()->CurrentAction = "Run";
 			m_enemyState = Chasing;
 		}
 		else
@@ -81,6 +82,15 @@ void EnemyAI::update(Timer& timer)
 			}*/
 
 			//if (m_enemyState != Caught) SetAnim(this, 0);
+
+			m_countTime += timer.getElapsedTime();
+			if (m_countTime >= 1.5f)
+			{
+				m_countTime = 0;
+				g_livingEntityManager.getLivingEntityById(m_idEnemy)->setHealth(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getHealth() - g_livingEntityManager.getLivingEntityById(m_idEntity)->getDamage());
+			}
+
+			g_livingEntityManager.getLivingEntityById(m_idEntity)->getInstance()->CurrentAction = "Beat1";
 			m_enemyState = Caught;
 		}
 

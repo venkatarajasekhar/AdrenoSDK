@@ -14,6 +14,7 @@ public:
 	MyVec3 m_scale;
 	MyVec3 m_vectorRotation;
 	float m_angle;
+	float m_countTime;
 
 	// enumeration
 	enum EnemyAiState

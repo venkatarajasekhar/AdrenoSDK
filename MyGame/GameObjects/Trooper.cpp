@@ -20,7 +20,7 @@ void Trooper::init(
 	if (teamType == MY_TEAM) m_bloodBar = bloodBarGreen;
 	else m_bloodBar = bloodBarRed;
 	LivingEntity::init(health, damage, range, ENTITY_TYPE_PAWN, teamType);
-	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "");
+	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "Run");
 	m_ai.init(m_idEntity, teamType, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale);
 }
 
@@ -44,7 +44,7 @@ void Trooper::copyAllProperties()
 void Trooper::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	MyVec3 pos = m_instance->Position + MyVec3(-0.8, 2.3, 0);
-	m_bloodBar->render(spriteBatch, camera, pos, m_health/(float)m_maxHealth);
+	m_bloodBar->render(spriteBatch, camera, pos, getHealthRatio());
 }
 
 SkinnedMesh1::Instance* Trooper::getInstance()

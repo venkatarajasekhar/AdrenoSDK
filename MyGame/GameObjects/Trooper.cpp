@@ -19,9 +19,15 @@ void Trooper::init(
 {
 	if (teamType == MY_TEAM) m_bloodBar = bloodBarGreen;
 	else m_bloodBar = bloodBarRed;
-	LivingEntity::init(health, damage, range, ENTITY_TYPE_PAWN, teamType);
+	
+	LivingEntity::init(health, damage, range, 2.0f, ENTITY_TYPE_PAWN, teamType);
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "Run");
-	m_ai.init(m_idEntity, teamType, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale);
+	
+	MyVec3 pointEnd = pos;
+	if (teamType == MY_TEAM) pointEnd.x = 20;
+	else pointEnd.x = -20;
+	
+	m_ai.init(m_idEntity, teamType, m_instance->Position, MyVec3(0, 1, 0), m_instance->Rotation.y, m_instance->Scale, pointEnd);
 }
 
 void Trooper::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)

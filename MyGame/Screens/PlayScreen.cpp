@@ -281,16 +281,29 @@ void PlayScreen::init()
 
 void PlayScreen::cloneTrooper()
 {
-	if (g_livingEntityManager.getNEntity() < 10)
-	{
-		Trooper* scorpion1 = new Trooper;
-		scorpion1->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
-		g_livingEntityManager.insertLivingEntityToList(scorpion1, TROOPER_SCORPION);
+	Trooper* scorpion11 = new Trooper;
+	scorpion11->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 2), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion11, TROOPER_SCORPION);
 
-		Trooper* scorpion2 = new Trooper;
-		scorpion2->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
-		g_livingEntityManager.insertLivingEntityToList(scorpion2, TROOPER_SCORPION);
-	}
+	Trooper* scorpion12 = new Trooper;
+	scorpion12->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-19, 0, 0), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion12, TROOPER_SCORPION);
+
+	Trooper* scorpion13 = new Trooper;
+	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, -2), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion13, TROOPER_SCORPION);
+
+	Trooper* scorpion21 = new Trooper;
+	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, -2), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion21, TROOPER_SCORPION);
+
+	Trooper* scorpion22 = new Trooper;
+	scorpion22->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(19, 0, 0), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion22, TROOPER_SCORPION);
+	
+	Trooper* scorpion23 = new Trooper;
+	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 2), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion23, TROOPER_SCORPION);
 }
 
 void PlayScreen::resize(int width, int height)
@@ -354,10 +367,10 @@ void PlayScreen::update(void* utilObjs)
 	getWindowDimension(width, height);
 
 	m_countTime += globalUtilObjs->timer->getElapsedTime();
-	if (m_countTime > 4)
+	if (m_countTime > 25)
 	{
 		cloneTrooper();
-		m_countTime -= 4;
+		m_countTime -= 25;
 	}
 
 	if (!m_lockedUserInput)

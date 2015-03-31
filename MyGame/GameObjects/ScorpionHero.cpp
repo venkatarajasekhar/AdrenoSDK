@@ -27,7 +27,7 @@ void ScorpionHero::init(
 		{ "Dead", { 245, 0 } }, // Dead
 	};
 
-	LivingEntity::init(health, damage, range, ENTITY_TYPE_HERO, teamType);
+	LivingEntity::init(health, damage, range, 2.0f, ENTITY_TYPE_HERO, teamType);
 
 	m_pointTouch = pos;
 

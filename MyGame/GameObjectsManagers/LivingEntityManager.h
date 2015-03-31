@@ -35,4 +35,5 @@ public:
 	int getIdLivingEntityInRange(int idEntity, float range);
 	bool checkLivingEntityCanMove(MyVec3 positionTrooper, int type);
 	void beatLivingEntitys(MyVec3 positionBeat, int dam);
+	//MyVec3 obstacleAvoidance(int idEntity);
 };

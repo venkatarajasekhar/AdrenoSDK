@@ -13,6 +13,7 @@ public:
 	MyVec3 m_pos;
 	MyVec3 m_scale;
 	MyVec3 m_vectorRotation;
+	MyVec3 m_pointEnd;
 	float m_angle;
 	float m_countTime;
 
@@ -29,7 +30,7 @@ public:
 	const float MaxEnemySpeed = 0.05f;
 	const float EnemyTurnSpeed = 5.0f;
 	const float EnemyChaseDistance = 8.0f;
-	const float EnemyCaughtDistance = 1.5f;
+	const float EnemyCaughtDistance = 1.0f;
 	const float EnemyHysteresis = 0.5f;
 
 	// field
@@ -47,7 +48,8 @@ public:
 		MyVec3 pos,
 		MyVec3 vectorRotation,
 		float angle,
-		MyVec3 scale);
+		MyVec3 scale,
+		MyVec3 pointEnd);
 	void update(Timer& timer);
 	float TurnToFace(MyVec3 position, MyVec3 faceThis, float currentAngle, float turnSpeed);
 	void Wanders(MyVec3 position, float& orientation, float turnSpeed);

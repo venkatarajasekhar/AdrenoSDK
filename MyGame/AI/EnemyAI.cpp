@@ -7,7 +7,8 @@ void EnemyAI::init(
 	MyVec3 pos,
 	MyVec3 vectorRotation,
 	float angle,
-	MyVec3 scale
+	MyVec3 scale,
+	MyVec3 pointEnd
 	)
 {
 	m_idEntity = idEntity;
@@ -17,6 +18,7 @@ void EnemyAI::init(
 	m_angle = angle;
 	m_scale = scale;
 	m_enemyOrientation = m_angle;
+	m_pointEnd = pointEnd;
 }
 
 
@@ -148,18 +150,13 @@ void EnemyAI::Wanders(MyVec3 position, float& orientation, float turnSpeed)
 {
 	float e = 0.1f;
 
-	if (fabs(m_pos.z) > e)
+	if (fabs(m_pos.z - m_pointEnd.z) > e)
 	{
-		MyVec3 positionNext = MyVec3(m_pos.x, 0, 0);
+		MyVec3 positionNext = MyVec3(m_pos.x, 0, m_pointEnd.z);
 		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}
 	else
-	{
-		MyVec3 positionNext;
-		if (m_team == MY_TEAM) positionNext = MyVec3(20, 0, 0);
-		else positionNext = MyVec3(-20, 0, 0);
-		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
-	}
+		orientation = TurnToFace(m_pos, m_pointEnd, orientation, .15f * turnSpeed);
 }
 
 void EnemyAI::Wanders(MyVec3 position, MyVec3& wanderDirection, float& orientation, float turnSpeed)

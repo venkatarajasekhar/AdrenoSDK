@@ -52,6 +52,7 @@ SkinnedMesh1::Instance* Trooper::getInstance()
 	return m_instance;
 }
 
+
 int Trooper::getTrooperType()
 {
 	return m_trooperType;

@@ -39,9 +39,10 @@ void Trooper::update(UserInput& userInput, Timer& timer, Camera& camera, int wid
 
 void Trooper::copyAllProperties()
 {
-	if (g_livingEntityManager.checkLivingEntityCanMove(m_ai.m_pos, m_teamType))
-		m_instance->Position = m_ai.m_pos;
-	else m_ai.m_pos = m_instance->Position;
+	//if (g_livingEntityManager.checkLivingEntityCanMove(m_ai.m_pos, m_teamType))
+		//m_instance->Position = m_ai.m_pos;
+	//else m_ai.m_pos = m_instance->Position;
+	m_instance->Position = m_ai.m_pos;
 	m_instance->Rotation = MyVec3(0, m_ai.m_angle, 0);
 	m_instance->Scale = m_ai.m_scale;
 

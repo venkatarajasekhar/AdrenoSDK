@@ -60,7 +60,8 @@ void EnemyAI::update(Timer& timer)
 		}
 
     	m_idEnemy = g_livingEntityManager.getIdLivingEntityInRange(m_idEntity, 1000000000.0f);
-		float distanceFromCat = distance(m_pos, g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position);
+		float distanceFromCat = 1000000000.0f;
+		if ((m_idEnemy != -1) && (g_livingEntityManager.getLivingEntityById(m_idEnemy) != NULL)) distanceFromCat = distance(m_pos, g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position);
 		if (distanceFromCat > EnemyChaseThreshold)
 		{
 			//if (m_enemyState != Wander) SetAnim(this, 0);
@@ -128,7 +129,7 @@ void EnemyAI::update(Timer& timer)
 
 MyVec3 EnemyAI::MoveEnemy(MyVec3 currPos, MyVec3 moveAmt, Timer& timer)
 {
-	MyVec3 foreMove = currPos + moveAmt * timer.getElapsedTime() * 40.0f;
+	MyVec3 foreMove = currPos + (moveAmt + 0.005f*g_livingEntityManager.checkLivingEntityCanMove(m_idEntity)) * timer.getElapsedTime() * 40.0f;
 
 	// kiem tra dich den co phai mat dat k?
 	/*if (_level.Terrain.DetermineTerrainType(foreMove.x, foreMove.z) == Terrain.TerrainType.Ground)

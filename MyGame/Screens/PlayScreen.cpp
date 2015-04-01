@@ -200,7 +200,7 @@ void PlayScreen::init()
 			&m_bloodbar_red,
 			&m_bloodbar_green,
 			m_billboards[BILLBOARD_FIREBALL],
-			1000, 20, 2.0f, MY_TEAM);
+			1000, 20, 3.0f, MY_TEAM);
 
 		g_livingEntityManager.insertLivingEntityToList(&m_scorpion, -1);
 	}
@@ -282,7 +282,7 @@ void PlayScreen::init()
 void PlayScreen::cloneTrooper()
 {
 	Trooper* scorpion11 = new Trooper;
-	scorpion11->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 2), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion11->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion11, TROOPER_SCORPION);
 
 	Trooper* scorpion12 = new Trooper;
@@ -290,11 +290,11 @@ void PlayScreen::cloneTrooper()
 	g_livingEntityManager.insertLivingEntityToList(scorpion12, TROOPER_SCORPION);
 
 	Trooper* scorpion13 = new Trooper;
-	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, -2), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, -1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion13, TROOPER_SCORPION);
 
 	Trooper* scorpion21 = new Trooper;
-	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, -2), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, -1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion21, TROOPER_SCORPION);
 
 	Trooper* scorpion22 = new Trooper;
@@ -302,7 +302,7 @@ void PlayScreen::cloneTrooper()
 	g_livingEntityManager.insertLivingEntityToList(scorpion22, TROOPER_SCORPION);
 	
 	Trooper* scorpion23 = new Trooper;
-	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 2), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion23, TROOPER_SCORPION);
 }
 

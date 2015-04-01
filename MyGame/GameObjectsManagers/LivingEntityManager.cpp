@@ -110,11 +110,10 @@ int LivingEntityManager::getNEntity()
 
 LivingEntity* LivingEntityManager::getLivingEntityById(int id)
 {
-	for (auto i = m_listLivingEntitys.begin(); i != m_listLivingEntitys.end(); i++)
-		if (i->second->getIdEntity() == id)
-		{
-			return i->second;
-		}
+	auto result = m_listLivingEntitys.find(id);
+	if (result != m_listLivingEntitys.end())
+		return result->second;
+	return NULL;
 }
 
 int LivingEntityManager::getIdLivingEntityInRange(int idEntity, float range)
@@ -131,18 +130,15 @@ int LivingEntityManager::getIdLivingEntityInRange(int idEntity, float range)
 	return result;
 }
 
-bool LivingEntityManager::checkLivingEntityCanMove(MyVec3 positionTrooper, int type)
+MyVec3 LivingEntityManager::checkLivingEntityCanMove(int idEntity)
 {
-	int count = 0;
 	for (auto i = m_listLivingEntitys.begin(); i != m_listLivingEntitys.end(); i++)
-		if (twoPointIsContact(positionTrooper, i->second->getInstance()->Position, 0.6f))
+		if ((idEntity != i->second->getIdEntity()) && (twoPointIsContact(m_listLivingEntitys[idEntity]->getInstance()->Position, i->second->getInstance()->Position, 1.0f)))
 		{
-			count++;
-			if (count == 2)
-				return false;
+			return m_listLivingEntitys[idEntity]->getInstance()->Position - i->second->getInstance()->Position;
 		}
 
-	return true;
+	return MyVec3(0);
 }
 
 void LivingEntityManager::beatLivingEntitys(MyVec3 positionBeat, int dam)

@@ -30,7 +30,7 @@ public:
 	const float MaxEnemySpeed = 0.05f;
 	const float EnemyTurnSpeed = 5.0f;
 	const float EnemyChaseDistance = 8.0f;
-	const float EnemyCaughtDistance = 1.0f;
+	const float EnemyCaughtDistance = 2.2f;
 	const float EnemyHysteresis = 0.5f;
 
 	// field

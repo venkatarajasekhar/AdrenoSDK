@@ -38,7 +38,8 @@ MovingEntity::MovingEntity()
 	: m_rotYOffset(0),
 	m_currOrientation(0),
 	m_speed(0),
-	m_turnSpeed(0)
+	m_turnSpeed(0),
+	m_isMoving(false)
 {
 }
 
@@ -67,6 +68,12 @@ void MovingEntity::update(Timer& timer)
 
 		m_position += heading * timer.getElapsedTime();
 		m_rotation.y = m_currOrientation - m_rotYOffset;
+
+		m_isMoving = true;
+	}
+	else
+	{
+		m_isMoving = false;
 	}
 }
 
@@ -80,6 +87,11 @@ MyVec3 MovingEntity::getPos()
 MyVec3 MovingEntity::getRot()
 {
 	return m_rotation;
+}
+
+bool MovingEntity::isMoving()
+{
+	return m_isMoving;
 }
 
 // Setter

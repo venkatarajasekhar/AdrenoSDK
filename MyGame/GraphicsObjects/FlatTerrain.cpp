@@ -15,8 +15,8 @@ bool FlatTerrain::isValidPos(const MyVec3& pos)
 	return (
 		(pos.x >= minTerrain.x) &&
 		(pos.x <= maxTerrain.x) &&
-		(pos.y >= minTerrain.y) &&
-		(pos.y <= maxTerrain.y)
+		(pos.z >= minTerrain.z) &&
+		(pos.z <= maxTerrain.z)
 		);
 }
 

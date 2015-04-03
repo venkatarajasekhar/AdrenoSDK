@@ -1,6 +1,7 @@
 
 #include "LivingEntity.h"
 
+
 int LivingEntity::m_numIDs = 0;
 
 LivingEntity::LivingEntity()

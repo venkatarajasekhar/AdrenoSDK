@@ -93,7 +93,10 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_CORE_PATH)/MainGame.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Player.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Trooper.cpp \
-				   $(GAME_GAME_OBJS_MNG_PATH)/TrooperManager.cpp \
+				   $(GAME_GAME_OBJS_MNG_PATH)/BaseEntity.cpp \				   
+				   $(GAME_GAME_OBJS_MNG_PATH)/MovingEntity.cpp \
+				   $(GAME_GAME_OBJS_MNG_PATH)/LivingEntity.cpp \
+				   $(GAME_GAME_OBJS_MNG_PATH)/LivingEntityManager.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \

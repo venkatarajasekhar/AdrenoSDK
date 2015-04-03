@@ -1,6 +1,7 @@
 
 #include "LivingEntity.h"
 
+
 int LivingEntity::m_numIDs = 0;
 
 LivingEntity::LivingEntity()
@@ -15,12 +16,13 @@ LivingEntity::~LivingEntity()
 {
 }
 
-void LivingEntity::init(int maxHealth, int damage, float range, ENTITY_TYPE entityType, TEAM_TYPE teamType)
+void LivingEntity::init(int maxHealth, int damage, float range, float radius, ENTITY_TYPE entityType, TEAM_TYPE teamType)
 {
 	m_maxHealth = maxHealth;
 	m_health = m_maxHealth;
 	m_damage = damage;
 	m_range = range;
+	m_radius = radius;
 	m_entityType = entityType;
 	m_teamType = teamType;
 }
@@ -58,4 +60,9 @@ int LivingEntity::getIdEntity()const
 float LivingEntity::getRange()const
 {
 	return m_range;
+}
+
+float LivingEntity::getRadius()const
+{
+	return m_radius;
 }

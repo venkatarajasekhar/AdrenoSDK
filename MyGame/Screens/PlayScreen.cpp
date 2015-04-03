@@ -115,6 +115,7 @@ void PlayScreen::init()
 
 	// Assets mesh 1 datas
 	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
+	m_mesh1Datas[MESH_1_DATA_SCORPION2] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/india_tower_of_victory.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_DUDE] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/dude.model").c_str());
 
@@ -124,6 +125,7 @@ void PlayScreen::init()
 
 	// Assets anim 1 datas
 	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
+	m_anim1Datas[ANIM_1_DATA_SCORPION2] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
 	m_anim1Datas[ANIM_1_DATA_DUDE] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/dude.anim").c_str());
 
 	// Assets anim 2 datas
@@ -136,6 +138,13 @@ void PlayScreen::init()
 		resource.LoadFromFile(resolveAssetsPath("Textures/Scorpion.pak").c_str());
 
 		m_meshTextures[TEXTURES_MESH_SCORPION].init(m_mesh1Datas[MESH_1_DATA_SCORPION], resource);
+	}
+
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/Scorpion.pak").c_str());
+
+		m_meshTextures[TEXTURES_MESH_SCORPION2].init(m_mesh1Datas[MESH_1_DATA_SCORPION2], resource);
 	}
 
 	{
@@ -191,12 +200,9 @@ void PlayScreen::init()
 			&m_bloodbar_red,
 			&m_bloodbar_green,
 			m_billboards[BILLBOARD_FIREBALL],
-			1000, 20, 2.0f, MY_TEAM);
+			1000, 20, 3.0f, MY_TEAM);
 
 		g_livingEntityManager.insertLivingEntityToList(&m_scorpion, -1);
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
 	}
 
 	{
@@ -245,43 +251,59 @@ void PlayScreen::init()
 	}*/
 	
 	{
-		//CFrmPackedResourceGLES resource;
-		//resource.LoadFromFile(resolveAssetsPath("Textures/Dman.pak").c_str());
-
-		/*Material material;
+		Material material;
 
 		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 		material.Diffuse = MyVec4(1.0f, 0.5f, 0.5f, 1.0f);
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
+		std::map<MyString, SkinnedMesh1::AnimAction> animationPose =
+		{
+			{ "Stand", { 85, 65 } }, // Stand
+			{ "Run", { 10, 25 } }, // Run
+			{ "Beat1", { 35, 60 } }, // Beat1
+			{ "Beat2", { 150, 55 } }, // Beat2
+			{ "Defence", { 195, 50 } }, // Defence
+			{ "Dead", { 245, 0 } }, // Dead
+		};
+
 		m_skinnedMesh_scorpion.init(
-			m_mesh1Datas[MESH_1_DATA_SCORPION],
-			m_anim1Datas[ANIM_1_DATA_SCORPION],
-			m_meshTextures[TEXTURES_MESH_SCORPION].Textures,
+			m_mesh1Datas[MESH_1_DATA_SCORPION2],
+			m_anim1Datas[ANIM_1_DATA_SCORPION2],
+			m_meshTextures[TEXTURES_MESH_SCORPION2].Textures,
 			m_shaders[SHADER_SKINNED_MESH_1],
-			&material);*/
+			&material, &animationPose);
 
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(0, 0, 5), MyVec3(0), MyVec3(0.2f), ""));
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(5, 0, 6), MyVec3(0, 45, 0), MyVec3(0.2f), ""));
-		//m_skinnedMesh_scorpion.addInstance(SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(-4, 0, 3), MyVec3(0, 120, 0), MyVec3(0.2f), ""));
-
-		g_livingEntityManager.init(&m_skinnedMesh_dude);
+		g_livingEntityManager.init(&m_skinnedMesh_scorpion);
 	}
 }
 
 void PlayScreen::cloneTrooper()
 {
-	if (g_livingEntityManager.getNEntity() < 10)
-	{
-		Trooper* scorpion1 = new Trooper;
-		scorpion1->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 0), MyVec3(0), MyVec3(0.04f), &m_bloodbar_red, &m_bloodbar_green);
-		g_livingEntityManager.insertLivingEntityToList(scorpion1, TROOPER_SCORPION);
+	Trooper* scorpion11 = new Trooper;
+	scorpion11->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion11, TROOPER_SCORPION);
 
-		Trooper* scorpion2 = new Trooper;
-		scorpion2->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 0), MyVec3(0, 180, 0), MyVec3(0.04f), &m_bloodbar_red, &m_bloodbar_green);
-		g_livingEntityManager.insertLivingEntityToList(scorpion2, TROOPER_SCORPION);
-	}
+	Trooper* scorpion12 = new Trooper;
+	scorpion12->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-19, 0, 0), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion12, TROOPER_SCORPION);
+
+	Trooper* scorpion13 = new Trooper;
+	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, -1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion13, TROOPER_SCORPION);
+
+	Trooper* scorpion21 = new Trooper;
+	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, -1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion21, TROOPER_SCORPION);
+
+	Trooper* scorpion22 = new Trooper;
+	scorpion22->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(19, 0, 0), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion22, TROOPER_SCORPION);
+	
+	Trooper* scorpion23 = new Trooper;
+	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion23, TROOPER_SCORPION);
 }
 
 void PlayScreen::resize(int width, int height)
@@ -345,10 +367,10 @@ void PlayScreen::update(void* utilObjs)
 	getWindowDimension(width, height);
 
 	m_countTime += globalUtilObjs->timer->getElapsedTime();
-	if (m_countTime > 4)
+	if (m_countTime > 25)
 	{
 		cloneTrooper();
-		m_countTime -= 4;
+		m_countTime -= 25;
 	}
 
 	if (!m_lockedUserInput)

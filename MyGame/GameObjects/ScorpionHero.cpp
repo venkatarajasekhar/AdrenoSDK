@@ -27,7 +27,7 @@ void ScorpionHero::init(
 		{ "Dead", { 245, 0 } }, // Dead
 	};
 
-	LivingEntity::init(health, damage, range, ENTITY_TYPE_HERO, teamType);
+	LivingEntity::init(health, damage, range, 2.0f, ENTITY_TYPE_HERO, teamType);
 
 	m_pointTouch = pos;
 
@@ -54,8 +54,8 @@ void ScorpionHero::init(
 
 void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
-	if (m_idEmemy != -1)
-		if (g_livingEntityManager.getLivingEntityById(m_idEmemy)->isDead()) m_idEmemy = -1;
+	//if (m_idEmemy != -1)
+		//if ((g_livingEntityManager.getLivingEntityById(m_idEmemy) != NULL) && (g_livingEntityManager.getLivingEntityById(m_idEmemy)->isDead())) m_idEmemy = -1;
 
 	if (m_isUsingSkill)
 	{
@@ -114,7 +114,8 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	else
 	{
 		if (!m_isUsingSkill) m_instance->CurrentAction = "Stand";
-		if (m_idEmemy == -1) m_idEmemy = findLivingEntityToBeat();
+		if ((m_idEmemy == -1) || (g_livingEntityManager.getLivingEntityById(m_idEmemy) == NULL) || (distance(position, g_livingEntityManager.getLivingEntityById(m_idEmemy)->getInstance()->Position) > m_range))
+			m_idEmemy = findLivingEntityToBeat();
 		if (m_idEmemy != -1)
 		{
 			rotatePlayer(g_livingEntityManager.getLivingEntityById(m_idEmemy)->getInstance()->Position);
@@ -125,6 +126,7 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 			{
 				Trooper* trooper = (Trooper*)(g_livingEntityManager.getLivingEntityById(m_idEmemy));
 				trooper->setHealth(trooper->getHealth() - m_damage);
+				if (g_livingEntityManager.getLivingEntityById(m_idEmemy)->isDead()) m_idEmemy = -1;
 				m_countTime = 0;
 			}
 		}

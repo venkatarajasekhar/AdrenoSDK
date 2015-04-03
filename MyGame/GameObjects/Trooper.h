@@ -5,7 +5,6 @@
 #include "EnemyAI.h"
 #include "BloodBar.h"
 #include "LivingEntity.h"
-#include "Global.h"
 
 /*enum TROOPER_TYPE
 {

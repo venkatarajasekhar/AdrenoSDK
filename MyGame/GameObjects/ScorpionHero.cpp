@@ -49,7 +49,7 @@ void ScorpionHero::init(
 	if (teamType == MY_TEAM) m_bloodBar = bloodBarGreen;
 	else m_bloodBar = bloodBarRed;
 
-	m_projectile.init(billboard);
+	m_billboard = billboard;
 }
 
 void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
@@ -59,12 +59,15 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 
 	if (m_isUsingSkill)
 	{
-		g_livingEntityManager.beatLivingEntitys(m_projectile.getPos(), 3 * m_damage);
+		//g_livingEntityManager.beatLivingEntitys(m_projectile.getPos(), 3 * m_damage);
 
 		int nFrame = m_instance->LeftFrame;
 		if (nFrame - 150 == 34)
 		{
-			MyVec3 dir(dSin(m_instance->Rotation.y), 0, dCos(m_instance->Rotation.y));
+			Projectile* m_projectile = new Projectile;
+			m_projectile->init(m_billboard, m_idEmemy, m_idEntity, 10.0f, MY_TEAM);
+			g_projectileManager.insertProjectileToList(m_projectile);
+			/*MyVec3 dir(dSin(m_instance->Rotation.y), 0, dCos(m_instance->Rotation.y));
 			{
 				MyVec3 offset = normalize(dir) + MyVec3(0, 3, 0);
 				m_projectile.setPos(PositionPlayer + 0.5f*offset);
@@ -75,7 +78,7 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 				m_projectile.setVelocity(vel);
 			}
 
-			m_projectile.setActive(true);
+			m_projectile.setActive(true);*/
 		}
 
 		if (nFrame - 150 == 53)
@@ -135,7 +138,6 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	PositionPlayer = m_instance->Position;
 
 	m_player.update(timer);
-	m_projectile.update(timer);
 }
 
 int ScorpionHero::findLivingEntityToBeat()
@@ -148,7 +150,6 @@ void ScorpionHero::render(Camera& camera, Light& light, SpriteBatch& spriteBatch
 {
 	m_player.render(camera, &light);
 	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health/(float)m_maxHealth);
-	m_projectile.render(camera);
 }
 
 void ScorpionHero::rotatePlayer(MyVec3 pointDestination)
@@ -176,8 +177,11 @@ void ScorpionHero::rotatePlayer(MyVec3 pointDestination)
 
 void ScorpionHero::projectile()
 {
-	m_instance->setActionAndReset("Beat2");
-	m_isUsingSkill = true;
+	if (m_idEmemy != -1)
+	{
+		m_instance->setActionAndReset("Beat2");
+		m_isUsingSkill = true;
+	}
 }
 
 SkinnedMesh1::Instance* ScorpionHero::getInstance()

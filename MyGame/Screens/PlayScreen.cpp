@@ -277,6 +277,8 @@ void PlayScreen::init()
 
 		g_livingEntityManager.init(&m_skinnedMesh_scorpion);
 	}
+
+	g_projectileManager.init();
 }
 
 void PlayScreen::cloneTrooper()
@@ -375,8 +377,8 @@ void PlayScreen::update(void* utilObjs)
 
 	if (!m_lockedUserInput)
 	{
-		//m_scorpion.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 		g_livingEntityManager.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
+		g_projectileManager.update(*globalUtilObjs->userInput, *globalUtilObjs->timer, m_camera_main, width, height);
 	}
 }
 
@@ -395,8 +397,8 @@ void PlayScreen::render(void* utilObjs)
 		//m_skinnedMesh_dude.render(m_camera_main, &light);
 		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
-		//m_scorpion.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		g_livingEntityManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
+		g_projectileManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 	}
 		
 	// HUD objects

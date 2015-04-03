@@ -12,7 +12,7 @@ private:
 	SkinnedMesh1 m_player;
 	SkinnedMesh1::Instance* m_instance;
 	BloodBar* m_bloodBar;
-	Projectile m_projectile;
+	Billboard m_billboard;
 
 	MyVec3 m_pointTouch;
 	MyVec3 m_direction = MyVec3(0, 0, 0);

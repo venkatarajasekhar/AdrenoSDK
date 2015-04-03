@@ -24,8 +24,7 @@ public:
 		FRM_ANIMATION_SET* animationSet,
 		CFrmPackedResourceGLES& resource,
 		Shader& shader);*/
-	void init(
-		SkinnedMesh1* scorpion);
+	void init(SkinnedMesh1* scorpion);
 	void insertLivingEntityToList(LivingEntity* entity, int typeEntity);
 	void removeLivingEntityFromList(LivingEntity* entity);
 	void update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height);

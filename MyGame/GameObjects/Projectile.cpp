@@ -30,8 +30,6 @@ void Projectile::init(Billboard& billboard,
 	MyVec3 posTarget = g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position;
 	//m_movingEntity.setPos(g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Position + 0.5f*offset);
 	//m_movingEntity.setTarget(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position);
-	smartLog(toString(pos.x) + " " + toString(pos.y) + " " + toString(pos.z));
-	smartLog(toString(posTarget.x) + " " + toString(posTarget.y) + " " + toString(posTarget.z));
 	m_movingEntity.init(pos, posTarget, MyVec3(0), 0, 5, 180);
 }
 
@@ -45,7 +43,9 @@ void Projectile::update(Timer& timer)
 		}
 		else
 		{
-			if (distance_optimized(getPos(), g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position) <= 0.5f)
+			//if (!m_movingEntity.isMoving())
+
+			if (distance_optimized(getPos(), g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position) <= 2.0f)
 			{
 				m_active = false;
 				g_livingEntityManager.getLivingEntityById(m_idEnemy)->setHealth(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getHealth()

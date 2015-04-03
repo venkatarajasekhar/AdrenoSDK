@@ -14,6 +14,9 @@ public:
 	void resize(int width, int height);
 	void update();
 
+	void lock();
+	void unlock();
+
 	// Pointer functionalities
 
 	bool pointer_Pressing(MyVec2& pos)const;
@@ -73,4 +76,5 @@ private:
 
 private:
 	Pointer m_pointer;
+	bool m_locked;
 };

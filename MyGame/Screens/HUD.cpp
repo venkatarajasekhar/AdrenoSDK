@@ -82,19 +82,8 @@ void HUD::render(SpriteBatch& spriteBatch)
 
 void HUD::OnPress(const IOnPressListener::Data& data)
 {
-	IOnPressListener::Data hudData =
-	{
-		"hud",
-		data.x,
-		data.y,
-	};
+	IOnPressListener::Data hudData("hud", data.x, data.y);
 	throwPressEvent(hudData);
-}
-
-void HUD::addPressListener(IOnPressListener* listener)
-{
-	m_btn_fighting.addPressListener(listener);
-	OnPressListenee::addPressListener(listener);
 }
 
 #pragma endregion

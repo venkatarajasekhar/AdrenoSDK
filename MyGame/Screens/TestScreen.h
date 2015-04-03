@@ -8,6 +8,7 @@
 #include <MySkinnedMesh1.h>
 #include <MySkinnedMesh2.h>
 #include <MyEventListener.h>
+#include <MyFont.h>
 
 #include "HUD.h"
 #include "FlatTerrain.h"
@@ -83,6 +84,12 @@ private:
 		NUM_ANIM_2_DATAS,
 	};
 
+	enum
+	{
+		FONT_CONSOLAS_12,
+		NUM_FONTS,
+	};
+
 	// Effects
 	enum
 	{
@@ -119,6 +126,7 @@ private:
 	CFrmMesh                m_mesh2Datas[NUM_MESH_2_DATAS];
 	Adreno::Animation*      m_anim1Datas[NUM_ANIM_1_DATAS];
 	FRM_ANIMATION_SET*      m_anim2Datas[NUM_ANIM_2_DATAS];
+	Font                    m_fonts[NUM_FONTS];
 
 	// Effects
 
@@ -130,4 +138,7 @@ private:
 
 	// Game objects
 	std::vector<IRenderableEntity*> m_renderableEnts;
+
+	// Misc
+	bool m_lockedUserInput;
 };

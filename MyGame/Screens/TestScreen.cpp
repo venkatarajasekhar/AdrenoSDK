@@ -5,6 +5,8 @@
 #include "TestScreen.h"
 #include "Hero_Controlled.h"
 
+static Hero_Controlled* g_heroPlayer = nullptr;
+
 //========================================================================================================
 //
 // Parameters
@@ -23,7 +25,8 @@ static const float MAIN_CAM_FAR = 100.0f;
 //========================================================================================================
 
 TestScreen::TestScreen(ScreenManager* screenManager)
-	: Screen(screenManager)
+	: Screen(screenManager),
+	m_lockedUserInput(false)
 {
 }
 
@@ -155,6 +158,9 @@ void TestScreen::initAssets()
 
 		m_meshTextures[TEXTURES_MESH_DUDE].init(m_mesh1Datas[MESH_1_DATA_DUDE], resource);
 	}
+
+	// Assets fonts
+	m_fonts[FONT_CONSOLAS_12].init(resolveAssetsPath("Fonts/Consolas12.pak"));
 }
 
 #pragma endregion
@@ -197,6 +203,8 @@ void TestScreen::initHeroes()
 		m_renderableEnts.push_back(hero);
 
 		m_mesh_terrain.addPressListener(hero);
+
+		g_heroPlayer = hero;
 	}
 }
 
@@ -209,6 +217,10 @@ void TestScreen::init()
 
 	initAssets();
 	initHeroes();
+
+	// HUD objects
+	m_hud.init(MyVec3(0), MyVec2(100));
+	m_hud.addPressListener(this);
 
 	// Mesh objects
 	{
@@ -227,8 +239,6 @@ void TestScreen::init()
 			MyVec2(100),
 			properties);
 	}
-
-	m_hud.init(MyVec3(0), MyVec2(100));
 }
 
 void TestScreen::resize(int width, int height)
@@ -246,11 +256,9 @@ void TestScreen::update(void* utilObjs)
 
 	// Core objects
 	{
-		/*
 		MyVec3 offset = MyVec3(0, 15, 15);
-		MyVec3 eye = PositionPlayer + offset;
+		MyVec3 eye = g_heroPlayer->getPos() + offset;
 		m_camera_main.setEye(eye);
-		/**/
 
 		m_camera_main.update();
 	}
@@ -265,6 +273,10 @@ void TestScreen::update(void* utilObjs)
 
 	// HUD objects
 	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
+	if (m_lockedUserInput)
+	{
+		globalUtilObjs->userInput->lock();
+	}
 
 	// Mesh objects
 	m_mesh_terrain.update(*globalUtilObjs->timer, *globalUtilObjs->userInput, m_camera_main);
@@ -274,6 +286,10 @@ void TestScreen::update(void* utilObjs)
 	{
 		(*i)->update(*globalUtilObjs->userInput, *globalUtilObjs->timer);
 	}
+
+	// Misc
+	globalUtilObjs->userInput->unlock();
+	m_lockedUserInput = false;
 }
 
 void TestScreen::render(void* utilObjs)
@@ -296,8 +312,16 @@ void TestScreen::render(void* utilObjs)
 		
 	// HUD objects
 	m_hud.render(*globalUtilObjs->spriteBatch);
+	globalUtilObjs->spriteBatch->renderText2D(
+		m_fonts[FONT_CONSOLAS_12],
+		toString(globalUtilObjs->timer->getFPS()),
+		MyVec2(10, 10));
 }
 
 void TestScreen::OnPress(const IOnPressListener::Data& data)
 {
+	if (data.Id == "hud")
+	{
+		m_lockedUserInput = true;
+	}
 }

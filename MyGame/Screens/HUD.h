@@ -31,7 +31,6 @@ public:
 
 	// Event handling
 	void OnPress(const IOnPressListener::Data& data);
-	void addPressListener(IOnPressListener* listener);
 
 private:
 	// Assets

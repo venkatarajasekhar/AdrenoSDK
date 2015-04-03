@@ -19,6 +19,7 @@ public:
 
 	MyVec3 getPos();
 	MyVec3 getRot();
+	bool isMoving();
 
 	// Setter
 
@@ -39,4 +40,6 @@ protected:
 	
 	float m_speed;
 	float m_turnSpeed;
+
+	bool m_isMoving;
 };

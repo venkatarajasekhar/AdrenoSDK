@@ -108,6 +108,7 @@ bool UserInput::Pointer::isDragging(MyVec2& delta)const
 //=================================================================================================
 
 UserInput::UserInput()
+	: m_locked(false)
 {
 }
 
@@ -127,27 +128,40 @@ void UserInput::resize(int width, int height)
 
 void UserInput::update()
 {
-	m_pointer.update();
+	if (!m_locked)
+	{
+		m_pointer.update();
+	}
+}
+
+void UserInput::lock()
+{
+	m_locked = true;
+}
+
+void UserInput::unlock()
+{
+	m_locked = false;
 }
 
 // Pointer functionalities
 
 bool UserInput::pointer_Pressing(MyVec2& pos)const
 {
-	return m_pointer.isPressing(pos);
+	return (m_pointer.isPressing(pos) && !m_locked);
 }
 
 bool UserInput::pointer_Releasing(MyVec2& pos)const
 {
-	return m_pointer.isReleasing(pos);
+	return (m_pointer.isReleasing(pos) && !m_locked);
 }
 
 bool UserInput::pointer_Holding(MyVec2& pos)const
 {
-	return m_pointer.isHolding(pos);
+	return (m_pointer.isHolding(pos) && !m_locked);
 }
 
 bool UserInput::pointer_Dragging(MyVec2& delta)const
 {
-	return m_pointer.isDragging(delta);
+	return (m_pointer.isDragging(delta) && !m_locked);
 }

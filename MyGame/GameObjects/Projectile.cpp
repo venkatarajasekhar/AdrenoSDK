@@ -1,6 +1,7 @@
 #include "Global.h"
 #include "Projectile.h"
 
+
 Projectile::Projectile()
 	: m_billboard(nullptr)
 {

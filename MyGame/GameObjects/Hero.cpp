@@ -47,7 +47,7 @@ void Hero::init(
 
 	// Moving elements
 	m_movingEnt.init(m_skinnedMeshIns->Position, m_skinnedMeshIns->Position, m_skinnedMeshIns->Rotation,
-		0, 3.0f, 3.0f);
+		0, 3.0f, 180.0f);
 
 	// States manager
 	m_stateMachine = new StateMachine<Hero>(this);
@@ -104,12 +104,11 @@ bool Hero::isMoving()
 
 void HeroState_Idle::Enter(Hero* hero)
 {
-
+	hero->changeAnimAction("Idle");
 }
 
 void HeroState_Idle::Execute(Hero* hero)
 {
-	hero->changeAnimAction("Idle");
 	if (hero->isMoving())
 	{
 		hero->getFSM()->ChangeState(HeroState_Walk::instance());
@@ -129,12 +128,11 @@ void HeroState_Idle::Exit(Hero* hero)
 
 void HeroState_Walk::Enter(Hero* hero)
 {
-
+	hero->changeAnimAction("Walk");
 }
 
 void HeroState_Walk::Execute(Hero* hero)
 {
-	hero->changeAnimAction("Walk");
 	if (!hero->isMoving())
 	{
 		hero->getFSM()->ChangeState(HeroState_Idle::instance());

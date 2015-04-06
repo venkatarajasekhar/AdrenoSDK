@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Texture 
+    ResourceID  = "MouserBoss_Mat"
+    SrcFileName = "MouserBoss_D.jpg"
+/>
+
+<Texture 
+    ResourceID  = "MouserBoss_Hit_INST_Chest"
+    SrcFileName = "MouserBoss_E.jpg"
+/>
+
+<Texture 
+    ResourceID  = "freakinLaser_Mat_INST"
+    SrcFileName = "MouserBoss_E.jpg"
+/>

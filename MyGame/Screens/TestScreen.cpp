@@ -5,7 +5,7 @@
 #include "TestScreen.h"
 #include "Hero_Controlled.h"
 
-static Hero_Controlled* g_heroPlayer = nullptr;
+Hero_Controlled* g_heroPlayer = nullptr;
 
 //========================================================================================================
 //
@@ -49,12 +49,6 @@ TestScreen::~TestScreen()
 	{
 		Adreno::FrmDestroyLoadedAnimation(m_anim1Datas[i]);
 	}
-
-	// Assets anim 2 datas
-	for (size_t i = 0; i < NUM_ANIM_2_DATAS; i++)
-	{
-		delete m_anim2Datas[i];
-	}
 }
 
 #pragma region Init assets
@@ -95,7 +89,7 @@ void TestScreen::initAssets()
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/Terrain.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/terrain.pak").c_str());
 
 		m_textures[TEXTURE_TERRAIN_DIFF_1].init(resource.GetTexture("diffuse_1"));
 		m_textures[TEXTURE_TERRAIN_DIFF_2].init(resource.GetTexture("diffuse_2"));
@@ -124,18 +118,11 @@ void TestScreen::initAssets()
 	m_mesh1Datas[MESH_1_DATA_SCORPION] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/scorpion.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/india_tower_of_victory.model").c_str());
 	m_mesh1Datas[MESH_1_DATA_DUDE] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/dude.model").c_str());
-
-	// Assets mesh 2 datas
-	m_mesh2Datas[MESH_2_DATA_BOY].Load(resolveAssetsPath("Meshes/Boy03.mesh").c_str());
-	m_mesh2Datas[MESH_2_DATA_DMAN].Load(resolveAssetsPath("Meshes/Dman.mesh").c_str());
+	m_mesh1Datas[MESH_1_DATA_MOUSER_BOSS] = Adreno::FrmLoadModelFromFile(resolveAssetsPath("Meshes/Heroes/MouserBoss/mouser_boss.model").c_str());
 
 	// Assets anim 1 datas
 	m_anim1Datas[ANIM_1_DATA_SCORPION] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/scorpion.anim").c_str());
 	m_anim1Datas[ANIM_1_DATA_DUDE] = Adreno::FrmLoadAnimationFromFile(resolveAssetsPath("Meshes/dude.anim").c_str());
-
-	// Assets anim 2 datas
-	FrmReadAnimation(resolveAssetsPath("Meshes/Boy03.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_BOY]);
-	FrmReadAnimation(resolveAssetsPath("Meshes/Dman.anim").c_str(), &m_anim2Datas[ANIM_2_DATA_DMAN]);
 
 	// Assets mesh textures
 	{
@@ -159,6 +146,13 @@ void TestScreen::initAssets()
 		m_meshTextures[TEXTURES_MESH_DUDE].init(m_mesh1Datas[MESH_1_DATA_DUDE], resource);
 	}
 
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Meshes/Heroes/MouserBoss/mouser_boss.pak").c_str());
+
+		m_meshTextures[TEXTURES_MESH_MOUSER_BOSS].init(m_mesh1Datas[MESH_1_DATA_MOUSER_BOSS], resource);
+	}
+
 	// Assets fonts
 	m_fonts[FONT_CONSOLAS_12].init(resolveAssetsPath("Fonts/Consolas12.pak"));
 }
@@ -169,6 +163,7 @@ void TestScreen::initAssets()
 
 void TestScreen::initHeroes()
 {
+	/*
 	{
 		Hero_Controlled* hero = new Hero_Controlled;
 
@@ -206,6 +201,48 @@ void TestScreen::initHeroes()
 
 		g_heroPlayer = hero;
 	}
+	/**/
+
+	/**/
+	{
+		Hero_Controlled* hero = new Hero_Controlled;
+
+		Material material;
+
+		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+		material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+		material.Shininess = 16.0f;
+
+		const int numAnimFiles = 2;
+		SkinnedMesh1::AnimFile animFiles[numAnimFiles] = 
+		{
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/MouserBoss/walk.anim"), "Walk"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/MouserBoss/idle.anim"), "Idle"),
+		};
+
+		std::map<MyString, SkinnedMesh1::AnimAction> actions;
+
+		SkinnedMesh1::mergeAnimFile(animFiles, numAnimFiles, m_anim1Datas[ANIM_1_DATA_MOUSER_BOSS], actions);
+
+		hero->init(
+			m_mesh1Datas[MESH_1_DATA_MOUSER_BOSS],
+			m_anim1Datas[ANIM_1_DATA_MOUSER_BOSS],
+			m_meshTextures[TEXTURES_MESH_MOUSER_BOSS].Textures,
+			m_shaders[SHADER_SKINNED_MESH_1],
+			material,
+			MyVec3(),
+			MyVec3(),
+			MyVec3(0.005f),
+			actions);
+
+		m_renderableEnts.push_back(hero);
+
+		m_mesh_terrain.addPressListener(hero);
+
+		g_heroPlayer = hero;
+	}
+	/**/
 }
 
 #pragma endregion
@@ -226,8 +263,8 @@ void TestScreen::init()
 	{
 		FlatTerrainProperties properties =
 		{
-			MyVec3(32.0f, 10.0f, 2.0f),
-			MyVec2(0.45f, 0.55f),
+			MyVec3(6.0f, 32.0f, 1.0f),
+			MyVec2(0.0f, 1.0f),
 		};
 
 		m_mesh_terrain.init(

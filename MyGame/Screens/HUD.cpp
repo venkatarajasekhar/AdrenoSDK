@@ -1,5 +1,8 @@
 
 #include "HUD.h"
+#include "Hero_Controlled.h"
+
+extern Hero_Controlled* g_heroPlayer;
 
 //==========================================================================================================
 //
@@ -70,9 +73,7 @@ void HUD::update(Timer& timer, UserInput& userInput)
 
 void HUD::render(SpriteBatch& spriteBatch)
 {
-	MyVec3 dumpPlayerPos;
-
-	m_miniMap.render(spriteBatch, dumpPlayerPos);
+	m_miniMap.render(spriteBatch, g_heroPlayer->getPos());
 	m_btn_fighting.render(spriteBatch);
 }
 

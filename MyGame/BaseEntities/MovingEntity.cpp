@@ -15,7 +15,7 @@ static const float DISTANCE_THRESHOLD = 0.1f;
 //
 //========================================================================================================================
 
-static float turnToFace(MyVec3 position, MyVec3 faceThis, float currentAngle, float turnSpeed)
+static float turnToFace(float elapsedTime, MyVec3 position, MyVec3 faceThis, float currentAngle, float turnSpeed)
 {
 	float x = faceThis.x - position.x;
 	float z = faceThis.z - position.z;
@@ -23,7 +23,7 @@ static float turnToFace(MyVec3 position, MyVec3 faceThis, float currentAngle, fl
 	float desiredAngle = dATan2(x, z);
 	
 	float difference = wrapAngle(desiredAngle - currentAngle);
-	difference = clamp(difference, -turnSpeed, turnSpeed);
+	difference = clamp(difference, -turnSpeed * elapsedTime, turnSpeed * elapsedTime);
 
 	return wrapAngle(currentAngle + difference);
 }
@@ -62,7 +62,7 @@ void MovingEntity::update(Timer& timer)
 {
 	if (distance_optimized(m_position, m_target) > DISTANCE_THRESHOLD)
 	{
-		m_currOrientation = turnToFace(m_position, m_target, m_currOrientation, m_turnSpeed);
+		m_currOrientation = turnToFace(timer.getElapsedTime(), m_position, m_target, m_currOrientation, m_turnSpeed);
 
 		MyVec3 heading = m_speed * MyVec3(dSin_optimized(m_currOrientation), 0, dCos_optimized(m_currOrientation));
 

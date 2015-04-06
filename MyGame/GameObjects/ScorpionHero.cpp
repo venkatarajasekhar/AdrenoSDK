@@ -90,6 +90,7 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 		rotatePlayer(m_pointTouch);
 	}
 
+
 	float moveFactor = 40.0f;
 
 	float e = 0.1f;

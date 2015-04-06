@@ -74,7 +74,15 @@ void HUD::update(Timer& timer, UserInput& userInput)
 
 void HUD::render(SpriteBatch& spriteBatch)
 {
-	m_miniMap.render(spriteBatch, g_heroPlayer->getPos());
+	if (g_heroPlayer != nullptr)
+	{
+		m_miniMap.render(spriteBatch, g_heroPlayer->getPos());
+	}
+	else
+	{
+		m_miniMap.render(spriteBatch, MyVec3());
+	}
+	
 	m_btn_fighting.render(spriteBatch);
 }
 

@@ -256,7 +256,7 @@ void TestScreen::init()
 	initHeroes();
 
 	// HUD objects
-	m_hud.init(MyVec3(0), MyVec2(100));
+	m_hud.init(MyVec3(0), MyVec2(100), this);
 	m_hud.addPressListener(this);
 
 	// Mesh objects

@@ -22,7 +22,7 @@ public:
 	bool isDead()const;
 	int getIdEntity()const;
 	float getRadius()const;
-	virtual SkinnedMesh1::Instance* getInstance() = 0;
+	virtual Mesh::Instance* getInstance() = 0;
 	virtual void update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height) = 0;
 	virtual void render(Camera& camera, Light& light, SpriteBatch& spriteBatch) = 0;
 

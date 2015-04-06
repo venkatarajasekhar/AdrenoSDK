@@ -24,7 +24,7 @@ public:
 	~HUD();
 
 	// Core functions
-	void init(const MyVec3& mapCenter, const MyVec2& mapSize);
+	void init(const MyVec3& mapCenter, const MyVec2& mapSize, IOnPressListener* listener);
 	void resize(int width, int height);
 	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch);

@@ -297,6 +297,9 @@
     <ClCompile Include="GameObjects\Hero_Controlled.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectsManagers\ProjectileManager.cpp">
+      <Filter>GameObjectsManagers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Player.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Hero_Controlled.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectsManagers\ProjectileManager.h">
+      <Filter>GameObjectsManagers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

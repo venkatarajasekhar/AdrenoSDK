@@ -147,6 +147,7 @@
     <ClCompile Include="BaseEntities\MovingEntity.cpp" />
     <ClCompile Include="Core\MainGame.cpp" />
     <ClCompile Include="GameObjectsManagers\LivingEntityManager.cpp" />
+    <ClCompile Include="GameObjectsManagers\ProjectileManager.cpp" />
     <ClCompile Include="GameObjects\Hero.cpp" />
     <ClCompile Include="GameObjects\Hero_AI.cpp" />
     <ClCompile Include="GameObjects\Hero_Controlled.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="BaseEntities\IRenderableEntity.h" />
     <ClInclude Include="Core\MainGame.h" />
     <ClInclude Include="GameObjectsManagers\LivingEntityManager.h" />
+    <ClInclude Include="GameObjectsManagers\ProjectileManager.h" />
     <ClInclude Include="GameObjects\Hero.h" />
     <ClInclude Include="GameObjects\Hero_AI.h" />
     <ClInclude Include="GameObjects\Hero_Controlled.h" />

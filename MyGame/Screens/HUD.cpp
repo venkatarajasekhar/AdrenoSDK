@@ -28,7 +28,7 @@ HUD::~HUD()
 
 #pragma region Core functions
 
-void HUD::init(const MyVec3& mapCenter, const MyVec2& mapSize)
+void HUD::init(const MyVec3& mapCenter, const MyVec2& mapSize, IOnPressListener* listener)
 {
 	// Assets textures
 	{
@@ -53,6 +53,7 @@ void HUD::init(const MyVec3& mapCenter, const MyVec2& mapSize)
 
 	m_btn_fighting.init("btn_hud_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
 	m_btn_fighting.addPressListener(this);
+	m_btn_fighting.addPressListener(listener);
 }
 
 void HUD::resize(int width, int height)

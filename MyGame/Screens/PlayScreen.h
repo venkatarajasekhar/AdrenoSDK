@@ -12,6 +12,7 @@
 #include "FlatTerrain.h"
 #include "Player.h"
 #include "ScorpionHero.h"
+#include "Tower.h"
 #include "Global.h"
 #include "HUD.h"
 
@@ -108,6 +109,7 @@ public:
 
 private:
 	void cloneTrooper();
+	void createBuilding();
 
 private:
 
@@ -142,6 +144,6 @@ private:
 	//Player m_player;
 	ScorpionHero m_scorpion;
 
-	float m_countTime = 23;
+	float m_countTime = 28;
 	bool m_lockedUserInput;
 };

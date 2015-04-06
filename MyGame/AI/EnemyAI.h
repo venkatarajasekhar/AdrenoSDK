@@ -3,6 +3,14 @@
 #include <MyUtils.h>
 #include <MyTimer.h>
 
+// enumeration
+enum EnemyAiState
+{
+	Chasing,
+	Caught,
+	Wander,
+	Die
+};
 
 class EnemyAI
 {
@@ -16,15 +24,6 @@ public:
 	MyVec3 m_pointEnd;
 	float m_angle;
 	float m_countTime;
-
-	// enumeration
-	enum EnemyAiState
-	{
-		Chasing,
-		Caught,
-		Wander,
-		Die
-	};
 
 	// constant
 	const float MaxEnemySpeed = 0.05f;

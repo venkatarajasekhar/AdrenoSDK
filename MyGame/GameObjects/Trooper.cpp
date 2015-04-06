@@ -39,13 +39,24 @@ void Trooper::update(UserInput& userInput, Timer& timer, Camera& camera, int wid
 
 void Trooper::copyAllProperties()
 {
-	//if (g_livingEntityManager.checkLivingEntityCanMove(m_ai.m_pos, m_teamType))
-		//m_instance->Position = m_ai.m_pos;
-	//else m_ai.m_pos = m_instance->Position;
 	m_instance->Position = m_ai.m_pos;
 	m_instance->Rotation = MyVec3(0, m_ai.m_angle, 0);
 	m_instance->Scale = m_ai.m_scale;
 
+	switch (m_ai.m_enemyState)
+	{
+		case Chasing:
+			m_instance->CurrentAction = "Run";
+			break;
+		case Wander:
+			m_instance->CurrentAction = "Run";
+			break;
+		case Caught:
+			m_instance->CurrentAction = "Beat1";
+			break;
+		case Die:
+			break;
+	}
 }
 
 void Trooper::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)

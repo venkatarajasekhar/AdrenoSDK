@@ -1,5 +1,4 @@
 #include "ScorpionHero.h"
-MyVec3 PositionPlayer;
 
 void ScorpionHero::init(
 	Adreno::Model* model,
@@ -135,7 +134,6 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 		}
 	}
 	m_instance->Position = position;
-	PositionPlayer = m_instance->Position;
 
 	m_player.update(timer);
 }
@@ -149,7 +147,7 @@ int ScorpionHero::findLivingEntityToBeat()
 void ScorpionHero::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	m_player.render(camera, &light);
-	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), m_health/(float)m_maxHealth);
+	m_bloodBar->render(spriteBatch, camera, m_instance->Position + MyVec3(-1, 2.5, 0), getHealthRatio());
 }
 
 void ScorpionHero::rotatePlayer(MyVec3 pointDestination)

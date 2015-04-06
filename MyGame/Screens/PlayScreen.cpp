@@ -15,7 +15,6 @@ static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 0.0f, 0.0f);
 
 static const float MAIN_CAM_FAR = 100.0f;
 
-extern MyVec3 PositionPlayer;
 //========================================================================================================
 //
 // PlayScreen class
@@ -279,32 +278,69 @@ void PlayScreen::init()
 	}
 
 	g_projectileManager.init();
+
+	createBuilding();
+}
+
+void PlayScreen::createBuilding()
+{
+	Tower* tower11 = new Tower;
+	tower11->init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
+		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
+		m_shaders[SHADER_MESH], 
+		MyVec3(-15, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, MY_TEAM);
+	g_livingEntityManager.insertLivingEntityToList(tower11, -1);
+
+	Tower* tower12 = new Tower;
+	tower12->init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
+		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
+		m_shaders[SHADER_MESH], 
+		MyVec3(-35, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, MY_TEAM);
+	g_livingEntityManager.insertLivingEntityToList(tower12, -1);
+
+	Tower* tower21 = new Tower;
+	tower21->init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
+		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
+		m_shaders[SHADER_MESH], 
+		MyVec3(15, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, ENEMY);
+	g_livingEntityManager.insertLivingEntityToList(tower21, -1);
+
+	Tower* tower22 = new Tower;
+	tower22->init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
+		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
+		m_shaders[SHADER_MESH], 
+		MyVec3(35, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, ENEMY);
+	g_livingEntityManager.insertLivingEntityToList(tower22, -1);
 }
 
 void PlayScreen::cloneTrooper()
 {
 	Trooper* scorpion11 = new Trooper;
-	scorpion11->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, 1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion11->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-40, 0, 1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion11, TROOPER_SCORPION);
 
 	Trooper* scorpion12 = new Trooper;
-	scorpion12->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-19, 0, 0), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion12->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-39, 0, 0), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion12, TROOPER_SCORPION);
 
 	Trooper* scorpion13 = new Trooper;
-	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-20, 0, -1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-40, 0, -1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion13, TROOPER_SCORPION);
 
 	Trooper* scorpion21 = new Trooper;
-	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, -1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(40, 0, -1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion21, TROOPER_SCORPION);
 
 	Trooper* scorpion22 = new Trooper;
-	scorpion22->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(19, 0, 0), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion22->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(39, 0, 0), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion22, TROOPER_SCORPION);
 	
 	Trooper* scorpion23 = new Trooper;
-	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(20, 0, 1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(40, 0, 1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion23, TROOPER_SCORPION);
 }
 
@@ -340,7 +376,7 @@ void PlayScreen::update(void* utilObjs)
 		}
 		/**/
 		MyVec3 offset = MyVec3(0, 15, 15);
-		MyVec3 eye = PositionPlayer + offset;
+		MyVec3 eye = g_livingEntityManager.getLivingEntityById(0)->getInstance()->Position + offset;
 		m_camera_main.setEye(eye);
 
 		m_camera_main.update();
@@ -362,7 +398,7 @@ void PlayScreen::update(void* utilObjs)
 	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
 	// Mesh objects
-	m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
+	//m_mesh_indiaTowerOfVictory.update(*globalUtilObjs->timer);
 	//m_skinnedMesh_dude.update(*globalUtilObjs->timer);
 
 	int width, height;
@@ -395,7 +431,7 @@ void PlayScreen::render(void* utilObjs)
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
 		//m_skinnedMesh_dude.render(m_camera_main, &light);
-		m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
+		//m_mesh_indiaTowerOfVictory.render(m_camera_main, &light);
 
 		g_livingEntityManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);
 		g_projectileManager.render(m_camera_main, light, *globalUtilObjs->spriteBatch);

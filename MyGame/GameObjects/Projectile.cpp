@@ -29,8 +29,7 @@ void Projectile::init(Billboard& billboard,
 	MyVec3 offset = normalize(dir) + MyVec3(0, 3, 0);
 	MyVec3 pos = g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Position + 0.5f*offset;
 	MyVec3 posTarget = g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position;
-	//m_movingEntity.setPos(g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Position + 0.5f*offset);
-	//m_movingEntity.setTarget(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position);
+
 	m_movingEntity.init(pos, posTarget, MyVec3(0), 0, 5, 180);
 }
 

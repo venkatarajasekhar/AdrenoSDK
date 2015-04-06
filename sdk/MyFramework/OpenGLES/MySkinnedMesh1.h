@@ -22,8 +22,8 @@
 class SkinnedMesh1 : public FileMesh1
 {
 public:
-	static const UINT32 MAX_BONES = 60;
-	static const UINT32 TOTAL_BONES = 256;
+	static const UINT32 MAX_BONES       = 60;
+	static const UINT32 TOTAL_BONES     = 256;
 	static const UINT32 TICKS_PER_FRAME = 150;
 
 public:
@@ -35,6 +35,24 @@ public:
 		UINT32 FrameLength;
 	};
 
+	struct AnimFile
+	{
+		AnimFile(const MyString& _fileName, const MyString& _name, const AnimAction& _range = {0, 0})
+			: FileName(_fileName), Name(_name), Range(_range), Anim(nullptr)
+		{}
+
+		MyString FileName;
+		Adreno::Animation* Anim;
+		
+		MyString Name;
+		AnimAction Range;
+	};
+
+	// Some problems with animation action:
+	//	1. Set current action
+	//	2. Action is unloop
+	//	3. Some event occurring at halfway of an action (0->1)
+
 	struct Instance : public Mesh::Instance
 	{
 		// At time of t0, we're being between m_leftFrame Frame and m_rightFrame Frame.
@@ -43,14 +61,26 @@ public:
 		INT32   RightFrame;
 		FLOAT32 FrameWeight;
 
+		bool LoopedAction;
 		MyString CurrentAction;
+		MyString NextAction;
+
 		UINT32   TotalTicks;
 
+		Instance();
+
+		// action: Current action will be played.
+		// looped: Current action is looped or not.
+		// nextAction: If current action is unlooped, play 'nextAction' action when finish current action
+		void setAction(const MyString& action, const MyString& nextAction = "", bool looped = true);
+
+		/*------------------------- Temp ------------------------------*/
 		void setActionAndReset(const MyString& action)
 		{
 			CurrentAction = action;
 			TotalTicks = 0;
 		}
+		/**/
 	};
 
 public:
@@ -75,7 +105,17 @@ private:
 	AnimAction getAction(const MyString& name)const;
 
 public:
-	static SkinnedMesh1::Instance* buildSkinnedMeshInstance(const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, const MyString& action);
+	static SkinnedMesh1::Instance* buildSkinnedMeshInstance(
+		const MyVec3& pos, 
+		const MyVec3& rot, 
+		const MyVec3& scale, 
+		const MyString& action);
+
+	static bool mergeAnimFile(
+		AnimFile* animFiles,
+		int numAnimFiles,
+		Adreno::Animation*& mergedAnim,
+		std::map<MyString, AnimAction>& actionsMap);
 
 private:
 	Adreno::Animation* m_anim;

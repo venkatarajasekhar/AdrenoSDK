@@ -52,6 +52,7 @@ private:
 		TEXTURES_MESH_SCORPION,
 		TEXTURES_MESH_INDIA_TOWER_OF_VICTORY,
 		TEXTURES_MESH_DUDE,
+		TEXTURES_MESH_MOUSER_BOSS,
 		NUM_TEXTURES_MESHES,
 	};
 
@@ -60,28 +61,16 @@ private:
 		MESH_1_DATA_SCORPION,
 		MESH_1_DATA_INDIA_TOWER_OF_VICTORY,
 		MESH_1_DATA_DUDE,
+		MESH_1_DATA_MOUSER_BOSS,
 		NUM_MESH_1_DATAS,
-	};
-
-	enum
-	{
-		MESH_2_DATA_BOY,
-		MESH_2_DATA_DMAN,
-		NUM_MESH_2_DATAS,
 	};
 
 	enum
 	{
 		ANIM_1_DATA_SCORPION,
 		ANIM_1_DATA_DUDE,
+		ANIM_1_DATA_MOUSER_BOSS,
 		NUM_ANIM_1_DATAS,
-	};
-
-	enum
-	{
-		ANIM_2_DATA_BOY,
-		ANIM_2_DATA_DMAN,
-		NUM_ANIM_2_DATAS,
 	};
 
 	enum
@@ -123,9 +112,7 @@ private:
 	SpriteSheet             m_spriteSheets[NUM_SPRITE_SHEETS];
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
 	Adreno::Model*          m_mesh1Datas[NUM_MESH_1_DATAS];
-	CFrmMesh                m_mesh2Datas[NUM_MESH_2_DATAS];
 	Adreno::Animation*      m_anim1Datas[NUM_ANIM_1_DATAS];
-	FRM_ANIMATION_SET*      m_anim2Datas[NUM_ANIM_2_DATAS];
 	Font                    m_fonts[NUM_FONTS];
 
 	// Effects

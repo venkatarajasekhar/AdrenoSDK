@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Texture 
+    ResourceID  = "diffuse_1"
+    SrcFileName = "grass.png"
+/>
+
+<Texture 
+    ResourceID  = "diffuse_2"
+    SrcFileName = "stone_pavement_1.jpg"
+/>
+
+<Texture 
+    ResourceID  = "blend"
+    SrcFileName = "terrain_map.png"
+/>

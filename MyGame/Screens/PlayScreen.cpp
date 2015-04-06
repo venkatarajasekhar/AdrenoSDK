@@ -175,8 +175,8 @@ void PlayScreen::init()
 	{
 		FlatTerrainProperties properties =
 		{
-			MyVec3(32.0f, 10.0f, 2.0f),
-			MyVec2(0.45f, 0.55f),
+			MyVec3(6.0f, 32.0f, 1.0f),
+			MyVec2(0.0f, 1.0f),
 		};
 
 		m_mesh_terrain.init(

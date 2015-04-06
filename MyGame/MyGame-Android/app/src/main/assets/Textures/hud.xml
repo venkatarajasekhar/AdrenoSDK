@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<!--
-Command: ResourcePacker ../textures/gui/hud.xml ../textures/gui/hud.pak
- -->
-
 <Texture
     ResourceID  = "minimap_background"
     SrcFileName = "minimap_background.png"

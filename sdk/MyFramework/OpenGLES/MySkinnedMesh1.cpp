@@ -12,7 +12,11 @@
 
 INT32 GetPropertyIndexFromName(Adreno::Mesh* pMesh, char* propertyName);
 
-SkinnedMesh1::Instance* SkinnedMesh1::buildSkinnedMeshInstance(const MyVec3& pos, const MyVec3& rot, const MyVec3& scale, const MyString& action)
+SkinnedMesh1::Instance* SkinnedMesh1::buildSkinnedMeshInstance(
+	const MyVec3& pos, 
+	const MyVec3& rot, 
+	const MyVec3& scale, 
+	const MyString& action)
 {
 	SkinnedMesh1::Instance* instance = new SkinnedMesh1::Instance;
 
@@ -21,9 +25,125 @@ SkinnedMesh1::Instance* SkinnedMesh1::buildSkinnedMeshInstance(const MyVec3& pos
 	instance->Scale = scale;
 
 	instance->CurrentAction = action;
-	instance->TotalTicks = 0;
 
 	return instance;
+}
+
+bool SkinnedMesh1::mergeAnimFile(
+	AnimFile* animFiles,
+	int numAnimFiles,
+	Adreno::Animation*& mergedAnim,
+	std::map<MyString, AnimAction>& actionsMap)
+{
+	INT32 numTracks(0), numFrames(0);
+	Adreno::Animation* firstAnim(nullptr);
+	std::map<MyString, Adreno::Animation*> animsMap;
+
+	mergedAnim = new Adreno::Animation;
+
+	if (animFiles == nullptr || numAnimFiles == 0)
+	{
+		smartLog("ERROR: List of animation file is empty.");
+		return false;
+	}
+
+	// Init animation files
+	for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+	{
+		auto pAnimFile = animFiles + iAnim;
+
+		auto ite = animsMap.find(pAnimFile->FileName);
+		if (ite == animsMap.end())
+		{
+			auto anim = Adreno::FrmLoadAnimationFromFile(pAnimFile->FileName.c_str());
+			animsMap[pAnimFile->FileName] = anim;
+			pAnimFile->Anim = anim;
+		}
+		else
+		{
+			pAnimFile->Anim = ite->second;
+		}
+	}
+
+	// Computing numTracks and numFrames
+	firstAnim = animFiles[0].Anim;
+	numTracks = firstAnim->NumTracks;
+
+	for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+	{
+		auto pAnimFile = animFiles + iAnim;
+
+		if (pAnimFile->Anim->NumTracks != numTracks)
+		{
+			smartLog("ERROR: Number of bones of animation files is not the same.");
+			return false;
+		}
+
+		UINT32 frameStart = pAnimFile->Range.FrameStart;
+		UINT32 frameLength = pAnimFile->Range.FrameLength;
+
+		if (frameStart >= pAnimFile->Anim->NumFrames)
+		{
+			frameStart = 0;
+		}
+		if (frameLength > pAnimFile->Anim->NumFrames - frameStart)
+		{
+			frameLength = pAnimFile->Anim->NumFrames - frameStart;
+		}
+
+		frameLength = (frameLength == 0) ? pAnimFile->Anim->NumFrames - frameStart : frameLength;
+
+		pAnimFile->Range.FrameStart = frameStart;
+		pAnimFile->Range.FrameLength = frameLength;
+
+		numFrames += frameLength;
+	}
+
+	// Merging animation files
+	mergedAnim->ResizeTracks(numTracks);
+	mergedAnim->NumFrames = numFrames;
+
+	for (int iTrack = 0; iTrack < numTracks; iTrack++)
+	{
+		auto mergedAnimTrack = mergedAnim->Tracks + iTrack;
+
+		mergedAnimTrack->SetName(firstAnim->Tracks[iTrack].Id.Name);
+		mergedAnimTrack->ResizeKeyframes(numFrames);
+		
+		int count(0);
+		
+		for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+		{
+			auto pAnimFile = animFiles + iAnim;
+			auto animTrack = pAnimFile->Anim->Tracks + iTrack;
+
+			for (int iFrame = pAnimFile->Range.FrameStart; iFrame < pAnimFile->Range.FrameStart + pAnimFile->Range.FrameLength; iFrame++)
+			{
+				if (iFrame >= 0 && iFrame < animTrack->NumKeyframes)
+				{
+					mergedAnimTrack->Keyframes[count++] = animTrack->Keyframes[iFrame];
+				}
+			}
+		}
+	}
+
+	// Destroy animation files
+	for (auto i = animsMap.begin(); i != animsMap.end(); ++i)
+	{
+		Adreno::FrmDestroyLoadedAnimation(i->second);
+	}
+
+	// Build action map
+	UINT32 frameStart(0);
+	for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+	{
+		auto pAnimFile = animFiles + iAnim;
+
+		actionsMap[pAnimFile->Name] = { frameStart, pAnimFile->Range.FrameLength };
+		frameStart += pAnimFile->Range.FrameLength;
+	}
+
+	return true;
 }
 
 // Desc: Get final transform for a bone
@@ -69,6 +189,7 @@ static BOOL SetupBoneTransform(Adreno::Model* pModel, Adreno::Animation* pAnim)
 	// If there is a mismatch, return false
 	if (pModel->NumJoints != pAnim->NumTracks)
 	{
+		smartLog("ERROR: Number of bones in model and animation is missmatch");
 		return FALSE;
 	}
 
@@ -163,6 +284,7 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 					{
 						if (boneRemapCount >= SkinnedMesh1::MAX_BONES)
 						{
+							smartLog("ERROR: Number of bones in model exceeds maximum " + toString(SkinnedMesh1::MAX_BONES) + " bones");
 							return FALSE;
 						}
 
@@ -188,6 +310,36 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 	}
 
 	return TRUE;
+}
+
+#pragma endregion
+
+#pragma region SkinnedMesh1::Instance struct
+
+//===============================================================================================================
+//
+// SkinnedMesh1::Instance struct
+//
+//===============================================================================================================
+
+SkinnedMesh1::Instance::Instance()
+	: LeftFrame(0), 
+	RightFrame(0), 
+	FrameWeight(0.0f), 
+	LoopedAction(true), 
+	TotalTicks(0)
+{}
+
+void SkinnedMesh1::Instance::setAction(const MyString& action, const MyString& nextAction, bool looped)
+{
+	CurrentAction = action;
+	LoopedAction = looped;
+	NextAction = nextAction;
+
+	if (!looped)
+	{
+		TotalTicks = 0;
+	}
 }
 
 #pragma endregion
@@ -246,6 +398,7 @@ void SkinnedMesh1::update(Timer& timer)
 		{
 			UINT32 frameStart, frameLength;
 
+			// Computing frameStart and frameLength
 			if (!m_animActions.empty())
 			{
 				AnimAction action = getAction(instance->CurrentAction);
@@ -267,12 +420,26 @@ void SkinnedMesh1::update(Timer& timer)
 				frameLength = m_anim->NumFrames;
 			}
 
+			// Computing LeftFrame, RightFrame and FrameWeight
 			frameLength = (frameLength == 0) ? m_anim->NumFrames - frameStart : frameLength;
 
 			UINT32 totalFrames = instance->TotalTicks / ticksPerFrame;
 			
 			instance->LeftFrame = frameStart + totalFrames % frameLength;
-			instance->RightFrame = (instance->LeftFrame != frameStart + frameLength - 1) ? instance->LeftFrame + 1 : frameStart;
+			if (instance->LeftFrame == frameStart + frameLength - 1)
+			{
+				instance->RightFrame = frameStart;
+				if (!instance->LoopedAction)
+				{
+					instance->setAction(instance->NextAction);
+				}
+			}
+			else
+			{
+				instance->RightFrame = instance->LeftFrame + 1;
+			}
+
+			//instance->RightFrame = (instance->LeftFrame != frameStart + frameLength - 1) ? instance->LeftFrame + 1 : frameStart;
 			instance->FrameWeight = (FLOAT32)(instance->TotalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
 		}
 	}

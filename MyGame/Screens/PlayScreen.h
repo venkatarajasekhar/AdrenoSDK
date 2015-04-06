@@ -144,6 +144,6 @@ private:
 	//Player m_player;
 	ScorpionHero m_scorpion;
 
-	float m_countTime = 23;
+	float m_countTime = 28;
 	bool m_lockedUserInput;
 };

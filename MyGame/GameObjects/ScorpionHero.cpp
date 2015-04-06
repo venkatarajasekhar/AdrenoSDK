@@ -58,26 +58,12 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 
 	if (m_isUsingSkill)
 	{
-		//g_livingEntityManager.beatLivingEntitys(m_projectile.getPos(), 3 * m_damage);
-
 		int nFrame = m_instance->LeftFrame;
 		if (nFrame - 150 == 34)
 		{
 			Projectile* m_projectile = new Projectile;
-			m_projectile->init(m_billboard, m_idEmemy, m_idEntity, 10.0f, MY_TEAM);
+			m_projectile->init(m_billboard, m_idEmemy, m_idEntity, 10.0f, 30, MY_TEAM);
 			g_projectileManager.insertProjectileToList(m_projectile);
-			/*MyVec3 dir(dSin(m_instance->Rotation.y), 0, dCos(m_instance->Rotation.y));
-			{
-				MyVec3 offset = normalize(dir) + MyVec3(0, 3, 0);
-				m_projectile.setPos(PositionPlayer + 0.5f*offset);
-			}
-
-			{
-				MyVec3 vel = normalize(dir) * 7.0f;
-				m_projectile.setVelocity(vel);
-			}
-
-			m_projectile.setActive(true);*/
 		}
 
 		if (nFrame - 150 == 53)

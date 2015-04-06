@@ -13,9 +13,8 @@ private:
 	FileMesh1::Instance* m_instance;
 	BloodBar* m_bloodBar;
 	Billboard m_billboard;
-	MyVec3 m_direction = MyVec3(0, 0, 0);
 	int m_idEmemy = -1;
-	float m_countTime = 0;
+	float m_countTime = 3;
 public:
 
 	void init(

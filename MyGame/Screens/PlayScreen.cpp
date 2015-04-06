@@ -289,15 +289,15 @@ void PlayScreen::createBuilding()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
 		MyVec3(-15, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, MY_TEAM);
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, MY_TEAM);
 	g_livingEntityManager.insertLivingEntityToList(tower11, -1);
 
 	Tower* tower12 = new Tower;
 	tower12->init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
-		MyVec3(-35, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, MY_TEAM);
+		MyVec3(-40, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, MY_TEAM);
 	g_livingEntityManager.insertLivingEntityToList(tower12, -1);
 
 	Tower* tower21 = new Tower;
@@ -305,15 +305,15 @@ void PlayScreen::createBuilding()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
 		MyVec3(15, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, ENEMY);
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, ENEMY);
 	g_livingEntityManager.insertLivingEntityToList(tower21, -1);
 
 	Tower* tower22 = new Tower;
 	tower22->init(m_mesh1Datas[MESH_1_DATA_INDIA_TOWER_OF_VICTORY],
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
-		MyVec3(35, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 5, ENEMY);
+		MyVec3(40, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
+		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, ENEMY);
 	g_livingEntityManager.insertLivingEntityToList(tower22, -1);
 }
 
@@ -405,10 +405,10 @@ void PlayScreen::update(void* utilObjs)
 	getWindowDimension(width, height);
 
 	m_countTime += globalUtilObjs->timer->getElapsedTime();
-	if (m_countTime > 25)
+	if (m_countTime > 30)
 	{
 		cloneTrooper();
-		m_countTime -= 25;
+		m_countTime -= 30;
 	}
 
 	if (!m_lockedUserInput)

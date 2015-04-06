@@ -16,6 +16,7 @@ public:
 		int idEnemy, 
 		int idHero,
 		float range,
+		int damage,
 		TEAM_TYPE teamType);
 	void update(Timer& timer);
 	void render(Camera& camera);
@@ -37,4 +38,5 @@ private:
 	int m_idEnemy;
 	int m_idHero;
 	float m_range;
+	int m_damage;
 };

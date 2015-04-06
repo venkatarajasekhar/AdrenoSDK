@@ -39,21 +39,19 @@ void Tower::init(
 
 void Tower::update(UserInput& userInput, Timer& timer, Camera& camera, int width, int height)
 {
-	/*int nFrame = m_instance->LeftFrame;
-	if (nFrame - 150 == 34)
+	if (g_livingEntityManager.getIdLivingEntityInRange(m_idEntity, m_range) != -1)
 	{
-		Projectile* m_projectile = new Projectile;
-		m_projectile->init(m_billboard, m_idEmemy, m_idEntity, 10.0f, MY_TEAM);
-		g_projectileManager.insertProjectileToList(m_projectile);
+		if (m_countTime >= 3)
+		{
+			Projectile* m_projectile = new Projectile;
+			m_idEmemy = g_livingEntityManager.getIdLivingEntityInRange(m_idEntity, m_range);
+			m_projectile->init(m_billboard, m_idEmemy, m_idEntity, 10.0f, 40, MY_TEAM);
+			g_projectileManager.insertProjectileToList(m_projectile);
+			m_countTime -= 3;
+		}
+		m_countTime += timer.getElapsedTime();
 	}
-
-	if (m_countTime >= 1.5f)
-	{
-		Trooper* trooper = (Trooper*)(g_livingEntityManager.getLivingEntityById(m_idEmemy));
-		trooper->setHealth(trooper->getHealth() - m_damage);
-		if (g_livingEntityManager.getLivingEntityById(m_idEmemy)->isDead()) m_idEmemy = -1;
-		m_countTime = 0;
-	}*/
+	else m_countTime = 3;
 
 	m_tower.update(timer);
 }

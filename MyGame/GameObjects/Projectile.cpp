@@ -15,12 +15,14 @@ void Projectile::init(Billboard& billboard,
 	int idEnemy,
 	int idHero,
 	float range,
+	int damage,
 	TEAM_TYPE teamType)
 {
 	m_billboard = &billboard;
 	m_idEnemy = idEnemy;
 	m_idHero = idHero;
 	m_range = range;
+	m_damage = damage;
 	m_teamType = teamType;
 	m_entityType = ENTITY_TYPE_PROJECTILE;
 	m_active = true;
@@ -48,8 +50,7 @@ void Projectile::update(Timer& timer)
 			if (distance_optimized(getPos(), g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position) <= 2.0f)
 			{
 				m_active = false;
-				g_livingEntityManager.getLivingEntityById(m_idEnemy)->setHealth(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getHealth()
-					- g_livingEntityManager.getLivingEntityById(m_idHero)->getDamage() * 3);
+				g_livingEntityManager.getLivingEntityById(m_idEnemy)->setHealth(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getHealth() - m_damage);
 			}
 			setTarget(g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position);
 			m_movingEntity.update(timer);

@@ -9,6 +9,7 @@
 #include <MySkinnedMesh2.h>
 #include <MyEventListener.h>
 #include <MyFont.h>
+#include <MyBillboard.h>
 
 #include "HUD.h"
 #include "FlatTerrain.h"
@@ -43,7 +44,8 @@ private:
 
 	enum
 	{
-		SPRITE_SHEET_FIREBALL,
+		SPRITE_SHEET_FIRE_BALL,
+		SPRITE_SHEET_ENERGY_BALL,
 		NUM_SPRITE_SHEETS,
 	};
 
@@ -82,7 +84,8 @@ private:
 	// Effects
 	enum
 	{
-		BILLBOARD_FIREBALL,
+		BILLBOARD_FIRE_BALL,
+		BILLBOARD_ENERGY_BALL,
 		NUM_BILLBOARDS,
 	};
 
@@ -116,6 +119,7 @@ private:
 	Font                    m_fonts[NUM_FONTS];
 
 	// Effects
+	Billboard m_billboards[NUM_BILLBOARDS];
 
 	// HUD objects
 	HUD m_hud;

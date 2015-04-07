@@ -109,9 +109,10 @@ void TestScreen::initAssets()
 	// Assets sprite sheets
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheets.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheet.pak").c_str());
 
-		m_spriteSheets[SPRITE_SHEET_FIREBALL].init(resource.GetTexture("fireball"), 10, MyIVec2(3, 2), MyIVec2(128, 128));
+		m_spriteSheets[SPRITE_SHEET_FIRE_BALL].init(resource.GetTexture("fire_ball"), 10, MyIVec2(3, 1), MyIVec2(32, 32));
+		m_spriteSheets[SPRITE_SHEET_ENERGY_BALL].init(resource.GetTexture("energy_ball"), 5, MyIVec2(3, 1), MyIVec2(100, 100));
 	}
 
 	// Assets mesh 1 datas
@@ -259,6 +260,10 @@ void TestScreen::init()
 	m_hud.init(MyVec3(0), MyVec2(100), this);
 	m_hud.addPressListener(this);
 
+	// Effects
+	m_billboards[BILLBOARD_FIRE_BALL].init(&m_spriteSheets[SPRITE_SHEET_FIRE_BALL], m_shaders[SHADER_BILLBOARD], MyVec3(0, 3, 0), MyVec2(1), 0);
+	m_billboards[BILLBOARD_ENERGY_BALL].init(&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL], m_shaders[SHADER_BILLBOARD], MyVec3(3, 3, 3), MyVec2(1), 0);
+
 	// Mesh objects
 	{
 		FlatTerrainProperties properties =
@@ -307,6 +312,11 @@ void TestScreen::update(void* utilObjs)
 	}
 
 	// Effects
+	m_billboards[BILLBOARD_ENERGY_BALL].setPos(MyVec3(-5.0f * globalUtilObjs->timer->getTotalTime(), 3, 0));
+	for (int i = 0; i < NUM_BILLBOARDS; i++)
+	{
+		m_billboards[i].update(*globalUtilObjs->timer);
+	}
 
 	// HUD objects
 	m_hud.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
@@ -346,6 +356,10 @@ void TestScreen::render(void* utilObjs)
 	}
 
 	// Effects objects
+	for (int i = 0; i < NUM_BILLBOARDS; i++)
+	{
+		m_billboards[i].render(m_camera_main);
+	}
 		
 	// HUD objects
 	m_hud.render(*globalUtilObjs->spriteBatch);

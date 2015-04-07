@@ -16,8 +16,11 @@ public:
 	void setPos(const MyVec3& pos);
 
 private:
-	BasicMesh m_mesh;
 	Texture* m_texture;
-
+	MyVec3 m_pos;
 	MyVec2 m_billboardSize;
+
+private:
+	static BasicMesh m_mesh;
+	static bool m_initedStatic;
 };

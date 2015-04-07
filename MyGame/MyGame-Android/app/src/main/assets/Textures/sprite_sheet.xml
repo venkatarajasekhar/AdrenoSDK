@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Texture 
+    ResourceID  = "energy_ball"
+    SrcFileName = "Energy Ball.png"
+/>
+
+<Texture 
+    ResourceID  = "fire_ball"
+    SrcFileName = "FireBall.PNG"
+/>

@@ -2,6 +2,9 @@
 #include "MyBillboard.h"
 #include "MySpriteSheet.h"
 
+BasicMesh Billboard::m_mesh;
+bool Billboard::m_initedStatic = false;
+
 Billboard::Billboard()
 	: m_texture(nullptr)
 {
@@ -14,12 +17,14 @@ Billboard::~Billboard()
 void Billboard::init(Texture* texture, Shader& shader, const MyVec3& pos, const MyVec2& size, float rot)
 {
 	m_texture = texture;
+	m_pos = pos;
 	m_billboardSize = size;
+
+	if (!m_initedStatic)
 	{
-		// Init mesh
 		std::vector<BillboardVertex> vertices;
 		vertices.resize(4);
-		
+
 		vertices[0] = BillboardVertex(MyVec2(0, 0));
 		vertices[1] = BillboardVertex(MyVec2(0, 1));
 		vertices[2] = BillboardVertex(MyVec2(1, 1));
@@ -35,7 +40,9 @@ void Billboard::init(Texture* texture, Shader& shader, const MyVec3& pos, const 
 		indices[4] = 2;
 		indices[5] = 3;
 
-		m_mesh.init(vertices, indices, shader, texture, pos, MyVec3(0), MyVec3(1));
+		m_mesh.init(vertices, indices, shader, nullptr, MyVec3(0), MyVec3(0), MyVec3(1));
+
+		m_initedStatic = true;
 	}
 }
 
@@ -57,6 +64,9 @@ void Billboard::render(Camera& camera)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
+	m_mesh.setPos(m_pos);
+	m_mesh.setDiffuseMap(m_texture);
+
 	m_mesh.render(camera);
 
 	glDisable(GL_BLEND);
@@ -64,5 +74,5 @@ void Billboard::render(Camera& camera)
 
 void Billboard::setPos(const MyVec3& pos)
 {
-	m_mesh.setPos(pos);
+	m_pos = pos;
 }

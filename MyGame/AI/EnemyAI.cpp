@@ -101,7 +101,7 @@ void EnemyAI::update(Timer& timer)
 		if (m_enemyState == Chasing)
 		{
 			m_enemyOrientation = TurnToFace(m_pos, g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position, m_enemyOrientation, EnemyTurnSpeed);
-			currentEnemySpeed = MaxEnemySpeed;
+			currentEnemySpeed = .9 * MaxEnemySpeed;
 		}
 		else if (m_enemyState == Wander)
 		{
@@ -138,33 +138,17 @@ MyVec3 EnemyAI::MoveEnemy(MyVec3 currPos, MyVec3 moveAmt, Timer& timer)
 
 	if (fabs(result.w - 1.0f) <= e)
 	{
-		//if (oldDirect != MyVec3(0))
 		if (distance_optimized(oldDirect, MyVec3(0)) > 0.1f)
 		{
 			MyVec3 newDirect(-oldDirect.z, oldDirect.y, oldDirect.x);
 			foreMove = currPos + 0.04f * newDirect * timer.getElapsedTime() * 40.0f;
 		}
-		//else
-			//foreMove = currPos + moveAmt * timer.getElapsedTime() * 40.0f;
 	}
 	else
 	{
 		foreMove = currPos + (moveAmt + 0.01f * oldDirect) * timer.getElapsedTime() * 40.0f;
 	}
 
-	// kiem tra dich den co phai mat dat k?
-	/*if (_level.Terrain.DetermineTerrainType(foreMove.x, foreMove.z) == Terrain.TerrainType.Ground)
-	{
-	m_pos = foreMove;
-	if ((_level.Terrain.CheckCollision(foreMove.X, foreMove.Z, this)) || (MonsterCheckCollision()))
-	return currPos;
-	else
-	return foreMove;
-	}
-	else
-	return currPos;*/
-
-	// tam thoi la thich di dau cung dc
 	return foreMove;
 }
 
@@ -172,19 +156,18 @@ void EnemyAI::Wanders(MyVec3 position, float& orientation, float turnSpeed)
 {
 	float e = 0.1f;
 	MyVec4 result = g_livingEntityManager.checkLivingEntityCanMove(m_idEntity);
-	//MyVec3 oldDirect(result.x, result.y, result.z);
 
-	//if (oldDirect != MyVec3(0))
 	if (fabs(result.w - 1.0f) <= e)
 	{
-		//MyVec3 positionNext = MyVec3(m_pos.x, m_pos.y, m_pos.z + 0.005);
+		//MyVec3 positionNext = MyVec3(m_pos.x, m_pos.y, m_pos.z);
 		//orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}
 	else
 	{
 		if (fabs(m_pos.z - m_pointEnd.z) > e)
 		{
-			MyVec3 positionNext = MyVec3(m_pos.x, 0, m_pointEnd.z);
+			int team = g_livingEntityManager.getLivingEntityById(m_idEntity)->getTeamType();
+			MyVec3 positionNext = MyVec3(m_pos.x - 4 * (team - 0.5f), 0, m_pointEnd.z);
 			orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 		}
 		else

@@ -27,7 +27,7 @@ void MiniMap::setStatus(Status status)
 
 void MiniMap::updateBounding()
 {
-	float scale = (m_status == SMALL ? 0.5f : 1.0f);
+	float scale = (m_status == SMALL ? 0.35f : 0.8f);
 
 	if (m_background != nullptr)
 	{

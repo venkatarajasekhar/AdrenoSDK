@@ -32,7 +32,6 @@ public:
 	int getNEntity();
 	LivingEntity* getLivingEntityById(int id);
 	int getIdLivingEntityInRange(int idEntity, float range);
-	MyVec3 checkLivingEntityCanMove(int idEntity);
+	MyVec4 checkLivingEntityCanMove(int idEntity);
 	void beatLivingEntitys(MyVec3 positionBeat, int dam);
-	//MyVec3 obstacleAvoidance(int idEntity);
 };

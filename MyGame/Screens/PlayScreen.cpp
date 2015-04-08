@@ -107,9 +107,9 @@ void PlayScreen::init()
 	// Assets sprite sheets
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheets.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheet.pak").c_str());
 
-		m_spriteSheets[SPRITE_SHEET_FIREBALL].init(resource.GetTexture("fireball"), 10, MyIVec2(3, 2), MyIVec2(128, 128));
+		m_spriteSheets[SPRITE_SHEET_FIREBALL].init(resource.GetTexture("energy_ball"), 5, MyIVec2(3, 1), MyIVec2(100, 100));
 	}
 
 	// Assets mesh 1 datas
@@ -161,7 +161,7 @@ void PlayScreen::init()
 	}
 
 	// Effects
-	m_billboards[BILLBOARD_FIREBALL].init(&m_spriteSheets[SPRITE_SHEET_FIREBALL], m_shaders[SHADER_BILLBOARD], MyVec3(0), MyVec2(2), 0);
+	m_billboards[BILLBOARD_FIREBALL].init(&m_spriteSheets[SPRITE_SHEET_FIREBALL], m_shaders[SHADER_BILLBOARD], MyVec3(0), MyVec2(1.0f), 0);
 	
 	// HUD objects
 	m_bloodbar_green.init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
@@ -289,7 +289,7 @@ void PlayScreen::createBuilding()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
 		MyVec3(-15, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, MY_TEAM);
+		m_billboards[BILLBOARD_FIREBALL], 1000, 40, 10, MY_TEAM);
 	g_livingEntityManager.insertLivingEntityToList(tower11, -1);
 
 	Tower* tower12 = new Tower;
@@ -297,7 +297,7 @@ void PlayScreen::createBuilding()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
 		MyVec3(-40, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, MY_TEAM);
+		m_billboards[BILLBOARD_FIREBALL], 1000, 40, 10, MY_TEAM);
 	g_livingEntityManager.insertLivingEntityToList(tower12, -1);
 
 	Tower* tower21 = new Tower;
@@ -305,7 +305,7 @@ void PlayScreen::createBuilding()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
 		MyVec3(15, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, ENEMY);
+		m_billboards[BILLBOARD_FIREBALL], 1000, 40, 10, ENEMY);
 	g_livingEntityManager.insertLivingEntityToList(tower21, -1);
 
 	Tower* tower22 = new Tower;
@@ -313,7 +313,7 @@ void PlayScreen::createBuilding()
 		m_meshTextures[TEXTURES_MESH_INDIA_TOWER_OF_VICTORY],
 		m_shaders[SHADER_MESH], 
 		MyVec3(40, 0, 0), MyVec3(0), MyVec3(0.25f), &m_bloodbar_red, &m_bloodbar_green,
-		m_billboards[BILLBOARD_FIREBALL], 2000, 50, 10, ENEMY);
+		m_billboards[BILLBOARD_FIREBALL], 1000, 40, 10, ENEMY);
 	g_livingEntityManager.insertLivingEntityToList(tower22, -1);
 }
 
@@ -331,6 +331,10 @@ void PlayScreen::cloneTrooper()
 	scorpion13->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-40, 0, -1.5), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion13, TROOPER_SCORPION);
 
+	Trooper* scorpion14 = new Trooper;
+	scorpion14->init(TROOPER_SCORPION, MY_TEAM, 100, 10, 2.0f, MyVec3(-41, 0, 0), MyVec3(0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion14, TROOPER_SCORPION);
+
 	Trooper* scorpion21 = new Trooper;
 	scorpion21->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(40, 0, -1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion21, TROOPER_SCORPION);
@@ -342,6 +346,10 @@ void PlayScreen::cloneTrooper()
 	Trooper* scorpion23 = new Trooper;
 	scorpion23->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(40, 0, 1.5), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
 	g_livingEntityManager.insertLivingEntityToList(scorpion23, TROOPER_SCORPION);
+
+	Trooper* scorpion24 = new Trooper;
+	scorpion24->init(TROOPER_SCORPION, ENEMY, 100, 10, 2.0f, MyVec3(41, 0, 0), MyVec3(0, 180, 0), MyVec3(0.12f), &m_bloodbar_red, &m_bloodbar_green);
+	g_livingEntityManager.insertLivingEntityToList(scorpion24, TROOPER_SCORPION);
 }
 
 void PlayScreen::resize(int width, int height)

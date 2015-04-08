@@ -91,7 +91,7 @@ void ScorpionHero::update(UserInput& userInput, Timer& timer, Camera& camera, in
 	}
 
 
-	float moveFactor = 40.0f;
+	float moveFactor = 45.0f;
 
 	float e = 0.1f;
 	if ((fabs(position.x - m_pointTouch.x) > e) || (fabs(position.z - m_pointTouch.z) > e))

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-static const int MAX_LINE_LENGTH = 64;
+static const int MAX_LINE_LENGTH = 256;
 
 InitFile::InitFile()
 {

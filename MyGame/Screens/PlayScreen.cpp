@@ -6,6 +6,15 @@
 
 //========================================================================================================
 //
+// Constants
+//
+//========================================================================================================
+
+static const MyVec3 MAP_CENTER = MyVec3(0);
+static const MyVec2 MAP_SIZE   = MyVec2(100);
+
+//========================================================================================================
+//
 // PlayScreen class
 //
 //========================================================================================================
@@ -119,6 +128,22 @@ void PlayScreen::init()
 
 	createBuilding();
 	/**/
+
+	{
+		Layer_HUD::InitBundle bundle;
+		bundle.MapCenter = MAP_CENTER;
+		bundle.MapSize = MAP_SIZE;
+
+		m_layer_HUD.init(bundle);
+	}
+
+	{
+		Layer_World::InitBundle bundle;
+		bundle.MapCenter = MAP_CENTER;
+		bundle.MapSize = MAP_SIZE;
+
+		m_layer_World.init(bundle);
+	}
 }
 
 /*
@@ -196,11 +221,16 @@ void PlayScreen::cloneTrooper()
 
 void PlayScreen::resize(int width, int height)
 {
+	m_layer_HUD.resize(width, height);
+	m_layer_World.resize(width, height);
 }
 
 void PlayScreen::update(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	m_layer_HUD.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
+	m_layer_World.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
 
 	/*
 	m_lockedUserInput = false;
@@ -226,6 +256,16 @@ void PlayScreen::update(void* utilObjs)
 void PlayScreen::render(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	m_layer_World.render(*globalUtilObjs->spriteBatch);
+
+	{
+		Layer_HUD::RenderBundle bundle;
+		bundle.PlayerPos = MyVec3(0);
+
+		m_layer_HUD.render(*globalUtilObjs->spriteBatch, bundle);
+	}
+
 
 	// Mesh objects
 

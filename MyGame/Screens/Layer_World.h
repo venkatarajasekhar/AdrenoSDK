@@ -6,9 +6,17 @@
 #include <MySpriteBatch.h>
 #include <MySpriteSheet.h>
 #include <MySkinnedMesh1.h>
+#include "FlatTerrain.h"
 
 class Layer_World
 {
+public:
+	struct InitBundle
+	{
+		MyVec3 MapCenter;
+		MyVec2 MapSize;
+	};
+
 private:
 	// Assets
 	enum
@@ -62,7 +70,7 @@ public:
 
 	// Core functions
 
-	void init();
+	void init(Layer_World::InitBundle& bundle);
 	void resize(int width, int height);
 	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch);
@@ -78,4 +86,7 @@ private:
 
 	// Core objects
 	PerspectiveCamera m_camera_main;
+
+	// Mesh objects
+	FlatTerrain m_mesh_terrain;
 };

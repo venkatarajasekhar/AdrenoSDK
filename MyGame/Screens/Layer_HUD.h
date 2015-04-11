@@ -8,12 +8,13 @@ class Layer_HUD
 public:
 	struct InitBundle
 	{
-
+		MyVec3 MapCenter;
+		MyVec2 MapSize;
 	};
 
 	struct RenderBundle
 	{
-
+		MyVec3 PlayerPos;
 	};
 
 private:
@@ -25,6 +26,12 @@ private:
 		TEXTURE_MINIMAP_PLAYER,
 		TEXTURE_BTN_FIGHTING,
 		NUM_TEXTURES,
+	};
+
+	enum
+	{
+		FONT_CONSOLAS_12,
+		NUM_FONTS,
 	};
 
 	// UI Widgets
@@ -48,10 +55,12 @@ public:
 private:
 	// Assets
 	Texture m_textures[NUM_TEXTURES];
+	Font    m_fonts[NUM_FONTS];
 
 	// UI Widgets
 	UIButton m_btns[NUM_BTNS];
 
 	// Other HUD-components
 	MiniMap m_miniMap;
+	float m_fps;
 };

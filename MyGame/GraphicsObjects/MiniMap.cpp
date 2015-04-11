@@ -1,6 +1,21 @@
 
 #include "MiniMap.h"
 
+#pragma region Constants
+
+//=====================================================================================================
+//
+// Constants
+//
+//=====================================================================================================
+
+static const int   MINI_MAP_MARGIN     = 8;
+static const int   CLOSE_BUTTON_MARGIN = 8;
+static const float SIZE_WHEN_LARGE     = 1.0f;
+static const float SIZE_WHEN_SMALL     = 0.35f;
+
+#pragma endregion
+
 #pragma region MiniMap helpers
 
 //=====================================================================================================
@@ -27,12 +42,12 @@ void MiniMap::setStatus(Status status)
 
 void MiniMap::updateBounding()
 {
-	float scale = (m_status == SMALL ? 0.35f : 0.8f);
+	float scale = (m_status == SMALL ? SIZE_WHEN_SMALL : SIZE_WHEN_LARGE);
 
 	if (m_background != nullptr)
 	{
 		m_bounding.Size = scale * MyVec2(m_background->getWidth(), m_background->getHeight());
-		m_bounding.Pos = MyVec2(m_widthWnd - PADDING_MINI_MAP - m_bounding.Size.x, PADDING_MINI_MAP);
+		m_bounding.Pos = MyVec2(m_widthWnd - MINI_MAP_MARGIN - m_bounding.Size.x, MINI_MAP_MARGIN);
 	}
 }
 
@@ -66,7 +81,7 @@ void MiniMap::init(
 {
 	m_background = &background;
 	m_player = &player;
-	m_closeButton.init("", MyVec2(), closeButton);
+	m_closeButton.init("hud_minimap_btn_close", MyVec2(), closeButton);
 	m_mapCenter = mapCenter;
 	m_mapSize = mapSize;
 
@@ -114,8 +129,8 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 	
 	// Render closing button
 	MyVec2 closeBtnPos(
-		m_widthWnd - PADDING_MINI_MAP - PADDING_CLOSE_BUTTON - m_closeButton.getSize().x, 
-		PADDING_MINI_MAP + PADDING_CLOSE_BUTTON);
+		m_widthWnd - MINI_MAP_MARGIN - CLOSE_BUTTON_MARGIN - m_closeButton.getSize().x,
+		MINI_MAP_MARGIN + CLOSE_BUTTON_MARGIN);
 
 	m_closeButton.setPos(closeBtnPos);
 	m_closeButton.render(spriteBatch);
@@ -123,5 +138,8 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 
 void MiniMap::OnPress(const IOnPressListener::Data& data)
 {
-	setStatus(SMALL);
+	if (data.Id == "hud_minimap_btn_close")
+	{
+		setStatus(SMALL);
+	}
 }

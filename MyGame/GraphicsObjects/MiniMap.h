@@ -46,8 +46,4 @@ private:
 	int m_widthWnd, m_heightWnd;
 
 	Status m_status;
-
-private:
-	static const int PADDING_MINI_MAP = 8;
-	static const int PADDING_CLOSE_BUTTON = 8;
 };

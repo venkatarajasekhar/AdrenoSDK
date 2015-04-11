@@ -2,6 +2,8 @@
 #pragma once
 
 #include <MyScreen.h>
+#include "Layer_HUD.h"
+#include "Layer_World.h"
 
 //class PlayScreen : public Screen, public IOnPressListener
 class PlayScreen : public Screen
@@ -69,4 +71,7 @@ private:
 	float m_countTime = 28;
 	bool m_lockedUserInput;
 	/**/
+
+	Layer_HUD   m_layer_HUD;
+	Layer_World m_layer_World;
 };

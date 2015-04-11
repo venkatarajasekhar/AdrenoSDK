@@ -7,7 +7,7 @@
 //
 //========================================================================================================
 
-static const MyVec3 MAIN_CAM_POS    = MyVec3(0.0f, 10.0f, 10.0f);
+static const MyVec3 MAIN_CAM_POS    = MyVec3(-5.0f, 20.0f, 15.0f);
 static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 0.0f, 0.0f);
 static const float  MAIN_CAM_FAR    = 100.0f;
 
@@ -27,7 +27,7 @@ Layer_World::~Layer_World()
 
 // Core functions
 
-void Layer_World::init()
+void Layer_World::init(Layer_World::InitBundle& bundle)
 {
 	// Assets shaders
 	m_shaders[SHADER_TERRAIN].init(
@@ -76,6 +76,24 @@ void Layer_World::init()
 
 	// Core objects
 	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
+
+	// Mesh objects
+	{
+		FlatTerrainProperties properties =
+		{
+			MyVec3(6.0f, 32.0f, 1.0f),
+			MyVec2(0.0f, 1.0f),
+		};
+
+		m_mesh_terrain.init(
+			m_shaders[SHADER_TERRAIN],
+			m_textures[TEXTURE_TERRAIN_DIFF_1],
+			m_textures[TEXTURE_TERRAIN_DIFF_2],
+			m_textures[TEXTURE_TERRAIN_BLEND],
+			bundle.MapCenter,
+			bundle.MapSize,
+			properties);
+	}
 }
 
 void Layer_World::resize(int width, int height)
@@ -88,9 +106,13 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 {
 	// Core objects
 	m_camera_main.update();
+
+	// Mesh objects
+	m_mesh_terrain.update(timer, userInput, m_camera_main);
 }
 
 void Layer_World::render(SpriteBatch& spriteBatch)
 {
-
+	// Mesh objects
+	m_mesh_terrain.render(m_camera_main);
 }

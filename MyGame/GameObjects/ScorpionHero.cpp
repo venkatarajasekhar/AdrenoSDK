@@ -38,7 +38,7 @@ void ScorpionHero::init(
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
-		m_player.init(model, animation, textures.Textures, shader, &material, &animationPose);
+		//m_player.init(model, animation, textures.Textures, shader, &material, &animationPose);
 
 		m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "Stand");
 

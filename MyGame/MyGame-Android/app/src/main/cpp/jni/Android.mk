@@ -18,6 +18,7 @@ SDK_MY_FRM_OPENGL_PATH   := $(SDK_MY_FRM_PATH)/OpenGLES
 
 GAME_PATH                := ../../../../../../
 GAME_AI_PATH             := $(GAME_PATH)/AI
+GAME_BASE_ENTS_PATH      := $(GAME_PATH)/BaseEntities
 GAME_CORE_PATH           := $(GAME_PATH)/Core
 GAME_GAME_OBJS_PATH      := $(GAME_PATH)/GameObjects
 GAME_GAME_OBJS_MNG_PATH  := $(GAME_PATH)/GameObjectsManagers
@@ -90,17 +91,27 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyUtilsGLES.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \
 				   $(GAME_AI_PATH)/EnemyAI.cpp \
+				   $(GAME_BASE_ENTS_PATH)/BaseEntity.cpp \
+				   $(GAME_BASE_ENTS_PATH)/LivingEntity.cpp \
+				   $(GAME_BASE_ENTS_PATH)/MovingEntity.cpp \
 				   $(GAME_CORE_PATH)/MainGame.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Hero.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Hero_AI.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Hero_Controlled.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Pawn.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Player.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Projectile.cpp \
+				   $(GAME_GAME_OBJS_PATH)/ScorpionHero.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Trooper.cpp \
-				   $(GAME_GAME_OBJS_MNG_PATH)/BaseEntity.cpp \				   
-				   $(GAME_GAME_OBJS_MNG_PATH)/MovingEntity.cpp \
-				   $(GAME_GAME_OBJS_MNG_PATH)/LivingEntity.cpp \
 				   $(GAME_GAME_OBJS_MNG_PATH)/LivingEntityManager.cpp \
+				   $(GAME_GAME_OBJS_MNG_PATH)/ProjectileManager.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
 				   $(GAME_SCREENS_PATH)/HUD.cpp \
+				   $(GAME_SCREENS_PATH)/Layer_HUD.cpp \
+				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
 				   $(GAME_SCREENS_PATH)/MenuScreen.cpp \
 				   $(GAME_SCREENS_PATH)/PlayScreen.cpp \
 				   $(GAME_UTILS_PATH)/Global.cpp
@@ -116,6 +127,7 @@ LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_MY_FRM_ANDROID_PATH) \
 					   $(LOCAL_PATH)/$(SDK_MY_FRM_OPENGL_PATH) \
 					   $(LOCAL_PATH)/$(GAME_AI_PATH) \
+					   $(LOCAL_PATH)/$(GAME_BASE_ENTS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_CORE_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_MNG_PATH) \

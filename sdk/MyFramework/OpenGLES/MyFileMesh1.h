@@ -6,6 +6,8 @@
 #include "FrmPackedResourceGLES.h"
 #include "MyTexture.h"
 
+#pragma region struct & enum
+
 //===============================================================================================================
 //
 // struct & enum
@@ -30,6 +32,8 @@ struct VERTEX_FORMAT_MAP
 	INT32 texCoord;
 };
 
+#pragma endregion
+
 //===============================================================================================================
 //
 // Wrapper for file *.model
@@ -38,25 +42,48 @@ struct VERTEX_FORMAT_MAP
 
 class FileMesh1 : public Mesh
 {
+
+#pragma region Wrapper for mesh data
+
 public:
+	struct MeshData
+	{
+		MeshData();
+		~MeshData();
+
+		void init(const MyString& filename);
+
+		Adreno::Model* Data;
+	};
+
 	struct MeshTextures
 	{
 		MeshTextures();
 		~MeshTextures();
 
-		void init(Adreno::Model* model, CFrmPackedResourceGLES& resource);
+		// NOTE: Deprecated, use void init(FileMesh1::MeshData&, CFrmPackedResourceGLES&) instead.
+		//void init(Adreno::Model* model, CFrmPackedResourceGLES& resource);
+		void init(FileMesh1::MeshData& meshData, CFrmPackedResourceGLES& resource);
 
 		Texture** Textures;
 		int NumTextures;
 	};
 
+#pragma endregion
+
 public:
 	FileMesh1();
 	virtual ~FileMesh1();
 
-	virtual void init(
+	// NOTE: Deprecated
+	/*virtual void init(
 		Adreno::Model* model,
 		Texture** modelTexture,
+		Shader& shader,
+		Material* material = nullptr);*/
+	virtual void init(
+		FileMesh1::MeshData& model,
+		FileMesh1::MeshTextures& modelTexture,
 		Shader& shader,
 		Material* material = nullptr);
 

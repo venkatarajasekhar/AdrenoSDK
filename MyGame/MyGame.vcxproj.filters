@@ -288,9 +288,6 @@
     <ClCompile Include="GameObjectsManagers\LivingEntityManager.cpp">
       <Filter>GameObjectsManagers</Filter>
     </ClCompile>
-    <ClCompile Include="Screens\TestScreen.cpp">
-      <Filter>Screens</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Hero_AI.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -379,9 +376,6 @@
     </ClInclude>
     <ClInclude Include="GameObjectsManagers\LivingEntityManager.h">
       <Filter>GameObjectsManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens\TestScreen.h">
-      <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Hero_AI.h">
       <Filter>GameObjects</Filter>

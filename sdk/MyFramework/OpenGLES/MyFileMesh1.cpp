@@ -115,6 +115,28 @@ void FileMesh1::prepareRenderSubmesh(int submesh)
 
 #pragma endregion
 
+#pragma region Wrapper for mesh data
+
+//===============================================================================================================
+//
+// FileMesh1::MeshTextures struct
+//
+//===============================================================================================================
+
+FileMesh1::MeshData::MeshData()
+	: Data(nullptr)
+{}
+
+FileMesh1::MeshData::~MeshData()
+{
+	Adreno::FrmDestroyLoadedModel(Data);
+}
+
+void FileMesh1::MeshData::init(const MyString& filename)
+{
+	Data = Adreno::FrmLoadModelFromFile(filename.c_str());
+}
+
 //===============================================================================================================
 //
 // FileMesh1::MeshTextures struct
@@ -140,10 +162,12 @@ FileMesh1::MeshTextures::~MeshTextures()
 	}
 }
 
+/*
 void FileMesh1::MeshTextures::init(Adreno::Model* model, CFrmPackedResourceGLES& resource)
 {
 	if (model->NumMaterials > 0)
 	{
+		NumTextures = model->NumMaterials;
 		Textures = new Texture*[model->NumMaterials];
 		memset(Textures, 0, sizeof(Texture*) * model->NumMaterials);
 
@@ -156,6 +180,29 @@ void FileMesh1::MeshTextures::init(Adreno::Model* model, CFrmPackedResourceGLES&
 		}
 	}
 }
+/**/
+
+void FileMesh1::MeshTextures::init(FileMesh1::MeshData& meshData, CFrmPackedResourceGLES& resource)
+{
+	auto model = meshData.Data;
+
+	if (model->NumMaterials > 0)
+	{
+		NumTextures = model->NumMaterials;
+		Textures = new Texture*[model->NumMaterials];
+		memset(Textures, 0, sizeof(Texture*) * model->NumMaterials);
+
+		for (INT32 materialIndex = 0; materialIndex < model->NumMaterials; ++materialIndex)
+		{
+			Adreno::Material* pMaterial = model->Materials + materialIndex;
+
+			Textures[materialIndex] = new Texture;
+			Textures[materialIndex]->init(resource.GetTexture(pMaterial->Id.Name));
+		}
+	}
+}
+
+#pragma endregion
 
 //===============================================================================================================
 //
@@ -192,6 +239,7 @@ FileMesh1::~FileMesh1()
 	SAFE_DELETE_ARRAY(m_vertexFormatMap);
 }
 
+/*
 void FileMesh1::init(
 	Adreno::Model* model,
 	Texture** modelTexture,
@@ -200,6 +248,47 @@ void FileMesh1::init(
 {
 	m_model = model;
 	m_modelTexture = modelTexture;
+
+	// Create vertex and index buffers, and map vertex format
+	m_vertexBuffer = new GLuint[m_model->NumMeshes];
+	memset(m_vertexBuffer, 0, sizeof(GLuint) * m_model->NumMeshes);
+
+	m_indexBuffer = new GLuint[m_model->NumMeshes];
+	memset(m_indexBuffer, 0, sizeof(GLuint) * m_model->NumMeshes);
+
+	m_vertexFormatMap = new VERTEX_FORMAT_MAP[m_model->NumMeshes];
+	memset(m_vertexFormatMap, 0, sizeof(VERTEX_FORMAT_MAP) * m_model->NumMeshes);
+
+	for (INT32 meshIndex = 0; meshIndex < m_model->NumMeshes; ++meshIndex)
+	{
+		Adreno::Mesh* pMesh = m_model->Meshes + meshIndex;
+
+		FrmCreateVertexBuffer(pMesh->Vertices.NumVerts, pMesh->Vertices.Format.Stride, pMesh->Vertices.Buffer, &m_vertexBuffer[meshIndex]);
+		FrmCreateIndexBuffer(pMesh->Indices.NumIndices, sizeof(UINT32), pMesh->Indices.Indices, &m_indexBuffer[meshIndex]);
+
+		m_vertexFormatMap[meshIndex].position = GetPropertyIndexFromName(pMesh, "position");
+		m_vertexFormatMap[meshIndex].normal = GetPropertyIndexFromName(pMesh, "normal");
+		m_vertexFormatMap[meshIndex].tangent = GetPropertyIndexFromName(pMesh, "tangent");
+		m_vertexFormatMap[meshIndex].binormal = GetPropertyIndexFromName(pMesh, "binormal");
+		m_vertexFormatMap[meshIndex].boneIndex = GetPropertyIndexFromName(pMesh, "skinindex");
+		m_vertexFormatMap[meshIndex].boneWeight = GetPropertyIndexFromName(pMesh, "skinweight");
+		m_vertexFormatMap[meshIndex].texCoord = GetPropertyIndexFromName(pMesh, "texcoord");
+	}
+
+	enableLighting();
+
+	Mesh::init(shader, material);
+}
+/**/
+
+void FileMesh1::init(
+	FileMesh1::MeshData& model,
+	FileMesh1::MeshTextures& modelTexture,
+	Shader& shader,
+	Material* material)
+{
+	m_model = model.Data;
+	m_modelTexture = modelTexture.Textures;
 
 	// Create vertex and index buffers, and map vertex format
 	m_vertexBuffer = new GLuint[m_model->NumMeshes];

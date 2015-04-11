@@ -33,14 +33,14 @@ void Hero::init(
 	FLOAT32 speedFactor)
 {
 	// Mesh/Appearance elements
-	m_skinnedMesh.init(
+	/*m_skinnedMesh.init(
 		model,
 		anim,
 		modelTexture,
 		shader,
 		&material,
 		&animActions,
-		speedFactor);
+		speedFactor);*/
 
 	m_skinnedMeshIns = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "Idle");
 	m_skinnedMesh.addInstance(m_skinnedMeshIns);

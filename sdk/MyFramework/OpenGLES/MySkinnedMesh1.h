@@ -21,10 +21,17 @@
 
 class SkinnedMesh1 : public FileMesh1
 {
+
+#pragma region Constants
+
 public:
 	static const UINT32 MAX_BONES       = 60;
 	static const UINT32 TOTAL_BONES     = 256;
 	static const UINT32 TICKS_PER_FRAME = 150;
+
+#pragma endregion
+
+#pragma region Structs
 
 public:
 
@@ -46,6 +53,18 @@ public:
 		
 		MyString Name;
 		AnimAction Range;
+	};
+
+	struct AnimData
+	{
+		AnimData();
+		~AnimData();
+
+		void init(const MyString& filename, std::map<MyString, AnimAction>* animActions = nullptr);
+		void init(AnimFile* animFiles, int numAnimFiles);
+
+		Adreno::Animation* Anim;
+		std::map<MyString, AnimAction> AnimActions;
 	};
 
 	// Some problems with animation action:
@@ -83,10 +102,13 @@ public:
 		/**/
 	};
 
+#pragma endregion
+
 public:
 	SkinnedMesh1();
 	~SkinnedMesh1();
 
+	/*
 	void init(
 		Adreno::Model* model,
 		Adreno::Animation* anim,
@@ -94,6 +116,14 @@ public:
 		Shader& shader,
 		Material* material = nullptr,
 		std::map<MyString, AnimAction>* animActions = nullptr,
+		FLOAT32 speedFactor = 1.0f);
+	/**/
+	void init(
+		FileMesh1::MeshData& model,
+		SkinnedMesh1::AnimData& anim,
+		FileMesh1::MeshTextures& modelTexture,
+		Shader& shader,
+		Material* material = nullptr,
 		FLOAT32 speedFactor = 1.0f);
 
 	void update(Timer& timer);
@@ -111,11 +141,13 @@ public:
 		const MyVec3& scale, 
 		const MyString& action);
 
+	/*
 	static bool mergeAnimFile(
 		AnimFile* animFiles,
 		int numAnimFiles,
 		Adreno::Animation*& mergedAnim,
 		std::map<MyString, AnimAction>& actionsMap);
+	/**/
 
 private:
 	Adreno::Animation* m_anim;

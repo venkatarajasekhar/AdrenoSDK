@@ -165,7 +165,6 @@
     <ClCompile Include="Screens\Layer_World.cpp" />
     <ClCompile Include="Screens\MenuScreen.cpp" />
     <ClCompile Include="Screens\PlayScreen.cpp" />
-    <ClCompile Include="Screens\TestScreen.cpp" />
     <ClCompile Include="Utils\Global.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,7 +195,6 @@
     <ClInclude Include="Screens\Layer_World.h" />
     <ClInclude Include="Screens\MenuScreen.h" />
     <ClInclude Include="Screens\PlayScreen.h" />
-    <ClInclude Include="Screens\TestScreen.h" />
     <ClInclude Include="Utils\Global.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>

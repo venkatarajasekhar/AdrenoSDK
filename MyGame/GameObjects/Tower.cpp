@@ -24,7 +24,7 @@ void Tower::init(
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 
-		m_tower.init(model, textures.Textures, shader, &material);
+		//m_tower.init(model, textures.Textures, shader, &material);
 
 		m_instance = FileMesh1::buildMeshInstance(pos, rot, scale);
 

@@ -70,31 +70,9 @@ public:
 		ChangeState(m_pPreviousState);
 	}
 
-	//returns true if the current state's type is equal to the type of the
-	//class passed as a parameter. 
-	bool  isInState(const State<entity_type>& st)const
-	{
-		if (typeid(*m_pCurrentState) == typeid(st)) return true;
-		return false;
-	}
-
 	State<entity_type>*  CurrentState()  const{ return m_pCurrentState; }
 	State<entity_type>*  GlobalState()   const{ return m_pGlobalState; }
 	State<entity_type>*  PreviousState() const{ return m_pPreviousState; }
-
-	//only ever used during debugging to grab the name of the current state
-	MyString         GetNameOfCurrentState()const
-	{
-		MyString s(typeid(*m_pCurrentState).name());
-
-		//remove the 'class ' part from the front of the string
-		if (s.size() > 5)
-		{
-			s.erase(0, 6);
-		}
-
-		return s;
-	}
 };
 
 

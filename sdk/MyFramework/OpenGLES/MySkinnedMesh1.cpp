@@ -29,6 +29,7 @@ SkinnedMesh1::Instance* SkinnedMesh1::buildSkinnedMeshInstance(
 	return instance;
 }
 
+/*
 bool SkinnedMesh1::mergeAnimFile(
 	AnimFile* animFiles,
 	int numAnimFiles,
@@ -145,6 +146,7 @@ bool SkinnedMesh1::mergeAnimFile(
 
 	return true;
 }
+/**/
 
 // Desc: Get final transform for a bone
 // Transform of a bone is relative to its parent. When rendering, we'll need world transform of bone.
@@ -314,7 +316,7 @@ static BOOL RemapBoneIndices(Adreno::Model* pModel, UINT32* boneRemap, UINT32& b
 
 #pragma endregion
 
-#pragma region SkinnedMesh1::Instance struct
+#pragma region Structs
 
 //===============================================================================================================
 //
@@ -342,6 +344,129 @@ void SkinnedMesh1::Instance::setAction(const MyString& action, const MyString& n
 	}
 }
 
+//===============================================================================================================
+//
+// SkinnedMesh1::AnimData struct
+//
+//===============================================================================================================
+
+SkinnedMesh1::AnimData::AnimData()
+	: Anim(nullptr)
+{}
+
+SkinnedMesh1::AnimData::~AnimData()
+{
+	Adreno::FrmDestroyLoadedAnimation(Anim);
+}
+
+void SkinnedMesh1::AnimData::init(const MyString& filename, std::map<MyString, AnimAction>* animActions)
+{
+	Anim = Adreno::FrmLoadAnimationFromFile(filename.c_str());
+	if (animActions != nullptr)
+	{
+		AnimActions = (*animActions);
+	}
+}
+
+void SkinnedMesh1::AnimData::init(AnimFile* animFiles, int numAnimFiles)
+{
+	INT32 numTracks(0), numFrames(0);
+	Adreno::Animation* firstAnim(nullptr);
+	std::map<MyString, Adreno::Animation*> animsMap;
+
+	Anim = new Adreno::Animation;
+
+	// Init animation files
+	for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+	{
+		auto pAnimFile = animFiles + iAnim;
+
+		auto ite = animsMap.find(pAnimFile->FileName);
+		if (ite == animsMap.end())
+		{
+			auto anim = Adreno::FrmLoadAnimationFromFile(pAnimFile->FileName.c_str());
+			animsMap[pAnimFile->FileName] = anim;
+			pAnimFile->Anim = anim;
+		}
+		else
+		{
+			pAnimFile->Anim = ite->second;
+		}
+	}
+
+	// Computing numTracks and numFrames
+	firstAnim = animFiles[0].Anim;
+	numTracks = firstAnim->NumTracks;
+
+	for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+	{
+		auto pAnimFile = animFiles + iAnim;
+
+		UINT32 frameStart = pAnimFile->Range.FrameStart;
+		UINT32 frameLength = pAnimFile->Range.FrameLength;
+
+		if (frameStart >= pAnimFile->Anim->NumFrames)
+		{
+			frameStart = 0;
+		}
+		if (frameLength > pAnimFile->Anim->NumFrames - frameStart)
+		{
+			frameLength = pAnimFile->Anim->NumFrames - frameStart;
+		}
+
+		frameLength = (frameLength == 0) ? pAnimFile->Anim->NumFrames - frameStart : frameLength;
+
+		pAnimFile->Range.FrameStart = frameStart;
+		pAnimFile->Range.FrameLength = frameLength;
+
+		numFrames += frameLength;
+	}
+
+	// Merging animation files
+	Anim->ResizeTracks(numTracks);
+	Anim->NumFrames = numFrames;
+
+	for (int iTrack = 0; iTrack < numTracks; iTrack++)
+	{
+		auto mergedAnimTrack = Anim->Tracks + iTrack;
+
+		mergedAnimTrack->SetName(firstAnim->Tracks[iTrack].Id.Name);
+		mergedAnimTrack->ResizeKeyframes(numFrames);
+
+		int count(0);
+
+		for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+		{
+			auto pAnimFile = animFiles + iAnim;
+			auto animTrack = pAnimFile->Anim->Tracks + iTrack;
+
+			for (int iFrame = pAnimFile->Range.FrameStart; iFrame < pAnimFile->Range.FrameStart + pAnimFile->Range.FrameLength; iFrame++)
+			{
+				if (iFrame >= 0 && iFrame < animTrack->NumKeyframes)
+				{
+					mergedAnimTrack->Keyframes[count++] = animTrack->Keyframes[iFrame];
+				}
+			}
+		}
+	}
+
+	// Destroy animation files
+	for (auto i = animsMap.begin(); i != animsMap.end(); ++i)
+	{
+		Adreno::FrmDestroyLoadedAnimation(i->second);
+	}
+
+	// Build action map
+	UINT32 frameStart(0);
+	for (int iAnim = 0; iAnim < numAnimFiles; ++iAnim)
+	{
+		auto pAnimFile = animFiles + iAnim;
+
+		AnimActions[pAnimFile->Name] = { frameStart, pAnimFile->Range.FrameLength };
+		frameStart += pAnimFile->Range.FrameLength;
+	}
+}
+
 #pragma endregion
 
 //===============================================================================================================
@@ -362,24 +487,19 @@ SkinnedMesh1::~SkinnedMesh1()
 }
 
 void SkinnedMesh1::init(
-	Adreno::Model* model,
-	Adreno::Animation* anim,
-	Texture** modelTexture,
+	FileMesh1::MeshData& model,
+	SkinnedMesh1::AnimData& anim,
+	FileMesh1::MeshTextures& modelTexture,
 	Shader& shader,
 	Material* material,
-	std::map<MyString, AnimAction>* animActions,
 	FLOAT32 speedFactor)
 {
-	m_anim = anim;
+	m_anim = anim.Anim;
 	m_speedFactor = speedFactor;
+	m_animActions = anim.AnimActions;
 	
-	if (animActions != nullptr)
-	{
-		m_animActions = (*animActions);
-	}
-
-	throwIfFailed(TRUE == SetupBoneTransform(model, anim), "ERROR: Fail to setup skinned mesh type 1");
-	throwIfFailed(TRUE == RemapBoneIndices(model, m_boneRemap, m_boneRemapCount), "ERROR: Fail to setup skinned mesh type 1");
+	throwIfFailed(TRUE == SetupBoneTransform(model.Data, m_anim), "ERROR: Fail to setup skinned mesh type 1");
+	throwIfFailed(TRUE == RemapBoneIndices(model.Data, m_boneRemap, m_boneRemapCount), "ERROR: Fail to setup skinned mesh type 1");
 
 	FileMesh1::init(model, modelTexture, shader, material);
 }

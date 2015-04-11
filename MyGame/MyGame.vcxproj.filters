@@ -300,6 +300,12 @@
     <ClCompile Include="GameObjectsManagers\ProjectileManager.cpp">
       <Filter>GameObjectsManagers</Filter>
     </ClCompile>
+    <ClCompile Include="Screens\Layer_HUD.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\Layer_World.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Player.h">
@@ -385,6 +391,12 @@
     </ClInclude>
     <ClInclude Include="GameObjectsManagers\ProjectileManager.h">
       <Filter>GameObjectsManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Layer_HUD.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Layer_World.h">
+      <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -161,6 +161,8 @@
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
     <ClCompile Include="GraphicsObjects\MiniMap.cpp" />
     <ClCompile Include="Screens\HUD.cpp" />
+    <ClCompile Include="Screens\Layer_HUD.cpp" />
+    <ClCompile Include="Screens\Layer_World.cpp" />
     <ClCompile Include="Screens\MenuScreen.cpp" />
     <ClCompile Include="Screens\PlayScreen.cpp" />
     <ClCompile Include="Screens\TestScreen.cpp" />
@@ -190,6 +192,8 @@
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />
     <ClInclude Include="GraphicsObjects\MiniMap.h" />
     <ClInclude Include="Screens\HUD.h" />
+    <ClInclude Include="Screens\Layer_HUD.h" />
+    <ClInclude Include="Screens\Layer_World.h" />
     <ClInclude Include="Screens\MenuScreen.h" />
     <ClInclude Include="Screens\PlayScreen.h" />
     <ClInclude Include="Screens\TestScreen.h" />

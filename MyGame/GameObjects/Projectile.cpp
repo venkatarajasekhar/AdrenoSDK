@@ -32,7 +32,7 @@ void Projectile::init(Billboard& billboard,
 	MyVec3 pos = g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Position + 0.5f*offset;
 	MyVec3 posTarget = g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position;
 
-	m_movingEntity.init(pos, posTarget, MyVec3(0), 0, 5, 180);
+	m_movingEntity.init(pos, posTarget, MyVec3(0), 0, 8, 10000);
 }
 
 void Projectile::update(Timer& timer)

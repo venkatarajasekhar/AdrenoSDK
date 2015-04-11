@@ -130,15 +130,40 @@ int LivingEntityManager::getIdLivingEntityInRange(int idEntity, float range)
 	return result;
 }
 
-MyVec3 LivingEntityManager::checkLivingEntityCanMove(int idEntity)
+MyVec4 LivingEntityManager::checkLivingEntityCanMove(int idEntity)
 {
+	MyVec4 result(0);
 	for (auto i = m_listLivingEntitys.begin(); i != m_listLivingEntitys.end(); i++)
-		if ((idEntity != i->second->getIdEntity()) && (twoPointIsContact(m_listLivingEntitys[idEntity]->getInstance()->Position, i->second->getInstance()->Position, 1.0f)))
+	{
+		if (i->second->getEntityType() != ENTITY_TYPE_PAWN) 
 		{
-			return m_listLivingEntitys[idEntity]->getInstance()->Position - i->second->getInstance()->Position;
+			if ((idEntity != i->second->getIdEntity()) && (twoPointIsContact(m_listLivingEntitys[idEntity]->getInstance()->Position, i->second->getInstance()->Position, 1.0f)))
+			{
+				MyVec3 direct = m_listLivingEntitys[idEntity]->getInstance()->Position - i->second->getInstance()->Position;
+				result = MyVec4(direct.x, direct.y, direct.z, 1.0f);
+				//smartLog(toString(result.x) + " " + toString(result.y) + " " + toString(result.z) + " " + toString(result.t));
+				break;
+			}
 		}
+	}
 
-	return MyVec3(0);
+	if (result == MyVec4(0))
+	{
+		for (auto i = m_listLivingEntitys.begin(); i != m_listLivingEntitys.end(); i++)
+		{
+			if (i->second->getEntityType() == ENTITY_TYPE_PAWN)
+			{
+				if ((idEntity != i->second->getIdEntity()) && (twoPointIsContact(m_listLivingEntitys[idEntity]->getInstance()->Position, i->second->getInstance()->Position, 1.0f)))
+				{
+					MyVec3 direct = m_listLivingEntitys[idEntity]->getInstance()->Position - i->second->getInstance()->Position;
+					result = MyVec4(direct.x, direct.y, direct.z, 0.0f);
+					break;
+				}
+			}
+		}
+	}
+
+	return result;
 }
 
 void LivingEntityManager::beatLivingEntitys(MyVec3 positionBeat, int dam)

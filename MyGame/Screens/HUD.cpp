@@ -1,6 +1,7 @@
 
 #include "HUD.h"
 #include "Hero_Controlled.h"
+#include "Global.h"
 
 extern Hero_Controlled* g_heroPlayer;
 
@@ -74,15 +75,17 @@ void HUD::update(Timer& timer, UserInput& userInput)
 
 void HUD::render(SpriteBatch& spriteBatch)
 {
-	if (g_heroPlayer != nullptr)
+	/*if (g_heroPlayer != nullptr)
 	{
 		m_miniMap.render(spriteBatch, g_heroPlayer->getPos());
 	}
 	else
 	{
 		m_miniMap.render(spriteBatch, MyVec3());
-	}
+	}*/
 	
+	m_miniMap.render(spriteBatch, g_livingEntityManager.getLivingEntityById(0)->getInstance()->Position);
+
 	m_btn_fighting.render(spriteBatch);
 }
 

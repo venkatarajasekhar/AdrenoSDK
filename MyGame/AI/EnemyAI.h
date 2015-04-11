@@ -26,8 +26,8 @@ public:
 	float m_countTime;
 
 	// constant
-	const float MaxEnemySpeed = 0.05f;
-	const float EnemyTurnSpeed = 5.0f;
+	const float MaxEnemySpeed = 0.08f;
+	const float EnemyTurnSpeed = 4.0f;
 	const float EnemyChaseDistance = 8.0f;
 	const float EnemyCaughtDistance = 2.2f;
 	const float EnemyHysteresis = 0.5f;

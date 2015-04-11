@@ -101,7 +101,7 @@ void EnemyAI::update(Timer& timer)
 		if (m_enemyState == Chasing)
 		{
 			m_enemyOrientation = TurnToFace(m_pos, g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position, m_enemyOrientation, EnemyTurnSpeed);
-			currentEnemySpeed = MaxEnemySpeed;
+			currentEnemySpeed = .9 * MaxEnemySpeed;
 		}
 		else if (m_enemyState == Wander)
 		{
@@ -129,35 +129,50 @@ void EnemyAI::update(Timer& timer)
 
 MyVec3 EnemyAI::MoveEnemy(MyVec3 currPos, MyVec3 moveAmt, Timer& timer)
 {
-	MyVec3 foreMove = currPos + (moveAmt + 0.005f*g_livingEntityManager.checkLivingEntityCanMove(m_idEntity)) * timer.getElapsedTime() * 40.0f;
+	float e = 0.1f;
+	MyVec3 foreMove;
+	MyVec4 result = g_livingEntityManager.checkLivingEntityCanMove(m_idEntity);
+	MyVec3 oldDirect(result.x, result.y, result.z); 
 
-	// kiem tra dich den co phai mat dat k?
-	/*if (_level.Terrain.DetermineTerrainType(foreMove.x, foreMove.z) == Terrain.TerrainType.Ground)
+	smartLog(toString(result.x) + " " + toString(result.y) + " " + toString(result.z) + " " + toString(result.w));
+
+	if (fabs(result.w - 1.0f) <= e)
 	{
-	m_pos = foreMove;
-	if ((_level.Terrain.CheckCollision(foreMove.X, foreMove.Z, this)) || (MonsterCheckCollision()))
-	return currPos;
-	else
-	return foreMove;
+		if (distance_optimized(oldDirect, MyVec3(0)) > 0.1f)
+		{
+			MyVec3 newDirect(-oldDirect.z, oldDirect.y, oldDirect.x);
+			foreMove = currPos + 0.04f * newDirect * timer.getElapsedTime() * 40.0f;
+		}
 	}
 	else
-	return currPos;*/
+	{
+		foreMove = currPos + (moveAmt + 0.01f * oldDirect) * timer.getElapsedTime() * 40.0f;
+	}
 
-	// tam thoi la thich di dau cung dc
 	return foreMove;
 }
 
 void EnemyAI::Wanders(MyVec3 position, float& orientation, float turnSpeed)
 {
 	float e = 0.1f;
+	MyVec4 result = g_livingEntityManager.checkLivingEntityCanMove(m_idEntity);
 
-	if (fabs(m_pos.z - m_pointEnd.z) > e)
+	if (fabs(result.w - 1.0f) <= e)
 	{
-		MyVec3 positionNext = MyVec3(m_pos.x, 0, m_pointEnd.z);
-		orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
+		//MyVec3 positionNext = MyVec3(m_pos.x, m_pos.y, m_pos.z);
+		//orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
 	}
 	else
-		orientation = TurnToFace(m_pos, m_pointEnd, orientation, .15f * turnSpeed);
+	{
+		if (fabs(m_pos.z - m_pointEnd.z) > e)
+		{
+			int team = g_livingEntityManager.getLivingEntityById(m_idEntity)->getTeamType();
+			MyVec3 positionNext = MyVec3(m_pos.x - 4 * (team - 0.5f), 0, m_pointEnd.z);
+			orientation = TurnToFace(m_pos, positionNext, orientation, .15f * turnSpeed);
+		}
+		else
+			orientation = TurnToFace(m_pos, m_pointEnd, orientation, .15f * turnSpeed);
+	}
 }
 
 void EnemyAI::Wanders(MyVec3 position, MyVec3& wanderDirection, float& orientation, float turnSpeed)

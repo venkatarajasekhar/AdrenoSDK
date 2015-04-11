@@ -46,6 +46,7 @@ private:
 	enum
 	{
 		SPRITE_SHEET_FIREBALL,
+		SPRITE_SHEET_ENERGYBALL,
 		NUM_SPRITE_SHEETS,
 	};
 
@@ -93,6 +94,7 @@ private:
 	enum
 	{
 		BILLBOARD_FIREBALL,
+		BILLBOARD_ENERGYBALL,
 		NUM_BILLBOARDS,
 	};
 

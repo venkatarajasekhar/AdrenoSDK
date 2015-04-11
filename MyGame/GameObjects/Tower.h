@@ -6,6 +6,7 @@
 #include "Global.h"
 #include "Projectile.h"
 
+
 class Tower : public LivingEntity
 {
 private:

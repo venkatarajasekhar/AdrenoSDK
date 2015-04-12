@@ -108,16 +108,6 @@ public:
 	SkinnedMesh1();
 	~SkinnedMesh1();
 
-	/*
-	void init(
-		Adreno::Model* model,
-		Adreno::Animation* anim,
-		Texture** modelTexture,
-		Shader& shader,
-		Material* material = nullptr,
-		std::map<MyString, AnimAction>* animActions = nullptr,
-		FLOAT32 speedFactor = 1.0f);
-	/**/
 	void init(
 		FileMesh1::MeshData& model,
 		SkinnedMesh1::AnimData& anim,
@@ -140,14 +130,6 @@ public:
 		const MyVec3& rot, 
 		const MyVec3& scale, 
 		const MyString& action);
-
-	/*
-	static bool mergeAnimFile(
-		AnimFile* animFiles,
-		int numAnimFiles,
-		Adreno::Animation*& mergedAnim,
-		std::map<MyString, AnimAction>& actionsMap);
-	/**/
 
 private:
 	Adreno::Animation* m_anim;

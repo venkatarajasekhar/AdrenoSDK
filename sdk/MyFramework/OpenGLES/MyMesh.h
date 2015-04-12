@@ -16,6 +16,8 @@ public:
 		MyVec3 Rotation;
 		MyVec3 Scale;
 		MyMat4 World;
+
+		bool Visible;
 	};
 
 public:

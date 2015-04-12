@@ -61,8 +61,6 @@ public:
 		MeshTextures();
 		~MeshTextures();
 
-		// NOTE: Deprecated, use void init(FileMesh1::MeshData&, CFrmPackedResourceGLES&) instead.
-		//void init(Adreno::Model* model, CFrmPackedResourceGLES& resource);
 		void init(FileMesh1::MeshData& meshData, CFrmPackedResourceGLES& resource);
 
 		Texture** Textures;
@@ -75,12 +73,6 @@ public:
 	FileMesh1();
 	virtual ~FileMesh1();
 
-	// NOTE: Deprecated
-	/*virtual void init(
-		Adreno::Model* model,
-		Texture** modelTexture,
-		Shader& shader,
-		Material* material = nullptr);*/
 	virtual void init(
 		FileMesh1::MeshData& model,
 		FileMesh1::MeshTextures& modelTexture,

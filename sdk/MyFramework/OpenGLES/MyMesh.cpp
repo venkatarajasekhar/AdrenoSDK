@@ -14,6 +14,7 @@ Mesh::Instance* Mesh::buildMeshInstance(const MyVec3& pos, const MyVec3& rot, co
 	instance->Position = pos;
 	instance->Rotation = rot;
 	instance->Scale = scale;
+	instance->Visible = true;
 
 	return instance;
 }
@@ -61,9 +62,12 @@ void Mesh::render(Camera& camera, Light* light)
 	{
 		Instance* instance = (*i);
 
-		instance->World = createTranslationMatrix(instance->Position);
-		instance->World *= createYawPitchRollMatrix(instance->Rotation.y, instance->Rotation.x, instance->Rotation.z);
-		instance->World *= createScaleMatrix(instance->Scale);
+		if (instance->Visible)
+		{
+			instance->World = createTranslationMatrix(instance->Position);
+			instance->World *= createYawPitchRollMatrix(instance->Rotation.y, instance->Rotation.x, instance->Rotation.z);
+			instance->World *= createScaleMatrix(instance->Scale);
+		}
 	}
 
 	m_shader->setUniform("u_view", camera.getView());
@@ -110,6 +114,14 @@ Mesh::Instance* Mesh::getInstance(int id)
 
 void Mesh::addInstance(Instance* instance)
 {
+	for (auto i = m_instances.begin(); i != m_instances.end(); ++i)
+	{
+		if (*i == instance)
+		{
+			return;
+		}
+	}
+
 	m_instances.push_back(instance);
 }
 

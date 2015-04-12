@@ -228,29 +228,14 @@
     <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\Player.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Trooper.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Core\MainGame.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Screens\HUD.cpp">
-      <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="Screens\MenuScreen.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
     <ClCompile Include="Screens\PlayScreen.cpp">
       <Filter>Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\Global.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="AI\EnemyAI.cpp">
-      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsObjects\BloodBar.cpp">
       <Filter>GraphicsObjects</Filter>
@@ -261,21 +246,6 @@
     <ClCompile Include="GraphicsObjects\MiniMap.cpp">
       <Filter>GraphicsObjects</Filter>
     </ClCompile>
-    <ClCompile Include="BaseEntities\MovingEntity.cpp">
-      <Filter>BaseEntities</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Projectile.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\ScorpionHero.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseEntities\BaseEntity.cpp">
-      <Filter>BaseEntities</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseEntities\LivingEntity.cpp">
-      <Filter>BaseEntities</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Hero.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -285,17 +255,11 @@
     <ClCompile Include="GameObjects\Tower.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectsManagers\LivingEntityManager.cpp">
-      <Filter>GameObjectsManagers</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Hero_AI.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\Hero_Controlled.cpp">
       <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectsManagers\ProjectileManager.cpp">
-      <Filter>GameObjectsManagers</Filter>
     </ClCompile>
     <ClCompile Include="Screens\Layer_HUD.cpp">
       <Filter>Screens</Filter>
@@ -306,19 +270,13 @@
     <ClCompile Include="Utils\TPSCamera.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="BaseEntities\MovingEntity.cpp">
+      <Filter>BaseEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjects\Player.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Trooper.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Core\MainGame.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens\HUD.h">
-      <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="Screens\MenuScreen.h">
       <Filter>Screens</Filter>
@@ -326,14 +284,8 @@
     <ClInclude Include="Screens\PlayScreen.h">
       <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Global.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Utils.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\EnemyAI.h">
-      <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsObjects\BloodBar.h">
       <Filter>GraphicsObjects</Filter>
@@ -343,21 +295,6 @@
     </ClInclude>
     <ClInclude Include="GraphicsObjects\MiniMap.h">
       <Filter>GraphicsObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEntities\MovingEntity.h">
-      <Filter>BaseEntities</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Projectile.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\ScorpionHero.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEntities\BaseEntity.h">
-      <Filter>BaseEntities</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseEntities\LivingEntity.h">
-      <Filter>BaseEntities</Filter>
     </ClInclude>
     <ClInclude Include="BaseEntities\IRenderableEntity.h">
       <Filter>BaseEntities</Filter>
@@ -377,17 +314,11 @@
     <ClInclude Include="GameObjects\Tower.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectsManagers\LivingEntityManager.h">
-      <Filter>GameObjectsManagers</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects\Hero_AI.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Hero_Controlled.h">
       <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectsManagers\ProjectileManager.h">
-      <Filter>GameObjectsManagers</Filter>
     </ClInclude>
     <ClInclude Include="Screens\Layer_HUD.h">
       <Filter>Screens</Filter>
@@ -397,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="Utils\TPSCamera.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\MovingEntity.h">
+      <Filter>BaseEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

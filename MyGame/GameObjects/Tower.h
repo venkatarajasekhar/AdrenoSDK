@@ -1,5 +1,9 @@
+
 #pragma once
 
+#include <MyFileMesh1.h>
+
+/*
 #include <MySkinnedMesh1.h>
 #include <MySpriteSheet.h>
 #include <MyInput.h>
@@ -37,4 +41,84 @@ public:
 	void render(Camera& camera, Light& light, SpriteBatch& spriteBatch);
 	int findLivingEntityToBeat();
 	FileMesh1::Instance* getInstance();
+};
+/**/
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+//=========================================================================================================
+//
+// Tower class
+//
+//=========================================================================================================
+
+class Tower
+{
+public:
+	Tower();
+	~Tower();
+
+	void init(FileMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale);
+
+private:
+	Mesh::Instance* m_instance;
+};
+
+//=========================================================================================================
+//
+// TowerPool class
+//
+//=========================================================================================================
+
+class TowerPool
+{
+public:
+	static const int MAX_NUM_TOWER = 6;
+
+private:
+	// Assets
+	enum
+	{
+		MESH_1_DATA_HOUSE_WIND,
+		MESH_1_DATA_OUTPOST,
+		MESH_1_DATA_TOWER_OF_VICTORY,
+		MESH_1_DATA_WHITE_PAGODA,
+		NUM_MESH_1_DATAS,
+	};
+
+	enum
+	{
+		TEXTURES_MESH_HOUSE_WIND,
+		TEXTURES_MESH_OUTPOST,
+		TEXTURES_MESH_TOWER_OF_VICTORY,
+		TEXTURES_MESH_WHITE_PAGODA,
+		NUM_TEXTURES_MESHES,
+	};
+
+	// Meshes
+	enum
+	{
+		FILE_MESH_MY_TOWER,
+		FILE_MESH_ENEMY_TOWER,
+		FILE_MESH_MY_MAIN_TOWER,
+		FILE_MESH_ENEMY_MAIN_TOWER,
+		NUM_FILE_MESHES,
+	};
+
+public:
+	TowerPool();
+	~TowerPool();
+
+	void init(Shader& meshShader);
+	void update(Timer& timer);
+	void render(Camera& camera, Light& light);
+
+private:
+	// Assets
+	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
+	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
+
+	// Meshes
+	FileMesh1 m_fileMeshes[NUM_FILE_MESHES];
+	Tower     m_towers[MAX_NUM_TOWER];
 };

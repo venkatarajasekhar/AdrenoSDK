@@ -89,6 +89,10 @@ void FlatTerrain::update(Timer& timer, UserInput& userInput, Camera& camera)
 			Ray ray = createRayInWorld(screenPos, width, height, camera.getView(), camera.getProj());
 			MyVec3 worldPos = intersect(ray, terrainPlane);
 
+			//---------------- Test ------------------------
+			//smartLog("Pressed at: " + toString(worldPos.x) + " " + toString(worldPos.y) + " " + toString(worldPos.z));
+			//----------------------------------------------
+
 			// If player can reach to that point, go ahead
 			if (isValidPos(worldPos))
 			{

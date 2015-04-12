@@ -8,6 +8,7 @@
 #include "IRenderableEntity.h"
 #include "LivingEntity.h"
 #include "TPSCamera.h"
+#include "Tower.h"
 
 class Layer_World
 {
@@ -94,4 +95,6 @@ private:
 	// Game objects
 	std::vector<IRenderableEntity*> m_renderableEnts;
 	std::vector<LivingEntity*> m_livingEnts;
+
+	TowerPool m_towerPool;
 };

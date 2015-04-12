@@ -21,6 +21,9 @@ void main()
 	vec4 color2 = texture2D( u_diffuseSampler2, texC * u_properties.TileRepeatFactor.y );
 	vec4 blend = texture2D( u_blendSampler, texC * u_properties.TileRepeatFactor.z );
 	
+	gl_FragColor = mix(color1, color2, blend.x);
+	
+	/*
 	if (blend.x < u_properties.Threshold.x)
 	{
 		gl_FragColor = color1;
@@ -32,5 +35,5 @@ void main()
 	else
 	{
 		gl_FragColor = mix(color1, color2, blend.x);
-	}
+	}*/
 }

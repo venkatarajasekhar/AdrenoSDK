@@ -36,6 +36,7 @@ private:
 
 	// Core objects
 	ScreenManager m_screenManager;
+	Camera2D m_camera2D;
 
 	// Shader resources
 	Shader m_shader_sprite;

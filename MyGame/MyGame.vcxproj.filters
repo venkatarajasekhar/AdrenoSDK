@@ -303,6 +303,9 @@
     <ClCompile Include="Screens\Layer_World.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\TPSCamera.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Player.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="Screens\Layer_World.h">
       <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TPSCamera.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

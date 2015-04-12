@@ -7,9 +7,8 @@
 //
 //========================================================================================================
 
-static const MyVec3 MAIN_CAM_POS    = MyVec3(-5.0f, 20.0f, 15.0f);
-static const MyVec3 MAIN_CAM_TARGET = MyVec3(0.0f, 0.0f, 0.0f);
-static const float  MAIN_CAM_FAR    = 100.0f;
+static const float  MAIN_CAM_FAR       = 100.0f;
+static const MyVec3 INITIAL_PLAYER_POS = MyVec3(0);
 
 //========================================================================================================
 //
@@ -75,7 +74,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	}
 
 	// Core objects
-	m_camera_main.init(MAIN_CAM_POS, MAIN_CAM_TARGET, 45.0f, 0.1f, MAIN_CAM_FAR);
+	m_camera_main.init(INITIAL_PLAYER_POS, 45.0f, 0.1f, MAIN_CAM_FAR);
 
 	// Mesh objects
 	{
@@ -105,14 +104,31 @@ void Layer_World::resize(int width, int height)
 void Layer_World::update(Timer& timer, UserInput& userInput)
 {
 	// Core objects
-	m_camera_main.update();
+	m_camera_main.update(timer, userInput);
 
 	// Mesh objects
 	m_mesh_terrain.update(timer, userInput, m_camera_main);
+
+	// Game objects
+	for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
+	{
+		(*i)->update(userInput, timer);
+	}
 }
 
 void Layer_World::render(SpriteBatch& spriteBatch)
 {
 	// Mesh objects
 	m_mesh_terrain.render(m_camera_main);
+
+	// Game objects
+	{
+		Light light;
+		light.PosOrDir = MyVec4(0, -1, -1, 0);
+
+		for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
+		{
+			(*i)->render(m_camera_main, light);
+		}
+	}
 }

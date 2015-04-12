@@ -11,7 +11,7 @@ public:
 	SpriteBatch();
 	~SpriteBatch();
 
-	void init(Shader& shader);
+	void init(Shader& shader, Camera2D& camera);
 	void resize(int width, int height);
 	void update();
 
@@ -23,7 +23,7 @@ public:
 	void renderText2D(Font& font, const MyString& text, const MyVec2& pos, float rot = 0.0f, MyColor color = MyColor(1, 1, 1));
 
 private:
-	Camera2D m_camera2D;
+	Camera2D* m_camera2D;
 
 	BasicMesh m_squad;
 

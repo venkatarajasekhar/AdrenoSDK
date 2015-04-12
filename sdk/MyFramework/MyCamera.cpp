@@ -58,7 +58,7 @@ void Camera::resize(int width, int height)
 	computeProj(width, height);
 }
 
-void Camera::update()
+void Camera::update(Timer& timer, UserInput& userInput)
 {
 	updateOrientation();
 	computeView();

@@ -65,9 +65,12 @@ BOOL MainGame::Initialize()
 		Pos2TexVertex::ShaderAttribsDesc,
 		Pos2TexVertex::NumShaderAttribsDesc);
 
+	// Core objects
+	m_camera2D.init();
+
 	// Global utility objects
 	m_userInput.init(m_Input);
-	m_spriteBatch.init(m_shader_sprite);
+	m_spriteBatch.init(m_shader_sprite, m_camera2D);
 	//m_gameServer.init();
 
 	// Core objects
@@ -95,6 +98,7 @@ BOOL MainGame::Resize()
 
 	// Core objects
 	m_screenManager.resize(m_nWidth, m_nHeight);
+	m_camera2D.resize(m_nWidth, m_nHeight);
 
 	// End resize
 	glViewport( 0, 0, m_nWidth, m_nHeight );
@@ -133,6 +137,7 @@ VOID MainGame::Update()
 		};
 		m_screenManager.update(&objs);
 	}
+	m_camera2D.update(m_timer, m_userInput);
 	
 	// End update
 	m_updated = true;

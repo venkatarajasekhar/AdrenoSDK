@@ -166,6 +166,7 @@
     <ClCompile Include="Screens\MenuScreen.cpp" />
     <ClCompile Include="Screens\PlayScreen.cpp" />
     <ClCompile Include="Utils\Global.cpp" />
+    <ClCompile Include="Utils\TPSCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI\EnemyAI.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Screens\MenuScreen.h" />
     <ClInclude Include="Screens\PlayScreen.h" />
     <ClInclude Include="Utils\Global.h" />
+    <ClInclude Include="Utils\TPSCamera.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

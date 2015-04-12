@@ -1,12 +1,13 @@
 
 #pragma once
 
-#include <MyPerspectiveCamera.h>
-#include <MyInput.h>
 #include <MySpriteBatch.h>
 #include <MySpriteSheet.h>
 #include <MySkinnedMesh1.h>
 #include "FlatTerrain.h"
+#include "IRenderableEntity.h"
+#include "LivingEntity.h"
+#include "TPSCamera.h"
 
 class Layer_World
 {
@@ -85,8 +86,12 @@ private:
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
 
 	// Core objects
-	PerspectiveCamera m_camera_main;
+	TPSCamera m_camera_main;
 
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
+
+	// Game objects
+	std::vector<IRenderableEntity*> m_renderableEnts;
+	std::vector<LivingEntity*> m_livingEnts;
 };

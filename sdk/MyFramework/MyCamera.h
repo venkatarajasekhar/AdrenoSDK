@@ -2,6 +2,8 @@
 #pragma once
 
 #include "MyUtils.h"
+#include "MyInput.h"
+#include "MyTimer.h"
 
 class Camera
 {
@@ -12,7 +14,7 @@ public:
 	// P: Point; V: Vector
 	virtual void init(const MyVec3& eyeP, const MyVec3& targetP);
 	virtual void resize(int width, int height);
-	virtual void update();
+	virtual void update(Timer& timer, UserInput& userInput);
 
 	// Getter
 

@@ -2,7 +2,8 @@
 #include "MySpriteBatch.h"
 
 SpriteBatch::SpriteBatch()
-	: m_scrWidth(0),
+	: m_camera2D(nullptr),
+	m_scrWidth(0),
 	m_scrHeight(0)
 {
 }
@@ -11,9 +12,9 @@ SpriteBatch::~SpriteBatch()
 {
 }
 
-void SpriteBatch::init(Shader& shader)
+void SpriteBatch::init(Shader& shader, Camera2D& camera)
 {
-	m_camera2D.init();
+	m_camera2D = &camera;
 
 	std::vector<Pos2TexVertex> vertices;
 	vertices.resize(4);
@@ -39,13 +40,10 @@ void SpriteBatch::resize(int width, int height)
 {
 	m_scrWidth = width;
 	m_scrHeight = height;
-
-	m_camera2D.resize(width, height);
 }
 
 void SpriteBatch::update()
 {
-	m_camera2D.update();
 }
 
 MyVec2 SpriteBatch::convertToWorld(const MyVec2& screenPos)
@@ -91,7 +89,7 @@ void SpriteBatch::renderTexture2D(Texture* texture, const Rect2D& dest, const Re
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 
-	m_squad.render(m_camera2D);
+	m_squad.render(*m_camera2D);
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);

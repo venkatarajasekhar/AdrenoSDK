@@ -114,7 +114,8 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
 				   $(GAME_SCREENS_PATH)/MenuScreen.cpp \
 				   $(GAME_SCREENS_PATH)/PlayScreen.cpp \
-				   $(GAME_UTILS_PATH)/Global.cpp
+				   $(GAME_UTILS_PATH)/Global.cpp \
+				   $(GAME_UTILS_PATH)/TPSCamera.cpp
 				   
 				   
 LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \

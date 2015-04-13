@@ -56,6 +56,7 @@ private:
 
 		POINTER_STATUS m_currStatus, m_prevStatus;
 		MyVec2 m_currPos, m_prevPos, m_deltaPos;
+		MyVec2 m_beginDraggingPos;
 	};
 
 #pragma endregion

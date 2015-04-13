@@ -72,6 +72,11 @@ void UserInput::Pointer::update()
 		m_currPos = homogeneous2Screen(pos, m_width, m_height);
 		m_deltaPos = ((m_prevStatus == POINTER_DOWN) ? m_currPos - m_prevPos : MyVec2(0, 0));
 		m_prevPos = m_currPos;
+
+		if (m_prevStatus == POINTER_UP)
+		{
+			m_beginDraggingPos = m_currPos;
+		}
 	}
 }
 
@@ -84,7 +89,12 @@ bool UserInput::Pointer::isPressing(MyVec2& pos)const
 bool UserInput::Pointer::isReleasing(MyVec2& pos)const
 {
 	pos = m_currPos;
-	return ((m_currStatus == POINTER_UP) && (m_prevStatus == POINTER_DOWN));
+	return (
+		(m_currStatus == POINTER_UP) && 
+		(m_prevStatus == POINTER_DOWN) && 
+		(abs(m_currPos.x - m_beginDraggingPos.x) < 0.1f) &&
+		(abs(m_currPos.y - m_beginDraggingPos.y) < 0.1f)
+		);
 }
 
 bool UserInput::Pointer::isHolding(MyVec2& pos)const

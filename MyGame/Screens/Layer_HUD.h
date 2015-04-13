@@ -3,7 +3,7 @@
 
 #include "MiniMap.h"
 
-class Layer_HUD
+class Layer_HUD : public IOnPressListener, public OnPressListenee
 {
 public:
 	struct InitBundle
@@ -51,6 +51,10 @@ public:
 	void resize(int width, int height);
 	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle);
+
+	// Event handling
+
+	void OnPress(const IOnPressListener::Data& data);
 
 private:
 	// Assets

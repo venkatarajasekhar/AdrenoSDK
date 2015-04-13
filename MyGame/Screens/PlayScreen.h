@@ -5,8 +5,7 @@
 #include "Layer_HUD.h"
 #include "Layer_World.h"
 
-//class PlayScreen : public Screen, public IOnPressListener
-class PlayScreen : public Screen
+class PlayScreen : public Screen, public IOnPressListener
 {
 private:
 
@@ -29,7 +28,7 @@ public:
 	void update(void* utilObjs);
 	void render(void* utilObjs);
 
-	//void OnPress(const IOnPressListener::Data& data);
+	void OnPress(const IOnPressListener::Data& data);
 
 private:
 	//void cloneTrooper();
@@ -74,4 +73,6 @@ private:
 
 	Layer_HUD   m_layer_HUD;
 	Layer_World m_layer_World;
+
+	bool m_lockedUserInput;
 };

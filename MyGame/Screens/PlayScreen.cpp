@@ -20,7 +20,8 @@ static const MyVec2 MAP_SIZE   = MyVec2(100);
 //========================================================================================================
 
 PlayScreen::PlayScreen(ScreenManager* screenManager)
-	: Screen(screenManager)
+	: Screen(screenManager),
+	m_lockedUserInput(false)
 {
 }
 
@@ -135,6 +136,7 @@ void PlayScreen::init()
 		bundle.MapSize = MAP_SIZE;
 
 		m_layer_HUD.init(bundle);
+		m_layer_HUD.addPressListener(this);
 	}
 
 	{
@@ -230,7 +232,16 @@ void PlayScreen::update(void* utilObjs)
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	m_layer_HUD.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
+
+	if (m_lockedUserInput)
+	{
+		globalUtilObjs->userInput->lock();
+	}
+
 	m_layer_World.update(*globalUtilObjs->timer, *globalUtilObjs->userInput);
+
+	globalUtilObjs->userInput->unlock();
+	m_lockedUserInput = false;
 
 	/*
 	m_lockedUserInput = false;
@@ -282,16 +293,10 @@ void PlayScreen::render(void* utilObjs)
 	/**/
 }
 
-/*
 void PlayScreen::OnPress(const IOnPressListener::Data& data)
 {
 	if (data.Id == "hud")
 	{
 		m_lockedUserInput = true;
 	}
-	else if (data.Id == "btn_hud_fighting")
-	{
-		m_scorpion.projectile();
-	}
 }
-/**/

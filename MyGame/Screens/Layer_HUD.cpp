@@ -46,6 +46,7 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 
 	// Button widgets
 	m_btns[BTN_FIGHTING].init("hud_btn_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
+	m_btns[BTN_FIGHTING].addPressListener(this);
 
 	// Other HUD-components
 	m_miniMap.init(
@@ -54,6 +55,7 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 		m_textures[TEXTURE_MINIMAP_BTN_CLOSE],
 		bundle.MapCenter,
 		bundle.MapSize);
+	m_miniMap.addPressListener(this);
 }
 
 void Layer_HUD::resize(int width, int height)
@@ -93,4 +95,12 @@ void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle
 			toString(m_fps),
 			MyVec2(10, 10));
 	}
+}
+
+// Event handling
+
+void Layer_HUD::OnPress(const IOnPressListener::Data& data)
+{
+	IOnPressListener::Data hudData("hud", data.x, data.y);
+	throwPressEvent(hudData);
 }

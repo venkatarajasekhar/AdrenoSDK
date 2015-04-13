@@ -2,6 +2,7 @@
 #pragma once
 
 #include <MySkinnedMesh1.h>
+#include <MyEventListener.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
 #include "StateMachine.h"
@@ -27,7 +28,6 @@ public:
 	virtual void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
 		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
 	virtual void update(Timer& timer);
-	virtual void render(Camera& camera, Light& light);
 
 	StateMachine<Hero>* getFSM()const;
 	MyVec3 getPos();
@@ -93,7 +93,7 @@ public:
 	HeroPool();
 	~HeroPool();
 
-	void init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts);
+	void init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts, OnPressListenee& map);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

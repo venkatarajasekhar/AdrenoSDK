@@ -101,7 +101,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	// Game objects
 	m_towerPool.init(m_shaders[SHADER_MESH], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
 	m_pawnPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
-	m_heroPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
+	m_heroPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts, m_mesh_terrain);
 }
 
 void Layer_World::resize(int width, int height)

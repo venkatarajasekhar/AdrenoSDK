@@ -40,7 +40,7 @@ void Hero::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const 
 
 	// Moving elements
 	m_movingEnt.init(m_instance->Position, m_instance->Position, m_instance->Rotation,
-		0, 3.0f, 180.0f);
+		0, 5.0f, 500.0f);
 
 	// States manager
 	m_stateMachine = new StateMachine<Hero>(this);
@@ -59,10 +59,6 @@ void Hero::update(Timer& timer)
 
 	// States manager
 	m_stateMachine->Update();
-}
-
-void Hero::render(Camera& camera, Light& light)
-{
 }
 
 StateMachine<Hero>* Hero::getFSM()const
@@ -106,7 +102,7 @@ HeroPool::~HeroPool()
 	}
 }
 
-void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
+void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts, OnPressListenee& map)
 {
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_BEAST_SEWON].init(resolveAssetsPath("Meshes/Heroes/Beast/sewon/Sewon.model"));
@@ -167,6 +163,8 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 	m_heroes[0]->init(m_skinnedMeshes[SKINNED_MESH_MY_HERO_1], MyVec3(-25.0f, 0, -8.0f), MyVec3(0, 90, 0), MyVec3(0.015f), myBloodBar, MyVec3(-1, 6, 0));
 	m_heroes[1]->init(m_skinnedMeshes[SKINNED_MESH_ENEMY_HERO_1], MyVec3(17.4f, 0, -1.0f), MyVec3(0, -90, 0), MyVec3(0.01f), enemyBloodBar, MyVec3(0, 6, 0));
 
+	map.addPressListener((Hero_Controlled*)m_heroes[0]);
+
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_HEROES; i++)
 	{
@@ -198,7 +196,7 @@ void HeroPool::render(Camera& camera, Light& light)
 
 void HeroState_Idle::Enter(Hero* hero)
 {
-	hero->changeAnimAction("Idle");
+	hero->changeAnimAction("idle");
 }
 
 void HeroState_Idle::Execute(Hero* hero)
@@ -222,7 +220,7 @@ void HeroState_Idle::Exit(Hero* hero)
 
 void HeroState_Walk::Enter(Hero* hero)
 {
-	hero->changeAnimAction("Walk");
+	hero->changeAnimAction("run");
 }
 
 void HeroState_Walk::Execute(Hero* hero)

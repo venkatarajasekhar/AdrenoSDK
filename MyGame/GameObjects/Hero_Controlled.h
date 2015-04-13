@@ -2,7 +2,6 @@
 #pragma once
 
 #include "Hero.h"
-#include <MyEventListener.h>
 
 class Hero_Controlled : public Hero, public IOnPressListener
 {

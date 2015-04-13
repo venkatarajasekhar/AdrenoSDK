@@ -96,6 +96,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 
 	// Game objects
 	m_towerPool.init(m_shaders[SHADER_MESH]);
+	m_pawnPool.init(m_shaders[SHADER_SKINNED_MESH_1]);
 }
 
 void Layer_World::resize(int width, int height)
@@ -119,6 +120,7 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	}
 
 	m_towerPool.update(timer);
+	m_pawnPool.update(timer);
 }
 
 void Layer_World::render(SpriteBatch& spriteBatch)
@@ -137,5 +139,6 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 		}
 
 		m_towerPool.render(m_camera_main, light);
+		m_pawnPool.render(m_camera_main, light);
 	}
 }

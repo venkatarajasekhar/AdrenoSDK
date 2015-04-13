@@ -9,6 +9,7 @@
 #include "LivingEntity.h"
 #include "TPSCamera.h"
 #include "Tower.h"
+#include "Pawn.h"
 
 class Layer_World
 {
@@ -97,4 +98,5 @@ private:
 	std::vector<LivingEntity*> m_livingEnts;
 
 	TowerPool m_towerPool;
+	PawnPool m_pawnPool;
 };

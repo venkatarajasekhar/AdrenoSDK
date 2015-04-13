@@ -2,7 +2,7 @@
 #pragma once
 
 #include <MySkinnedMesh1.h>
-
+#include "LivingEntity.h"
 #include "MovingEntity.h"
 #include "StateMachine.h"
 
@@ -17,14 +17,15 @@
 //
 //===================================================================================================================
 
-class Hero
+class Hero : public LivingEntity
 {
 public:
 	Hero();
 	virtual ~Hero();
 
 	// Core functions
-	virtual void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale);
+	virtual void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
+		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
 	virtual void update(Timer& timer);
 	virtual void render(Camera& camera, Light& light);
 
@@ -92,7 +93,7 @@ public:
 	HeroPool();
 	~HeroPool();
 
-	void init(Shader& skinnedShader);
+	void init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

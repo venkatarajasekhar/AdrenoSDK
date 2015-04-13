@@ -90,6 +90,8 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyTexture.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyUtilsGLES.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyVertex.cpp \
+				   $(GAME_BASE_ENTS_PATH)/BaseEntity.cpp \
+				   $(GAME_BASE_ENTS_PATH)/LivingEntity.cpp \
 				   $(GAME_BASE_ENTS_PATH)/MovingEntity.cpp \
 				   $(GAME_CORE_PATH)/MainGame.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero.cpp \

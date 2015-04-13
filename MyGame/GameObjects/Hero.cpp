@@ -3,6 +3,16 @@
 #include "Hero_AI.h"
 #include "Hero_Controlled.h"
 
+//=========================================================================================================
+//
+// Constants
+//
+//=========================================================================================================
+
+static const int    HERO_INITIAL_MAX_HEALTH = 1000;
+static const int    HERO_INITIAL_DAMAGE = 5;
+static const MyVec2 HERO_BLOOD_BAR_SCALE = MyVec2(1.0f, 1.0f);
+
 //===================================================================================================================
 //
 // Hero class
@@ -22,7 +32,8 @@ Hero::~Hero()
 
 // Core functions
 
-void Hero::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale)
+void Hero::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
+	BloodBar& bloodBar, const MyVec3& bloodBarOffset)
 {
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "idle");
 	mesh.addInstance(m_instance);
@@ -34,6 +45,8 @@ void Hero::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const 
 	// States manager
 	m_stateMachine = new StateMachine<Hero>(this);
 	m_stateMachine->SetCurrentState(HeroState_Idle::instance());
+
+	LivingEntity::init(HERO_INITIAL_MAX_HEALTH, HERO_INITIAL_DAMAGE, bloodBar, HERO_BLOOD_BAR_SCALE, bloodBarOffset);
 }
 
 void Hero::update(Timer& timer)
@@ -93,7 +106,7 @@ HeroPool::~HeroPool()
 	}
 }
 
-void HeroPool::init(Shader& skinnedShader)
+void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
 {
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_BEAST_SEWON].init(resolveAssetsPath("Meshes/Heroes/Beast/sewon/Sewon.model"));
@@ -151,8 +164,14 @@ void HeroPool::init(Shader& skinnedShader)
 	m_skinnedMeshes[SKINNED_MESH_ENEMY_HERO_1].init(m_mesh1Datas[MESH_1_DATA_BEAST_SEWON], m_anim1Datas[ANIM_1_DATA_BEAST_SEWON], m_meshTextures[TEXTURES_MESH_BEAST_SEWON], skinnedShader, &material);
 
 	// Heroes
-	m_heroes[0]->init(m_skinnedMeshes[SKINNED_MESH_MY_HERO_1], MyVec3(-25.0f, 0, -8.0f), MyVec3(0, 90, 0), MyVec3(0.015f));
-	m_heroes[1]->init(m_skinnedMeshes[SKINNED_MESH_ENEMY_HERO_1], MyVec3(17.4f, 0, -1.0f), MyVec3(0, -90, 0), MyVec3(0.01f));
+	m_heroes[0]->init(m_skinnedMeshes[SKINNED_MESH_MY_HERO_1], MyVec3(-25.0f, 0, -8.0f), MyVec3(0, 90, 0), MyVec3(0.015f), myBloodBar, MyVec3(-1, 6, 0));
+	m_heroes[1]->init(m_skinnedMeshes[SKINNED_MESH_ENEMY_HERO_1], MyVec3(17.4f, 0, -1.0f), MyVec3(0, -90, 0), MyVec3(0.01f), enemyBloodBar, MyVec3(0, 6, 0));
+
+	// Fill into list of living entities
+	for (size_t i = 0; i < MAX_NUM_HEROES; i++)
+	{
+		lEnts.push_back(m_heroes[i]);
+	}
 }
 
 void HeroPool::update(Timer& timer)

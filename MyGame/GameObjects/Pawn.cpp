@@ -3,6 +3,16 @@
 
 //=========================================================================================================
 //
+// Constants
+//
+//=========================================================================================================
+
+static const int    PAWN_INITIAL_MAX_HEALTH = 50;
+static const int    PAWN_INITIAL_DAMAGE = 2;
+static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
+
+//=========================================================================================================
+//
 // Pawn class
 //
 //=========================================================================================================
@@ -16,10 +26,22 @@ Pawn::~Pawn()
 {
 }
 
-void Pawn::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale)
+void Pawn::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
+	BloodBar& bloodBar, const MyVec3& bloodBarOffset)
 {
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "idle");
 	mesh.addInstance(m_instance);
+
+	LivingEntity::init(PAWN_INITIAL_MAX_HEALTH, PAWN_INITIAL_DAMAGE, bloodBar, PAWN_BLOOD_BAR_SCALE, bloodBarOffset);
+}
+
+void Pawn::update(Timer& timer)
+{
+}
+
+MyVec3 Pawn::getPos()
+{
+	return m_instance->Position;
 }
 
 //=========================================================================================================
@@ -36,7 +58,7 @@ PawnPool::~PawnPool()
 {
 }
 
-void PawnPool::init(Shader& skinnedShader)
+void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
 {
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_BROWNIE].init(resolveAssetsPath("Meshes/Pawns/brownie/Brownie5.model"));
@@ -90,13 +112,19 @@ void PawnPool::init(Shader& skinnedShader)
 	m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN].init(m_mesh1Datas[MESH_1_DATA_SKELETON], m_anim1Datas[ANIM_1_DATA_SKELETON], m_meshTextures[TEXTURES_MESH_SKELETON], skinnedShader, &material);
 
 	// Pawns
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_MY_PAWN], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f));
-	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_MY_PAWN], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f));
-	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_MY_PAWN], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f));
+	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_MY_PAWN], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, MyVec3(0, 3, 0));
+	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_MY_PAWN], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, MyVec3(0, 3, 0));
+	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_MY_PAWN], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, MyVec3(0, 3, 0));
 
-	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f));
-	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f));
-	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f));
+	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, MyVec3(-1.5f, 4.5f, 0));
+	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, MyVec3(-1.5f, 4.5f, 0));
+	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_ENEMY_PAWN], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, MyVec3(-1.5f, 4.5f, 0));
+
+	// Fill into list of living entities
+	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)
+	{
+		lEnts.push_back(&m_pawns[i]);
+	}
 }
 
 void PawnPool::update(Timer& timer)

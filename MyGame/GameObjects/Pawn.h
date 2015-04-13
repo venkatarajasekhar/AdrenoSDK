@@ -2,6 +2,7 @@
 #pragma once
 
 #include <MySkinnedMesh1.h>
+#include "LivingEntity.h"
 
 //=========================================================================================================
 //
@@ -9,13 +10,17 @@
 //
 //=========================================================================================================
 
-class Pawn
+class Pawn : public LivingEntity
 {
 public:
 	Pawn();
 	~Pawn();
 
-	void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale);
+	void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
+		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
+	void update(Timer& timer);
+
+	MyVec3 getPos();
 
 private:
 	SkinnedMesh1::Instance* m_instance;
@@ -67,7 +72,7 @@ public:
 	PawnPool();
 	~PawnPool();
 
-	void init(Shader& skinnedShader);
+	void init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

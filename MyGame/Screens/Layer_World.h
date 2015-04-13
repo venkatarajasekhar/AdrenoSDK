@@ -10,6 +10,7 @@
 #include "TPSCamera.h"
 #include "Tower.h"
 #include "Pawn.h"
+#include "Hero.h"
 
 class Layer_World
 {
@@ -99,4 +100,5 @@ private:
 
 	TowerPool m_towerPool;
 	PawnPool m_pawnPool;
+	HeroPool m_heroPool;
 };

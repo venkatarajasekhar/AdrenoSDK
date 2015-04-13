@@ -1,5 +1,7 @@
 
 #include "Hero.h"
+#include "Hero_AI.h"
+#include "Hero_Controlled.h"
 
 //===================================================================================================================
 //
@@ -8,7 +10,7 @@
 //===================================================================================================================
 
 Hero::Hero()
-	: m_skinnedMeshIns(nullptr),
+	: m_instance(nullptr),
 	m_stateMachine(nullptr)
 {
 }
@@ -20,33 +22,13 @@ Hero::~Hero()
 
 // Core functions
 
-void Hero::init(
-	Adreno::Model* model,
-	Adreno::Animation* anim,
-	Texture** modelTexture,
-	Shader& shader,
-	Material& material,
-	const MyVec3& pos,
-	const MyVec3& rot,
-	const MyVec3& scale,
-	std::map<MyString, SkinnedMesh1::AnimAction>& animActions,
-	FLOAT32 speedFactor)
+void Hero::init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale)
 {
-	// Mesh/Appearance elements
-	/*m_skinnedMesh.init(
-		model,
-		anim,
-		modelTexture,
-		shader,
-		&material,
-		&animActions,
-		speedFactor);*/
-
-	m_skinnedMeshIns = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "Idle");
-	m_skinnedMesh.addInstance(m_skinnedMeshIns);
+	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "idle");
+	mesh.addInstance(m_instance);
 
 	// Moving elements
-	m_movingEnt.init(m_skinnedMeshIns->Position, m_skinnedMeshIns->Position, m_skinnedMeshIns->Rotation,
+	m_movingEnt.init(m_instance->Position, m_instance->Position, m_instance->Rotation,
 		0, 3.0f, 180.0f);
 
 	// States manager
@@ -54,25 +36,20 @@ void Hero::init(
 	m_stateMachine->SetCurrentState(HeroState_Idle::instance());
 }
 
-void Hero::update(UserInput& userInput, Timer& timer)
+void Hero::update(Timer& timer)
 {
 	// Moving elements
 	m_movingEnt.update(timer);
 
-	m_skinnedMeshIns->Position = m_movingEnt.getPos();
-	m_skinnedMeshIns->Rotation = m_movingEnt.getRot();
+	m_instance->Position = m_movingEnt.getPos();
+	m_instance->Rotation = m_movingEnt.getRot();
 
 	// States manager
 	m_stateMachine->Update();
-
-	// Mesh/Appearance elements
-	m_skinnedMesh.update(timer);
 }
 
 void Hero::render(Camera& camera, Light& light)
 {
-	// Mesh/Appearance elements
-	m_skinnedMesh.render(camera, &light);
 }
 
 StateMachine<Hero>* Hero::getFSM()const
@@ -88,12 +65,110 @@ MyVec3 Hero::getPos()
 // Controlling hero
 void Hero::changeAnimAction(const MyString& action)
 {
-	m_skinnedMeshIns->CurrentAction = action;
+	m_instance->CurrentAction = action;
 }
 
 bool Hero::isMoving()
 {
 	return m_movingEnt.isMoving();
+}
+
+//===================================================================================================================
+//
+// HeroPool class
+//
+//===================================================================================================================
+
+HeroPool::HeroPool()
+{
+	m_heroes[0] = new Hero_Controlled;
+	m_heroes[1] = new Hero_AI;
+}
+
+HeroPool::~HeroPool()
+{
+	for (int i = 0; i < MAX_NUM_HEROES; i++)
+	{
+		SAFE_DELETE(m_heroes[i]);
+	}
+}
+
+void HeroPool::init(Shader& skinnedShader)
+{
+	// Assets mesh data
+	m_mesh1Datas[MESH_1_DATA_BEAST_SEWON].init(resolveAssetsPath("Meshes/Heroes/Beast/sewon/Sewon.model"));
+	m_mesh1Datas[MESH_1_DATA_FIGHTER_DAN_MEI].init(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/DanMei_A_Type.model"));
+
+	// Assets anim data
+	{
+		const int numAnimFiles = 5;
+		SkinnedMesh1::AnimFile animFiles[numAnimFiles] =
+		{
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/cast.anim"), "attack_1"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/idle.anim"), "idle"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/la.anim"), "attack_2"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/la2.anim"), "attack_3"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/run.anim"), "run"),
+		};
+		m_anim1Datas[ANIM_1_DATA_BEAST_SEWON].init(animFiles, numAnimFiles);
+	}
+
+	{
+		const int numAnimFiles = 5;
+		SkinnedMesh1::AnimFile animFiles[numAnimFiles] =
+		{
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/fwd.anim"), "run"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/idle.anim"), "idle"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/la.anim"), "attack_1"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/la2.anim"), "attack_2"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/llla.anim"), "attack_3"),
+		};
+		m_anim1Datas[ANIM_1_DATA_FIGHTER_DAN_MEI].init(animFiles, numAnimFiles);
+	}
+
+	// Assets mesh texture
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/Sewon.pak").c_str());
+		m_meshTextures[TEXTURES_MESH_BEAST_SEWON].init(m_mesh1Datas[MESH_1_DATA_BEAST_SEWON], resource);
+	}
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/DanMei_A_Type.pak").c_str());
+		m_meshTextures[TEXTURES_MESH_FIGHTER_DAN_MEI].init(m_mesh1Datas[MESH_1_DATA_FIGHTER_DAN_MEI], resource);
+	}
+
+	// Skinned meshes
+
+	Material material;
+
+	material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	material.Shininess = 16.0f;
+
+	m_skinnedMeshes[SKINNED_MESH_MY_HERO_1].init(m_mesh1Datas[MESH_1_DATA_FIGHTER_DAN_MEI], m_anim1Datas[ANIM_1_DATA_FIGHTER_DAN_MEI], m_meshTextures[TEXTURES_MESH_FIGHTER_DAN_MEI], skinnedShader, &material);
+	m_skinnedMeshes[SKINNED_MESH_ENEMY_HERO_1].init(m_mesh1Datas[MESH_1_DATA_BEAST_SEWON], m_anim1Datas[ANIM_1_DATA_BEAST_SEWON], m_meshTextures[TEXTURES_MESH_BEAST_SEWON], skinnedShader, &material);
+
+	// Heroes
+	m_heroes[0]->init(m_skinnedMeshes[SKINNED_MESH_MY_HERO_1], MyVec3(-25.0f, 0, -8.0f), MyVec3(0, 90, 0), MyVec3(0.015f));
+	m_heroes[1]->init(m_skinnedMeshes[SKINNED_MESH_ENEMY_HERO_1], MyVec3(17.4f, 0, -1.0f), MyVec3(0, -90, 0), MyVec3(0.01f));
+}
+
+void HeroPool::update(Timer& timer)
+{
+	for (int i = 0; i < NUM_SKINNED_MESHES; i++)
+	{
+		m_skinnedMeshes[i].update(timer);
+	}
+}
+
+void HeroPool::render(Camera& camera, Light& light)
+{
+	for (int i = 0; i < NUM_SKINNED_MESHES; i++)
+	{
+		m_skinnedMeshes[i].render(camera, &light);
+	}
 }
 
 //===================================================================================================================

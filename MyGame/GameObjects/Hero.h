@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "IRenderableEntity.h"
 #include <MySkinnedMesh1.h>
 
 #include "MovingEntity.h"
@@ -18,25 +17,15 @@
 //
 //===================================================================================================================
 
-class Hero : public IRenderableEntity
+class Hero
 {
 public:
 	Hero();
 	virtual ~Hero();
 
 	// Core functions
-	virtual void init(
-		Adreno::Model* model,
-		Adreno::Animation* anim,
-		Texture** modelTexture,
-		Shader& shader,
-		Material& material,
-		const MyVec3& pos,
-		const MyVec3& rot,
-		const MyVec3& scale,
-		std::map<MyString, SkinnedMesh1::AnimAction>& animActions,
-		FLOAT32 speedFactor = 1.0f);
-	virtual void update(UserInput& userInput, Timer& timer);
+	virtual void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale);
+	virtual void update(Timer& timer);
 	virtual void render(Camera& camera, Light& light);
 
 	StateMachine<Hero>* getFSM()const;
@@ -48,14 +37,74 @@ public:
 
 protected:
 	// Mesh/Appearance elements
-	SkinnedMesh1 m_skinnedMesh;
-	SkinnedMesh1::Instance* m_skinnedMeshIns;
+	SkinnedMesh1::Instance* m_instance;
 
 	// Moving elements
 	MovingEntity m_movingEnt;
 
 	// States manager
 	StateMachine<Hero>* m_stateMachine;
+};
+
+//===================================================================================================================
+//
+// HeroPool class
+//
+//===================================================================================================================
+
+class HeroPool
+{
+public:
+	static const int MAX_NUM_HEROES = 2;
+
+private:
+	// Assets
+	enum
+	{
+		MESH_1_DATA_BEAST_SEWON,
+		MESH_1_DATA_FIGHTER_DAN_MEI,
+		NUM_MESH_1_DATAS,
+	};
+
+	enum
+	{
+		ANIM_1_DATA_BEAST_SEWON,
+		ANIM_1_DATA_FIGHTER_DAN_MEI,
+		NUM_ANIM_1_DATAS,
+	};
+
+	enum
+	{
+		TEXTURES_MESH_BEAST_SEWON,
+		TEXTURES_MESH_FIGHTER_DAN_MEI,
+		NUM_TEXTURES_MESHES,
+	};
+
+	// Meshes
+	enum
+	{
+		SKINNED_MESH_MY_HERO_1,
+		SKINNED_MESH_ENEMY_HERO_1,
+		NUM_SKINNED_MESHES,
+	};
+
+public:
+	HeroPool();
+	~HeroPool();
+
+	void init(Shader& skinnedShader);
+	void update(Timer& timer);
+	void render(Camera& camera, Light& light);
+
+private:
+	// Assets
+	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
+	SkinnedMesh1::AnimData  m_anim1Datas[NUM_ANIM_1_DATAS];
+	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
+
+	// Meshes
+	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
+	Hero*        m_heroes[MAX_NUM_HEROES];
 };
 
 //===================================================================================================================

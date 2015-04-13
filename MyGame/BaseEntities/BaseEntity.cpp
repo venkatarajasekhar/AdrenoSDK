@@ -2,6 +2,8 @@
 #include "BaseEntity.h"
 
 BaseEntity::BaseEntity()
+	: m_entityType(ENTITY_TYPE_UNDEFINED),
+	m_teamType(TEAM_TYPE_UNDEFINED)
 {
 }
 

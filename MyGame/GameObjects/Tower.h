@@ -2,6 +2,7 @@
 #pragma once
 
 #include <MyFileMesh1.h>
+#include "LivingEntity.h"
 
 /*
 #include <MySkinnedMesh1.h>
@@ -52,13 +53,17 @@ public:
 //
 //=========================================================================================================
 
-class Tower
+class Tower : public LivingEntity
 {
 public:
 	Tower();
 	~Tower();
 
-	void init(FileMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale);
+	void init(FileMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
+		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
+	void update(Timer& timer);
+
+	MyVec3 getPos();
 
 private:
 	Mesh::Instance* m_instance;
@@ -109,7 +114,7 @@ public:
 	TowerPool();
 	~TowerPool();
 
-	void init(Shader& meshShader);
+	void init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

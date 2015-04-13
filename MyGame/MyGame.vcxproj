@@ -141,6 +141,8 @@
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
+    <ClCompile Include="BaseEntities\BaseEntity.cpp" />
+    <ClCompile Include="BaseEntities\LivingEntity.cpp" />
     <ClCompile Include="BaseEntities\MovingEntity.cpp" />
     <ClCompile Include="Core\MainGame.cpp" />
     <ClCompile Include="GameObjects\Hero.cpp" />
@@ -160,7 +162,9 @@
   <ItemGroup>
     <ClInclude Include="AI\State.h" />
     <ClInclude Include="AI\StateMachine.h" />
+    <ClInclude Include="BaseEntities\BaseEntity.h" />
     <ClInclude Include="BaseEntities\IRenderableEntity.h" />
+    <ClInclude Include="BaseEntities\LivingEntity.h" />
     <ClInclude Include="BaseEntities\MovingEntity.h" />
     <ClInclude Include="Core\MainGame.h" />
     <ClInclude Include="GameObjects\Hero.h" />

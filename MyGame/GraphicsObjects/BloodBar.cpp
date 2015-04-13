@@ -3,7 +3,8 @@
 
 BloodBar::BloodBar()
 	: m_foreground(nullptr),
-	m_background(nullptr)
+	m_background(nullptr),
+	m_scale(1)
 {
 }
 
@@ -25,6 +26,11 @@ void BloodBar::render(SpriteBatch& spriteBatch, Camera& camera, const MyVec3& po
 	// Screen position
 	MyVec2 posS = project(posW, w, h, camera.getView(), camera.getProj());
 
-	spriteBatch.renderTexture2D(m_background, posS, 0, MyVec2(1));
-	spriteBatch.renderTexture2D(m_foreground, posS, 0, MyVec2(health, 1));
+	spriteBatch.renderTexture2D(m_background, posS, 0, m_scale);
+	spriteBatch.renderTexture2D(m_foreground, posS, 0, m_scale * MyVec2(health, 1));
+}
+
+void BloodBar::setScale(const MyVec2& scale)
+{
+	m_scale = scale;
 }

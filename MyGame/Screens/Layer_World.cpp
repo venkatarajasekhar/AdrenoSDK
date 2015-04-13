@@ -95,9 +95,13 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	}
 
 	// Game objects
-	m_towerPool.init(m_shaders[SHADER_MESH]);
+	m_towerPool.init(m_shaders[SHADER_MESH], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
 	m_pawnPool.init(m_shaders[SHADER_SKINNED_MESH_1]);
 	m_heroPool.init(m_shaders[SHADER_SKINNED_MESH_1]);
+
+	// Graphics objects
+	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
+	m_bloodBar[BLOOD_BAR_ENEMY].init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
 }
 
 void Layer_World::resize(int width, int height)
@@ -115,9 +119,9 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	m_mesh_terrain.update(timer, userInput, m_camera_main);
 
 	// Game objects
-	for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
+	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 	{
-		(*i)->update(userInput, timer);
+		(*i)->update(timer);
 	}
 
 	m_towerPool.update(timer);
@@ -135,13 +139,13 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 		Light light;
 		light.PosOrDir = MyVec4(0, -1, -1, 0);
 
-		for (auto i = m_renderableEnts.begin(); i != m_renderableEnts.end(); ++i)
-		{
-			(*i)->render(m_camera_main, light);
-		}
-
 		m_towerPool.render(m_camera_main, light);
 		m_pawnPool.render(m_camera_main, light);
 		m_heroPool.render(m_camera_main, light);
+
+		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
+		{
+			(*i)->render(spriteBatch, m_camera_main, light);
+		}
 	}
 }

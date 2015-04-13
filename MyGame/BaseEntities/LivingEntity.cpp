@@ -1,7 +1,8 @@
 
 #include "LivingEntity.h"
+#include <MyUtils.h>
 
-
+/*
 int LivingEntity::m_numIDs = 0;
 
 LivingEntity::LivingEntity()
@@ -65,4 +66,67 @@ float LivingEntity::getRange()const
 float LivingEntity::getRadius()const
 {
 	return m_radius;
+}
+/**/
+
+LivingEntity::LivingEntity()
+	: m_maxHealth(0),
+	m_health(0),
+	m_damage(0),
+	m_bloodBar(nullptr)
+{
+}
+
+LivingEntity::~LivingEntity()
+{
+}
+
+void LivingEntity::init(int maxHealth, int damage, BloodBar& bloodBar, const MyVec2& bloodBarScale, const MyVec3& bloodBarOffset)
+{
+	m_maxHealth = maxHealth;
+	m_health = m_maxHealth;
+	m_damage = damage;
+
+	m_bloodBar = &bloodBar;
+	m_bloodBarScale = bloodBarScale;
+	m_bloodBarOffset = bloodBarOffset;
+}
+
+void LivingEntity::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
+{
+	m_bloodBar->setScale(m_bloodBarScale);
+	m_bloodBar->render(spriteBatch, camera, getPos() + m_bloodBarOffset, (float)m_health / (float)m_maxHealth);
+}
+
+// Getter
+
+int LivingEntity::getHealth()const
+{
+	return m_health;
+}
+
+// Setter
+
+void LivingEntity::accMaxHealth(int delta)
+{
+	m_maxHealth += delta;
+	if (m_maxHealth < 0)
+	{
+		m_maxHealth = 0;
+	}
+}
+
+void LivingEntity::accHealth(int delta)
+{
+	m_health += delta;
+	m_health = clamp(m_health, 0, m_maxHealth);
+}
+
+void LivingEntity::accDamage(int delta)
+{
+	m_damage += delta;
+	if (m_damage < 0)
+	{
+		m_damage = 0;
+	}
 }

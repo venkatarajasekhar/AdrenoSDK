@@ -273,6 +273,12 @@
     <ClCompile Include="BaseEntities\MovingEntity.cpp">
       <Filter>BaseEntities</Filter>
     </ClCompile>
+    <ClCompile Include="BaseEntities\BaseEntity.cpp">
+      <Filter>BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEntities\LivingEntity.cpp">
+      <Filter>BaseEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -330,6 +336,12 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="BaseEntities\MovingEntity.h">
+      <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\BaseEntity.h">
+      <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEntities\LivingEntity.h">
       <Filter>BaseEntities</Filter>
     </ClInclude>
   </ItemGroup>

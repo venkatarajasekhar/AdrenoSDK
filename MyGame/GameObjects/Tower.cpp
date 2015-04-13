@@ -80,6 +80,16 @@ FileMesh1::Instance* Tower::getInstance()
 
 //=========================================================================================================
 //
+// Constants
+//
+//=========================================================================================================
+
+static const int    TOWER_INITIAL_MAX_HEALTH = 2000;
+static const int    TOWER_INITIAL_DAMAGE     = 10;
+static const MyVec2 TOWER_BLOOD_BAR_SCALE    = MyVec2(1.0f, 0.6f);
+
+//=========================================================================================================
+//
 // Tower class
 //
 //=========================================================================================================
@@ -93,10 +103,22 @@ Tower::~Tower()
 {
 }
 
-void Tower::init(FileMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale)
+void Tower::init(FileMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
+	BloodBar& bloodBar, const MyVec3& bloodBarOffset)
 {
 	m_instance = Mesh::buildMeshInstance(pos, rot, scale);
 	mesh.addInstance(m_instance);
+
+	LivingEntity::init(TOWER_INITIAL_MAX_HEALTH, TOWER_INITIAL_DAMAGE, bloodBar, TOWER_BLOOD_BAR_SCALE, bloodBarOffset);
+}
+
+void Tower::update(Timer& timer)
+{
+}
+
+MyVec3 Tower::getPos()
+{
+	return m_instance->Position;
 }
 
 //=========================================================================================================
@@ -113,7 +135,7 @@ TowerPool::~TowerPool()
 {
 }
 
-void TowerPool::init(Shader& meshShader)
+void TowerPool::init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
 {
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_HOUSE_WIND].init(resolveAssetsPath("Meshes/Towers/house_wind/wrhousewind02.model"));
@@ -157,13 +179,19 @@ void TowerPool::init(Shader& meshShader)
 	m_fileMeshes[FILE_MESH_ENEMY_MAIN_TOWER].init(m_mesh1Datas[MESH_1_DATA_HOUSE_WIND], m_meshTextures[TEXTURES_MESH_HOUSE_WIND], meshShader, &material);
 
 	// Towers
-	m_towers[0].init(m_fileMeshes[FILE_MESH_MY_MAIN_TOWER], MyVec3(-43.0f, 0, 0.39f), MyVec3(0), MyVec3(0.5f));
-	m_towers[1].init(m_fileMeshes[FILE_MESH_MY_TOWER], MyVec3(-29.0f, 0, 2.0f), MyVec3(0, -90, 0), MyVec3(0.5f));
-	m_towers[2].init(m_fileMeshes[FILE_MESH_MY_TOWER], MyVec3(-13.0f, 0, -3.5f), MyVec3(0), MyVec3(0.5f));
+	m_towers[0].init(m_fileMeshes[FILE_MESH_MY_MAIN_TOWER], MyVec3(-43.0f, 0, 0.39f), MyVec3(0), MyVec3(0.5f), myBloodBar, MyVec3(0, 8.5f, 0));
+	m_towers[1].init(m_fileMeshes[FILE_MESH_MY_TOWER], MyVec3(-29.0f, 0, 2.0f), MyVec3(0, -90, 0), MyVec3(0.5f), myBloodBar, MyVec3(0, 7, 0));
+	m_towers[2].init(m_fileMeshes[FILE_MESH_MY_TOWER], MyVec3(-13.0f, 0, -3.5f), MyVec3(0), MyVec3(0.5f), myBloodBar, MyVec3(0, 7, 0));
 
-	m_towers[3].init(m_fileMeshes[FILE_MESH_ENEMY_MAIN_TOWER], MyVec3(39.0f, 0, -1.5f), MyVec3(-90, 0 ,0), MyVec3(0.002f));
-	m_towers[4].init(m_fileMeshes[FILE_MESH_ENEMY_TOWER], MyVec3(15.0f, 0, 4.0f), MyVec3(0, 45, 0), MyVec3(0.3f));
-	m_towers[5].init(m_fileMeshes[FILE_MESH_ENEMY_TOWER], MyVec3(2.0f, 0, 4.5f), MyVec3(0), MyVec3(0.3f));
+	m_towers[3].init(m_fileMeshes[FILE_MESH_ENEMY_MAIN_TOWER], MyVec3(39.0f, 0, -1.5f), MyVec3(-90, 0, 0), MyVec3(0.002f), enemyBloodBar, MyVec3(0, 8, 0));
+	m_towers[4].init(m_fileMeshes[FILE_MESH_ENEMY_TOWER], MyVec3(15.0f, 0, 4.0f), MyVec3(0, 45, 0), MyVec3(0.3f), enemyBloodBar, MyVec3(0, 7, 0));
+	m_towers[5].init(m_fileMeshes[FILE_MESH_ENEMY_TOWER], MyVec3(2.0f, 0, 4.5f), MyVec3(0), MyVec3(0.3f), enemyBloodBar, MyVec3(0, 7, 0));
+
+	// Fill into list of living entities
+	for (size_t i = 0; i < MAX_NUM_TOWER; i++)
+	{
+		lEnts.push_back(&m_towers[i]);
+	}
 }
 
 void TowerPool::update(Timer& timer)

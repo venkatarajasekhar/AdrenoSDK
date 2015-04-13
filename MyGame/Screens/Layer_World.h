@@ -5,7 +5,6 @@
 #include <MySpriteSheet.h>
 #include <MySkinnedMesh1.h>
 #include "FlatTerrain.h"
-#include "IRenderableEntity.h"
 #include "LivingEntity.h"
 #include "TPSCamera.h"
 #include "Tower.h"
@@ -68,6 +67,14 @@ private:
 		NUM_TEXTURES_MESHES,
 	};
 
+	// Graphics objects
+	enum
+	{
+		BLOOD_BAR_MY_TEAM,
+		BLOOD_BAR_ENEMY,
+		NUM_BLOOD_BARS,
+	};
+
 public:
 	Layer_World();
 	~Layer_World();
@@ -95,10 +102,12 @@ private:
 	FlatTerrain m_mesh_terrain;
 
 	// Game objects
-	std::vector<IRenderableEntity*> m_renderableEnts;
 	std::vector<LivingEntity*> m_livingEnts;
 
 	TowerPool m_towerPool;
 	PawnPool m_pawnPool;
 	HeroPool m_heroPool;
+
+	// Graphics objects
+	BloodBar m_bloodBar[NUM_BLOOD_BARS];
 };

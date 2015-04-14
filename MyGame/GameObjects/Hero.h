@@ -32,12 +32,7 @@ public:
 		int iHero);
 	virtual void update(Timer& timer);
 
-	StateMachine<Hero>* getFSM()const;
 	MyVec3 getPos();
-
-	// Controlling hero
-	void changeAnimAction(const MyString& action);
-	bool isMoving();
 
 protected:
 	// Mesh/Appearance elements
@@ -48,6 +43,11 @@ protected:
 
 	// States manager
 	StateMachine<Hero>* m_stateMachine;
+
+protected:
+	friend class HeroState_Idle;
+	friend class HeroState_Walk;
+	friend class HeroState_Attack;
 };
 
 //===================================================================================================================

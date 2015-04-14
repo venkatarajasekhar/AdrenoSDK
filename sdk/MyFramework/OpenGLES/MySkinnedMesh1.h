@@ -119,6 +119,10 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera, Light* light = nullptr);
 
+	// Originally, an action occur at a specific position (commonly unaligned to origin).
+	// We usually want to move to origin.
+	void translateAction(const MyString& action, const MyVec3& translate);
+
 private:
 	void setWorldArray(SkinnedMesh1::Instance* instance);
 

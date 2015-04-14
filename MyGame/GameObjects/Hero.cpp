@@ -67,7 +67,7 @@ static void initHeroProps()
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 1000;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 10;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 5;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 10;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 5;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingRotYOffset = 0;
@@ -164,25 +164,9 @@ void Hero::update(Timer& timer)
 	m_stateMachine->Update();
 }
 
-StateMachine<Hero>* Hero::getFSM()const
-{
-	return m_stateMachine;
-}
-
 MyVec3 Hero::getPos()
 {
 	return m_movingEnt.getPos();
-}
-
-// Controlling hero
-void Hero::changeAnimAction(const MyString& action)
-{
-	m_instance->setAction(action);
-}
-
-bool Hero::isMoving()
-{
-	return m_movingEnt.isMoving();
 }
 
 //===================================================================================================================
@@ -265,6 +249,9 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		m_meshTextures[TEXTURES_MESH_FIGHTER_DAN_MEI], 
 		skinnedShader, 
 		&g_HeroProps[HERO_FIGHTER_DAN_MEI].Material);
+
+	// Adjusting unaligned action
+	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200));
 	
 	// Heroes
 	m_heroes[HERO_IN_GAME_MY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], myBloodBar, lEnts, HERO_FIGHTER_DAN_MEI);
@@ -305,14 +292,26 @@ void HeroPool::render(Camera& camera, Light& light)
 
 void HeroState_Idle::Enter(Hero* hero)
 {
-	hero->changeAnimAction("idle");
+	hero->m_instance->setAction("idle");
 }
 
 void HeroState_Idle::Execute(Hero* hero)
 {
-	if (hero->isMoving())
+	if (hero->m_movingEnt.isMoving())
 	{
-		hero->getFSM()->ChangeState(HeroState_Walk::instance());
+		hero->m_stateMachine->ChangeState(HeroState_Walk::instance());
+	}
+	else
+	{
+		for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
+		{
+			if ((hero != (*i)) && (distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_atkRange))
+			{
+				hero->m_atkTarget = (*i);
+				hero->m_stateMachine->ChangeState(HeroState_Attack::instance());
+				break;
+			}
+		}
 	}
 }
 
@@ -329,14 +328,14 @@ void HeroState_Idle::Exit(Hero* hero)
 
 void HeroState_Walk::Enter(Hero* hero)
 {
-	hero->changeAnimAction("run");
+	hero->m_instance->setAction("run");
 }
 
 void HeroState_Walk::Execute(Hero* hero)
 {
-	if (!hero->isMoving())
+	if (!hero->m_movingEnt.isMoving())
 	{
-		hero->getFSM()->ChangeState(HeroState_Idle::instance());
+		hero->m_stateMachine->ChangeState(HeroState_Idle::instance());
 	}
 }
 
@@ -353,11 +352,29 @@ void HeroState_Walk::Exit(Hero* hero)
 
 void HeroState_Attack::Enter(Hero* hero)
 {
-	hero->changeAnimAction("attack_1");
+	hero->m_instance->setAction("attack_1");
 }
 
 void HeroState_Attack::Execute(Hero* hero)
 {
+	if (hero->m_movingEnt.isMoving())
+	{
+		hero->m_stateMachine->ChangeState(HeroState_Walk::instance());
+	}
+	else
+	{
+		if (hero->m_atkTarget != nullptr)
+		{
+			if (distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_atkRange)
+			{
+				hero->m_stateMachine->ChangeState(HeroState_Idle::instance());
+			}
+			else
+			{
+				hero->m_atkTarget->accHealth(-hero->m_damage);
+			}
+		}
+	}
 }
 
 void HeroState_Attack::Exit(Hero* hero)

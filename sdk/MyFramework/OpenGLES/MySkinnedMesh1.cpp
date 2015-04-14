@@ -491,6 +491,51 @@ void SkinnedMesh1::render(Camera& camera, Light* light)
 	FrmSetIndexBuffer(NULL);
 }
 
+void SkinnedMesh1::translateAction(const MyString& action, const MyVec3& translate)
+{
+	if (m_anim == nullptr)
+	{
+		return;
+	}
+
+	// Computing frameStart and frameLength
+	UINT32 frameStart, frameLength;
+
+	if (!m_animActions.empty())
+	{
+		AnimAction actionRange = getAction(action);
+		frameStart = actionRange.FrameStart;
+		frameLength = actionRange.FrameLength;
+
+		if (frameStart >= m_anim->NumFrames)
+		{
+			frameStart = 0;
+		}
+		if (frameLength > m_anim->NumFrames - frameStart)
+		{
+			frameLength = m_anim->NumFrames - frameStart;
+		}
+	}
+	else
+	{
+		frameStart = 0;
+		frameLength = m_anim->NumFrames;
+	}
+
+	frameLength = (frameLength == 0) ? m_anim->NumFrames - frameStart : frameLength;
+
+	// Moving
+	for (UINT32 trackIndex = 0; trackIndex < m_anim->NumTracks; trackIndex++)
+	{
+		auto pTrack = m_anim->Tracks + trackIndex;
+		for (UINT32 frameIndex = frameStart; frameIndex < frameStart + frameLength; frameIndex++)
+		{
+			auto pFrame = pTrack->Keyframes + frameIndex;
+			pFrame->Position += FRMVECTOR3(translate.x, translate.y, translate.z);
+		}
+	}
+}
+
 void SkinnedMesh1::setWorldArray(SkinnedMesh1::Instance* instance)
 {
 	// Prepare this frame's transforms for each of the bones

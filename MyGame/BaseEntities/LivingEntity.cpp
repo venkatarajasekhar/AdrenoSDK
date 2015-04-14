@@ -73,7 +73,10 @@ LivingEntity::LivingEntity()
 	: m_maxHealth(0),
 	m_health(0),
 	m_damage(0),
-	m_bloodBar(nullptr)
+	m_bloodBar(nullptr),
+	m_lEnts(nullptr),
+	m_atkTarget(nullptr),
+	m_atkRange(0)
 {
 }
 
@@ -81,7 +84,14 @@ LivingEntity::~LivingEntity()
 {
 }
 
-void LivingEntity::init(int maxHealth, int damage, BloodBar& bloodBar, const MyVec2& bloodBarScale, const MyVec3& bloodBarOffset)
+void LivingEntity::init(
+	int maxHealth,
+	int damage,
+	BloodBar& bloodBar,
+	const MyVec2& bloodBarScale,
+	const MyVec3& bloodBarOffset,
+	std::vector<LivingEntity*>& lEnts,
+	float atkRange)
 {
 	m_maxHealth = maxHealth;
 	m_health = m_maxHealth;
@@ -90,6 +100,9 @@ void LivingEntity::init(int maxHealth, int damage, BloodBar& bloodBar, const MyV
 	m_bloodBar = &bloodBar;
 	m_bloodBarScale = bloodBarScale;
 	m_bloodBarOffset = bloodBarOffset;
+
+	m_lEnts = &lEnts;
+	m_atkRange = atkRange;
 }
 
 void LivingEntity::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)

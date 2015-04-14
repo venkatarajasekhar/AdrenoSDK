@@ -25,8 +25,11 @@ public:
 	virtual ~Hero();
 
 	// Core functions
-	virtual void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
-		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
+	virtual void init(
+		SkinnedMesh1& mesh,
+		BloodBar& bloodBar, 
+		std::vector<LivingEntity*>& lEnts,
+		int iHero);
 	virtual void update(Timer& timer);
 
 	StateMachine<Hero>* getFSM()const;
@@ -55,9 +58,6 @@ protected:
 
 class HeroPool
 {
-public:
-	static const int MAX_NUM_HEROES = 2;
-
 private:
 	// Assets
 	enum
@@ -84,16 +84,29 @@ private:
 	// Meshes
 	enum
 	{
-		SKINNED_MESH_MY_HERO_1,
-		SKINNED_MESH_ENEMY_HERO_1,
+		SKINNED_MESH_BEAST_SEWON,
+		SKINNED_MESH_FIGHTER_DAN_MEI,
 		NUM_SKINNED_MESHES,
+	};
+
+	// Heroes in-game
+	enum
+	{
+		HERO_IN_GAME_MY_HERO_1,
+		HERO_IN_GAME_ENEMY_HERO_1,
+		MAX_NUM_HEROES_IN_GAME,
 	};
 
 public:
 	HeroPool();
 	~HeroPool();
 
-	void init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts, OnPressListenee& map);
+	void init(
+		Shader& skinnedShader, 
+		BloodBar& myBloodBar, 
+		BloodBar& enemyBloodBar, 
+		std::vector<LivingEntity*>& lEnts, 
+		OnPressListenee& map);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 
@@ -105,7 +118,7 @@ private:
 
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
-	Hero*        m_heroes[MAX_NUM_HEROES];
+	Hero*        m_heroes[MAX_NUM_HEROES_IN_GAME];
 };
 
 //===================================================================================================================
@@ -139,6 +152,22 @@ private:
 
 public:
 	static HeroState_Walk* instance(){ static HeroState_Walk ins; return &ins; }
+
+public:
+	virtual void Enter(Hero* hero);
+	virtual void Execute(Hero* hero);
+	virtual void Exit(Hero* hero);
+};
+
+class HeroState_Attack : public State<Hero>
+{
+private:
+	HeroState_Attack(){}
+	HeroState_Attack(const HeroState_Attack&);
+	HeroState_Attack& operator=(const HeroState_Attack&);
+
+public:
+	static HeroState_Attack* instance(){ static HeroState_Attack ins; return &ins; }
 
 public:
 	virtual void Enter(Hero* hero);

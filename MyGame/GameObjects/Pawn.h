@@ -16,8 +16,14 @@ public:
 	Pawn();
 	~Pawn();
 
-	void init(SkinnedMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
-		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
+	void init(
+		SkinnedMesh1& mesh, 
+		const MyVec3& pos, 
+		const MyVec3& rot, 
+		const MyVec3& scale,
+		BloodBar& bloodBar, 
+		std::vector<LivingEntity*>& lEnts,
+		int iPawn);
 	void update(Timer& timer);
 
 	MyVec3 getPos();
@@ -63,8 +69,8 @@ private:
 	// Meshes
 	enum
 	{
-		SKINNED_MESH_MY_PAWN,
-		SKINNED_MESH_ENEMY_PAWN,
+		SKINNED_MESH_BROWNIE,
+		SKINNED_MESH_SKELETON,
 		NUM_SKINNED_MESHES,
 	};
 

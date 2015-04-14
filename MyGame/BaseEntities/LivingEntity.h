@@ -49,7 +49,14 @@ public:
 	LivingEntity();
 	virtual ~LivingEntity();
 
-	virtual void init(int maxHealth, int damage, BloodBar& bloodBar, const MyVec2& bloodBarScale, const MyVec3& bloodBarOffset);
+	virtual void init(
+		int maxHealth, 
+		int damage, 
+		BloodBar& bloodBar, 
+		const MyVec2& bloodBarScale, 
+		const MyVec3& bloodBarOffset,
+		std::vector<LivingEntity*>& lEnts,
+		float atkRange);
 	virtual void update(Timer& timer) = 0;
 	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
@@ -72,4 +79,8 @@ protected:
 	BloodBar* m_bloodBar;
 	MyVec2 m_bloodBarScale;
 	MyVec3 m_bloodBarOffset;
+
+	std::vector<LivingEntity*>* m_lEnts;
+	LivingEntity* m_atkTarget;
+	float m_atkRange;
 };

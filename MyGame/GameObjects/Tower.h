@@ -59,8 +59,12 @@ public:
 	Tower();
 	~Tower();
 
-	void init(FileMesh1& mesh, const MyVec3& pos, const MyVec3& rot, const MyVec3& scale,
-		BloodBar& bloodBar, const MyVec3& bloodBarOffset);
+	void init(
+		FileMesh1& mesh,
+		BloodBar& bloodBar,
+		std::vector<LivingEntity*>& lEnts,
+		int iTower,
+		int iTowerInGame);
 	void update(Timer& timer);
 
 	MyVec3 getPos();
@@ -78,7 +82,16 @@ private:
 class TowerPool
 {
 public:
-	static const int MAX_NUM_TOWER = 6;
+	enum
+	{
+		TOWER_IN_GAME_MY_MAIN_TOWER,
+		TOWER_IN_GAME_MY_TOWER_1,
+		TOWER_IN_GAME_MY_TOWER_2,
+		TOWER_IN_GAME_ENEMY_MAIN_TOWER,
+		TOWER_IN_GAME_ENEMY_TOWER_1,
+		TOWER_IN_GAME_ENEMY_TOWER_2,
+		MAX_NUM_TOWER_IN_GAME,
+	};
 
 private:
 	// Assets
@@ -103,10 +116,10 @@ private:
 	// Meshes
 	enum
 	{
-		FILE_MESH_MY_TOWER,
-		FILE_MESH_ENEMY_TOWER,
-		FILE_MESH_MY_MAIN_TOWER,
-		FILE_MESH_ENEMY_MAIN_TOWER,
+		FILE_MESH_HOUSE_WIND,
+		FILE_MESH_OUTPOST,
+		FILE_MESH_TOWER_OF_VICTORY,
+		FILE_MESH_WHITE_PAGODA,
 		NUM_FILE_MESHES,
 	};
 
@@ -125,5 +138,5 @@ private:
 
 	// Meshes
 	FileMesh1 m_fileMeshes[NUM_FILE_MESHES];
-	Tower     m_towers[MAX_NUM_TOWER];
+	Tower     m_towers[MAX_NUM_TOWER_IN_GAME];
 };

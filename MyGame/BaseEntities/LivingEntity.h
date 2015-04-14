@@ -72,6 +72,9 @@ public:
 	void accDamage(int delta);
 
 protected:
+	virtual void dead();
+
+protected:
 	int m_maxHealth;
 	int m_health;
 	int m_damage;

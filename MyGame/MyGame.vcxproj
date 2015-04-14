@@ -150,6 +150,7 @@
     <ClCompile Include="GameObjects\Hero_Controlled.cpp" />
     <ClCompile Include="GameObjects\Pawn.cpp" />
     <ClCompile Include="GameObjects\Tower.cpp" />
+    <ClCompile Include="GameObjects\Tower_Main.cpp" />
     <ClCompile Include="GraphicsObjects\BloodBar.cpp" />
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
     <ClCompile Include="GraphicsObjects\MiniMap.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="GameObjects\Hero_Controlled.h" />
     <ClInclude Include="GameObjects\Pawn.h" />
     <ClInclude Include="GameObjects\Tower.h" />
+    <ClInclude Include="GameObjects\Tower_Main.h" />
     <ClInclude Include="GraphicsObjects\BloodBar.h" />
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />
     <ClInclude Include="GraphicsObjects\MiniMap.h" />

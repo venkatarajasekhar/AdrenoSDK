@@ -1,5 +1,6 @@
 
 #include "Tower.h"
+#include "Tower_Main.h"
 
 /*
 void Tower::init(
@@ -305,10 +306,21 @@ MyVec3 Tower::getPos()
 
 TowerPool::TowerPool()
 {
+	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER] = new Tower_Main;
+	m_towers[TOWER_IN_GAME_MY_TOWER_1] = new Tower;
+	m_towers[TOWER_IN_GAME_MY_TOWER_2] = new Tower;
+
+	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER] = new Tower_Main;
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1] = new Tower;
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2] = new Tower;
 }
 
 TowerPool::~TowerPool()
 {
+	for (int i = 0; i < MAX_NUM_TOWER_IN_GAME; i++)
+	{
+		SAFE_DELETE(m_towers[i]);
+	}
 }
 
 void TowerPool::init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
@@ -367,18 +379,18 @@ void TowerPool::init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBl
 		&g_TowerProps[TOWER_HOUSE_WIND].Material);
 
 	// Towers
-	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER].init(m_fileMeshes[FILE_MESH_WHITE_PAGODA], myBloodBar, lEnts, TOWER_WHITE_PAGODA, TOWER_IN_GAME_MY_MAIN_TOWER, TEAM_TYPE_MY_TEAM);
-	m_towers[TOWER_IN_GAME_MY_TOWER_1].init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_1, TEAM_TYPE_MY_TEAM);
-	m_towers[TOWER_IN_GAME_MY_TOWER_2].init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_2, TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER]->init(m_fileMeshes[FILE_MESH_WHITE_PAGODA], myBloodBar, lEnts, TOWER_WHITE_PAGODA, TOWER_IN_GAME_MY_MAIN_TOWER, TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_TOWER_1]->init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_1, TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_TOWER_2]->init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_2, TEAM_TYPE_MY_TEAM);
 
-	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER].init(m_fileMeshes[FILE_MESH_HOUSE_WIND], enemyBloodBar, lEnts, TOWER_HOUSE_WIND, TOWER_IN_GAME_ENEMY_MAIN_TOWER, TEAM_TYPE_ENEMY);
-	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1].init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_1, TEAM_TYPE_ENEMY);
-	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2].init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_2, TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER]->init(m_fileMeshes[FILE_MESH_HOUSE_WIND], enemyBloodBar, lEnts, TOWER_HOUSE_WIND, TOWER_IN_GAME_ENEMY_MAIN_TOWER, TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1]->init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_1, TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2]->init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_2, TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_TOWER_IN_GAME; i++)
 	{
-		lEnts.push_back(&m_towers[i]);
+		lEnts.push_back(m_towers[i]);
 	}
 }
 

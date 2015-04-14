@@ -279,6 +279,9 @@
     <ClCompile Include="BaseEntities\LivingEntity.cpp">
       <Filter>BaseEntities</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Tower_Main.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="BaseEntities\LivingEntity.h">
       <Filter>BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Tower_Main.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

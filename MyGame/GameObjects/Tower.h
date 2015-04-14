@@ -57,20 +57,20 @@ class Tower : public LivingEntity
 {
 public:
 	Tower();
-	~Tower();
+	virtual ~Tower();
 
-	void init(
+	virtual void init(
 		FileMesh1& mesh,
 		BloodBar& bloodBar,
 		std::vector<LivingEntity*>& lEnts,
 		int iTower,
 		int iTowerInGame,
 		TEAM_TYPE team);
-	void update(Timer& timer);
+	virtual void update(Timer& timer);
 
 	MyVec3 getPos();
 
-private:
+protected:
 	Mesh::Instance* m_instance;
 };
 
@@ -139,5 +139,5 @@ private:
 
 	// Meshes
 	FileMesh1 m_fileMeshes[NUM_FILE_MESHES];
-	Tower     m_towers[MAX_NUM_TOWER_IN_GAME];
+	Tower*    m_towers[MAX_NUM_TOWER_IN_GAME];
 };

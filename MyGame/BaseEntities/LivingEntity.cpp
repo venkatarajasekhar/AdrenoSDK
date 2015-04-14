@@ -111,6 +111,10 @@ void LivingEntity::render(SpriteBatch& spriteBatch, Camera& camera, Light& light
 	m_bloodBar->render(spriteBatch, camera, getPos() + m_bloodBarOffset, (float)m_health / (float)m_maxHealth);
 }
 
+void LivingEntity::dead()
+{
+}
+
 // Getter
 
 int LivingEntity::getHealth()const
@@ -133,6 +137,11 @@ void LivingEntity::accHealth(int delta)
 {
 	m_health += delta;
 	m_health = clamp(m_health, 0, m_maxHealth);
+
+	if (m_health == 0)
+	{
+		dead();
+	}
 }
 
 void LivingEntity::accDamage(int delta)

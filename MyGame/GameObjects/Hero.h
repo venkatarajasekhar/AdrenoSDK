@@ -29,7 +29,8 @@ public:
 		SkinnedMesh1& mesh,
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
-		int iHero);
+		int iHero,
+		TEAM_TYPE team);
 	virtual void update(Timer& timer);
 
 	MyVec3 getPos();

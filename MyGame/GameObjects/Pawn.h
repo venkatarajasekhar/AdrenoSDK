@@ -23,7 +23,8 @@ public:
 		const MyVec3& scale,
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
-		int iPawn);
+		int iPawn,
+		TEAM_TYPE team);
 	void update(Timer& timer);
 
 	MyVec3 getPos();

@@ -266,13 +266,17 @@ void Tower::init(
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
 	int iTower,
-	int iTowerInGame)
+	int iTowerInGame,
+	TEAM_TYPE team)
 {
 	TowerProps* towerProp = g_TowerProps + iTower;
 	TowerInGameProp* towerInGameProp = g_TowerInGameProps + iTowerInGame;
 
 	m_instance = Mesh::buildMeshInstance(towerInGameProp->Pos, towerInGameProp->Rot, towerInGameProp->Scale);
 	mesh.addInstance(m_instance);
+
+	setTeamType(team);
+	setEntityType(ENTITY_TYPE_TOWER);
 
 	LivingEntity::init(
 		towerProp->InitialMaxHealth, 
@@ -363,13 +367,13 @@ void TowerPool::init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBl
 		&g_TowerProps[TOWER_HOUSE_WIND].Material);
 
 	// Towers
-	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER].init(m_fileMeshes[FILE_MESH_WHITE_PAGODA], myBloodBar, lEnts, TOWER_WHITE_PAGODA, TOWER_IN_GAME_MY_MAIN_TOWER);
-	m_towers[TOWER_IN_GAME_MY_TOWER_1].init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_1);
-	m_towers[TOWER_IN_GAME_MY_TOWER_2].init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_2);
+	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER].init(m_fileMeshes[FILE_MESH_WHITE_PAGODA], myBloodBar, lEnts, TOWER_WHITE_PAGODA, TOWER_IN_GAME_MY_MAIN_TOWER, TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_TOWER_1].init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_1, TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_TOWER_2].init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_2, TEAM_TYPE_MY_TEAM);
 
-	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER].init(m_fileMeshes[FILE_MESH_HOUSE_WIND], enemyBloodBar, lEnts, TOWER_HOUSE_WIND, TOWER_IN_GAME_ENEMY_MAIN_TOWER);
-	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1].init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_1);
-	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2].init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_2);
+	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER].init(m_fileMeshes[FILE_MESH_HOUSE_WIND], enemyBloodBar, lEnts, TOWER_HOUSE_WIND, TOWER_IN_GAME_ENEMY_MAIN_TOWER, TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1].init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_1, TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2].init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_2, TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_TOWER_IN_GAME; i++)

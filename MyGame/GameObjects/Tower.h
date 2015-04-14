@@ -64,7 +64,8 @@ public:
 		BloodBar& bloodBar,
 		std::vector<LivingEntity*>& lEnts,
 		int iTower,
-		int iTowerInGame);
+		int iTowerInGame,
+		TEAM_TYPE team);
 	void update(Timer& timer);
 
 	MyVec3 getPos();

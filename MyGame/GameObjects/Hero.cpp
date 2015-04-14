@@ -122,7 +122,8 @@ void Hero::init(
 	SkinnedMesh1& mesh,
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
-	int iHero)
+	int iHero,
+	TEAM_TYPE team)
 {
 	HeroProps* heroProps = g_HeroProps + iHero;
 
@@ -141,6 +142,9 @@ void Hero::init(
 	// States manager
 	m_stateMachine = new StateMachine<Hero>(this);
 	m_stateMachine->SetCurrentState(HeroState_Idle::instance());
+
+	setTeamType(team);
+	setEntityType(ENTITY_TYPE_HERO);
 
 	LivingEntity::init(
 		heroProps->InitialMaxHealth, 
@@ -254,8 +258,8 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200));
 	
 	// Heroes
-	m_heroes[HERO_IN_GAME_MY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], myBloodBar, lEnts, HERO_FIGHTER_DAN_MEI);
-	m_heroes[HERO_IN_GAME_ENEMY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], enemyBloodBar, lEnts, HERO_BEAST_SEWON);
+	m_heroes[HERO_IN_GAME_MY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], myBloodBar, lEnts, HERO_FIGHTER_DAN_MEI, TEAM_TYPE_MY_TEAM);
+	m_heroes[HERO_IN_GAME_ENEMY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], enemyBloodBar, lEnts, HERO_BEAST_SEWON, TEAM_TYPE_ENEMY);
 
 	map.addPressListener((Hero_Controlled*)m_heroes[0]);
 
@@ -305,7 +309,9 @@ void HeroState_Idle::Execute(Hero* hero)
 	{
 		for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
 		{
-			if ((hero != (*i)) && (distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_atkRange))
+			if ((hero != (*i)) && 
+				(hero->getTeamType() != (*i)->getTeamType()) &&
+				(distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_atkRange))
 			{
 				hero->m_atkTarget = (*i);
 				hero->m_stateMachine->ChangeState(HeroState_Attack::instance());

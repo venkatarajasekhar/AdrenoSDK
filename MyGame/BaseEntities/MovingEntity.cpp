@@ -39,7 +39,8 @@ MovingEntity::MovingEntity()
 	m_currOrientation(0),
 	m_speed(0),
 	m_turnSpeed(0),
-	m_isMoving(false)
+	m_isMoving(false),
+	m_pathPivot(1)
 {
 }
 
@@ -47,11 +48,38 @@ MovingEntity::~MovingEntity()
 {
 }
 
-void MovingEntity::init(const MyVec3& pos, const MyVec3& target, const MyVec3& rot, float rotYOffset, float speed, float turnSpeed)
+void MovingEntity::init(
+	const MyVec3& pos, 
+	const MyVec3& target, 
+	const MyVec3& rot, 
+	float rotYOffset, 
+	float speed, 
+	float turnSpeed)
 {
 	setPos(pos);
 	setTarget(target);
 	setRot(rot);
+	setSpeed(speed);
+
+	m_rotYOffset = rotYOffset;
+	m_turnSpeed = turnSpeed;
+}
+
+void MovingEntity::init(
+	const std::vector<MyVec3>& path,
+	float rotYOffset,
+	float speed,
+	float turnSpeed)
+{
+	m_path = path;
+
+	if (!m_path.empty())
+	{
+		setPos(m_path[0]);
+		MyVec3 target = ((m_path.size() >= 2) ? m_path[1] : m_path[0]);
+		setTarget(target);
+	}
+
 	setSpeed(speed);
 
 	m_rotYOffset = rotYOffset;
@@ -73,7 +101,22 @@ void MovingEntity::update(Timer& timer)
 	}
 	else
 	{
-		m_isMoving = false;
+		if (!m_path.empty())
+		{
+			m_pathPivot++;
+			if (m_pathPivot < m_path.size())
+			{
+				setTarget(m_path[m_pathPivot]);
+			}
+			else
+			{
+				m_isMoving = false;
+			}
+		}
+		else
+		{
+			m_isMoving = false;
+		}
 	}
 }
 

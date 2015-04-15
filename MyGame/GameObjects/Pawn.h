@@ -3,6 +3,8 @@
 
 #include <MySkinnedMesh1.h>
 #include "LivingEntity.h"
+#include "MovingEntity.h"
+#include "StateMachine.h"
 
 //=========================================================================================================
 //
@@ -21,6 +23,7 @@ public:
 		const MyVec3& pos, 
 		const MyVec3& rot, 
 		const MyVec3& scale,
+		const std::vector<MyVec3>& path,
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
 		int iPawn,
@@ -30,7 +33,18 @@ public:
 	MyVec3 getPos();
 
 private:
+	// Mesh/Appearance elements
 	SkinnedMesh1::Instance* m_instance;
+
+	// Moving elements
+	MovingEntity m_movingEnt;
+
+	// States manager
+	StateMachine<Pawn>* m_stateMachine;
+
+private:
+	friend class PawnState_Idle;
+	friend class PawnState_Walk;
 };
 
 //=========================================================================================================
@@ -42,7 +56,8 @@ private:
 class PawnPool
 {
 public:
-	static const int MAX_NUM_PAWNS = 6;
+	//static const int MAX_NUM_PAWNS = 6;
+	static const int MAX_NUM_PAWNS = 1;
 
 private:
 	// Assets
@@ -92,4 +107,42 @@ private:
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
 	Pawn         m_pawns[MAX_NUM_PAWNS];
+};
+
+//=========================================================================================================
+//
+// Pawn state
+//
+//=========================================================================================================
+
+class PawnState_Idle : public State<Pawn>
+{
+private:
+	PawnState_Idle(){}
+	PawnState_Idle(const PawnState_Idle&);
+	PawnState_Idle& operator=(const PawnState_Idle&);
+
+public:
+	static PawnState_Idle* instance(){ static PawnState_Idle ins; return &ins; }
+
+public:
+	virtual void Enter(Pawn* pawn);
+	virtual void Execute(Pawn* pawn);
+	virtual void Exit(Pawn* pawn);
+};
+
+class PawnState_Walk : public State<Pawn>
+{
+private:
+	PawnState_Walk(){}
+	PawnState_Walk(const PawnState_Walk&);
+	PawnState_Walk& operator=(const PawnState_Walk&);
+
+public:
+	static PawnState_Walk* instance(){ static PawnState_Walk ins; return &ins; }
+
+public:
+	virtual void Enter(Pawn* pawn);
+	virtual void Execute(Pawn* pawn);
+	virtual void Exit(Pawn* pawn);
 };

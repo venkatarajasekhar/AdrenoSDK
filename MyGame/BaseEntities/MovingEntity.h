@@ -12,7 +12,18 @@ public:
 	// rotYOffset: When rotY = 0, angle between entity's heading and Oz
 	//             -180 <= rotYOffset <= 180
 	//             counter-clockwise (toward Oz) is positive direction
-	virtual void init(const MyVec3& pos, const MyVec3& target, const MyVec3& rot, float rotYOffset, float speed, float turnSpeed);
+	virtual void init(
+		const MyVec3& pos, 
+		const MyVec3& target, 
+		const MyVec3& rot, 
+		float rotYOffset, 
+		float speed, 
+		float turnSpeed);
+	virtual void init(
+		const std::vector<MyVec3>& path,
+		float rotYOffset,
+		float speed,
+		float turnSpeed);
 	virtual void update(Timer& timer);
 
 	void turnTo(const MyVec3& target);
@@ -44,4 +55,7 @@ protected:
 	float m_turnSpeed;
 
 	bool m_isMoving;
+
+	std::vector<MyVec3> m_path;
+	int m_pathPivot;
 };

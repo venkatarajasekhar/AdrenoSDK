@@ -127,6 +127,7 @@ void Hero::init(
 {
 	HeroProps* heroProps = g_HeroProps + iHero;
 
+	// Mesh/Appearance elements
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroProps->InitialPos, heroProps->InitialRot, heroProps->InitialScale, "idle");
 	mesh.addInstance(m_instance);
 

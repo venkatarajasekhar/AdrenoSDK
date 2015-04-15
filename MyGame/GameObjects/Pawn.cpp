@@ -36,8 +36,8 @@ static void initPawnProps()
 	// Brownie
 	g_PawnProps[PAWN_BROWNIE].AttackRange = 5;
 
-	g_PawnProps[PAWN_BROWNIE].MovingSpeed = 5;
-	g_PawnProps[PAWN_BROWNIE].MovingRotYOffset = 0;
+	g_PawnProps[PAWN_BROWNIE].MovingSpeed = 3;
+	g_PawnProps[PAWN_BROWNIE].MovingRotYOffset = 90;
 	g_PawnProps[PAWN_BROWNIE].MovingTurnSpeed = 500;
 
 	g_PawnProps[PAWN_BROWNIE].BloodbarOffset = MyVec3(0, 3, 0);
@@ -76,6 +76,12 @@ static const int    PAWN_INITIAL_MAX_HEALTH = 50;
 static const int    PAWN_INITIAL_DAMAGE = 2;
 static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
 
+static const std::vector<MyVec3> PAWN_PATH = 
+{
+	MyVec3(0, 0, -2),
+	MyVec3(-20, 0, 1),
+};
+
 #pragma endregion
 
 //=========================================================================================================
@@ -85,12 +91,14 @@ static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
 //=========================================================================================================
 
 Pawn::Pawn()
-	: m_instance(nullptr)
+	: m_instance(nullptr),
+	m_stateMachine(nullptr)
 {
 }
 
 Pawn::~Pawn()
 {
+	SAFE_DELETE(m_stateMachine);
 }
 
 void Pawn::init(
@@ -98,6 +106,7 @@ void Pawn::init(
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
+	const std::vector<MyVec3>& path,
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
 	int iPawn,
@@ -105,8 +114,16 @@ void Pawn::init(
 {
 	PawnProps* pawnProp = g_PawnProps + iPawn;
 
+	// Mesh/Appearance elements
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "idle");
 	mesh.addInstance(m_instance);
+
+	// Moving elements
+	m_movingEnt.init(path, pawnProp->MovingRotYOffset, pawnProp->MovingSpeed, pawnProp->MovingTurnSpeed);
+
+	// States manager
+	m_stateMachine = new StateMachine<Pawn>(this);
+	m_stateMachine->SetCurrentState(PawnState_Idle::instance());
 
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_PAWN);
@@ -123,11 +140,19 @@ void Pawn::init(
 
 void Pawn::update(Timer& timer)
 {
+	// Moving elements
+	m_movingEnt.update(timer);
+
+	m_instance->Position = m_movingEnt.getPos();
+	m_instance->Rotation = m_movingEnt.getRot();
+
+	// States manager
+	m_stateMachine->Update();
 }
 
 MyVec3 Pawn::getPos()
 {
-	return m_instance->Position;
+	return m_movingEnt.getPos();
 }
 
 //=========================================================================================================
@@ -202,13 +227,13 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		&g_PawnProps[PAWN_SKELETON].Material);
 
 	// Pawns
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), PAWN_PATH, myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	//m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	//m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
 
-	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	//m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	//m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	//m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)
@@ -232,3 +257,55 @@ void PawnPool::render(Camera& camera, Light& light)
 		m_skinnedMeshes[i].render(camera, &light);
 	}
 }
+
+#pragma region Pawn states
+
+//===================================================================================================================
+//
+// Pawn state idle
+//
+//===================================================================================================================
+
+void PawnState_Idle::Enter(Pawn* pawn)
+{
+	pawn->m_instance->setAction("idle");
+}
+
+void PawnState_Idle::Execute(Pawn* pawn)
+{
+	if (pawn->m_movingEnt.isMoving())
+	{
+		pawn->m_stateMachine->ChangeState(PawnState_Walk::instance());
+	}
+}
+
+void PawnState_Idle::Exit(Pawn* pawn)
+{
+
+}
+
+//===================================================================================================================
+//
+// Pawn state idle
+//
+//===================================================================================================================
+
+void PawnState_Walk::Enter(Pawn* pawn)
+{
+	pawn->m_instance->setAction("run");
+}
+
+void PawnState_Walk::Execute(Pawn* pawn)
+{
+	if (!pawn->m_movingEnt.isMoving())
+	{
+		pawn->m_stateMachine->ChangeState(PawnState_Idle::instance());
+	}
+}
+
+void PawnState_Walk::Exit(Pawn* pawn)
+{
+
+}
+
+#pragma endregion

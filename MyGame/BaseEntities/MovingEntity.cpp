@@ -77,6 +77,12 @@ void MovingEntity::update(Timer& timer)
 	}
 }
 
+void MovingEntity::turnTo(const MyVec3& target)
+{
+	m_currOrientation = turnToFace(1, m_position, target, m_currOrientation, 180);
+	m_rotation.y = m_currOrientation - m_rotYOffset;
+}
+
 // Getter
 
 MyVec3 MovingEntity::getPos()

@@ -15,6 +15,8 @@ public:
 	virtual void init(const MyVec3& pos, const MyVec3& target, const MyVec3& rot, float rotYOffset, float speed, float turnSpeed);
 	virtual void update(Timer& timer);
 
+	void turnTo(const MyVec3& target);
+
 	// Getter
 
 	MyVec3 getPos();

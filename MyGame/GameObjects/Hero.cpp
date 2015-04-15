@@ -358,7 +358,11 @@ void HeroState_Walk::Exit(Hero* hero)
 
 void HeroState_Attack::Enter(Hero* hero)
 {
-	hero->m_instance->setAction("attack_1");
+	if (hero->m_atkTarget != nullptr)
+	{
+		hero->m_movingEnt.turnTo(hero->m_atkTarget->getPos());
+		hero->m_instance->setAction("attack_1");
+	}
 }
 
 void HeroState_Attack::Execute(Hero* hero)

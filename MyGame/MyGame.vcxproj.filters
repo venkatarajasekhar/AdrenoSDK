@@ -231,12 +231,6 @@
     <ClCompile Include="Core\MainGame.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Screens\MenuScreen.cpp">
-      <Filter>Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="Screens\PlayScreen.cpp">
-      <Filter>Screens</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicsObjects\BloodBar.cpp">
       <Filter>GraphicsObjects</Filter>
     </ClCompile>
@@ -285,16 +279,19 @@
     <ClCompile Include="Utils\EventListener.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Screens\Screen_Menu.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\Screen_Play.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\Screen_GameOver.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens\MenuScreen.h">
-      <Filter>Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Screens\PlayScreen.h">
-      <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Utils.h">
       <Filter>Utils</Filter>
@@ -355,6 +352,15 @@
     </ClInclude>
     <ClInclude Include="Utils\EventListener.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Screen_Menu.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Screen_Play.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Screen_GameOver.h">
+      <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

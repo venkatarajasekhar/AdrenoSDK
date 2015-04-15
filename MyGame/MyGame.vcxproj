@@ -156,8 +156,9 @@
     <ClCompile Include="GraphicsObjects\MiniMap.cpp" />
     <ClCompile Include="Screens\Layer_HUD.cpp" />
     <ClCompile Include="Screens\Layer_World.cpp" />
-    <ClCompile Include="Screens\MenuScreen.cpp" />
-    <ClCompile Include="Screens\PlayScreen.cpp" />
+    <ClCompile Include="Screens\Screen_GameOver.cpp" />
+    <ClCompile Include="Screens\Screen_Menu.cpp" />
+    <ClCompile Include="Screens\Screen_Play.cpp" />
     <ClCompile Include="Utils\EventListener.cpp" />
     <ClCompile Include="Utils\TPSCamera.cpp" />
   </ItemGroup>
@@ -180,8 +181,9 @@
     <ClInclude Include="GraphicsObjects\MiniMap.h" />
     <ClInclude Include="Screens\Layer_HUD.h" />
     <ClInclude Include="Screens\Layer_World.h" />
-    <ClInclude Include="Screens\MenuScreen.h" />
-    <ClInclude Include="Screens\PlayScreen.h" />
+    <ClInclude Include="Screens\Screen_GameOver.h" />
+    <ClInclude Include="Screens\Screen_Menu.h" />
+    <ClInclude Include="Screens\Screen_Play.h" />
     <ClInclude Include="Utils\EventListener.h" />
     <ClInclude Include="Utils\TPSCamera.h" />
     <ClInclude Include="Utils\Utils.h" />

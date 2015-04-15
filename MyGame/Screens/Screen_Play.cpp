@@ -2,7 +2,8 @@
 // Always including Utils.h on top
 #include "Utils.h"
 
-#include "PlayScreen.h"
+#include "Screen_Play.h"
+#include <MyScreenManager.h>
 
 //========================================================================================================
 //
@@ -304,5 +305,5 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 
 void PlayScreen::OnGameOver(const IOnGameOverListener::Data& data)
 {
-	smartLog("Game is over...................");
+	m_screenManager->activeScreen("GameOverScreen");
 }

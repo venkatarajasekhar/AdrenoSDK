@@ -282,6 +282,9 @@
     <ClCompile Include="GameObjects\Tower_Main.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\EventListener.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Tower_Main.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\EventListener.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

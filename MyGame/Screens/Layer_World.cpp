@@ -99,7 +99,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	m_bloodBar[BLOOD_BAR_ENEMY].init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
 
 	// Game objects
-	m_towerPool.init(m_shaders[SHADER_MESH], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
+	m_towerPool.init(m_shaders[SHADER_MESH], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts, bundle.GameOverListener);
 	m_pawnPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
 	m_heroPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts, m_mesh_terrain);
 }

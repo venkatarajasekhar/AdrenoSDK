@@ -10,6 +10,7 @@
 #include "Tower.h"
 #include "Pawn.h"
 #include "Hero.h"
+#include "EventListener.h"
 
 class Layer_World
 {
@@ -18,6 +19,8 @@ public:
 	{
 		MyVec3 MapCenter;
 		MyVec2 MapSize;
+
+		IOnGameOverListener* GameOverListener;
 	};
 
 private:

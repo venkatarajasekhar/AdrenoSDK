@@ -3,6 +3,7 @@
 
 #include <MyFileMesh1.h>
 #include "LivingEntity.h"
+#include "EventListener.h"
 
 /*
 #include <MySkinnedMesh1.h>
@@ -128,7 +129,12 @@ public:
 	TowerPool();
 	~TowerPool();
 
-	void init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts);
+	void init(
+		Shader& meshShader, 
+		BloodBar& myBloodBar, 
+		BloodBar& enemyBloodBar, 
+		std::vector<LivingEntity*>& lEnts,
+		IOnGameOverListener* gameOverListener);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

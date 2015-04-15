@@ -323,7 +323,12 @@ TowerPool::~TowerPool()
 	}
 }
 
-void TowerPool::init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
+void TowerPool::init(
+	Shader& meshShader, 
+	BloodBar& myBloodBar, 
+	BloodBar& enemyBloodBar, 
+	std::vector<LivingEntity*>& lEnts,
+	IOnGameOverListener* gameOverListener)
 {
 	initTowerProps();
 	initTowerInGameProps();
@@ -386,6 +391,9 @@ void TowerPool::init(Shader& meshShader, BloodBar& myBloodBar, BloodBar& enemyBl
 	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER]->init(m_fileMeshes[FILE_MESH_HOUSE_WIND], enemyBloodBar, lEnts, TOWER_HOUSE_WIND, TOWER_IN_GAME_ENEMY_MAIN_TOWER, TEAM_TYPE_ENEMY);
 	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1]->init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_1, TEAM_TYPE_ENEMY);
 	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2]->init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_2, TEAM_TYPE_ENEMY);
+
+	((Tower_Main*)m_towers[TOWER_IN_GAME_MY_MAIN_TOWER])->addGameOverListener(gameOverListener);
+	((Tower_Main*)m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER])->addGameOverListener(gameOverListener);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_TOWER_IN_GAME; i++)

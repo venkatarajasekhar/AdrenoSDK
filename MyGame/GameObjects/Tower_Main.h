@@ -3,7 +3,7 @@
 
 #include "Tower.h"
 
-class Tower_Main : public Tower
+class Tower_Main : public Tower, public OnGameOverListenee
 {
 public:
 	Tower_Main();

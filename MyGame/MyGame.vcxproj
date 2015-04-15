@@ -158,6 +158,7 @@
     <ClCompile Include="Screens\Layer_World.cpp" />
     <ClCompile Include="Screens\MenuScreen.cpp" />
     <ClCompile Include="Screens\PlayScreen.cpp" />
+    <ClCompile Include="Utils\EventListener.cpp" />
     <ClCompile Include="Utils\TPSCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +182,7 @@
     <ClInclude Include="Screens\Layer_World.h" />
     <ClInclude Include="Screens\MenuScreen.h" />
     <ClInclude Include="Screens\PlayScreen.h" />
+    <ClInclude Include="Utils\EventListener.h" />
     <ClInclude Include="Utils\TPSCamera.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>

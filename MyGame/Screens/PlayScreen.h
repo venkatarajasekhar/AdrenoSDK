@@ -5,7 +5,7 @@
 #include "Layer_HUD.h"
 #include "Layer_World.h"
 
-class PlayScreen : public Screen, public IOnPressListener
+class PlayScreen : public Screen, public IOnPressListener, public IOnGameOverListener
 {
 private:
 
@@ -29,6 +29,7 @@ public:
 	void render(void* utilObjs);
 
 	void OnPress(const IOnPressListener::Data& data);
+	void OnGameOver(const IOnGameOverListener::Data& data);
 
 private:
 	//void cloneTrooper();

@@ -143,6 +143,7 @@ void PlayScreen::init()
 		Layer_World::InitBundle bundle;
 		bundle.MapCenter = MAP_CENTER;
 		bundle.MapSize = MAP_SIZE;
+		bundle.GameOverListener = this;
 
 		m_layer_World.init(bundle);
 	}
@@ -299,4 +300,9 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	{
 		m_lockedUserInput = true;
 	}
+}
+
+void PlayScreen::OnGameOver(const IOnGameOverListener::Data& data)
+{
+	smartLog("Game is over...................");
 }

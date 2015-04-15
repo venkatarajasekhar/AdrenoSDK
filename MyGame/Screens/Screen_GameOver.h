@@ -2,6 +2,7 @@
 #pragma once
 
 #include <MyScreen.h>
+#include <MyFont.h>
 
 class GameOverScreen : public Screen
 {
@@ -15,5 +16,7 @@ public:
 	void render(void* utilObjs);
 
 private:
+	int m_width, m_height;
 
+	Font m_font;
 };

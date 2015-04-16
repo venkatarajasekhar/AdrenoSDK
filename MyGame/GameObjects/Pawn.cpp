@@ -50,8 +50,8 @@ static void initPawnProps()
 	// Skeleton
 	g_PawnProps[PAWN_SKELETON].AttackRange = 5;
 
-	g_PawnProps[PAWN_SKELETON].MovingSpeed = 5;
-	g_PawnProps[PAWN_SKELETON].MovingRotYOffset = 0;
+	g_PawnProps[PAWN_SKELETON].MovingSpeed = 3.5f;
+	g_PawnProps[PAWN_SKELETON].MovingRotYOffset = 180;
 	g_PawnProps[PAWN_SKELETON].MovingTurnSpeed = 500;
 
 	g_PawnProps[PAWN_SKELETON].BloodbarOffset = MyVec3(-1.5f, 4.5f, 0);
@@ -76,11 +76,42 @@ static const int    PAWN_INITIAL_MAX_HEALTH = 50;
 static const int    PAWN_INITIAL_DAMAGE = 2;
 static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
 
-static const std::vector<MyVec3> PAWN_PATH = 
+static const std::vector<MyVec3> MY_PAWN_PATH = 
 {
-	MyVec3(0, 0, -2),
-	MyVec3(-20, 0, 1),
+	MyVec3(-35.3303f, 0, -1.98404f),
+	MyVec3(-28.4367f, 0, -6.21993f),
+	MyVec3(-19.6944f, 0, 1.42722f),
+	MyVec3(-7.63194f, 0, 2.77652f),
+	MyVec3(4.66686f, 0, -2.11865f),
+	MyVec3(20.6128f, 0, -2.67075f),
+	MyVec3(33.1632f, 0, 1.181f),
 };
+
+static const std::vector<MyVec3> ENEMY_PAWN_PATH =
+{
+	MyVec3(30.6013f, 0, 2.89223f),
+	MyVec3(14.6958f, 0, -3.19085f),
+	MyVec3(0.451345f, 0, -1.58377f),
+	MyVec3(-12.2037f, 0, 3.04689f),
+	MyVec3(-23.3116f, 0, -4.71635f),
+	MyVec3(-30.7036f, 0, -4.28849f),
+	MyVec3(-37.9492f, 0, -0.463198f),
+};
+
+std::vector<MyVec3> spawnPath(const std::vector<MyVec3>& basePath)
+{
+	std::vector<MyVec3> path;
+	path.reserve(basePath.size());
+
+	for (auto i = basePath.begin(); i != basePath.end(); ++i)
+	{
+		MyVec3 pivot = (*i);
+		pivot += MyVec3(random(-5.0f, 5.0f), 0, random(-5.0f, 5.0f));
+		path.push_back(pivot);
+	}
+
+	return path;
+}
 
 #pragma endregion
 
@@ -227,13 +258,13 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		&g_PawnProps[PAWN_SKELETON].Material);
 
 	// Pawns
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), PAWN_PATH, myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	//m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	//m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
 
-	//m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	//m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	//m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)

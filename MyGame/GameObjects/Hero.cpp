@@ -11,26 +11,6 @@
 //
 //===================================================================================================================
 
-struct HeroProps
-{
-	int InitialMaxHealth;
-	int InitialDamage;
-
-	float AttackRange;
-
-	float MovingSpeed;
-	float MovingRotYOffset;
-	float MovingTurnSpeed;
-
-	MyVec3 BloodbarOffset;
-
-	Material Material;
-
-	MyVec3 InitialPos;
-	MyVec3 InitialRot;
-	MyVec3 InitialScale;
-};
-
 enum
 {
 	HERO_BEAST_SEWON,
@@ -48,7 +28,7 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 5;
 
-	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 5;
+	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 5.0f;
 	g_HeroProps[HERO_BEAST_SEWON].MovingRotYOffset = 0;
 	g_HeroProps[HERO_BEAST_SEWON].MovingTurnSpeed = 500;
 
@@ -97,6 +77,17 @@ static void initHeroProps()
 
 static const MyVec2 HERO_BLOOD_BAR_SCALE = MyVec2(1.0f, 1.0f);
 
+static const std::vector<MyVec3> ENEMY_HERO_PATH =
+{
+	MyVec3(30.6013f, 0, 2.89223f),
+	MyVec3(14.6958f, 0, -3.19085f),
+	MyVec3(0.451345f, 0, -1.58377f),
+	MyVec3(-12.2037f, 0, 3.04689f),
+	MyVec3(-23.3116f, 0, -4.71635f),
+	MyVec3(-30.7036f, 0, -4.28849f),
+	MyVec3(-37.9492f, 0, -0.463198f),
+};
+
 #pragma endregion
 
 //===================================================================================================================
@@ -122,23 +113,12 @@ void Hero::init(
 	SkinnedMesh1& mesh,
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
-	int iHero,
+	HeroProps& heroProp,
 	TEAM_TYPE team)
 {
-	HeroProps* heroProps = g_HeroProps + iHero;
-
 	// Mesh/Appearance elements
-	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroProps->InitialPos, heroProps->InitialRot, heroProps->InitialScale, "idle");
+	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroProp.InitialPos, heroProp.InitialRot, heroProp.InitialScale, "idle");
 	mesh.addInstance(m_instance);
-
-	// Moving elements
-	m_movingEnt.init(
-		m_instance->Position, 
-		m_instance->Position, 
-		m_instance->Rotation,
-		heroProps->MovingRotYOffset, 
-		heroProps->MovingSpeed, 
-		heroProps->MovingTurnSpeed);
 
 	// States manager
 	m_stateMachine = new StateMachine<Hero>(this);
@@ -148,13 +128,13 @@ void Hero::init(
 	setEntityType(ENTITY_TYPE_HERO);
 
 	LivingEntity::init(
-		heroProps->InitialMaxHealth, 
-		heroProps->InitialDamage, 
+		heroProp.InitialMaxHealth,
+		heroProp.InitialDamage,
 		bloodBar, 
 		HERO_BLOOD_BAR_SCALE, 
-		heroProps->BloodbarOffset, 
+		heroProp.BloodbarOffset,
 		lEnts, 
-		heroProps->AttackRange);
+		heroProp.AttackRange);
 }
 
 void Hero::update(Timer& timer)
@@ -182,8 +162,10 @@ MyVec3 Hero::getPos()
 
 HeroPool::HeroPool()
 {
-	m_heroes[HERO_IN_GAME_MY_HERO_1] = new Hero_Controlled;
-	m_heroes[HERO_IN_GAME_ENEMY_HERO_1] = new Hero_AI;
+	for (int i = 0; i < MAX_NUM_HEROES_IN_GAME; i++)
+	{
+		m_heroes[i] = nullptr;
+	}
 }
 
 HeroPool::~HeroPool()
@@ -257,12 +239,22 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 
 	// Adjusting unaligned action
 	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200));
-	
-	// Heroes
-	m_heroes[HERO_IN_GAME_MY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], myBloodBar, lEnts, HERO_FIGHTER_DAN_MEI, TEAM_TYPE_MY_TEAM);
-	m_heroes[HERO_IN_GAME_ENEMY_HERO_1]->init(m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], enemyBloodBar, lEnts, HERO_BEAST_SEWON, TEAM_TYPE_ENEMY);
 
-	map.addPressListener((Hero_Controlled*)m_heroes[0]);
+	// Heroes
+	{
+		Hero_Controlled* hero = new Hero_Controlled;
+		hero->init(m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], myBloodBar, lEnts, g_HeroProps[HERO_FIGHTER_DAN_MEI], TEAM_TYPE_MY_TEAM);
+
+		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
+
+		map.addPressListener(hero);
+	}
+	{
+		Hero_AI* hero = new Hero_AI;
+		hero->init(m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], enemyBloodBar, ENEMY_HERO_PATH, lEnts, g_HeroProps[HERO_BEAST_SEWON], TEAM_TYPE_ENEMY);
+
+		m_heroes[HERO_IN_GAME_ENEMY_HERO_1] = hero;
+	}
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_HEROES_IN_GAME; i++)

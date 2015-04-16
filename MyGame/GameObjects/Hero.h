@@ -9,6 +9,32 @@
 
 //===================================================================================================================
 //
+// Structs
+//
+//===================================================================================================================
+
+struct HeroProps
+{
+	int InitialMaxHealth;
+	int InitialDamage;
+
+	float AttackRange;
+
+	float MovingSpeed;
+	float MovingRotYOffset;
+	float MovingTurnSpeed;
+
+	MyVec3 BloodbarOffset;
+
+	Material Material;
+
+	MyVec3 InitialPos;
+	MyVec3 InitialRot;
+	MyVec3 InitialScale;
+};
+
+//===================================================================================================================
+//
 // Hero consists of state:
 //	- Idle
 //	- Walk
@@ -29,7 +55,7 @@ public:
 		SkinnedMesh1& mesh,
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
-		int iHero,
+		HeroProps& heroProp,
 		TEAM_TYPE team);
 	virtual void update(Timer& timer);
 

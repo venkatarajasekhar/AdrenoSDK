@@ -5,7 +5,6 @@
 #include <MyEventListener.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
-#include "StateMachine.h"
 
 //===================================================================================================================
 //
@@ -35,12 +34,7 @@ struct HeroProps
 
 //===================================================================================================================
 //
-// Hero consists of state:
-//	- Idle
-//	- Walk
-//	- Attack
-//	- Skill attack
-//	- Die
+// Hero class
 //
 //===================================================================================================================
 
@@ -67,14 +61,6 @@ protected:
 
 	// Moving elements
 	MovingEntity m_movingEnt;
-
-	// States manager
-	StateMachine<Hero>* m_stateMachine;
-
-protected:
-	friend class HeroState_Idle;
-	friend class HeroState_Walk;
-	friend class HeroState_Attack;
 };
 
 //===================================================================================================================
@@ -146,58 +132,4 @@ private:
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
 	Hero*        m_heroes[MAX_NUM_HEROES_IN_GAME];
-};
-
-//===================================================================================================================
-//
-// Hero states
-//
-//===================================================================================================================
-
-class HeroState_Idle : public State<Hero>
-{
-private:
-	HeroState_Idle(){}
-	HeroState_Idle(const HeroState_Idle&);
-	HeroState_Idle& operator=(const HeroState_Idle&);
-
-public:
-	static HeroState_Idle* instance(){ static HeroState_Idle ins; return &ins; }
-
-public:
-	virtual void Enter(Hero* hero);
-	virtual void Execute(Hero* hero);
-	virtual void Exit(Hero* hero);
-};
-
-class HeroState_Walk : public State<Hero>
-{
-private:
-	HeroState_Walk(){}
-	HeroState_Walk(const HeroState_Walk&);
-	HeroState_Walk& operator=(const HeroState_Walk&);
-
-public:
-	static HeroState_Walk* instance(){ static HeroState_Walk ins; return &ins; }
-
-public:
-	virtual void Enter(Hero* hero);
-	virtual void Execute(Hero* hero);
-	virtual void Exit(Hero* hero);
-};
-
-class HeroState_Attack : public State<Hero>
-{
-private:
-	HeroState_Attack(){}
-	HeroState_Attack(const HeroState_Attack&);
-	HeroState_Attack& operator=(const HeroState_Attack&);
-
-public:
-	static HeroState_Attack* instance(){ static HeroState_Attack ins; return &ins; }
-
-public:
-	virtual void Enter(Hero* hero);
-	virtual void Execute(Hero* hero);
-	virtual void Exit(Hero* hero);
 };

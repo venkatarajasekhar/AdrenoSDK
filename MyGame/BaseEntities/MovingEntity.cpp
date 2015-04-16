@@ -1,6 +1,8 @@
 
 #include "MovingEntity.h"
 
+#pragma region Constants
+
 //========================================================================================================================
 //
 // Constants
@@ -8,6 +10,10 @@
 //========================================================================================================================
 
 static const float DISTANCE_THRESHOLD = 0.1f;
+
+#pragma endregion
+
+#pragma region Helper functions
 
 //========================================================================================================================
 //
@@ -28,6 +34,8 @@ static float turnToFace(float elapsedTime, MyVec3 position, MyVec3 faceThis, flo
 	return wrapAngle(currentAngle + difference);
 }
 
+#pragma endregion
+
 //========================================================================================================================
 //
 // MovingEntity class
@@ -40,7 +48,8 @@ MovingEntity::MovingEntity()
 	m_speed(0),
 	m_turnSpeed(0),
 	m_isMoving(false),
-	m_pathPivot(1)
+	m_pathPivot(1),
+	m_followingPath(true)
 {
 }
 
@@ -101,7 +110,7 @@ void MovingEntity::update(Timer& timer)
 	}
 	else
 	{
-		if (!m_path.empty())
+		if (!m_path.empty() && m_followingPath)
 		{
 			m_pathPivot++;
 			if (m_pathPivot < m_path.size())
@@ -168,4 +177,19 @@ void MovingEntity::setSpeed(float speed)
 void MovingEntity::accelerate(float dSpeed)
 {
 	setSpeed(m_speed + dSpeed);
+}
+
+void MovingEntity::disFollowPath()
+{
+	m_followingPath = false;
+}
+
+void MovingEntity::reFollowPath()
+{
+	if (0 <= m_pathPivot && m_pathPivot < m_path.size())
+	{
+		setTarget(m_path[m_pathPivot]);
+	}
+	
+	m_followingPath = true;
 }

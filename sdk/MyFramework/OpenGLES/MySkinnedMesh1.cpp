@@ -220,10 +220,13 @@ void SkinnedMesh1::Instance::setAction(const MyString& action, const MyString& n
 	LoopedAction = looped;
 	NextAction = nextAction;
 
+	/*
 	if (!looped)
 	{
 		TotalTicks = 0;
 	}
+	/**/
+	TotalTicks = 0;
 }
 
 //===============================================================================================================

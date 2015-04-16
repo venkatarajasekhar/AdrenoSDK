@@ -32,6 +32,7 @@ public:
 
 	MyVec3 getPos();
 	MyVec3 getRot();
+
 	bool isMoving();
 
 	// Setter
@@ -42,6 +43,9 @@ public:
 	void setSpeed(float speed);
 
 	void accelerate(float dSpeed);
+
+	void disFollowPath();
+	void reFollowPath();
 
 protected:
 	MyVec3 m_position;
@@ -58,4 +62,5 @@ protected:
 
 	std::vector<MyVec3> m_path;
 	int m_pathPivot;
+	bool m_followingPath;
 };

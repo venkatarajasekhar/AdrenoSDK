@@ -56,7 +56,7 @@ private:
 class PawnPool
 {
 public:
-	static const int MAX_NUM_PAWNS = 6;
+	static const int MAX_NUM_PAWNS = 1;
 
 private:
 	// Assets

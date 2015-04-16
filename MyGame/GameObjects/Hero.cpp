@@ -97,14 +97,12 @@ static const std::vector<MyVec3> ENEMY_HERO_PATH =
 //===================================================================================================================
 
 Hero::Hero()
-	: m_instance(nullptr),
-	m_stateMachine(nullptr)
+	: m_instance(nullptr)
 {
 }
 
 Hero::~Hero()
 {
-	SAFE_DELETE(m_stateMachine);
 }
 
 // Core functions
@@ -119,10 +117,6 @@ void Hero::init(
 	// Mesh/Appearance elements
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroProp.InitialPos, heroProp.InitialRot, heroProp.InitialScale, "idle");
 	mesh.addInstance(m_instance);
-
-	// States manager
-	m_stateMachine = new StateMachine<Hero>(this);
-	m_stateMachine->SetCurrentState(HeroState_Idle::instance());
 
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_HERO);
@@ -144,9 +138,6 @@ void Hero::update(Timer& timer)
 
 	m_instance->Position = m_movingEnt.getPos();
 	m_instance->Rotation = m_movingEnt.getRot();
-
-	// States manager
-	m_stateMachine->Update();
 }
 
 MyVec3 Hero::getPos()
@@ -278,111 +269,3 @@ void HeroPool::render(Camera& camera, Light& light)
 		m_skinnedMeshes[i].render(camera, &light);
 	}
 }
-
-#pragma region Hero states
-
-//===================================================================================================================
-//
-// Hero state idle
-//
-//===================================================================================================================
-
-void HeroState_Idle::Enter(Hero* hero)
-{
-	hero->m_instance->setAction("idle");
-}
-
-void HeroState_Idle::Execute(Hero* hero)
-{
-	if (hero->m_movingEnt.isMoving())
-	{
-		hero->m_stateMachine->ChangeState(HeroState_Walk::instance());
-	}
-	else
-	{
-		for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
-		{
-			if ((hero != (*i)) && 
-				(hero->getTeamType() != (*i)->getTeamType()) &&
-				(distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_atkRange))
-			{
-				hero->m_atkTarget = (*i);
-				hero->m_stateMachine->ChangeState(HeroState_Attack::instance());
-				break;
-			}
-		}
-	}
-}
-
-void HeroState_Idle::Exit(Hero* hero)
-{
-
-}
-
-//===================================================================================================================
-//
-// Hero state walk
-//
-//===================================================================================================================
-
-void HeroState_Walk::Enter(Hero* hero)
-{
-	hero->m_instance->setAction("run");
-}
-
-void HeroState_Walk::Execute(Hero* hero)
-{
-	if (!hero->m_movingEnt.isMoving())
-	{
-		hero->m_stateMachine->ChangeState(HeroState_Idle::instance());
-	}
-}
-
-void HeroState_Walk::Exit(Hero* hero)
-{
-
-}
-
-//===================================================================================================================
-//
-// Hero state attack
-//
-//===================================================================================================================
-
-void HeroState_Attack::Enter(Hero* hero)
-{
-	if (hero->m_atkTarget != nullptr)
-	{
-		hero->m_movingEnt.turnTo(hero->m_atkTarget->getPos());
-		hero->m_instance->setAction("attack_1");
-	}
-}
-
-void HeroState_Attack::Execute(Hero* hero)
-{
-	if (hero->m_movingEnt.isMoving())
-	{
-		hero->m_stateMachine->ChangeState(HeroState_Walk::instance());
-	}
-	else
-	{
-		if (hero->m_atkTarget != nullptr)
-		{
-			if (distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_atkRange)
-			{
-				hero->m_stateMachine->ChangeState(HeroState_Idle::instance());
-			}
-			else
-			{
-				hero->m_atkTarget->accHealth(-hero->m_damage);
-			}
-		}
-	}
-}
-
-void HeroState_Attack::Exit(Hero* hero)
-{
-
-}
-
-#pragma endregion

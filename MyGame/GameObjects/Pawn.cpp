@@ -258,13 +258,14 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		&g_PawnProps[PAWN_SKELETON].Material);
 
 	// Pawns
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	//m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	//m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	//m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
 
-	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	//m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	//m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	//m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)

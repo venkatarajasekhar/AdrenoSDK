@@ -35,6 +35,15 @@ public:
 
 public:
 
+	// For an anim action (idle, walk, attack, ...), at a specific time (e.g. the end of action), a event
+	// will be trigger.
+	// A pointer to IOnPerformAActListener will listen that event.
+	class IOnPerformAActListener
+	{
+	public:
+		virtual void OnPerformAAct(void* tag) = 0;
+	};
+
 	// An action (e.g. run, walk, dead, ...) will begin at Frame of FrameStart and last FrameLength frames.
 	struct AnimAction
 	{
@@ -86,20 +95,23 @@ public:
 
 		UINT32   TotalTicks;
 
+		IOnPerformAActListener* PerformAActListener;
+		float TimeToPerformAAct;
+		void* PerformAActTag;
+
 		Instance();
 
 		// action: Current action will be played.
 		// looped: Current action is looped or not.
 		// nextAction: If current action is unlooped, play 'nextAction' action when finish current action
-		void setAction(const MyString& action, const MyString& nextAction = "", bool looped = true);
-
-		/*------------------------- Temp ------------------------------*/
-		void setActionAndReset(const MyString& action)
-		{
-			CurrentAction = action;
-			TotalTicks = 0;
-		}
-		/**/
+		// paa_Time: Restricted to interval [0.0, 1.0]
+		void setAction(
+			const MyString& action, 
+			const MyString& nextAction = "", 
+			bool looped = true,
+			IOnPerformAActListener* paa_Listener = nullptr,
+			float paa_Time = 0.0f,
+			void* paa_Tag = nullptr);
 	};
 
 #pragma endregion

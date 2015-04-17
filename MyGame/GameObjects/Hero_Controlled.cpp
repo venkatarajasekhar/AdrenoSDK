@@ -130,7 +130,7 @@ void Hero_ControlledState_Attack::Enter(Hero_Controlled* hero)
 	if (hero->m_atkTarget != nullptr)
 	{
 		hero->m_movingEnt.turnTo(hero->m_atkTarget->getPos());
-		hero->m_instance->setAction("attack_1");
+		hero->m_instance->setAction("attack_1", "", true, this, 0.3636f, hero);
 	}
 }
 
@@ -148,14 +148,19 @@ void Hero_ControlledState_Attack::Execute(Hero_Controlled* hero)
 			{
 				hero->m_stateMachine->ChangeState(Hero_ControlledState_Idle::instance());
 			}
-			else
-			{
-				hero->m_atkTarget->accHealth(-hero->m_damage);
-			}
 		}
 	}
 }
 
 void Hero_ControlledState_Attack::Exit(Hero_Controlled* hero)
 {
+}
+
+void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
+{
+	if (tag != nullptr)
+	{
+		Hero_Controlled* hero = (Hero_Controlled*)tag;
+		hero->m_atkTarget->accHealth(-hero->m_damage);
+	}
 }

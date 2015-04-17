@@ -46,7 +46,7 @@ static void initHeroProps()
 
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 1000;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 10;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 30;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 10;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
@@ -222,7 +222,8 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		m_anim1Datas[ANIM_1_DATA_BEAST_SEWON], 
 		m_meshTextures[TEXTURES_MESH_BEAST_SEWON], 
 		skinnedShader, 
-		&g_HeroProps[HERO_BEAST_SEWON].Material);
+		&g_HeroProps[HERO_BEAST_SEWON].Material,
+		0.8f);
 	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].init(
 		m_mesh1Datas[MESH_1_DATA_FIGHTER_DAN_MEI], 
 		m_anim1Datas[ANIM_1_DATA_FIGHTER_DAN_MEI], 

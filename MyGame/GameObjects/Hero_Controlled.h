@@ -74,7 +74,7 @@ public:
 	virtual void Exit(Hero_Controlled* hero);
 };
 
-class Hero_ControlledState_Attack : public State<Hero_Controlled>
+class Hero_ControlledState_Attack : public State<Hero_Controlled>, public SkinnedMesh1::IOnPerformAActListener
 {
 private:
 	Hero_ControlledState_Attack(){}
@@ -88,4 +88,6 @@ public:
 	virtual void Enter(Hero_Controlled* hero);
 	virtual void Execute(Hero_Controlled* hero);
 	virtual void Exit(Hero_Controlled* hero);
+
+	void OnPerformAAct(void* tag);
 };

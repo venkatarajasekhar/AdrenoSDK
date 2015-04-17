@@ -9,20 +9,6 @@
 //
 //===================================================================================================================
 
-struct PawnProps
-{
-	float AttackRange;
-	float ChasingRange;
-
-	float MovingSpeed;
-	float MovingRotYOffset;
-	float MovingTurnSpeed;
-
-	MyVec3 BloodbarOffset;
-
-	Material Material;
-};
-
 enum
 {
 	PAWN_BROWNIE,
@@ -42,12 +28,16 @@ static void initPawnProps()
 	g_PawnProps[PAWN_BROWNIE].MovingRotYOffset = 90;
 	g_PawnProps[PAWN_BROWNIE].MovingTurnSpeed = 500;
 
+	g_PawnProps[PAWN_BROWNIE].Scale = MyVec3(0.03f);
+
 	g_PawnProps[PAWN_BROWNIE].BloodbarOffset = MyVec3(0, 3, 0);
 
 	g_PawnProps[PAWN_BROWNIE].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_PawnProps[PAWN_BROWNIE].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	g_PawnProps[PAWN_BROWNIE].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_PawnProps[PAWN_BROWNIE].Material.Shininess = 16.0f;
+
+	g_PawnProps[PAWN_BROWNIE].Time_PAA_Attack_1 = 0.4545f;
 
 	// Skeleton
 	g_PawnProps[PAWN_SKELETON].AttackRange = 5;
@@ -57,12 +47,16 @@ static void initPawnProps()
 	g_PawnProps[PAWN_SKELETON].MovingRotYOffset = 180;
 	g_PawnProps[PAWN_SKELETON].MovingTurnSpeed = 500;
 
+	g_PawnProps[PAWN_SKELETON].Scale = MyVec3(0.01f);
+
 	g_PawnProps[PAWN_SKELETON].BloodbarOffset = MyVec3(-1.5f, 4.5f, 0);
 
 	g_PawnProps[PAWN_SKELETON].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_PawnProps[PAWN_SKELETON].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	g_PawnProps[PAWN_SKELETON].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_PawnProps[PAWN_SKELETON].Material.Shininess = 16.0f;
+
+	g_PawnProps[PAWN_SKELETON].Time_PAA_Attack_1 = 0.392f;
 }
 
 #pragma endregion
@@ -138,29 +132,24 @@ Pawn::~Pawn()
 
 void Pawn::init(
 	SkinnedMesh1& mesh,
-	const MyVec3& pos,
-	const MyVec3& rot,
-	const MyVec3& scale,
 	const std::vector<MyVec3>& path,
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
-	int iPawn,
+	PawnProps& pawnProp,
 	TEAM_TYPE team)
 {
-	PawnProps* pawnProp = g_PawnProps + iPawn;
-
 	// Mesh/Appearance elements
-	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(pos, rot, scale, "idle");
+	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(), MyVec3(), pawnProp.Scale, "idle");
 	mesh.addInstance(m_instance);
 
 	// Moving elements
-	m_movingEnt.init(path, pawnProp->MovingRotYOffset, pawnProp->MovingSpeed, pawnProp->MovingTurnSpeed);
+	m_movingEnt.init(path, pawnProp.MovingRotYOffset, pawnProp.MovingSpeed, pawnProp.MovingTurnSpeed);
 
 	// States manager
 	m_stateMachine = new StateMachine<Pawn>(this);
 	m_stateMachine->SetCurrentState(PawnState_Idle::instance());
 
-	m_chasingRange = pawnProp->ChasingRange;
+	m_chasingRange = pawnProp.ChasingRange;
 
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_PAWN);
@@ -170,9 +159,9 @@ void Pawn::init(
 		PAWN_INITIAL_DAMAGE, 
 		bloodBar, 
 		PAWN_BLOOD_BAR_SCALE, 
-		pawnProp->BloodbarOffset, 
+		pawnProp.BloodbarOffset,
 		lEnts, 
-		pawnProp->AttackRange);
+		pawnProp.AttackRange);
 }
 
 void Pawn::update(Timer& timer)
@@ -265,13 +254,13 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		&g_PawnProps[PAWN_SKELETON].Material);
 
 	// Pawns
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
+	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
+	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
 
-	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
+	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
+	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)

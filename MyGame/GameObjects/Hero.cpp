@@ -40,9 +40,7 @@ static void initHeroProps()
 	g_HeroProps[HERO_BEAST_SEWON].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_HeroProps[HERO_BEAST_SEWON].Material.Shininess = 16.0f;
 
-	g_HeroProps[HERO_BEAST_SEWON].InitialPos = MyVec3(17.4f, 0, -1.0f);
-	g_HeroProps[HERO_BEAST_SEWON].InitialRot = MyVec3(0, -90, 0);
-	g_HeroProps[HERO_BEAST_SEWON].InitialScale = MyVec3(0.01f);
+	g_HeroProps[HERO_BEAST_SEWON].Time_PAA_Attack_1 = 0.63768f;
 
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 1000;
@@ -62,9 +60,32 @@ static void initHeroProps()
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].Material.Shininess = 16.0f;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialPos = MyVec3(-25.0f, 0, -8.0f);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialRot = MyVec3(0, 90, 0);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialScale = MyVec3(0.015f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].Time_PAA_Attack_1 = 0.3636f;
+}
+
+#pragma endregion
+
+#pragma region Hero in-game properties
+
+//===================================================================================================================
+//
+// Hero in-game properties
+//
+//===================================================================================================================
+
+static HeroInGameProps g_HeroInGameProps[HeroPool::MAX_NUM_HEROES_IN_GAME];
+
+static void initHeroInGameProps()
+{
+	// My hero 1
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Pos = MyVec3(-25.0f, 0, -8.0f);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Rot = MyVec3(0, 90, 0);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Scale = MyVec3(0.015f);
+
+	// Enemy hero 1
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Pos = MyVec3(17.4f, 0, -1.0f);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Rot = MyVec3(0, -90, 0);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Scale = MyVec3(0.01f);
 }
 
 #pragma endregion
@@ -114,10 +135,11 @@ void Hero::init(
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
 	HeroProps& heroProp,
+	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
 {
 	// Mesh/Appearance elements
-	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroProp.InitialPos, heroProp.InitialRot, heroProp.InitialScale, "idle");
+	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroInGameProp.Pos, heroInGameProp.Rot, heroInGameProp.Scale, "idle");
 	mesh.addInstance(m_instance);
 
 	setTeamType(team);
@@ -172,6 +194,7 @@ HeroPool::~HeroPool()
 void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts, OnPressListenee& map)
 {
 	initHeroProps();
+	initHeroInGameProps();
 
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_BEAST_SEWON].init(resolveAssetsPath("Meshes/Heroes/Beast/sewon/Sewon.model"));
@@ -238,7 +261,13 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 	// Heroes
 	{
 		Hero_Controlled* hero = new Hero_Controlled;
-		hero->init(m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], myBloodBar, lEnts, g_HeroProps[HERO_FIGHTER_DAN_MEI], TEAM_TYPE_MY_TEAM);
+		hero->init(
+			m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], 
+			myBloodBar, 
+			lEnts, 
+			g_HeroProps[HERO_FIGHTER_DAN_MEI], 
+			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
+			TEAM_TYPE_MY_TEAM);
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
 
@@ -246,7 +275,14 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 	}
 	{
 		Hero_AI* hero = new Hero_AI;
-		hero->init(m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], enemyBloodBar, ENEMY_HERO_PATH, lEnts, g_HeroProps[HERO_BEAST_SEWON], TEAM_TYPE_ENEMY);
+		hero->init(
+			m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], 
+			enemyBloodBar, 
+			ENEMY_HERO_PATH, 
+			lEnts, 
+			g_HeroProps[HERO_BEAST_SEWON], 
+			g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1],
+			TEAM_TYPE_ENEMY);
 
 		m_heroes[HERO_IN_GAME_ENEMY_HERO_1] = hero;
 	}

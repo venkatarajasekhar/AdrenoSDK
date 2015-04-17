@@ -21,6 +21,7 @@ public:
 		BloodBar& bloodBar,
 		std::vector<LivingEntity*>& lEnts,
 		HeroProps& heroProp,
+		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
 

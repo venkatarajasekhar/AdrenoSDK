@@ -8,6 +8,30 @@
 
 //=========================================================================================================
 //
+// Structs
+//
+//=========================================================================================================
+
+struct PawnProps
+{
+	float AttackRange;
+	float ChasingRange;
+
+	float MovingSpeed;
+	float MovingRotYOffset;
+	float MovingTurnSpeed;
+
+	MyVec3 Scale;
+
+	MyVec3 BloodbarOffset;
+
+	Material Material;
+
+	float Time_PAA_Attack_1;
+};
+
+//=========================================================================================================
+//
 // Pawn class
 //
 //=========================================================================================================
@@ -20,13 +44,10 @@ public:
 
 	void init(
 		SkinnedMesh1& mesh, 
-		const MyVec3& pos, 
-		const MyVec3& rot, 
-		const MyVec3& scale,
 		const std::vector<MyVec3>& path,
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
-		int iPawn,
+		PawnProps& pawnProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
 

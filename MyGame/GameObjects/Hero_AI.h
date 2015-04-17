@@ -22,6 +22,7 @@ public:
 		const std::vector<MyVec3>& path,
 		std::vector<LivingEntity*>& lEnts,
 		HeroProps& heroProp,
+		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
 
 	void update(Timer& timer);

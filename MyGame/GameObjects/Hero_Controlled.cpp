@@ -22,13 +22,14 @@ void Hero_Controlled::init(
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
 	HeroProps& heroProp,
+	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
 {
 	// Moving elements
 	m_movingEnt.init(
-		heroProp.InitialPos,
-		heroProp.InitialPos,
-		heroProp.InitialRot,
+		heroInGameProp.Pos,
+		heroInGameProp.Pos,
+		heroInGameProp.Rot,
 		heroProp.MovingRotYOffset,
 		heroProp.MovingSpeed,
 		heroProp.MovingTurnSpeed);
@@ -36,7 +37,7 @@ void Hero_Controlled::init(
 	// States manager
 	m_stateMachine->SetCurrentState(Hero_ControlledState_Idle::instance());
 
-	Hero::init(mesh, bloodBar, lEnts, heroProp, team);
+	Hero::init(mesh, bloodBar, lEnts, heroProp, heroInGameProp, team);
 }
 
 void Hero_Controlled::update(Timer& timer)

@@ -50,6 +50,32 @@ public:
 
 //=========================================================================================================
 //
+// Struct
+//
+//=========================================================================================================
+
+struct TowerProps
+{
+	int InitialMaxHealth;
+	int InitialDamage;
+
+	float AttackRange;
+
+	MyVec2 BloodbarScale;
+	MyVec3 BloodbarOffset;
+
+	Material Material;
+};
+
+struct TowerInGameProp
+{
+	MyVec3 Pos;
+	MyVec3 Rot;
+	MyVec3 Scale;
+};
+
+//=========================================================================================================
+//
 // Tower class
 //
 //=========================================================================================================
@@ -64,8 +90,8 @@ public:
 		FileMesh1& mesh,
 		BloodBar& bloodBar,
 		std::vector<LivingEntity*>& lEnts,
-		int iTower,
-		int iTowerInGame,
+		TowerProps& towerProp,
+		TowerInGameProp& towerInGameProp,
 		TEAM_TYPE team);
 	virtual void update(Timer& timer);
 

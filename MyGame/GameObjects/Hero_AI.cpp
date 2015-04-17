@@ -24,6 +24,7 @@ void Hero_AI::init(
 	const std::vector<MyVec3>& path,
 	std::vector<LivingEntity*>& lEnts,
 	HeroProps& heroProp,
+	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
 {
 	// Moving elements
@@ -38,7 +39,7 @@ void Hero_AI::init(
 
 	m_chasingRange = heroProp.ChasingRange;
 
-	Hero::init(mesh, bloodBar, lEnts, heroProp, team);
+	Hero::init(mesh, bloodBar, lEnts, heroProp, heroInGameProp, team);
 }
 
 void Hero_AI::update(Timer& timer)

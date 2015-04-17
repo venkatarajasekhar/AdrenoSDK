@@ -28,9 +28,14 @@ struct HeroProps
 
 	Material Material;
 
-	MyVec3 InitialPos;
-	MyVec3 InitialRot;
-	MyVec3 InitialScale;
+	float Time_PAA_Attack_1;
+};
+
+struct HeroInGameProps
+{
+	MyVec3 Pos;
+	MyVec3 Rot;
+	MyVec3 Scale;
 };
 
 //===================================================================================================================
@@ -51,6 +56,7 @@ public:
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
 		HeroProps& heroProp,
+		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
 	virtual void update(Timer& timer);
 
@@ -72,6 +78,15 @@ protected:
 
 class HeroPool
 {
+public:
+	// Heroes in-game
+	enum
+	{
+		HERO_IN_GAME_MY_HERO_1,
+		HERO_IN_GAME_ENEMY_HERO_1,
+		MAX_NUM_HEROES_IN_GAME,
+	};
+
 private:
 	// Assets
 	enum
@@ -101,14 +116,6 @@ private:
 		SKINNED_MESH_BEAST_SEWON,
 		SKINNED_MESH_FIGHTER_DAN_MEI,
 		NUM_SKINNED_MESHES,
-	};
-
-	// Heroes in-game
-	enum
-	{
-		HERO_IN_GAME_MY_HERO_1,
-		HERO_IN_GAME_ENEMY_HERO_1,
-		MAX_NUM_HEROES_IN_GAME,
 	};
 
 public:

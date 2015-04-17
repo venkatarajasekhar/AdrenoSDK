@@ -110,19 +110,6 @@ static const MyVec3 ENEMY_TOWER_SCALE = MyVec3(0.3f);
 //
 //===================================================================================================================
 
-struct TowerProps
-{
-	int InitialMaxHealth;
-	int InitialDamage;
-
-	float AttackRange;
-
-	MyVec2 BloodbarScale;
-	MyVec3 BloodbarOffset;
-
-	Material Material;
-};
-
 enum
 {
 	TOWER_WHITE_PAGODA,
@@ -203,13 +190,6 @@ static void initTowerProps()
 //
 //===================================================================================================================
 
-struct TowerInGameProp
-{
-	MyVec3 Pos;
-	MyVec3 Rot;
-	MyVec3 Scale;
-};
-
 static TowerInGameProp g_TowerInGameProps[TowerPool::MAX_NUM_TOWER_IN_GAME];
 
 static void initTowerInGameProps()
@@ -266,27 +246,24 @@ void Tower::init(
 	FileMesh1& mesh,
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
-	int iTower,
-	int iTowerInGame,
+	TowerProps& towerProp,
+	TowerInGameProp& towerInGameProp,
 	TEAM_TYPE team)
 {
-	TowerProps* towerProp = g_TowerProps + iTower;
-	TowerInGameProp* towerInGameProp = g_TowerInGameProps + iTowerInGame;
-
-	m_instance = Mesh::buildMeshInstance(towerInGameProp->Pos, towerInGameProp->Rot, towerInGameProp->Scale);
+	m_instance = Mesh::buildMeshInstance(towerInGameProp.Pos, towerInGameProp.Rot, towerInGameProp.Scale);
 	mesh.addInstance(m_instance);
 
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_TOWER);
 
 	LivingEntity::init(
-		towerProp->InitialMaxHealth, 
-		towerProp->InitialDamage, 
+		towerProp.InitialMaxHealth, 
+		towerProp.InitialDamage, 
 		bloodBar, 
-		towerProp->BloodbarScale, 
-		towerProp->BloodbarOffset, 
+		towerProp.BloodbarScale, 
+		towerProp.BloodbarOffset, 
 		lEnts, 
-		towerProp->AttackRange);
+		towerProp.AttackRange);
 }
 
 void Tower::update(Timer& timer)
@@ -384,13 +361,49 @@ void TowerPool::init(
 		&g_TowerProps[TOWER_HOUSE_WIND].Material);
 
 	// Towers
-	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER]->init(m_fileMeshes[FILE_MESH_WHITE_PAGODA], myBloodBar, lEnts, TOWER_WHITE_PAGODA, TOWER_IN_GAME_MY_MAIN_TOWER, TEAM_TYPE_MY_TEAM);
-	m_towers[TOWER_IN_GAME_MY_TOWER_1]->init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_1, TEAM_TYPE_MY_TEAM);
-	m_towers[TOWER_IN_GAME_MY_TOWER_2]->init(m_fileMeshes[FILE_MESH_OUTPOST], myBloodBar, lEnts, TOWER_OUTPOST, TOWER_IN_GAME_MY_TOWER_2, TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER]->init(
+		m_fileMeshes[FILE_MESH_WHITE_PAGODA], 
+		myBloodBar, 
+		lEnts, 
+		g_TowerProps[TOWER_WHITE_PAGODA], 
+		g_TowerInGameProps[TOWER_IN_GAME_MY_MAIN_TOWER], 
+		TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_TOWER_1]->init(
+		m_fileMeshes[FILE_MESH_OUTPOST], 
+		myBloodBar, 
+		lEnts, 
+		g_TowerProps[TOWER_OUTPOST], 
+		g_TowerInGameProps[TOWER_IN_GAME_MY_TOWER_1], 
+		TEAM_TYPE_MY_TEAM);
+	m_towers[TOWER_IN_GAME_MY_TOWER_2]->init(
+		m_fileMeshes[FILE_MESH_OUTPOST], 
+		myBloodBar, 
+		lEnts, 
+		g_TowerProps[TOWER_OUTPOST], 
+		g_TowerInGameProps[TOWER_IN_GAME_MY_TOWER_2], 
+		TEAM_TYPE_MY_TEAM);
 
-	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER]->init(m_fileMeshes[FILE_MESH_HOUSE_WIND], enemyBloodBar, lEnts, TOWER_HOUSE_WIND, TOWER_IN_GAME_ENEMY_MAIN_TOWER, TEAM_TYPE_ENEMY);
-	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1]->init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_1, TEAM_TYPE_ENEMY);
-	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2]->init(m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], enemyBloodBar, lEnts, TOWER_TOWER_OF_VICTORY, TOWER_IN_GAME_ENEMY_TOWER_2, TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER]->init(
+		m_fileMeshes[FILE_MESH_HOUSE_WIND], 
+		enemyBloodBar, 
+		lEnts, 
+		g_TowerProps[TOWER_HOUSE_WIND], 
+		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_MAIN_TOWER], 
+		TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1]->init(
+		m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], 
+		enemyBloodBar, 
+		lEnts, 
+		g_TowerProps[TOWER_TOWER_OF_VICTORY], 
+		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_TOWER_1], 
+		TEAM_TYPE_ENEMY);
+	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2]->init(
+		m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], 
+		enemyBloodBar, 
+		lEnts, 
+		g_TowerProps[TOWER_TOWER_OF_VICTORY], 
+		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_TOWER_2], 
+		TEAM_TYPE_ENEMY);
 
 	((Tower_Main*)m_towers[TOWER_IN_GAME_MY_MAIN_TOWER])->addGameOverListener(gameOverListener);
 	((Tower_Main*)m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER])->addGameOverListener(gameOverListener);

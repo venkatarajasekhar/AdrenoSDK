@@ -12,6 +12,7 @@
 struct PawnProps
 {
 	float AttackRange;
+	float ChasingRange;
 
 	float MovingSpeed;
 	float MovingRotYOffset;
@@ -35,6 +36,7 @@ static void initPawnProps()
 {
 	// Brownie
 	g_PawnProps[PAWN_BROWNIE].AttackRange = 5;
+	g_PawnProps[PAWN_BROWNIE].ChasingRange = 10;
 
 	g_PawnProps[PAWN_BROWNIE].MovingSpeed = 3;
 	g_PawnProps[PAWN_BROWNIE].MovingRotYOffset = 90;
@@ -49,6 +51,7 @@ static void initPawnProps()
 
 	// Skeleton
 	g_PawnProps[PAWN_SKELETON].AttackRange = 5;
+	g_PawnProps[PAWN_SKELETON].ChasingRange = 10;
 
 	g_PawnProps[PAWN_SKELETON].MovingSpeed = 3.5f;
 	g_PawnProps[PAWN_SKELETON].MovingRotYOffset = 180;
@@ -123,7 +126,8 @@ std::vector<MyVec3> spawnPath(const std::vector<MyVec3>& basePath)
 
 Pawn::Pawn()
 	: m_instance(nullptr),
-	m_stateMachine(nullptr)
+	m_stateMachine(nullptr),
+	m_chasingRange(0)
 {
 }
 
@@ -155,6 +159,8 @@ void Pawn::init(
 	// States manager
 	m_stateMachine = new StateMachine<Pawn>(this);
 	m_stateMachine->SetCurrentState(PawnState_Idle::instance());
+
+	m_chasingRange = pawnProp->ChasingRange;
 
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_PAWN);
@@ -249,7 +255,8 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		m_anim1Datas[ANIM_1_DATA_BROWNIE], 
 		m_meshTextures[TEXTURES_MESH_BROWNIE], 
 		skinnedShader, 
-		&g_PawnProps[PAWN_BROWNIE].Material);
+		&g_PawnProps[PAWN_BROWNIE].Material,
+		1.5f);
 	m_skinnedMeshes[SKINNED_MESH_SKELETON].init(
 		m_mesh1Datas[MESH_1_DATA_SKELETON], 
 		m_anim1Datas[ANIM_1_DATA_SKELETON], 
@@ -258,14 +265,13 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		&g_PawnProps[PAWN_SKELETON].Material);
 
 	// Pawns
-	//m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	//m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
-	//m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.0f, 0, -8.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-34.6f, 0, -3.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
+	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], MyVec3(-35.6f, 0, 2.0f), MyVec3(0), MyVec3(0.03f), spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, PAWN_BROWNIE, TEAM_TYPE_MY_TEAM);
 
-	//m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	//m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	//m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.0f, 0, -6.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(27.4f, 0, -1.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
+	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], MyVec3(28.6f, 0, 4.0f), MyVec3(0, 90, 0), MyVec3(0.01f), spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, PAWN_SKELETON, TEAM_TYPE_ENEMY);
 
 	// Fill into list of living entities
 	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)
@@ -313,12 +319,11 @@ void PawnState_Idle::Execute(Pawn* pawn)
 
 void PawnState_Idle::Exit(Pawn* pawn)
 {
-
 }
 
 //===================================================================================================================
 //
-// Pawn state idle
+// Pawn state walk
 //
 //===================================================================================================================
 
@@ -333,11 +338,97 @@ void PawnState_Walk::Execute(Pawn* pawn)
 	{
 		pawn->m_stateMachine->ChangeState(PawnState_Idle::instance());
 	}
+	else
+	{
+		for (auto i = pawn->m_lEnts->begin(); i != pawn->m_lEnts->end(); ++i)
+		{
+			if ((pawn != (*i)) &&
+				(pawn->getTeamType() != (*i)->getTeamType()) &&
+				(distance_optimized(pawn->getPos(), (*i)->getPos()) <= pawn->m_chasingRange))
+			{
+				pawn->m_atkTarget = (*i);
+				pawn->m_stateMachine->ChangeState(PawnState_Chase::instance());
+				break;
+			}
+		}
+	}
 }
 
 void PawnState_Walk::Exit(Pawn* pawn)
 {
+}
 
+//===================================================================================================================
+//
+// Pawn state chase
+//
+//===================================================================================================================
+
+void PawnState_Chase::Enter(Pawn* pawn)
+{
+	if (pawn->m_instance->CurrentAction != "run")
+	{
+		pawn->m_instance->setAction("run");
+	}
+	pawn->m_movingEnt.disFollowPath();
+}
+
+void PawnState_Chase::Execute(Pawn* pawn)
+{
+	if (pawn->m_atkTarget != nullptr)
+	{
+		if (distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) > pawn->m_chasingRange)
+		{
+			pawn->m_movingEnt.reFollowPath();
+			pawn->m_stateMachine->ChangeState(PawnState_Walk::instance());
+		}
+		else
+		{
+			if (distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) <= pawn->m_atkRange)
+			{
+				pawn->m_stateMachine->ChangeState(PawnState_Attack::instance());
+			}
+			else
+			{
+				pawn->m_movingEnt.setTarget(pawn->m_atkTarget->getPos());
+			}
+		}
+	}
+}
+
+void PawnState_Chase::Exit(Pawn* pawn)
+{
+}
+
+//===================================================================================================================
+//
+// Pawn state attack
+//
+//===================================================================================================================
+
+void PawnState_Attack::Enter(Pawn* pawn)
+{
+	pawn->m_instance->setAction("attack");
+	pawn->m_movingEnt.setTarget(pawn->getPos());
+}
+
+void PawnState_Attack::Execute(Pawn* pawn)
+{
+	if (pawn->m_atkTarget != nullptr)
+	{
+		if (distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) > pawn->m_atkRange)
+		{
+			pawn->m_stateMachine->ChangeState(PawnState_Chase::instance());
+		}
+		else
+		{
+			pawn->m_atkTarget->accHealth(-pawn->m_damage);
+		}
+	}
+}
+
+void PawnState_Attack::Exit(Pawn* pawn)
+{
 }
 
 #pragma endregion

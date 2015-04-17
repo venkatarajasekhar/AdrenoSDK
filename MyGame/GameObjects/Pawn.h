@@ -42,9 +42,13 @@ private:
 	// States manager
 	StateMachine<Pawn>* m_stateMachine;
 
+	float m_chasingRange;
+
 private:
 	friend class PawnState_Idle;
 	friend class PawnState_Walk;
+	friend class PawnState_Chase;
+	friend class PawnState_Attack;
 };
 
 //=========================================================================================================
@@ -56,7 +60,7 @@ private:
 class PawnPool
 {
 public:
-	static const int MAX_NUM_PAWNS = 1;
+	static const int MAX_NUM_PAWNS = 6;
 
 private:
 	// Assets
@@ -139,6 +143,38 @@ private:
 
 public:
 	static PawnState_Walk* instance(){ static PawnState_Walk ins; return &ins; }
+
+public:
+	virtual void Enter(Pawn* pawn);
+	virtual void Execute(Pawn* pawn);
+	virtual void Exit(Pawn* pawn);
+};
+
+class PawnState_Chase : public State<Pawn>
+{
+private:
+	PawnState_Chase(){}
+	PawnState_Chase(const PawnState_Chase&);
+	PawnState_Chase& operator=(const PawnState_Chase&);
+
+public:
+	static PawnState_Chase* instance(){ static PawnState_Chase ins; return &ins; }
+
+public:
+	virtual void Enter(Pawn* pawn);
+	virtual void Execute(Pawn* pawn);
+	virtual void Exit(Pawn* pawn);
+};
+
+class PawnState_Attack : public State<Pawn>
+{
+private:
+	PawnState_Attack(){}
+	PawnState_Attack(const PawnState_Attack&);
+	PawnState_Attack& operator=(const PawnState_Attack&);
+
+public:
+	static PawnState_Attack* instance(){ static PawnState_Attack ins; return &ins; }
 
 public:
 	virtual void Enter(Pawn* pawn);

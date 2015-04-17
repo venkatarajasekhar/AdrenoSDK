@@ -18,6 +18,7 @@ struct HeroProps
 	int InitialDamage;
 
 	float AttackRange;
+	float ChasingRange;
 
 	float MovingSpeed;
 	float MovingRotYOffset;

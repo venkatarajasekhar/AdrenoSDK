@@ -27,6 +27,7 @@ static void initHeroProps()
 	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 10;
 
 	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 5;
+	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
 	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 5.0f;
 	g_HeroProps[HERO_BEAST_SEWON].MovingRotYOffset = 0;
@@ -48,6 +49,7 @@ static void initHeroProps()
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 10;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 10;
+	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 5;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingRotYOffset = 0;
@@ -182,9 +184,9 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		{
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/idle.anim"), "idle"),
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/run.anim"), "run"),
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/cast.anim"), "attack_1"),
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/la.anim"), "attack_2"),
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/la2.anim"), "attack_3"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/la2.anim"), "attack_1"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/cast.anim"), "attack_2"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Beast/sewon/la.anim"), "attack_3"),
 		};
 		m_anim1Datas[ANIM_1_DATA_BEAST_SEWON].init(animFiles, numAnimFiles);
 	}
@@ -230,6 +232,7 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 
 	// Adjusting unaligned action
 	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200));
+	m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON].translateAction("attack_1", MyVec3(0, 0, -400));
 
 	// Heroes
 	{

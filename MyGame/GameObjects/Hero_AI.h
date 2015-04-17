@@ -30,9 +30,12 @@ private:
 	// States manager
 	StateMachine<Hero_AI>* m_stateMachine;
 
+	float m_chasingRange;
+
 private:
 	friend class Hero_AIState_Idle;
 	friend class Hero_AIState_Walk;
+	friend class Hero_AIState_Chase;
 	friend class Hero_AIState_Attack;
 };
 
@@ -67,6 +70,22 @@ private:
 
 public:
 	static Hero_AIState_Walk* instance(){ static Hero_AIState_Walk ins; return &ins; }
+
+public:
+	virtual void Enter(Hero_AI* hero);
+	virtual void Execute(Hero_AI* hero);
+	virtual void Exit(Hero_AI* hero);
+};
+
+class Hero_AIState_Chase : public State<Hero_AI>
+{
+private:
+	Hero_AIState_Chase(){}
+	Hero_AIState_Chase(const Hero_AIState_Chase&);
+	Hero_AIState_Chase& operator=(const Hero_AIState_Chase&);
+
+public:
+	static Hero_AIState_Chase* instance(){ static Hero_AIState_Chase ins; return &ins; }
 
 public:
 	virtual void Enter(Hero_AI* hero);

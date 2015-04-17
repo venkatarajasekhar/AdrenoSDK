@@ -162,7 +162,7 @@ void Hero_AIState_Chase::Exit(Hero_AI* hero)
 
 void Hero_AIState_Attack::Enter(Hero_AI* hero)
 {
-	hero->m_instance->setAction("attack_1");
+	hero->m_instance->setAction("attack_1", "", true, this, hero->m_time_PAA_Attack_1, hero);
 	hero->m_movingEnt.setTarget(hero->getPos());
 }
 
@@ -174,15 +174,20 @@ void Hero_AIState_Attack::Execute(Hero_AI* hero)
 		{
 			hero->m_stateMachine->ChangeState(Hero_AIState_Chase::instance());
 		}
-		else
-		{
-			hero->m_atkTarget->accHealth(-hero->m_damage);
-		}
 	}
 }
 
 void Hero_AIState_Attack::Exit(Hero_AI* hero)
 {
+}
+
+void Hero_AIState_Attack::OnPerformAAct(void* tag)
+{
+	if (tag != nullptr)
+	{
+		Hero_AI* hero = (Hero_AI*)tag;
+		hero->m_atkTarget->accHealth(-hero->m_damage);
+	}
 }
 
 #pragma endregion

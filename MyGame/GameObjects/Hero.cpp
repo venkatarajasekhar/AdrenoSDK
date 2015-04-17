@@ -138,6 +138,8 @@ void Hero::init(
 	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
 {
+	m_time_PAA_Attack_1 = heroProp.Time_PAA_Attack_1;
+
 	// Mesh/Appearance elements
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(heroInGameProp.Pos, heroInGameProp.Rot, heroInGameProp.Scale, "idle");
 	mesh.addInstance(m_instance);

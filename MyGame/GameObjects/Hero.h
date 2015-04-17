@@ -68,6 +68,8 @@ protected:
 
 	// Moving elements
 	MovingEntity m_movingEnt;
+
+	float m_time_PAA_Attack_1;
 };
 
 //===================================================================================================================

@@ -69,8 +69,8 @@ static void initPawnProps()
 //
 //=========================================================================================================
 
-static const int    PAWN_INITIAL_MAX_HEALTH = 50;
-static const int    PAWN_INITIAL_DAMAGE = 2;
+static const int    PAWN_INITIAL_MAX_HEALTH = 60;
+static const int    PAWN_INITIAL_DAMAGE = 10;
 static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
 
 static const std::vector<MyVec3> MY_PAWN_PATH = 
@@ -138,6 +138,8 @@ void Pawn::init(
 	PawnProps& pawnProp,
 	TEAM_TYPE team)
 {
+	m_time_PAA_Attack_1 = pawnProp.Time_PAA_Attack_1;
+
 	// Mesh/Appearance elements
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(), MyVec3(), pawnProp.Scale, "idle");
 	mesh.addInstance(m_instance);
@@ -397,7 +399,7 @@ void PawnState_Chase::Exit(Pawn* pawn)
 
 void PawnState_Attack::Enter(Pawn* pawn)
 {
-	pawn->m_instance->setAction("attack");
+	pawn->m_instance->setAction("attack", "", true, this, pawn->m_time_PAA_Attack_1, pawn);
 	pawn->m_movingEnt.setTarget(pawn->getPos());
 }
 
@@ -409,15 +411,20 @@ void PawnState_Attack::Execute(Pawn* pawn)
 		{
 			pawn->m_stateMachine->ChangeState(PawnState_Chase::instance());
 		}
-		else
-		{
-			pawn->m_atkTarget->accHealth(-pawn->m_damage);
-		}
 	}
 }
 
 void PawnState_Attack::Exit(Pawn* pawn)
 {
+}
+
+void PawnState_Attack::OnPerformAAct(void* tag)
+{
+	if (tag != nullptr)
+	{
+		Pawn* pawn = (Pawn*)tag;
+		pawn->m_atkTarget->accHealth(-pawn->m_damage);
+	}
 }
 
 #pragma endregion

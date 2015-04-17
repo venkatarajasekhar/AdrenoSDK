@@ -64,6 +64,7 @@ private:
 	StateMachine<Pawn>* m_stateMachine;
 
 	float m_chasingRange;
+	float m_time_PAA_Attack_1;
 
 private:
 	friend class PawnState_Idle;
@@ -187,7 +188,7 @@ public:
 	virtual void Exit(Pawn* pawn);
 };
 
-class PawnState_Attack : public State<Pawn>
+class PawnState_Attack : public State<Pawn>, public SkinnedMesh1::IOnPerformAActListener
 {
 private:
 	PawnState_Attack(){}
@@ -201,4 +202,6 @@ public:
 	virtual void Enter(Pawn* pawn);
 	virtual void Execute(Pawn* pawn);
 	virtual void Exit(Pawn* pawn);
+
+	void OnPerformAAct(void* tag);
 };

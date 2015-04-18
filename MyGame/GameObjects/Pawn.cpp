@@ -156,6 +156,8 @@ void Pawn::init(
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_PAWN);
 
+	m_inUse = true;
+
 	LivingEntity::init(
 		PAWN_INITIAL_MAX_HEALTH, 
 		PAWN_INITIAL_DAMAGE, 
@@ -181,6 +183,12 @@ void Pawn::update(Timer& timer)
 MyVec3 Pawn::getPos()
 {
 	return m_movingEnt.getPos();
+}
+
+void Pawn::dead()
+{
+	m_instance->Visible = false;
+	LivingEntity::dead();
 }
 
 //=========================================================================================================

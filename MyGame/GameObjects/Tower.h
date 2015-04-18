@@ -98,6 +98,9 @@ public:
 	MyVec3 getPos();
 
 protected:
+	virtual void dead();
+
+protected:
 	Mesh::Instance* m_instance;
 };
 

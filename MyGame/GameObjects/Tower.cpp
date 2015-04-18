@@ -256,6 +256,8 @@ void Tower::init(
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_TOWER);
 
+	m_inUse = true;
+
 	LivingEntity::init(
 		towerProp.InitialMaxHealth, 
 		towerProp.InitialDamage, 
@@ -273,6 +275,12 @@ void Tower::update(Timer& timer)
 MyVec3 Tower::getPos()
 {
 	return m_instance->Position;
+}
+
+void Tower::dead()
+{
+	m_instance->Visible = false;
+	LivingEntity::dead();
 }
 
 //=========================================================================================================

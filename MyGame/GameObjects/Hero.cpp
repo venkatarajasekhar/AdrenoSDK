@@ -44,7 +44,7 @@ static void initHeroProps()
 
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 1000;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 30;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 100;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 10;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
@@ -147,6 +147,8 @@ void Hero::init(
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_HERO);
 
+	m_inUse = true;
+
 	LivingEntity::init(
 		heroProp.InitialMaxHealth,
 		heroProp.InitialDamage,
@@ -169,6 +171,12 @@ void Hero::update(Timer& timer)
 MyVec3 Hero::getPos()
 {
 	return m_movingEnt.getPos();
+}
+
+void Hero::dead()
+{
+	m_instance->Visible = false;
+	LivingEntity::dead();
 }
 
 //===================================================================================================================

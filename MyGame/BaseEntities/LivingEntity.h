@@ -65,6 +65,8 @@ public:
 	int getHealth()const;
 	virtual MyVec3 getPos() = 0;
 
+	bool inUse()const;
+
 	// Setter
 
 	void accMaxHealth(int delta);
@@ -86,4 +88,6 @@ protected:
 	std::vector<LivingEntity*>* m_lEnts;
 	LivingEntity* m_atkTarget;
 	float m_atkRange;
+
+	bool m_inUse;
 };

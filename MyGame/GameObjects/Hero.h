@@ -63,6 +63,9 @@ public:
 	MyVec3 getPos();
 
 protected:
+	virtual void dead();
+
+protected:
 	// Mesh/Appearance elements
 	SkinnedMesh1::Instance* m_instance;
 

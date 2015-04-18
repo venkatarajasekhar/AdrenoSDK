@@ -76,7 +76,8 @@ LivingEntity::LivingEntity()
 	m_bloodBar(nullptr),
 	m_lEnts(nullptr),
 	m_atkTarget(nullptr),
-	m_atkRange(0)
+	m_atkRange(0),
+	m_inUse(false)
 {
 }
 
@@ -113,6 +114,7 @@ void LivingEntity::render(SpriteBatch& spriteBatch, Camera& camera, Light& light
 
 void LivingEntity::dead()
 {
+	m_inUse = false;
 }
 
 // Getter
@@ -120,6 +122,11 @@ void LivingEntity::dead()
 int LivingEntity::getHealth()const
 {
 	return m_health;
+}
+
+bool LivingEntity::inUse()const
+{
+	return m_inUse;
 }
 
 // Setter

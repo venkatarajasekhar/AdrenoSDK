@@ -121,7 +121,10 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	// Game objects
 	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 	{
-		(*i)->update(timer);
+		if ((*i)->inUse())
+		{
+			(*i)->update(timer);
+		}
 	}
 
 	m_towerPool.update(timer);
@@ -145,7 +148,10 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 
 		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 		{
-			(*i)->render(spriteBatch, m_camera_main, light);
+			if ((*i)->inUse())
+			{
+				(*i)->render(spriteBatch, m_camera_main, light);
+			}
 		}
 	}
 }

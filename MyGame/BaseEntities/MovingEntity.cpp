@@ -48,7 +48,7 @@ MovingEntity::MovingEntity()
 	m_speed(0),
 	m_turnSpeed(0),
 	m_isMoving(false),
-	m_pathPivot(1),
+	m_pathPivot(0),
 	m_followingPath(true)
 {
 }
@@ -80,16 +80,8 @@ void MovingEntity::init(
 	float speed,
 	float turnSpeed)
 {
-	m_path = path;
-
-	if (!m_path.empty())
-	{
-		setPos(m_path[0]);
-		MyVec3 target = ((m_path.size() >= 2) ? m_path[1] : m_path[0]);
-		setTarget(target);
-	}
-
 	setSpeed(speed);
+	setPath(path);
 
 	m_rotYOffset = rotYOffset;
 	m_turnSpeed = turnSpeed;
@@ -172,6 +164,20 @@ void MovingEntity::setTarget(const MyVec3& target)
 void MovingEntity::setSpeed(float speed)
 {
 	m_speed = (speed < 0 ? 0 : speed);
+}
+
+void MovingEntity::setPath(const std::vector<MyVec3>& path)
+{
+	m_path = path;
+	m_pathPivot = 1;
+	m_followingPath = true;
+
+	if (!m_path.empty())
+	{
+		setPos(m_path[0]);
+		MyVec3 target = ((m_path.size() >= 2) ? m_path[1] : m_path[0]);
+		setTarget(target);
+	}
 }
 
 void MovingEntity::accelerate(float dSpeed)

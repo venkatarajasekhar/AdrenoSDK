@@ -26,7 +26,7 @@ struct HeroProps
 
 	MyVec3 BloodbarOffset;
 
-	Material Material;
+	Material MeshMaterial;
 
 	float Time_PAA_Attack_1;
 };
@@ -61,6 +61,9 @@ public:
 	virtual void update(Timer& timer);
 
 	MyVec3 getPos();
+
+protected:
+	virtual void dead();
 
 protected:
 	// Mesh/Appearance elements

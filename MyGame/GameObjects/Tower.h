@@ -64,7 +64,7 @@ struct TowerProps
 	MyVec2 BloodbarScale;
 	MyVec3 BloodbarOffset;
 
-	Material Material;
+	Material MeshMaterial;
 };
 
 struct TowerInGameProp
@@ -96,6 +96,9 @@ public:
 	virtual void update(Timer& timer);
 
 	MyVec3 getPos();
+
+protected:
+	virtual void dead();
 
 protected:
 	Mesh::Instance* m_instance;

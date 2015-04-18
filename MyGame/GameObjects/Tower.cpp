@@ -132,10 +132,10 @@ static void initTowerProps()
 	g_TowerProps[TOWER_WHITE_PAGODA].BloodbarScale = MAIN_TOWER_BLOOD_BAR_SCALE;
 	g_TowerProps[TOWER_WHITE_PAGODA].BloodbarOffset = MyVec3(0, 8.5f, 0);
 
-	g_TowerProps[TOWER_WHITE_PAGODA].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_WHITE_PAGODA].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_TowerProps[TOWER_WHITE_PAGODA].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_TowerProps[TOWER_WHITE_PAGODA].Material.Shininess = 16.0f;
+	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Shininess = 16.0f;
 
 	// House wind
 	g_TowerProps[TOWER_HOUSE_WIND].InitialMaxHealth = MAIN_TOWER_INITIAL_MAX_HEALTH;
@@ -146,10 +146,10 @@ static void initTowerProps()
 	g_TowerProps[TOWER_HOUSE_WIND].BloodbarScale = MAIN_TOWER_BLOOD_BAR_SCALE;
 	g_TowerProps[TOWER_HOUSE_WIND].BloodbarOffset = MyVec3(0, 8, 0);
 
-	g_TowerProps[TOWER_HOUSE_WIND].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_HOUSE_WIND].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_TowerProps[TOWER_HOUSE_WIND].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_TowerProps[TOWER_HOUSE_WIND].Material.Shininess = 16.0f;
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Shininess = 16.0f;
 
 	// Outpost
 	g_TowerProps[TOWER_OUTPOST].InitialMaxHealth = TOWER_INITIAL_MAX_HEALTH;
@@ -160,10 +160,10 @@ static void initTowerProps()
 	g_TowerProps[TOWER_OUTPOST].BloodbarScale = TOWER_BLOOD_BAR_SCALE;
 	g_TowerProps[TOWER_OUTPOST].BloodbarOffset = MyVec3(0, 7, 0);
 
-	g_TowerProps[TOWER_OUTPOST].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_OUTPOST].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_TowerProps[TOWER_OUTPOST].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_TowerProps[TOWER_OUTPOST].Material.Shininess = 16.0f;
+	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Shininess = 16.0f;
 
 	// Tower of victory
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].InitialMaxHealth = TOWER_INITIAL_MAX_HEALTH;
@@ -174,10 +174,10 @@ static void initTowerProps()
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].BloodbarScale = TOWER_BLOOD_BAR_SCALE;
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].BloodbarOffset = MyVec3(0, 7, 0);
 
-	g_TowerProps[TOWER_TOWER_OF_VICTORY].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_TOWER_OF_VICTORY].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_TowerProps[TOWER_TOWER_OF_VICTORY].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_TowerProps[TOWER_TOWER_OF_VICTORY].Material.Shininess = 16.0f;
+	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Shininess = 16.0f;
 }
 
 #pragma endregion
@@ -256,6 +256,8 @@ void Tower::init(
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_TOWER);
 
+	m_inUse = true;
+
 	LivingEntity::init(
 		towerProp.InitialMaxHealth, 
 		towerProp.InitialDamage, 
@@ -273,6 +275,12 @@ void Tower::update(Timer& timer)
 MyVec3 Tower::getPos()
 {
 	return m_instance->Position;
+}
+
+void Tower::dead()
+{
+	m_instance->Visible = false;
+	LivingEntity::dead();
 }
 
 //=========================================================================================================
@@ -343,22 +351,22 @@ void TowerPool::init(
 		m_mesh1Datas[MESH_1_DATA_OUTPOST], 
 		m_meshTextures[TEXTURES_MESH_OUTPOST], 
 		meshShader, 
-		&g_TowerProps[TOWER_OUTPOST].Material);
+		&g_TowerProps[TOWER_OUTPOST].MeshMaterial);
 	m_fileMeshes[FILE_MESH_WHITE_PAGODA].init(
 		m_mesh1Datas[MESH_1_DATA_WHITE_PAGODA], 
 		m_meshTextures[TEXTURES_MESH_WHITE_PAGODA], 
 		meshShader, 
-		&g_TowerProps[TOWER_WHITE_PAGODA].Material);
+		&g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial);
 	m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY].init(
 		m_mesh1Datas[MESH_1_DATA_TOWER_OF_VICTORY], 
 		m_meshTextures[TEXTURES_MESH_TOWER_OF_VICTORY], 
 		meshShader, 
-		&g_TowerProps[TOWER_TOWER_OF_VICTORY].Material);
+		&g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial);
 	m_fileMeshes[FILE_MESH_HOUSE_WIND].init(
 		m_mesh1Datas[MESH_1_DATA_HOUSE_WIND], 
 		m_meshTextures[TEXTURES_MESH_HOUSE_WIND], 
 		meshShader, 
-		&g_TowerProps[TOWER_HOUSE_WIND].Material);
+		&g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial);
 
 	// Towers
 	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER]->init(

@@ -97,6 +97,7 @@ void Hero_AIState_Walk::Execute(Hero_AI* hero)
 		for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
 		{
 			if ((hero != (*i)) &&
+				((*i)->inUse()) &&
 				(hero->getTeamType() != (*i)->getTeamType()) &&
 				(distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_chasingRange))
 			{
@@ -131,7 +132,10 @@ void Hero_AIState_Chase::Execute(Hero_AI* hero)
 {
 	if (hero->m_atkTarget != nullptr)
 	{
-		if (distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_chasingRange)
+		if (
+			(!hero->m_atkTarget->inUse()) ||
+			(distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_chasingRange)
+			)
 		{
 			hero->m_movingEnt.reFollowPath();
 			hero->m_stateMachine->ChangeState(Hero_AIState_Walk::instance());
@@ -170,9 +174,17 @@ void Hero_AIState_Attack::Execute(Hero_AI* hero)
 {
 	if (hero->m_atkTarget != nullptr)
 	{
-		if (distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_atkRange)
+		if (!hero->m_atkTarget->inUse())
 		{
-			hero->m_stateMachine->ChangeState(Hero_AIState_Chase::instance());
+			hero->m_movingEnt.reFollowPath();
+			hero->m_stateMachine->ChangeState(Hero_AIState_Walk::instance());
+		}
+		else
+		{
+			if (distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_atkRange)
+			{
+				hero->m_stateMachine->ChangeState(Hero_AIState_Chase::instance());
+			}
 		}
 	}
 }

@@ -99,13 +99,16 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_Controlled.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Pawn.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Tower_Main.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_HUD.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
-				   $(GAME_SCREENS_PATH)/MenuScreen.cpp \
-				   $(GAME_SCREENS_PATH)/PlayScreen.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_GameOver.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_Menu.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_Play.cpp \
+				   $(GAME_UTILS_PATH)/EventListener.cpp \
 				   $(GAME_UTILS_PATH)/TPSCamera.cpp
 				   
 				   

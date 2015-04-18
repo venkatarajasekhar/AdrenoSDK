@@ -26,5 +26,5 @@ void Tower_Main::dead()
 		throwGameOverEvent(data);
 	}
 
-	LivingEntity::dead();
+	Tower::dead();
 }

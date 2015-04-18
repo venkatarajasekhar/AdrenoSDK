@@ -35,16 +35,16 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_BEAST_SEWON].BloodbarOffset = MyVec3(0, 6, 0);
 
-	g_HeroProps[HERO_BEAST_SEWON].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_HeroProps[HERO_BEAST_SEWON].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_HeroProps[HERO_BEAST_SEWON].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_HeroProps[HERO_BEAST_SEWON].Material.Shininess = 16.0f;
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Shininess = 16.0f;
 
 	g_HeroProps[HERO_BEAST_SEWON].Time_PAA_Attack_1 = 0.63768f;
 
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 1000;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 30;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 100;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 10;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
@@ -55,10 +55,10 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].BloodbarOffset = MyVec3(-1, 6, 0);
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].Material.Shininess = 16.0f;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Shininess = 16.0f;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].Time_PAA_Attack_1 = 0.3636f;
 }
@@ -147,6 +147,8 @@ void Hero::init(
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_HERO);
 
+	m_inUse = true;
+
 	LivingEntity::init(
 		heroProp.InitialMaxHealth,
 		heroProp.InitialDamage,
@@ -169,6 +171,12 @@ void Hero::update(Timer& timer)
 MyVec3 Hero::getPos()
 {
 	return m_movingEnt.getPos();
+}
+
+void Hero::dead()
+{
+	m_instance->Visible = false;
+	LivingEntity::dead();
 }
 
 //===================================================================================================================
@@ -247,14 +255,14 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		m_anim1Datas[ANIM_1_DATA_BEAST_SEWON], 
 		m_meshTextures[TEXTURES_MESH_BEAST_SEWON], 
 		skinnedShader, 
-		&g_HeroProps[HERO_BEAST_SEWON].Material,
+		&g_HeroProps[HERO_BEAST_SEWON].MeshMaterial,
 		0.8f);
 	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].init(
 		m_mesh1Datas[MESH_1_DATA_FIGHTER_DAN_MEI], 
 		m_anim1Datas[ANIM_1_DATA_FIGHTER_DAN_MEI], 
 		m_meshTextures[TEXTURES_MESH_FIGHTER_DAN_MEI], 
 		skinnedShader, 
-		&g_HeroProps[HERO_FIGHTER_DAN_MEI].Material);
+		&g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial);
 
 	// Adjusting unaligned action
 	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200));

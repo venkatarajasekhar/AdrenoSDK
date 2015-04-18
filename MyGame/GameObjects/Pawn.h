@@ -47,13 +47,14 @@ public:
 	~Pawn();
 
 	void init(
-		SkinnedMesh1& mesh, 
-		const std::vector<MyVec3>& path,
+		SkinnedMesh1& mesh,
 		BloodBar& bloodBar, 
 		std::vector<LivingEntity*>& lEnts,
 		PawnProps& pawnProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
+
+	void respawn(const std::vector<MyVec3>& path);
 
 	MyVec3 getPos();
 
@@ -89,7 +90,7 @@ private:
 class PawnPool
 {
 public:
-	static const int MAX_NUM_PAWNS = 6;
+	static const int MAX_NUM_PAWNS_EACH_SIDE = 15;
 
 private:
 	// Assets
@@ -131,6 +132,12 @@ public:
 	void render(Camera& camera, Light& light);
 
 private:
+	Pawn* getFreeSlot(Pawn* container, int size);
+
+	void spawnMyTeam();
+	void spawnEnemyTeam();
+
+private:
 	// Assets
 	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
 	SkinnedMesh1::AnimData  m_anim1Datas[NUM_ANIM_1_DATAS];
@@ -138,7 +145,9 @@ private:
 
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
-	Pawn         m_pawns[MAX_NUM_PAWNS];
+
+	Pawn m_myPawns[MAX_NUM_PAWNS_EACH_SIDE];
+	Pawn m_enemyPawns[MAX_NUM_PAWNS_EACH_SIDE];
 };
 
 #pragma region Pawn state

@@ -42,6 +42,8 @@ public:
 	void setTarget(const MyVec3& target);
 	void setSpeed(float speed);
 
+	void setPath(const std::vector<MyVec3>& path);
+
 	void accelerate(float dSpeed);
 
 	void disFollowPath();

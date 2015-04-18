@@ -132,7 +132,6 @@ Pawn::~Pawn()
 
 void Pawn::init(
 	SkinnedMesh1& mesh,
-	const std::vector<MyVec3>& path,
 	BloodBar& bloodBar,
 	std::vector<LivingEntity*>& lEnts,
 	PawnProps& pawnProp,
@@ -142,21 +141,19 @@ void Pawn::init(
 
 	// Mesh/Appearance elements
 	m_instance = SkinnedMesh1::buildSkinnedMeshInstance(MyVec3(), MyVec3(), pawnProp.Scale, "idle");
+	m_instance->Visible = false;
 	mesh.addInstance(m_instance);
 
 	// Moving elements
-	m_movingEnt.init(path, pawnProp.MovingRotYOffset, pawnProp.MovingSpeed, pawnProp.MovingTurnSpeed);
+	m_movingEnt.init(MyVec3(), MyVec3(), MyVec3(), pawnProp.MovingRotYOffset, pawnProp.MovingSpeed, pawnProp.MovingTurnSpeed);
 
 	// States manager
 	m_stateMachine = new StateMachine<Pawn>(this);
-	m_stateMachine->SetCurrentState(PawnState_Idle::instance());
 
 	m_chasingRange = pawnProp.ChasingRange;
 
 	setTeamType(team);
 	setEntityType(ENTITY_TYPE_PAWN);
-
-	m_inUse = true;
 
 	LivingEntity::init(
 		PAWN_INITIAL_MAX_HEALTH, 
@@ -178,6 +175,19 @@ void Pawn::update(Timer& timer)
 
 	// States manager
 	m_stateMachine->Update();
+}
+
+void Pawn::respawn(const std::vector<MyVec3>& path)
+{
+	m_instance->Visible = true;
+	m_inUse = true;
+	m_health = PAWN_INITIAL_MAX_HEALTH;
+
+	// Moving elements
+	m_movingEnt.setPath(path);
+
+	// States manager
+	m_stateMachine->SetCurrentState(PawnState_Idle::instance());
 }
 
 MyVec3 Pawn::getPos()
@@ -264,19 +274,17 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		&g_PawnProps[PAWN_SKELETON].Material);
 
 	// Pawns
-	m_pawns[0].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
-	m_pawns[1].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
-	m_pawns[2].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], spawnPath(MY_PAWN_PATH), myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
-
-	m_pawns[3].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
-	m_pawns[4].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
-	m_pawns[5].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], spawnPath(ENEMY_PAWN_PATH), enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
-
-	// Fill into list of living entities
-	for (size_t i = 0; i < MAX_NUM_PAWNS; i++)
+	for (size_t i = 0; i < MAX_NUM_PAWNS_EACH_SIDE; i++)
 	{
-		lEnts.push_back(&m_pawns[i]);
+		m_myPawns[i].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
+		m_enemyPawns[i].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
+
+		lEnts.push_back(&m_myPawns[i]);
+		lEnts.push_back(&m_enemyPawns[i]);
 	}
+
+	spawnMyTeam();
+	spawnEnemyTeam();
 }
 
 void PawnPool::update(Timer& timer)
@@ -292,6 +300,44 @@ void PawnPool::render(Camera& camera, Light& light)
 	for (int i = 0; i < NUM_SKINNED_MESHES; i++)
 	{
 		m_skinnedMeshes[i].render(camera, &light);
+	}
+}
+
+Pawn* PawnPool::getFreeSlot(Pawn* container, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		Pawn* pawn = container + i;
+		if (!pawn->inUse())
+		{
+			return pawn;
+		}
+	}
+
+	return nullptr;
+}
+
+void PawnPool::spawnMyTeam()
+{
+	for (int i = 1; i <= 3; i++)
+	{
+		Pawn* pawn = getFreeSlot(m_myPawns, MAX_NUM_PAWNS_EACH_SIDE);
+		if (pawn != nullptr)
+		{
+			pawn->respawn(spawnPath(MY_PAWN_PATH));
+		}
+	}
+}
+
+void PawnPool::spawnEnemyTeam()
+{
+	for (int i = 1; i <= 3; i++)
+	{
+		Pawn* pawn = getFreeSlot(m_enemyPawns, MAX_NUM_PAWNS_EACH_SIDE);
+		if (pawn != nullptr)
+		{
+			pawn->respawn(spawnPath(ENEMY_PAWN_PATH));
+		}
 	}
 }
 

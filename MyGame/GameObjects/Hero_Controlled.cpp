@@ -82,6 +82,7 @@ void Hero_ControlledState_Idle::Execute(Hero_Controlled* hero)
 		for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
 		{
 			if ((hero != (*i)) &&
+				((*i)->inUse()) &&
 				(hero->getTeamType() != (*i)->getTeamType()) &&
 				(distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_atkRange))
 			{
@@ -145,7 +146,10 @@ void Hero_ControlledState_Attack::Execute(Hero_Controlled* hero)
 	{
 		if (hero->m_atkTarget != nullptr)
 		{
-			if (distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_atkRange)
+			if (
+				(!hero->m_atkTarget->inUse()) ||
+				(distance_optimized(hero->getPos(), hero->m_atkTarget->getPos()) > hero->m_atkRange)
+				)
 			{
 				hero->m_stateMachine->ChangeState(Hero_ControlledState_Idle::instance());
 			}

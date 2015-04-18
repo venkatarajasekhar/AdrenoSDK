@@ -342,6 +342,7 @@ void PawnState_Walk::Execute(Pawn* pawn)
 		for (auto i = pawn->m_lEnts->begin(); i != pawn->m_lEnts->end(); ++i)
 		{
 			if ((pawn != (*i)) &&
+				((*i)->inUse()) &&
 				(pawn->getTeamType() != (*i)->getTeamType()) &&
 				(distance_optimized(pawn->getPos(), (*i)->getPos()) <= pawn->m_chasingRange))
 			{
@@ -376,7 +377,10 @@ void PawnState_Chase::Execute(Pawn* pawn)
 {
 	if (pawn->m_atkTarget != nullptr)
 	{
-		if (distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) > pawn->m_chasingRange)
+		if (
+			(!pawn->m_atkTarget->inUse()) ||
+			(distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) > pawn->m_chasingRange)
+			)
 		{
 			pawn->m_movingEnt.reFollowPath();
 			pawn->m_stateMachine->ChangeState(PawnState_Walk::instance());
@@ -415,9 +419,17 @@ void PawnState_Attack::Execute(Pawn* pawn)
 {
 	if (pawn->m_atkTarget != nullptr)
 	{
-		if (distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) > pawn->m_atkRange)
+		if (!pawn->m_atkTarget->inUse())
 		{
-			pawn->m_stateMachine->ChangeState(PawnState_Chase::instance());
+			pawn->m_movingEnt.reFollowPath();
+			pawn->m_stateMachine->ChangeState(PawnState_Walk::instance());
+		}
+		else
+		{
+			if (distance_optimized(pawn->getPos(), pawn->m_atkTarget->getPos()) > pawn->m_atkRange)
+			{
+				pawn->m_stateMachine->ChangeState(PawnState_Chase::instance());
+			}
 		}
 	}
 }

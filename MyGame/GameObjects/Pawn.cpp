@@ -32,10 +32,10 @@ static void initPawnProps()
 
 	g_PawnProps[PAWN_BROWNIE].BloodbarOffset = MyVec3(0, 3, 0);
 
-	g_PawnProps[PAWN_BROWNIE].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_PawnProps[PAWN_BROWNIE].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_PawnProps[PAWN_BROWNIE].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_PawnProps[PAWN_BROWNIE].Material.Shininess = 16.0f;
+	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Shininess = 16.0f;
 
 	g_PawnProps[PAWN_BROWNIE].Time_PAA_Attack_1 = 0.4545f;
 
@@ -51,10 +51,10 @@ static void initPawnProps()
 
 	g_PawnProps[PAWN_SKELETON].BloodbarOffset = MyVec3(-1.5f, 4.5f, 0);
 
-	g_PawnProps[PAWN_SKELETON].Material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_PawnProps[PAWN_SKELETON].Material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	g_PawnProps[PAWN_SKELETON].Material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
-	g_PawnProps[PAWN_SKELETON].Material.Shininess = 16.0f;
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Shininess = 16.0f;
 
 	g_PawnProps[PAWN_SKELETON].Time_PAA_Attack_1 = 0.392f;
 }
@@ -264,14 +264,14 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 		m_anim1Datas[ANIM_1_DATA_BROWNIE], 
 		m_meshTextures[TEXTURES_MESH_BROWNIE], 
 		skinnedShader, 
-		&g_PawnProps[PAWN_BROWNIE].Material,
+		&g_PawnProps[PAWN_BROWNIE].MeshMaterial,
 		1.5f);
 	m_skinnedMeshes[SKINNED_MESH_SKELETON].init(
 		m_mesh1Datas[MESH_1_DATA_SKELETON], 
 		m_anim1Datas[ANIM_1_DATA_SKELETON], 
 		m_meshTextures[TEXTURES_MESH_SKELETON], 
 		skinnedShader, 
-		&g_PawnProps[PAWN_SKELETON].Material);
+		&g_PawnProps[PAWN_SKELETON].MeshMaterial);
 
 	// Pawns
 	for (size_t i = 0; i < MAX_NUM_PAWNS_EACH_SIDE; i++)

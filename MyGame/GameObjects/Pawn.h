@@ -27,7 +27,7 @@ struct PawnProps
 
 	MyVec3 BloodbarOffset;
 
-	Material Material;
+	Material MeshMaterial;
 
 	float Time_PAA_Attack_1;
 };

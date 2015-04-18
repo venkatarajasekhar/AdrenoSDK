@@ -64,7 +64,7 @@ struct TowerProps
 	MyVec2 BloodbarScale;
 	MyVec3 BloodbarOffset;
 
-	Material Material;
+	Material MeshMaterial;
 };
 
 struct TowerInGameProp

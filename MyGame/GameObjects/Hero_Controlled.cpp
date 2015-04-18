@@ -60,6 +60,8 @@ void Hero_Controlled::OnPress(const IOnPressListener::Data& data)
 	}
 }
 
+#pragma region Hero_Controlled states
+
 //===================================================================================================================
 //
 // Hero_Controlled state idle
@@ -169,3 +171,5 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 	}
 }
+
+#pragma endregion

@@ -6,6 +6,8 @@
 #include "MovingEntity.h"
 #include "StateMachine.h"
 
+#pragma region Structs
+
 //=========================================================================================================
 //
 // Structs
@@ -29,6 +31,8 @@ struct PawnProps
 
 	float Time_PAA_Attack_1;
 };
+
+#pragma endregion
 
 //=========================================================================================================
 //
@@ -137,6 +141,8 @@ private:
 	Pawn         m_pawns[MAX_NUM_PAWNS];
 };
 
+#pragma region Pawn state
+
 //=========================================================================================================
 //
 // Pawn state
@@ -208,3 +214,5 @@ public:
 
 	void OnPerformAAct(void* tag);
 };
+
+#pragma endregion

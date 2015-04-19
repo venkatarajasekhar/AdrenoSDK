@@ -63,6 +63,7 @@ public:
 	// Getter
 
 	int getHealth()const;
+	int getDamage()const;
 	virtual MyVec3 getPos() = 0;
 
 	bool inUse()const;

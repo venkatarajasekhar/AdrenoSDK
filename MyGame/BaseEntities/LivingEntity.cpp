@@ -124,6 +124,11 @@ int LivingEntity::getHealth()const
 	return m_health;
 }
 
+int LivingEntity::getDamage()const
+{
+	return m_damage;
+}
+
 bool LivingEntity::inUse()const
 {
 	return m_inUse;

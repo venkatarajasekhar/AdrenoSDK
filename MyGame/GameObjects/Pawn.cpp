@@ -72,6 +72,7 @@ static void initPawnProps()
 static const int    PAWN_INITIAL_MAX_HEALTH = 60;
 static const int    PAWN_INITIAL_DAMAGE = 10;
 static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
+static const float  PAWN_TIME_TO_SPAWN = 20.0f;
 
 static const std::vector<MyVec3> MY_PAWN_PATH = 
 {
@@ -208,6 +209,7 @@ void Pawn::dead()
 //=========================================================================================================
 
 PawnPool::PawnPool()
+	: m_spawnTime(0.0f)
 {
 }
 
@@ -289,6 +291,15 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 
 void PawnPool::update(Timer& timer)
 {
+	m_spawnTime += timer.getElapsedTime();
+	if (m_spawnTime >= PAWN_TIME_TO_SPAWN)
+	{
+		spawnMyTeam();
+		spawnEnemyTeam();
+
+		m_spawnTime -= PAWN_TIME_TO_SPAWN;
+	}
+
 	for (int i = 0; i < NUM_SKINNED_MESHES; i++)
 	{
 		m_skinnedMeshes[i].update(timer);

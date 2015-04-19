@@ -90,7 +90,7 @@ private:
 class PawnPool
 {
 public:
-	static const int MAX_NUM_PAWNS_EACH_SIDE = 15;
+	static const int MAX_NUM_PAWNS_EACH_SIDE = 12;
 
 private:
 	// Assets
@@ -148,6 +148,8 @@ private:
 
 	Pawn m_myPawns[MAX_NUM_PAWNS_EACH_SIDE];
 	Pawn m_enemyPawns[MAX_NUM_PAWNS_EACH_SIDE];
+
+	float m_spawnTime;
 };
 
 #pragma region Pawn state

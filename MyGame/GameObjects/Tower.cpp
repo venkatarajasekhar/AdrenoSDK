@@ -87,16 +87,16 @@ FileMesh1::Instance* Tower::getInstance()
 //
 //=========================================================================================================
 
-static const int    TOWER_INITIAL_MAX_HEALTH = 1500;
-static const int    TOWER_INITIAL_DAMAGE = 30;
-static const float  TOWER_ATTACK_RANGE = 20;
+static const int    TOWER_INITIAL_MAX_HEALTH = 1000;
+static const int    TOWER_INITIAL_DAMAGE = 25;
+static const float  TOWER_ATTACK_RANGE = 5;
 static const float  TOWER_ATTACK_TIME_PERIOD = 4;
-static const MyVec2 TOWER_BLOOD_BAR_SCALE = MyVec2(1.0f, 0.6f);
+static const MyVec2 TOWER_BLOOD_BAR_SCALE = MyVec2(3.0f, 1.0f);
 
 static const int    MAIN_TOWER_INITIAL_MAX_HEALTH = 2000;
 static const int    MAIN_TOWER_INITIAL_DAMAGE = 40;
-static const float  MAIN_TOWER_ATTACK_RANGE = 20;
-static const MyVec2 MAIN_TOWER_BLOOD_BAR_SCALE = MyVec2(1.5f, 0.6f);
+static const float  MAIN_TOWER_ATTACK_RANGE = 5;
+static const MyVec2 MAIN_TOWER_BLOOD_BAR_SCALE = MyVec2(4.0f, 1.0f);
 
 static const MyVec3 MY_TOWER_SCALE = MyVec3(0.5f);
 static const MyVec3 ENEMY_TOWER_SCALE = MyVec3(0.3f);
@@ -131,7 +131,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_WHITE_PAGODA].AttackRange = MAIN_TOWER_ATTACK_RANGE;
 
 	g_TowerProps[TOWER_WHITE_PAGODA].BloodbarScale = MAIN_TOWER_BLOOD_BAR_SCALE;
-	g_TowerProps[TOWER_WHITE_PAGODA].BloodbarOffset = MyVec3(0, 8.5f, 0);
+	g_TowerProps[TOWER_WHITE_PAGODA].BloodbarOffset = MyVec3(-2.0f, 9.5f, 0);
 
 	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -145,7 +145,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_HOUSE_WIND].AttackRange = MAIN_TOWER_ATTACK_RANGE;
 
 	g_TowerProps[TOWER_HOUSE_WIND].BloodbarScale = MAIN_TOWER_BLOOD_BAR_SCALE;
-	g_TowerProps[TOWER_HOUSE_WIND].BloodbarOffset = MyVec3(0, 8, 0);
+	g_TowerProps[TOWER_HOUSE_WIND].BloodbarOffset = MyVec3(-2.0f, 9, 0);
 
 	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -159,7 +159,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_OUTPOST].AttackRange = TOWER_ATTACK_RANGE;
 
 	g_TowerProps[TOWER_OUTPOST].BloodbarScale = TOWER_BLOOD_BAR_SCALE;
-	g_TowerProps[TOWER_OUTPOST].BloodbarOffset = MyVec3(0, 7, 0);
+	g_TowerProps[TOWER_OUTPOST].BloodbarOffset = MyVec3(-2.0f, 8, 0);
 
 	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -173,7 +173,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].AttackRange = TOWER_ATTACK_RANGE;
 
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].BloodbarScale = TOWER_BLOOD_BAR_SCALE;
-	g_TowerProps[TOWER_TOWER_OF_VICTORY].BloodbarOffset = MyVec3(0, 7, 0);
+	g_TowerProps[TOWER_TOWER_OF_VICTORY].BloodbarOffset = MyVec3(-2.0f, 8, 0);
 
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -201,12 +201,12 @@ static void initTowerInGameProps()
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_MAIN_TOWER].Scale = MyVec3(0.5f);
 
 	// My tower 1
-	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_1].Pos = MyVec3(-29.0f, 0, 2.0f);
+	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_1].Pos = MyVec3(-30.0f, 0, 2.0f);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_1].Rot = MyVec3(0);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_1].Scale = MY_TOWER_SCALE;
 
 	// My tower 2
-	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_2].Pos = MyVec3(-13.0f, 0, -3.5f);
+	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_2].Pos = MyVec3(-10.0f, 0, -3.5f);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_2].Rot = MyVec3(0);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_MY_TOWER_2].Scale = MY_TOWER_SCALE;
 
@@ -216,12 +216,12 @@ static void initTowerInGameProps()
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_MAIN_TOWER].Scale = MyVec3(0.002f);
 
 	// Enemy tower 1
-	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_1].Pos = MyVec3(15.0f, 0, 4.0f);
+	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_1].Pos = MyVec3(30.0f, 0, -4.0f);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_1].Rot = MyVec3(0);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_1].Scale = ENEMY_TOWER_SCALE;
 
 	// Enemy tower 2
-	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_2].Pos = MyVec3(2.0f, 0, 4.5f);
+	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_2].Pos = MyVec3(10.0f, 0, 4.5f);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_2].Rot = MyVec3(0);
 	g_TowerInGameProps[TowerPool::TOWER_IN_GAME_ENEMY_TOWER_2].Scale = ENEMY_TOWER_SCALE;
 }

@@ -24,7 +24,7 @@ static void initPawnProps()
 	g_PawnProps[PAWN_BROWNIE].AttackRange = 5;
 	g_PawnProps[PAWN_BROWNIE].ChasingRange = 10;
 
-	g_PawnProps[PAWN_BROWNIE].MovingSpeed = 3;
+	g_PawnProps[PAWN_BROWNIE].MovingSpeed = 3.2f;
 	g_PawnProps[PAWN_BROWNIE].MovingRotYOffset = 90;
 	g_PawnProps[PAWN_BROWNIE].MovingTurnSpeed = 500;
 
@@ -43,13 +43,13 @@ static void initPawnProps()
 	g_PawnProps[PAWN_SKELETON].AttackRange = 5;
 	g_PawnProps[PAWN_SKELETON].ChasingRange = 10;
 
-	g_PawnProps[PAWN_SKELETON].MovingSpeed = 3.5f;
+	g_PawnProps[PAWN_SKELETON].MovingSpeed = 3.2f;
 	g_PawnProps[PAWN_SKELETON].MovingRotYOffset = 180;
 	g_PawnProps[PAWN_SKELETON].MovingTurnSpeed = 500;
 
 	g_PawnProps[PAWN_SKELETON].Scale = MyVec3(0.01f);
 
-	g_PawnProps[PAWN_SKELETON].BloodbarOffset = MyVec3(-1.5f, 4.5f, 0);
+	g_PawnProps[PAWN_SKELETON].BloodbarOffset = MyVec3(-1.5f, 4.3f, 0);
 
 	g_PawnProps[PAWN_SKELETON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_PawnProps[PAWN_SKELETON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -180,12 +180,12 @@ void Pawn::update(Timer& timer)
 
 void Pawn::respawn(const std::vector<MyVec3>& path)
 {
+	// Moving elements
+	m_movingEnt.setPath(path);
+
 	m_instance->Visible = true;
 	m_inUse = true;
 	m_health = PAWN_INITIAL_MAX_HEALTH;
-
-	// Moving elements
-	m_movingEnt.setPath(path);
 
 	// States manager
 	m_stateMachine->SetCurrentState(PawnState_Idle::instance());

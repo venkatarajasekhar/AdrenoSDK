@@ -162,6 +162,11 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	// Mesh objects
 	m_mesh_terrain.update(timer, userInput, m_camera_main);
 
+	m_towerPool.update(timer);
+	m_pawnPool.update(timer);
+	m_heroPool.update(timer);
+	m_projectilePool.update(timer);
+
 	// Game objects
 	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 	{
@@ -171,10 +176,7 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 		}
 	}
 
-	m_towerPool.update(timer);
-	m_pawnPool.update(timer);
-	m_heroPool.update(timer);
-	m_projectilePool.update(timer);
+	
 }
 
 void Layer_World::render(SpriteBatch& spriteBatch)

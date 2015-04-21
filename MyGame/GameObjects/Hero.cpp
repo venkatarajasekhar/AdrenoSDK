@@ -23,17 +23,17 @@ static HeroProps g_HeroProps[NUM_HEROES];
 static void initHeroProps()
 {
 	// Beast sewon
-	g_HeroProps[HERO_BEAST_SEWON].InitialMaxHealth = 1000;
-	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 10;
+	g_HeroProps[HERO_BEAST_SEWON].InitialMaxHealth = 200;
+	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 20;
 
-	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 5;
+	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 4;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
-	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 5.0f;
+	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 4.5f;
 	g_HeroProps[HERO_BEAST_SEWON].MovingRotYOffset = 0;
 	g_HeroProps[HERO_BEAST_SEWON].MovingTurnSpeed = 500;
 
-	g_HeroProps[HERO_BEAST_SEWON].BloodbarOffset = MyVec3(0, 6, 0);
+	g_HeroProps[HERO_BEAST_SEWON].BloodbarOffset = MyVec3(-2, 5, 0);
 
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -43,17 +43,17 @@ static void initHeroProps()
 	g_HeroProps[HERO_BEAST_SEWON].Time_PAA_Attack_1 = 0.63768f;
 
 	// Fighter dan mei
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 1000;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 100;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 200;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 10;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 4;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 5;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 4.5f;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingRotYOffset = 0;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingTurnSpeed = 500;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].BloodbarOffset = MyVec3(-1, 6, 0);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].BloodbarOffset = MyVec3(-1, 5, 0);
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -78,14 +78,14 @@ static HeroInGameProps g_HeroInGameProps[HeroPool::MAX_NUM_HEROES_IN_GAME];
 static void initHeroInGameProps()
 {
 	// My hero 1
-	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Pos = MyVec3(-25.0f, 0, -8.0f);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Pos = MyVec3(-40.0f, 0, 0.0f);
 	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Rot = MyVec3(0, 90, 0);
-	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Scale = MyVec3(0.015f);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1].Scale = MyVec3(0.011f);
 
 	// Enemy hero 1
-	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Pos = MyVec3(17.4f, 0, -1.0f);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Pos = MyVec3(40.0f, 0, 0.0f);
 	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Rot = MyVec3(0, -90, 0);
-	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Scale = MyVec3(0.01f);
+	g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1].Scale = MyVec3(0.006f);
 }
 
 #pragma endregion
@@ -98,7 +98,7 @@ static void initHeroInGameProps()
 //
 //===================================================================================================================
 
-static const MyVec2 HERO_BLOOD_BAR_SCALE = MyVec2(1.0f, 1.0f);
+static const MyVec2 HERO_BLOOD_BAR_SCALE = MyVec2(1.5f, 0.8f);
 
 static const std::vector<MyVec3> ENEMY_HERO_PATH =
 {

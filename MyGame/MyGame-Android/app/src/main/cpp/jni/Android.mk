@@ -98,6 +98,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_AI.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_Controlled.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Pawn.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Projectile.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower_Main.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \

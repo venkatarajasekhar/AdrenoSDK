@@ -88,12 +88,13 @@ FileMesh1::Instance* Tower::getInstance()
 //=========================================================================================================
 
 static const int    TOWER_INITIAL_MAX_HEALTH = 1500;
-static const int    TOWER_INITIAL_DAMAGE = 7;
+static const int    TOWER_INITIAL_DAMAGE = 30;
 static const float  TOWER_ATTACK_RANGE = 7;
+static const float  TOWER_ATTACK_TIME_PERIOD = 4;
 static const MyVec2 TOWER_BLOOD_BAR_SCALE = MyVec2(1.0f, 0.6f);
 
 static const int    MAIN_TOWER_INITIAL_MAX_HEALTH = 2000;
-static const int    MAIN_TOWER_INITIAL_DAMAGE = 10;
+static const int    MAIN_TOWER_INITIAL_DAMAGE = 40;
 static const float  MAIN_TOWER_ATTACK_RANGE = 10;
 static const MyVec2 MAIN_TOWER_BLOOD_BAR_SCALE = MyVec2(1.5f, 0.6f);
 
@@ -234,12 +235,15 @@ static void initTowerInGameProps()
 //=========================================================================================================
 
 Tower::Tower()
-	: m_instance(nullptr)
+	: m_instance(nullptr),
+	m_timeElapsed(0)
 {
+	m_stateMachine = new StateMachine<Tower>(this);
 }
 
 Tower::~Tower()
 {
+	SAFE_DELETE(m_stateMachine);
 }
 
 void Tower::init(
@@ -258,6 +262,9 @@ void Tower::init(
 
 	m_inUse = true;
 
+	// States manager
+	m_stateMachine->SetCurrentState(TowerState_Idle::instance());
+
 	LivingEntity::init(
 		towerProp.InitialMaxHealth, 
 		towerProp.InitialDamage, 
@@ -270,6 +277,10 @@ void Tower::init(
 
 void Tower::update(Timer& timer)
 {
+	m_timeElapsed += timer.getElapsedTime();
+
+	// States manager
+	m_stateMachine->Update();
 }
 
 MyVec3 Tower::getPos()
@@ -438,3 +449,75 @@ void TowerPool::render(Camera& camera, Light& light)
 		m_fileMeshes[i].render(camera, &light);
 	}
 }
+
+#pragma region Tower state
+
+//=========================================================================================================
+//
+// Tower state idle
+//
+//=========================================================================================================
+
+void TowerState_Idle::Enter(Tower* tower)
+{
+}
+
+void TowerState_Idle::Execute(Tower* tower)
+{
+	for (auto i = tower->m_lEnts->begin(); i != tower->m_lEnts->end(); ++i)
+	{
+		if ((tower != (*i)) &&
+			((*i)->inUse()) &&
+			(tower->getTeamType() != (*i)->getTeamType()) &&
+			(distance_optimized(tower->getPos(), (*i)->getPos()) <= tower->m_atkRange))
+		{
+			tower->m_atkTarget = (*i);
+			tower->m_stateMachine->ChangeState(TowerState_Attack::instance());
+			break;
+		}
+	}
+}
+
+void TowerState_Idle::Exit(Tower* tower)
+{
+}
+
+//=========================================================================================================
+//
+// Tower state attack
+//
+//=========================================================================================================
+
+void TowerState_Attack::Enter(Tower* tower)
+{
+	tower->m_timeElapsed = 0.0f;
+}
+
+void TowerState_Attack::Execute(Tower* tower)
+{
+	if (tower->m_atkTarget != nullptr)
+	{
+		if (
+			(!tower->m_atkTarget->inUse()) ||
+			(distance_optimized(tower->getPos(), tower->m_atkTarget->getPos()) > tower->m_atkRange)
+			)
+		{
+			tower->m_stateMachine->ChangeState(TowerState_Idle::instance());
+		}
+		else
+		{
+			if (tower->m_timeElapsed > TOWER_ATTACK_TIME_PERIOD)
+			{
+				// Attack target
+
+				tower->m_timeElapsed -= TOWER_ATTACK_TIME_PERIOD;
+			}
+		}
+	}
+}
+
+void TowerState_Attack::Exit(Tower* tower)
+{
+}
+
+#pragma endregion

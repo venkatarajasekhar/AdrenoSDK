@@ -4,6 +4,7 @@
 #include <MyFileMesh1.h>
 #include "LivingEntity.h"
 #include "EventListener.h"
+#include "StateMachine.h"
 
 /*
 #include <MySkinnedMesh1.h>
@@ -102,6 +103,15 @@ protected:
 
 protected:
 	Mesh::Instance* m_instance;
+
+	// States manager
+	StateMachine<Tower>* m_stateMachine;
+
+	float m_timeElapsed;
+
+protected:
+	friend class TowerState_Idle;
+	friend class TowerState_Attack;
 };
 
 //=========================================================================================================
@@ -176,3 +186,45 @@ private:
 	FileMesh1 m_fileMeshes[NUM_FILE_MESHES];
 	Tower*    m_towers[MAX_NUM_TOWER_IN_GAME];
 };
+
+#pragma region Tower state
+
+//=========================================================================================================
+//
+// Tower state
+//
+//=========================================================================================================
+
+class TowerState_Idle : public State<Tower>
+{
+private:
+	TowerState_Idle(){}
+	TowerState_Idle(const TowerState_Idle&);
+	TowerState_Idle& operator=(const TowerState_Idle&);
+
+public:
+	static TowerState_Idle* instance(){ static TowerState_Idle ins; return &ins; }
+
+public:
+	virtual void Enter(Tower* tower);
+	virtual void Execute(Tower* tower);
+	virtual void Exit(Tower* tower);
+};
+
+class TowerState_Attack : public State<Tower>
+{
+private:
+	TowerState_Attack(){}
+	TowerState_Attack(const TowerState_Attack&);
+	TowerState_Attack& operator=(const TowerState_Attack&);
+
+public:
+	static TowerState_Attack* instance(){ static TowerState_Attack ins; return &ins; }
+
+public:
+	virtual void Enter(Tower* tower);
+	virtual void Execute(Tower* tower);
+	virtual void Exit(Tower* tower);
+};
+
+#pragma endregion

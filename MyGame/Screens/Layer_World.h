@@ -4,6 +4,7 @@
 #include <MySpriteBatch.h>
 #include <MySpriteSheet.h>
 #include <MySkinnedMesh1.h>
+#include <MyBillboard.h>
 #include "FlatTerrain.h"
 #include "LivingEntity.h"
 #include "TPSCamera.h"
@@ -48,7 +49,7 @@ private:
 
 	enum
 	{
-		SPRITE_SHEET_DUMP,
+		SPRITE_SHEET_ENERGY_BALL,
 		NUM_SPRITE_SHEETS,
 	};
 
@@ -71,6 +72,12 @@ private:
 	};
 
 	// Graphics objects
+	enum
+	{
+		BILLBOARD_ENERGY_BALL,
+		NUM_BILLBOARDS,
+	};
+
 	enum
 	{
 		BLOOD_BAR_MY_TEAM,
@@ -110,7 +117,9 @@ private:
 	TowerPool m_towerPool;
 	PawnPool m_pawnPool;
 	HeroPool m_heroPool;
+	ProjectilePool m_projectilePool;
 
 	// Graphics objects
+	Billboard m_billboards[NUM_BILLBOARDS];
 	BloodBar m_bloodBar[NUM_BLOOD_BARS];
 };

@@ -291,9 +291,6 @@
     <ClCompile Include="GameObjects\Projectile.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\ProjectileTemp.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -369,9 +366,6 @@
       <Filter>Screens</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Projectile.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\ProjectileTemp.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

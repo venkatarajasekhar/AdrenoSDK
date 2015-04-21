@@ -89,13 +89,13 @@ FileMesh1::Instance* Tower::getInstance()
 
 static const int    TOWER_INITIAL_MAX_HEALTH = 1500;
 static const int    TOWER_INITIAL_DAMAGE = 30;
-static const float  TOWER_ATTACK_RANGE = 7;
+static const float  TOWER_ATTACK_RANGE = 20;
 static const float  TOWER_ATTACK_TIME_PERIOD = 4;
 static const MyVec2 TOWER_BLOOD_BAR_SCALE = MyVec2(1.0f, 0.6f);
 
 static const int    MAIN_TOWER_INITIAL_MAX_HEALTH = 2000;
 static const int    MAIN_TOWER_INITIAL_DAMAGE = 40;
-static const float  MAIN_TOWER_ATTACK_RANGE = 10;
+static const float  MAIN_TOWER_ATTACK_RANGE = 20;
 static const MyVec2 MAIN_TOWER_BLOOD_BAR_SCALE = MyVec2(1.5f, 0.6f);
 
 static const MyVec3 MY_TOWER_SCALE = MyVec3(0.5f);
@@ -249,11 +249,16 @@ Tower::~Tower()
 void Tower::init(
 	FileMesh1& mesh,
 	BloodBar& bloodBar,
+	Billboard& projtBillboard,
+	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
 	TowerProps& towerProp,
 	TowerInGameProp& towerInGameProp,
 	TEAM_TYPE team)
 {
+	m_projtBillboard = &projtBillboard;
+	m_projectilePool = &projectilePool;
+
 	m_instance = Mesh::buildMeshInstance(towerInGameProp.Pos, towerInGameProp.Rot, towerInGameProp.Scale);
 	mesh.addInstance(m_instance);
 
@@ -320,9 +325,11 @@ TowerPool::~TowerPool()
 }
 
 void TowerPool::init(
-	Shader& meshShader, 
-	BloodBar& myBloodBar, 
-	BloodBar& enemyBloodBar, 
+	Shader& meshShader,
+	BloodBar& myBloodBar,
+	BloodBar& enemyBloodBar,
+	Billboard& projtBillboard,
+	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
 	IOnGameOverListener* gameOverListener)
 {
@@ -383,6 +390,8 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER]->init(
 		m_fileMeshes[FILE_MESH_WHITE_PAGODA], 
 		myBloodBar, 
+		projtBillboard,
+		projectilePool,
 		lEnts, 
 		g_TowerProps[TOWER_WHITE_PAGODA], 
 		g_TowerInGameProps[TOWER_IN_GAME_MY_MAIN_TOWER], 
@@ -390,6 +399,8 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_MY_TOWER_1]->init(
 		m_fileMeshes[FILE_MESH_OUTPOST], 
 		myBloodBar, 
+		projtBillboard,
+		projectilePool,
 		lEnts, 
 		g_TowerProps[TOWER_OUTPOST], 
 		g_TowerInGameProps[TOWER_IN_GAME_MY_TOWER_1], 
@@ -397,6 +408,8 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_MY_TOWER_2]->init(
 		m_fileMeshes[FILE_MESH_OUTPOST], 
 		myBloodBar, 
+		projtBillboard,
+		projectilePool,
 		lEnts, 
 		g_TowerProps[TOWER_OUTPOST], 
 		g_TowerInGameProps[TOWER_IN_GAME_MY_TOWER_2], 
@@ -404,7 +417,9 @@ void TowerPool::init(
 
 	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER]->init(
 		m_fileMeshes[FILE_MESH_HOUSE_WIND], 
-		enemyBloodBar, 
+		enemyBloodBar,
+		projtBillboard,
+		projectilePool,
 		lEnts, 
 		g_TowerProps[TOWER_HOUSE_WIND], 
 		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_MAIN_TOWER], 
@@ -412,6 +427,8 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1]->init(
 		m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], 
 		enemyBloodBar, 
+		projtBillboard,
+		projectilePool,
 		lEnts, 
 		g_TowerProps[TOWER_TOWER_OF_VICTORY], 
 		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_TOWER_1], 
@@ -419,6 +436,8 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2]->init(
 		m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], 
 		enemyBloodBar, 
+		projtBillboard,
+		projectilePool,
 		lEnts, 
 		g_TowerProps[TOWER_TOWER_OF_VICTORY], 
 		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_TOWER_2], 
@@ -490,7 +509,7 @@ void TowerState_Idle::Exit(Tower* tower)
 
 void TowerState_Attack::Enter(Tower* tower)
 {
-	tower->m_timeElapsed = 0.0f;
+	tower->m_timeElapsed = TOWER_ATTACK_TIME_PERIOD + 0.1;
 }
 
 void TowerState_Attack::Execute(Tower* tower)
@@ -508,7 +527,10 @@ void TowerState_Attack::Execute(Tower* tower)
 		{
 			if (tower->m_timeElapsed > TOWER_ATTACK_TIME_PERIOD)
 			{
-				// Attack target
+				tower->m_projectilePool->spawnProjectile(
+					*tower->m_projtBillboard,
+					tower,
+					tower->m_atkTarget);
 
 				tower->m_timeElapsed -= TOWER_ATTACK_TIME_PERIOD;
 			}

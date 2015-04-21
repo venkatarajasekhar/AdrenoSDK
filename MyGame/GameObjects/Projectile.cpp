@@ -1,9 +1,28 @@
-#include "Global.h"
+
 #include "Projectile.h"
 
+//==============================================================================================================
+//
+// Constants
+//
+//==============================================================================================================
+
+static const float PROJECTILE_MOVING_SPEED = 15.0f;
+static const float DISTANCE_THRESHOLD = 0.5f;
+static const MyVec3 ATTACKER_OFFSET = MyVec3(0, 5, 0);
+static const MyVec3 ATTACK_TARGET_OFFSET = MyVec3(0, 3, 0);
+
+//==============================================================================================================
+//
+// Projectile class
+//
+//==============================================================================================================
 
 Projectile::Projectile()
-	: m_billboard(nullptr)
+	: m_billboard(nullptr),
+	m_inUse(false),
+	m_attacker(nullptr),
+	m_atkTarget(nullptr)
 {
 }
 
@@ -11,109 +30,80 @@ Projectile::~Projectile()
 {
 }
 
-void Projectile::init(Billboard& billboard, PROJECTILE_TYPE projectileType, std::vector<LivingEntity*>& lEnts)
+void Projectile::init()
 {
-	m_billboard = &billboard;
-	m_projectileType = projectileType;
-	m_lEnts = &lEnts;
-	m_active = false;
 }
-
-/*void Projectile::init(Billboard& billboard,
-	int idEnemy,
-	int idHero,
-	float range,
-	int damage,
-	TEAM_TYPE teamType)
-{
-	m_billboard = &billboard;
-	m_idEnemy = idEnemy;
-	m_idHero = idHero;
-	m_range = range;
-	m_damage = damage;
-	m_teamType = teamType;
-	m_entityType = ENTITY_TYPE_PROJECTILE;
-	m_active = true;
-
-	MyVec3 dir(dSin(g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Rotation.y), 0, dCos(g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Rotation.y));
-	MyVec3 offset = normalize(dir) + MyVec3(0, 3, 0);
-	MyVec3 pos = g_livingEntityManager.getLivingEntityById(m_idHero)->getInstance()->Position + 0.5f*offset;
-	MyVec3 posTarget = g_livingEntityManager.getLivingEntityById(m_idEnemy)->getInstance()->Position;
-
-	m_movingEntity.init(pos, posTarget, MyVec3(0), 0, 8, 10000);
-}*/
 
 void Projectile::update(Timer& timer)
 {
-	if (m_active)
-	{ 
-		if (!m_enemy->inUse())
+	if ((m_attacker != nullptr) && (m_atkTarget != nullptr))
+	{
+		if (!m_atkTarget->inUse())
 		{
-			m_active = false;
+			m_inUse = false;
 		}
 		else
 		{
-			if (distance_optimized(getPos(), m_enemy->getPos()) <= 2.0f)
+			if (distance_optimized(m_position, m_target) <= DISTANCE_THRESHOLD)
 			{
-				m_active = false;
-				m_enemy->accHealth(-m_hero->getDamage());
+				m_inUse = false;
+				m_atkTarget->accHealth(-m_attacker->getDamage());
 			}
-			setTarget(m_enemy->getPos());
-			m_movingEntity.update(timer);
+			else
+			{
+				setTarget(m_atkTarget->getPos());
+			}
 		}
 	}
+
+	// Moving elements
+	MyVec3 heading = PROJECTILE_MOVING_SPEED * normalize_optimized(m_target - m_position);
+	m_position += heading * timer.getElapsedTime();
 }
 
 void Projectile::render(Camera& camera)
 {
-	if (m_active)
+	if (m_billboard != nullptr)
 	{
-		m_billboard->setPos(m_movingEntity.getPos());
+		m_billboard->setPos(m_position);
 		m_billboard->render(camera);
 	}
 }
 
+void Projectile::respawn(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget)
+{
+	m_billboard = &billboard;
+	setPos(attacker->getPos());
+	setTarget(atkTarget->getPos());
+	m_inUse = true;
+	m_attacker = attacker;
+	m_atkTarget = atkTarget;
+}
+
+// Getter
+
+bool Projectile::inUse()const
+{
+	return m_inUse;
+}
+
 // Setter
+
 void Projectile::setPos(const MyVec3& pos)
 {
-	m_movingEntity.setPos(pos);
-}
-
-MyVec3 Projectile::getPos()
-{
-	return m_movingEntity.getPos();
-}
-
-float Projectile::getRange()
-{
-	return m_range;
+	m_position = pos + ATTACKER_OFFSET;
 }
 
 void Projectile::setTarget(const MyVec3& target)
 {
-	m_movingEntity.setTarget(target);
+	m_target = target + ATTACK_TARGET_OFFSET;
 }
 
-void Projectile::setActive(bool active)
-{
-	m_active = active;
-}
-
-bool Projectile::getActive()
-{
-	return m_active;
-}
-
-PROJECTILE_TYPE Projectile::getProjectileType() const
-{
-	return m_projectileType;
-}
-
-//=========================================================================================================
+//==============================================================================================================
 //
 // ProjectilePool class
 //
-//=========================================================================================================
+//==============================================================================================================
 
 ProjectilePool::ProjectilePool()
 {
@@ -123,41 +113,57 @@ ProjectilePool::~ProjectilePool()
 {
 }
 
-void ProjectilePool::init(Shader& billboardShader, std::vector<LivingEntity*>& lEnts)
+void ProjectilePool::init()
 {
+	for (int i = 0; i < MAX_NUM_PROJECTILES; i++)
 	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheet.pak").c_str());
-
-		m_spriteSheets[SPRITESHEET_ENERGY_BALL].init(resource.GetTexture("energy_ball"), 5, MyIVec2(3, 1), MyIVec2(100, 100));
-		m_spriteSheets[SPRITESHEET_FIRE_BALL].init(resource.GetTexture("fire_ball"), 5, MyIVec2(1, 1), MyIVec2(96, 32));
+		Projectile* projectile = m_projectiles + i;
+		projectile->init();
 	}
-
-	m_billboards[BILLBOARD_FIRE_BALL].init(&m_spriteSheets[SPRITESHEET_FIRE_BALL], billboardShader, MyVec3(0), MyVec2(1.2f, 0.4f), 0);
-	m_billboards[BILLBOARD_ENERGY_BALL].init(&m_spriteSheets[SPRITESHEET_ENERGY_BALL], billboardShader, MyVec3(0), MyVec2(1.0f), 0);
-
-	for (size_t i = 0; i < MAX_NUM_EACH_PROJECTILE; i++)
-		m_projectiles[i].init(m_billboards[BILLBOARD_FIRE_BALL], PROJECTILE_FIRE_BALL, lEnts);
-	for (size_t i = 0; i < MAX_NUM_EACH_PROJECTILE; i++)
-		m_projectiles[i].init(m_billboards[BILLBOARD_ENERGY_BALL], PROJECTILE_ENERGY_BALL, lEnts);
 }
 
 void ProjectilePool::update(Timer& timer)
 {
-
-}
-
-void ProjectilePool::render(Camera& camera, Light& light)
-{
-
-}
-
-Projectile* ProjectilePool::getFreeSlot(Projectile* container, int size, PROJECTILE_TYPE type)
-{
-	for (int i = 0; i < MAX_NUM_EACH_PROJECTILE * NUM_BILLBOARD; i++)
+	for (int i = 0; i < MAX_NUM_PROJECTILES; i++)
 	{
-		if ((!m_projectiles[i].getActive()) && (m_projectiles[i].getProjectileType() == type))
-			return &m_projectiles[i];
+		Projectile* projectile = m_projectiles + i;
+		if (projectile->inUse())
+		{
+			projectile->update(timer);
+		}
+	}
+}
+
+void ProjectilePool::render(Camera& camera)
+{
+	for (int i = 0; i < MAX_NUM_PROJECTILES; i++)
+	{
+		Projectile* projectile = m_projectiles + i;
+		if (projectile->inUse())
+		{
+			projectile->render(camera);
+		}
+	}
+}
+
+void ProjectilePool::spawnProjectile(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget)
+{
+	Projectile* projectile = getFreeSlot();
+	if (projectile != nullptr)
+	{
+		projectile->respawn(billboard, attacker, atkTarget);
+	}
+}
+
+Projectile* ProjectilePool::getFreeSlot()
+{
+	for (int i = 0; i < MAX_NUM_PROJECTILES; i++)
+	{
+		Projectile* projectile = m_projectiles + i;
+		if (!projectile->inUse())
+		{
+			return projectile;
+		}
 	}
 
 	return nullptr;

@@ -5,6 +5,7 @@
 #include "LivingEntity.h"
 #include "EventListener.h"
 #include "StateMachine.h"
+#include "Projectile.h"
 
 /*
 #include <MySkinnedMesh1.h>
@@ -90,6 +91,8 @@ public:
 	virtual void init(
 		FileMesh1& mesh,
 		BloodBar& bloodBar,
+		Billboard& projtBillboard,
+		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
 		TowerProps& towerProp,
 		TowerInGameProp& towerInGameProp,
@@ -108,6 +111,9 @@ protected:
 	StateMachine<Tower>* m_stateMachine;
 
 	float m_timeElapsed;
+
+	Billboard* m_projtBillboard;
+	ProjectilePool* m_projectilePool;
 
 protected:
 	friend class TowerState_Idle;
@@ -172,6 +178,8 @@ public:
 		Shader& meshShader, 
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
+		Billboard& projtBillboard,
+		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
 		IOnGameOverListener* gameOverListener);
 	void update(Timer& timer);

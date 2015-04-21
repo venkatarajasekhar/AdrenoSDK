@@ -73,6 +73,14 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("bloodbar_enemy_background"));
 	}
 
+	// Assets sprite sheets
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheet.pak").c_str());
+
+		m_spriteSheets[SPRITE_SHEET_ENERGY_BALL].init(resource.GetTexture("energy_ball"), 8, MyIVec2(3, 1), MyIVec2(100, 100));
+	}
+
 	// Core objects
 	m_camera_main.init(INITIAL_PLAYER_POS, 45.0f, 0.1f, MAIN_CAM_FAR);
 
@@ -98,10 +106,34 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodBar[BLOOD_BAR_ENEMY].init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
 
+	m_billboards[BILLBOARD_ENERGY_BALL].init(
+		&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL],
+		m_shaders[SHADER_BILLBOARD],
+		MyVec3(0),
+		MyVec2(1.5f),
+		0);
+
 	// Game objects
-	m_towerPool.init(m_shaders[SHADER_MESH], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts, bundle.GameOverListener);
-	m_pawnPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts);
-	m_heroPool.init(m_shaders[SHADER_SKINNED_MESH_1], m_bloodBar[BLOOD_BAR_MY_TEAM], m_bloodBar[BLOOD_BAR_ENEMY], m_livingEnts, m_mesh_terrain);
+	m_towerPool.init(
+		m_shaders[SHADER_MESH],
+		m_bloodBar[BLOOD_BAR_MY_TEAM],
+		m_bloodBar[BLOOD_BAR_ENEMY],
+		m_billboards[BILLBOARD_ENERGY_BALL],
+		m_projectilePool,
+		m_livingEnts, 
+		bundle.GameOverListener);
+	m_pawnPool.init(
+		m_shaders[SHADER_SKINNED_MESH_1], 
+		m_bloodBar[BLOOD_BAR_MY_TEAM], 
+		m_bloodBar[BLOOD_BAR_ENEMY], 
+		m_livingEnts);
+	m_heroPool.init(
+		m_shaders[SHADER_SKINNED_MESH_1], 
+		m_bloodBar[BLOOD_BAR_MY_TEAM], 
+		m_bloodBar[BLOOD_BAR_ENEMY], 
+		m_livingEnts, 
+		m_mesh_terrain);
+	m_projectilePool.init();
 }
 
 void Layer_World::resize(int width, int height)
@@ -114,6 +146,18 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 {
 	// Core objects
 	m_camera_main.update(timer, userInput);
+
+	// Assets
+	for (int i = 0; i < NUM_SPRITE_SHEETS; i++)
+	{
+		m_spriteSheets[i].update(timer);
+	}
+
+	// Graphics objects
+	for (int i = 0; i < NUM_BILLBOARDS; i++)
+	{
+		m_billboards[i].update(timer);
+	}
 
 	// Mesh objects
 	m_mesh_terrain.update(timer, userInput, m_camera_main);
@@ -130,6 +174,7 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	m_towerPool.update(timer);
 	m_pawnPool.update(timer);
 	m_heroPool.update(timer);
+	m_projectilePool.update(timer);
 }
 
 void Layer_World::render(SpriteBatch& spriteBatch)
@@ -145,6 +190,7 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 		m_towerPool.render(m_camera_main, light);
 		m_pawnPool.render(m_camera_main, light);
 		m_heroPool.render(m_camera_main, light);
+		m_projectilePool.render(m_camera_main);
 
 		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 		{

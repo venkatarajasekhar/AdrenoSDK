@@ -98,6 +98,7 @@ public:
 		IOnPerformAActListener* PerformAActListener;
 		float TimeToPerformAAct;
 		void* PerformAActTag;
+		bool PerformedAAct;
 
 		Instance();
 

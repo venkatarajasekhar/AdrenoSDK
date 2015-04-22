@@ -46,7 +46,7 @@ static void initHeroProps()
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 200;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 4;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 7;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 4.5f;

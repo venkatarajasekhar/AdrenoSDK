@@ -232,6 +232,7 @@ void SkinnedMesh1::Instance::setAction(
 	PerformAActListener = paa_Listener;
 	TimeToPerformAAct = clamp(paa_Time, 0.0f, 1.0f);
 	PerformAActTag = paa_Tag;
+	PerformedAAct = false;
 
 	/*
 	if (!looped)
@@ -462,12 +463,20 @@ void SkinnedMesh1::update(Timer& timer)
 				instance->FrameWeight = (FLOAT32)(instance->TotalTicks - totalFrames * ticksPerFrame) / ticksPerFrame;
 
 				// Inform to PAA listener
-				if ((totalFrames % frameLength) == (UINT32)(instance->TimeToPerformAAct * (frameLength - 1)))
+				if (
+					((totalFrames % frameLength) == (UINT32)(instance->TimeToPerformAAct * (frameLength - 1))) &&
+					!instance->PerformedAAct
+					)
 				{
 					if (instance->PerformAActListener != nullptr)
 					{
 						instance->PerformAActListener->OnPerformAAct(instance->PerformAActTag);
 					}
+					instance->PerformedAAct = true;
+				}
+				if ((totalFrames % frameLength) == 0)
+				{
+					instance->PerformedAAct = false;
 				}
 			}
 		}

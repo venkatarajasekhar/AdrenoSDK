@@ -89,13 +89,13 @@ FileMesh1::Instance* Tower::getInstance()
 
 static const int    TOWER_INITIAL_MAX_HEALTH = 1000;
 static const int    TOWER_INITIAL_DAMAGE = 25;
-static const float  TOWER_ATTACK_RANGE = 5;
+static const float  TOWER_ATTACK_RANGE = 10;
 static const float  TOWER_ATTACK_TIME_PERIOD = 4;
 static const MyVec2 TOWER_BLOOD_BAR_SCALE = MyVec2(3.0f, 1.0f);
 
 static const int    MAIN_TOWER_INITIAL_MAX_HEALTH = 2000;
 static const int    MAIN_TOWER_INITIAL_DAMAGE = 40;
-static const float  MAIN_TOWER_ATTACK_RANGE = 5;
+static const float  MAIN_TOWER_ATTACK_RANGE = 10;
 static const MyVec2 MAIN_TOWER_BLOOD_BAR_SCALE = MyVec2(4.0f, 1.0f);
 
 static const MyVec3 MY_TOWER_SCALE = MyVec3(0.5f);
@@ -236,7 +236,7 @@ static void initTowerInGameProps()
 
 Tower::Tower()
 	: m_instance(nullptr),
-	m_timeElapsed(0)
+	m_timeElapsed(TOWER_ATTACK_TIME_PERIOD)
 {
 	m_stateMachine = new StateMachine<Tower>(this);
 }
@@ -509,7 +509,7 @@ void TowerState_Idle::Exit(Tower* tower)
 
 void TowerState_Attack::Enter(Tower* tower)
 {
-	tower->m_timeElapsed = TOWER_ATTACK_TIME_PERIOD + 0.1;
+	//tower->m_timeElapsed = TOWER_ATTACK_TIME_PERIOD + 0.1;
 }
 
 void TowerState_Attack::Execute(Tower* tower)
@@ -532,7 +532,8 @@ void TowerState_Attack::Execute(Tower* tower)
 					tower,
 					tower->m_atkTarget);
 
-				tower->m_timeElapsed -= TOWER_ATTACK_TIME_PERIOD;
+				//tower->m_timeElapsed -= TOWER_ATTACK_TIME_PERIOD;
+				tower->m_timeElapsed = 0;
 			}
 		}
 	}

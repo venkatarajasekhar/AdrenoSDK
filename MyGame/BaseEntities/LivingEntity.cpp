@@ -156,6 +156,7 @@ void LivingEntity::accHealth(int delta)
 	}
 }
 
+
 void LivingEntity::accDamage(int delta)
 {
 	m_damage += delta;

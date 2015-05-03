@@ -16,6 +16,7 @@ enum
 	NUM_PAWNS,
 };
 
+
 static PawnProps g_PawnProps[NUM_PAWNS];
 
 static void initPawnProps()

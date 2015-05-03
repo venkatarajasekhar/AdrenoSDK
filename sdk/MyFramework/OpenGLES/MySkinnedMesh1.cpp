@@ -468,7 +468,7 @@ void SkinnedMesh1::update(Timer& timer)
 					!instance->PerformedAAct
 					)
 				{
-					if (instance->PerformAActListener != nullptr)
+					if (instance->PerformAActListener != nullptr) 
 					{
 						instance->PerformAActListener->OnPerformAAct(instance->PerformAActTag);
 					}

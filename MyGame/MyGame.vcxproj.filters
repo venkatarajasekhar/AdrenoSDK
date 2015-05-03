@@ -31,9 +31,6 @@
     <Filter Include="Screens">
       <UniqueIdentifier>{3fb4a543-e031-4dfb-8d78-01c73ce14c9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjectsManagers">
-      <UniqueIdentifier>{0c18aaf2-e8ea-4114-a2d4-7d330ba47d70}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObjects">
       <UniqueIdentifier>{07a7f2fe-0283-4959-8321-d663e229af48}</UniqueIdentifier>
     </Filter>

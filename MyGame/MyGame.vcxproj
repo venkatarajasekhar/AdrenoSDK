@@ -160,6 +160,7 @@
     <ClCompile Include="Screens\Screen_GameOver.cpp" />
     <ClCompile Include="Screens\Screen_Menu.cpp" />
     <ClCompile Include="Screens\Screen_Play.cpp" />
+    <ClCompile Include="Screens\Screen_Shop.cpp" />
     <ClCompile Include="Utils\EventListener.cpp" />
     <ClCompile Include="Utils\TPSCamera.cpp" />
   </ItemGroup>
@@ -186,6 +187,7 @@
     <ClInclude Include="Screens\Screen_GameOver.h" />
     <ClInclude Include="Screens\Screen_Menu.h" />
     <ClInclude Include="Screens\Screen_Play.h" />
+    <ClInclude Include="Screens\Screen_Shop.h" />
     <ClInclude Include="Utils\EventListener.h" />
     <ClInclude Include="Utils\TPSCamera.h" />
     <ClInclude Include="Utils\Utils.h" />

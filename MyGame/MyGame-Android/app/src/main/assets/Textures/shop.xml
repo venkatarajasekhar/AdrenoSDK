@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Texture 
+    ResourceID  = "shop_background"
+    SrcFileName = "shop_background.png"
+/>
+
+<Texture 
+    ResourceID  = "shop_btn_close"
+    SrcFileName = "shop_btn_close.png"
+/>

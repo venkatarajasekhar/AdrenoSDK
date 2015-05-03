@@ -288,6 +288,9 @@
     <ClCompile Include="GameObjects\Projectile.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Screens\Screen_Shop.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -364,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Projectile.h">
       <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Screen_Shop.h">
+      <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

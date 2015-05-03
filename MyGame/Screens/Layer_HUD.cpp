@@ -47,6 +47,7 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	// Button widgets
 	m_btns[BTN_FIGHTING].init("hud_btn_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
 	m_btns[BTN_FIGHTING].addPressListener(this);
+	m_btns[BTN_FIGHTING].addPressListener(bundle.OpenShopListener);
 
 	// Other HUD-components
 	m_miniMap.init(

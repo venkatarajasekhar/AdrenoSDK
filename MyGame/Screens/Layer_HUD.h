@@ -10,6 +10,7 @@ public:
 	{
 		MyVec3 MapCenter;
 		MyVec2 MapSize;
+		IOnPressListener* OpenShopListener;
 	};
 
 	struct RenderBundle

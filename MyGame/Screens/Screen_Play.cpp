@@ -36,6 +36,7 @@ void PlayScreen::init()
 		Layer_HUD::InitBundle bundle;
 		bundle.MapCenter = MAP_CENTER;
 		bundle.MapSize = MAP_SIZE;
+		bundle.OpenShopListener = this;
 
 		m_layer_HUD.init(bundle);
 		m_layer_HUD.addPressListener(this);
@@ -93,6 +94,10 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	if (data.Id == "hud")
 	{
 		m_lockedUserInput = true;
+	}
+	else if (data.Id == "hud_btn_fighting")
+	{
+		m_screenManager->activeScreen("ShopScreen");
 	}
 }
 

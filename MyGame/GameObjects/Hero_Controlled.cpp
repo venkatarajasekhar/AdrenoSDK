@@ -167,8 +167,6 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 {
 	if (tag != nullptr)
 	{
-		static int a(0);
-		smartLog("tru mau: " + toString(a++));
 		Hero_Controlled* hero = (Hero_Controlled*)tag;
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 	}

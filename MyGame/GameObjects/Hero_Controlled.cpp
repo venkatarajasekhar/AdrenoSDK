@@ -1,5 +1,6 @@
 
 #include "Hero_Controlled.h"
+#include "Hero.h"
 
 //===================================================================================================================
 //
@@ -168,6 +169,20 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 	if (tag != nullptr)
 	{
 		Hero_Controlled* hero = (Hero_Controlled*)tag;
+		if (hero->m_atkTarget->getHealth() - hero->m_damage <= 0)
+		{
+			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_PAWN)
+			{
+				hero->m_money += MONEY_PAWN;
+				hero->m_exp += EXP_PAWN;
+			}
+			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_TOWER)
+			{
+				hero->m_money += MONEY_TOWER;
+				hero->m_exp += EXP_TOWER;
+			}
+			//hero->m_health += 30;
+		}
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 	}
 }

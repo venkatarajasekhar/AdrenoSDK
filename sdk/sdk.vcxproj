@@ -95,6 +95,7 @@
     <ClCompile Include="MyFramework\MyScreenManager.cpp" />
     <ClCompile Include="MyFramework\MyTimer.cpp" />
     <ClCompile Include="MyFramework\MyUIButton.cpp" />
+    <ClCompile Include="MyFramework\MyUIList.cpp" />
     <ClCompile Include="MyFramework\MyUIWidget.cpp" />
     <ClCompile Include="MyFramework\MyUtils.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyBasicMesh.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="MyFramework\MyScreenManager.h" />
     <ClInclude Include="MyFramework\MyTimer.h" />
     <ClInclude Include="MyFramework\MyUIButton.h" />
+    <ClInclude Include="MyFramework\MyUIList.h" />
     <ClInclude Include="MyFramework\MyUIWidget.h" />
     <ClInclude Include="MyFramework\MyUtils.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h" />

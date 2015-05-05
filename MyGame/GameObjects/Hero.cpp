@@ -149,6 +149,10 @@ void Hero::init(
 
 	m_inUse = true;
 
+	m_exp = 0;
+	m_money = 600;
+	m_countTime = 0;
+
 	LivingEntity::init(
 		heroProp.InitialMaxHealth,
 		heroProp.InitialDamage,
@@ -166,6 +170,40 @@ void Hero::update(Timer& timer)
 
 	m_instance->Position = m_movingEnt.getPos();
 	m_instance->Rotation = m_movingEnt.getRot();
+
+	m_countTime += timer.getElapsedTime();
+	if (m_countTime >= 1.0f)
+	{
+		if (m_health < m_maxHealth) m_health++;
+		m_money++;
+		m_countTime--;
+	}
+}
+
+void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
+{
+	LivingEntity::render(spriteBatch, camera, light);
+
+	if (getTeamType() == TEAM_TYPE_MY_TEAM)
+	{
+		Font m_font;
+		m_font.init(resolveAssetsPath("Fonts/Consolas12.pak"));
+
+		spriteBatch.renderText2D(
+			m_font,
+			"Money " + toString(m_money),
+			MyVec2(10, 40));
+
+		spriteBatch.renderText2D(
+			m_font,
+			"Exp " + toString(m_exp),
+			MyVec2(10, 70));
+
+		spriteBatch.renderText2D(
+			m_font,
+			"Health " + toString(m_health),
+			MyVec2(10, 100));
+	}
 }
 
 MyVec3 Hero::getPos()

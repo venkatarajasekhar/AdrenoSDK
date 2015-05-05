@@ -38,6 +38,37 @@ struct HeroInGameProps
 	MyVec3 Scale;
 };
 
+
+#pragma region Constants
+
+//===================================================================================================================
+//
+// Constants
+//
+//===================================================================================================================
+const std::vector<float> EXP_LEVEL =
+{
+	1000,
+	2000,
+	4000,
+	8000,
+	16000,
+	32000,
+	64000,
+	128000,
+	256000,
+	512000,
+	1024000,
+};
+
+const float MONEY_PAWN = 50;
+const float MONEY_TOWER = 400;
+const float EXP_PAWN = 100;
+const float EXP_TOWER = 500;
+
+#pragma endregion
+
+
 //===================================================================================================================
 //
 // Hero class
@@ -59,6 +90,7 @@ public:
 		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
 	virtual void update(Timer& timer);
+	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
 	MyVec3 getPos();
 
@@ -73,6 +105,10 @@ protected:
 	MovingEntity m_movingEnt;
 
 	float m_time_PAA_Attack_1;
+
+	float m_exp;
+	float m_money;
+	float m_countTime;
 };
 
 //===================================================================================================================

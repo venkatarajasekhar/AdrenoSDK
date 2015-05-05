@@ -51,7 +51,7 @@ MyVec2 SpriteBatch::convertToWorld(const MyVec2& screenPos)
 	return MyVec2(screenPos.x - (float)m_scrWidth / 2, (float)m_scrHeight / 2 - screenPos.y);
 }
 
-void SpriteBatch::renderTexture2D(Texture* texture, const MyVec2& pos, float rot, const MyVec2& scale, MyColor color)
+void SpriteBatch::renderTexture2D(Texture* texture, const MyVec2& pos, float rot, const MyVec2& scale, const Rect2D* viewport, MyColor color)
 {
 	Rect2D dest = 
 	{
@@ -59,10 +59,10 @@ void SpriteBatch::renderTexture2D(Texture* texture, const MyVec2& pos, float rot
 		MyVec2(scale.x * texture->getWidth(), scale.y * texture->getHeight())
 	};
 
-	renderTexture2D(texture, dest, nullptr, rot, color);
+	renderTexture2D(texture, dest, nullptr, rot, viewport, color);
 }
 
-void SpriteBatch::renderTexture2D(Texture* texture, const Rect2D& dest, const Rect2D* src, float rot, MyColor color)
+void SpriteBatch::renderTexture2D(Texture* texture, const Rect2D& dest, const Rect2D* src, float rot, const Rect2D* viewport, MyColor color)
 {
 	// Compute transformation of texture mesh
 	MyVec2 pos2 = convertToWorld(dest.Pos);
@@ -89,13 +89,30 @@ void SpriteBatch::renderTexture2D(Texture* texture, const Rect2D& dest, const Re
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 
+	// Begin render on viewport
+	int cachedWidth, cachedHeight;
+	getWindowDimension(cachedWidth, cachedHeight);
+
+	if (viewport != nullptr)
+	{
+		m_camera2D->changeViewport(*viewport);
+		glViewport(viewport->Pos.x, cachedHeight - viewport->Pos.y - viewport->Size.y, viewport->Size.x, viewport->Size.y);
+	}
+
 	m_squad.render(*m_camera2D);
+
+	// End render on viewport
+	if (viewport != nullptr)
+	{
+		glViewport(0, 0, cachedWidth, cachedHeight);
+		m_camera2D->restoreDefaultViewport();
+	}
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 }
 
-void SpriteBatch::renderText2D(Font& font, const MyString& text, const MyVec2& pos, float rot, MyColor color)
+void SpriteBatch::renderText2D(Font& font, const MyString& text, const MyVec2& pos, float rot, const Rect2D* viewport, MyColor color)
 {
 	FLOAT32 sx = pos.x, sy = pos.y;
 
@@ -122,7 +139,7 @@ void SpriteBatch::renderText2D(Font& font, const MyString& text, const MyVec2& p
 		Rect2D dest(MyVec2(sx, sy), MyVec2(w, h));
 		Rect2D src(MyVec2(pGlyph->u0, pGlyph->v0), MyVec2(pGlyph->u1 - pGlyph->u0, pGlyph->v1 - pGlyph->v0));
 
-		renderTexture2D(&font.getTexture(), dest, &src, rot, color);
+		renderTexture2D(&font.getTexture(), dest, &src, rot, viewport, color);
 
 		sx += font.getScale().x * pGlyph->nAdvance;
 	}

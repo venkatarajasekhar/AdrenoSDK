@@ -17,6 +17,13 @@ public:
 		float bottom,
 		float top);
 
+	// Setter
+
+	void setLeft(float left);
+	void setRight(float right);
+	void setBottom(float bottom);
+	void setTop(float top);
+
 protected:
 	virtual void computeProj(int width, int height);
 

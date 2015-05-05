@@ -33,3 +33,29 @@ void OrthoCamera::computeProj(int width, int height)
 {
 	m_proj = createOrthoMatrix(m_left, m_right, m_bottom, m_top);
 }
+
+// Setter
+
+void OrthoCamera::setLeft(float left)
+{
+	m_left = left;
+	computeProj(0, 0);
+}
+
+void OrthoCamera::setRight(float right)
+{
+	m_right = right;
+	computeProj(0, 0);
+}
+
+void OrthoCamera::setBottom(float bottom)
+{
+	m_bottom = bottom;
+	computeProj(0, 0);
+}
+
+void OrthoCamera::setTop(float top)
+{
+	m_top = top;
+	computeProj(0, 0);
+}

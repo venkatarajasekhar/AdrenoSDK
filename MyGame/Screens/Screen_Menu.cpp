@@ -88,6 +88,7 @@ void MenuScreen::render(void* utilObjs)
 		yCoor += m_texture_btns[i].getHeight() + vDis;
 	}
 
+	/*
 	{
 		MyVec2 pos((m_width - m_font.getTextWidth("Heroes World")) / 2, 5);
 		float totalTimer = globalUtilObjs->timer->getTotalTime();
@@ -95,6 +96,7 @@ void MenuScreen::render(void* utilObjs)
 			50 * totalTimer, 
 			MyColor(dCos(totalTimer * 50), dSin(totalTimer * 70), dCos(totalTimer * 40)));
 	}
+	/**/
 }
 
 void MenuScreen::OnPress(const IOnPressListener::Data& data)

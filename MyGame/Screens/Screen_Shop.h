@@ -3,6 +3,7 @@
 
 #include <MyScreen.h>
 #include <MyUIButton.h>
+#include <MyUIList.h>
 
 class ShopScreen : public Screen, public IOnPressListener
 {
@@ -12,6 +13,13 @@ private:
 	{
 		TEXTURE_SHOP_BACKGROUND,
 		TEXTURE_SHOP_BTN_CLOSE,
+		TEXTURE_DUMP_LIST_BACKGROUND,
+		TEXTURE_DUMP_LIST_ITEM_1,
+		TEXTURE_DUMP_LIST_ITEM_2,
+		TEXTURE_DUMP_LIST_ITEM_3,
+		TEXTURE_DUMP_LIST_ITEM_4,
+		TEXTURE_DUMP_LIST_ITEM_5,
+		TEXTURE_DUMP_LIST_ITEM_6,
 		NUM_TEXTURES,
 	};
 
@@ -41,4 +49,5 @@ private:
 
 	// UI Widgets
 	UIButton m_btns[NUM_BTNS];
+	UIList m_dumpList;
 };

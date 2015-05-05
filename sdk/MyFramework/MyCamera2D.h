@@ -11,4 +11,7 @@ public:
 
 	void init();
 	void resize(int width, int height);
+
+	void changeViewport(const Rect2D& viewport);
+	void restoreDefaultViewport();
 };

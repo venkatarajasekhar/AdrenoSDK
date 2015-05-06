@@ -102,6 +102,7 @@ static const MyVec2 HERO_BLOOD_BAR_SCALE = MyVec2(1.5f, 0.8f);
 
 static const std::vector<MyVec3> ENEMY_HERO_PATH =
 {
+	MyVec3(40.0f, 0, 0.0f),
 	MyVec3(30.6013f, 0, 2.89223f),
 	MyVec3(14.6958f, 0, -3.19085f),
 	MyVec3(0.451345f, 0, -1.58377f),
@@ -152,6 +153,10 @@ void Hero::init(
 	m_exp = 0;
 	m_money = 600;
 	m_countTime = 0;
+	m_revivalTime = 0;
+
+	m_positionStart = heroInGameProp.Pos;
+	m_rotationStart = heroInGameProp.Rot;
 
 	LivingEntity::init(
 		heroProp.InitialMaxHealth,
@@ -178,11 +183,19 @@ void Hero::update(Timer& timer)
 		m_money++;
 		m_countTime--;
 	}
+
+	if (!m_instance->Visible)
+		m_revivalTime += timer.getElapsedTime();
+	if ((!m_instance->Visible) && (m_revivalTime >= 5))
+	{
+		m_revivalTime = 0;
+		revival();
+	}
 }
 
 void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 {
-	LivingEntity::render(spriteBatch, camera, light);
+	if (m_instance->Visible) LivingEntity::render(spriteBatch, camera, light);
 
 	if (getTeamType() == TEAM_TYPE_MY_TEAM)
 	{
@@ -214,7 +227,22 @@ MyVec3 Hero::getPos()
 void Hero::dead()
 {
 	m_instance->Visible = false;
-	LivingEntity::dead();
+	
+	if (getTeamType() == TEAM_TYPE_ENEMY)
+		m_movingEnt.setPath(ENEMY_HERO_PATH);
+	else
+	{
+		m_movingEnt.setTarget(m_positionStart);
+		m_movingEnt.setPos(m_positionStart);
+		m_movingEnt.setRot(m_rotationStart);
+	}
+}
+
+void Hero::revival()
+{	
+	m_health = m_maxHealth;
+	m_instance->Visible = true;
+	m_inUse = true;
 }
 
 //===================================================================================================================

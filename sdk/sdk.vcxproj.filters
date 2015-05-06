@@ -120,6 +120,9 @@
     <ClCompile Include="MyFramework\MyUIList.cpp">
       <Filter>MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\MyUILabel.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -216,6 +219,9 @@
       <Filter>MyFramework</Filter>
     </ClInclude>
     <ClInclude Include="MyFramework\MyUIList.h">
+      <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyUILabel.h">
       <Filter>MyFramework</Filter>
     </ClInclude>
   </ItemGroup>

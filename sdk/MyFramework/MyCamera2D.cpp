@@ -16,11 +16,10 @@ void Camera2D::init()
 
 void Camera2D::resize(int width, int height)
 {
-	Rect2D viewport;
-	viewport.Pos = MyVec2(0, 0);
-	viewport.Size = MyVec2(width, height);
-
-	changeViewport(viewport);
+	setLeft(-(float)width / 2.0f);
+	setRight(+(float)width / 2.0f);
+	setTop(+(float)height / 2.0f);
+	setBottom(-(float)height / 2.0f);
 
 	Camera::resize(width, height);
 }

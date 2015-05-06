@@ -36,7 +36,7 @@ private:
 private:
 	Texture* m_background;
 	Texture* m_player;
-	UIButton m_closeButton;
+	UIImageButton m_closeButton;
 
 	Rect2D m_bounding;
 

@@ -297,6 +297,9 @@
     <ClCompile Include="GraphicsObjects\HeroInfo.cpp">
       <Filter>GraphicsObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyUILabel.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">

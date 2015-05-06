@@ -63,7 +63,7 @@ private:
 	Font    m_fonts[NUM_FONTS];
 
 	// UI Widgets
-	UIButton m_btns[NUM_BTNS];
+	UIImageButton m_btns[NUM_BTNS];
 
 	// Other HUD-components
 	MiniMap m_miniMap;

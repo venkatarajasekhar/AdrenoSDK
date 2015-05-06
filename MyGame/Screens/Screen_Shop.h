@@ -48,6 +48,6 @@ private:
 	Texture m_textures[NUM_TEXTURES];
 
 	// UI Widgets
-	UIButton m_btns[NUM_BTNS];
+	UIImageButton m_btns[NUM_BTNS];
 	UIList m_dumpList;
 };

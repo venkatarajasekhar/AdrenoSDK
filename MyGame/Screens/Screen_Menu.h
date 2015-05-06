@@ -29,7 +29,7 @@ private:
 	Texture m_texture_btns[NUM_BUTTONS];
 
 	// Buttons
-	UIButton m_btns[NUM_BUTTONS];
+	UIImageButton m_btns[NUM_BUTTONS];
 
 	Font m_font;
 };

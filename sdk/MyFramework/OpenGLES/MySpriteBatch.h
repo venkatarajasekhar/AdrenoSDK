@@ -17,10 +17,28 @@ public:
 
 	MyVec2 convertToWorld(const MyVec2& screenPos);
 
-	void renderTexture2D(Texture* texture, const MyVec2& pos, float rot = 0.0f, const MyVec2& scale = MyVec2(1.0f), MyColor color = MyColor(1, 1, 1));
-	void renderTexture2D(Texture* texture, const Rect2D& dest, const Rect2D* src = nullptr, float rot = 0.0f, MyColor color = MyColor(1, 1, 1));
+	void renderTexture2D(
+		Texture* texture, 
+		const MyVec2& pos, 
+		float rot = 0.0f, 
+		const MyVec2& scale = MyVec2(1.0f),
+		const Rect2D* viewport = nullptr,
+		MyColor color = MyColor(1, 1, 1));
+	void renderTexture2D(
+		Texture* texture, 
+		const Rect2D& dest, 
+		const Rect2D* src = nullptr, 
+		float rot = 0.0f, 
+		const Rect2D* viewport = nullptr,
+		MyColor color = MyColor(1, 1, 1));
 
-	void renderText2D(Font& font, const MyString& text, const MyVec2& pos, float rot = 0.0f, MyColor color = MyColor(1, 1, 1));
+	void renderText2D(
+		Font& font, 
+		const MyString& text, 
+		const MyVec2& pos, 
+		float rot = 0.0f, 
+		const Rect2D* viewport = nullptr,
+		MyColor color = MyColor(1, 1, 1));
 
 private:
 	Camera2D* m_camera2D;

@@ -291,6 +291,9 @@
     <ClCompile Include="Screens\Screen_Shop.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="HeroInfo.cpp">
+      <Filter>GraphicsObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -370,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="Screens\Screen_Shop.h">
       <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="HeroInfo.h">
+      <Filter>GraphicsObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

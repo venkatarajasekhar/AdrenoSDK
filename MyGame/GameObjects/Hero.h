@@ -96,6 +96,7 @@ public:
 
 protected:
 	virtual void dead();
+	void revival();
 
 protected:
 	// Mesh/Appearance elements
@@ -109,6 +110,10 @@ protected:
 	float m_exp;
 	float m_money;
 	float m_countTime;
+	float m_revivalTime;
+
+	MyVec3 m_positionStart;
+	MyVec3 m_rotationStart;
 };
 
 //===================================================================================================================

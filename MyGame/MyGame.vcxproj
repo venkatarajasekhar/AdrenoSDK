@@ -155,8 +155,8 @@
     <ClCompile Include="GameObjects\Tower_Main.cpp" />
     <ClCompile Include="GraphicsObjects\BloodBar.cpp" />
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
+    <ClCompile Include="GraphicsObjects\HeroInfo.cpp" />
     <ClCompile Include="GraphicsObjects\MiniMap.cpp" />
-    <ClCompile Include="HeroInfo.cpp" />
     <ClCompile Include="Screens\Layer_HUD.cpp" />
     <ClCompile Include="Screens\Layer_World.cpp" />
     <ClCompile Include="Screens\Screen_GameOver.cpp" />
@@ -183,8 +183,8 @@
     <ClInclude Include="GameObjects\Tower_Main.h" />
     <ClInclude Include="GraphicsObjects\BloodBar.h" />
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />
+    <ClInclude Include="GraphicsObjects\HeroInfo.h" />
     <ClInclude Include="GraphicsObjects\MiniMap.h" />
-    <ClInclude Include="HeroInfo.h" />
     <ClInclude Include="Screens\Layer_HUD.h" />
     <ClInclude Include="Screens\Layer_World.h" />
     <ClInclude Include="Screens\Screen_GameOver.h" />

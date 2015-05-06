@@ -291,11 +291,11 @@
     <ClCompile Include="Screens\Screen_Shop.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
-    <ClCompile Include="HeroInfo.cpp">
-      <Filter>GraphicsObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\sdk\MyFramework\MyUIList.cpp">
       <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObjects\HeroInfo.cpp">
+      <Filter>GraphicsObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,7 +377,7 @@
     <ClInclude Include="Screens\Screen_Shop.h">
       <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="HeroInfo.h">
+    <ClInclude Include="GraphicsObjects\HeroInfo.h">
       <Filter>GraphicsObjects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -59,7 +59,7 @@ void UIList::update(UserInput& userInput)
 	UIWidget::update(userInput);
 }
 
-void UIList::render(SpriteBatch& spriteBatch)
+void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 {
 	float height(0.0f);
 	MyVec2 listItemPos = getPos();

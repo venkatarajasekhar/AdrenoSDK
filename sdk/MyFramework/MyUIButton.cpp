@@ -22,14 +22,14 @@ void UIImageButton::init(const MyString& id, const MyVec2& pos, Texture& backgro
 	UIWidget::init(id, pos, MyVec2(m_background->getWidth(), m_background->getHeight()));
 }
 
-void UIImageButton::render(SpriteBatch& spriteBatch)
+void UIImageButton::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 {
 	if (m_status == HIDDEN)
 	{
 		return;
 	}
 
-	spriteBatch.renderTexture2D(m_background, m_bounding);
+	spriteBatch.renderTexture2D(m_background, m_bounding, nullptr, 0, viewport);
 }
 
 //===========================================================================================================
@@ -57,7 +57,7 @@ void UITextButton::init(
 	UIImageButton::init(id, pos, background);
 }
 
-void UITextButton::render(SpriteBatch& spriteBatch)
+void UITextButton::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 {
 	if (m_status == HIDDEN)
 	{
@@ -65,12 +65,12 @@ void UITextButton::render(SpriteBatch& spriteBatch)
 	}
 
 	// Render background
-	UIImageButton::render(spriteBatch);
+	UIImageButton::render(spriteBatch, viewport);
 
 	// Render text
 	{
 		MyVec2 pos = getPos() + 0.5f * (getSize() - m_label.getSize());
 		m_label.setPos(pos);
-		m_label.render(spriteBatch);
+		m_label.render(spriteBatch, viewport);
 	}
 }

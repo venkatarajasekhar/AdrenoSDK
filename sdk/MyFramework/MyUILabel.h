@@ -16,10 +16,10 @@ public:
 		const MyString& text, 
 		const MyColor& color = MyColor(1, 1, 1), 
 		float size = 1.0f);
-	void render(SpriteBatch& spriteBatch);
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
 private:
-	Font m_font;
+	Font* m_font;
 	MyString m_text;
 	float m_size;
 	MyColor m_color;

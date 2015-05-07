@@ -21,7 +21,7 @@ public:
 
 	virtual void init(const MyString& id, const MyVec2& pos, const MyVec2& size);
 	virtual void update(UserInput& userInput);
-	virtual void render(SpriteBatch& spriteBatch) = 0;
+	virtual void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr) = 0;
 
 	// Getter
 

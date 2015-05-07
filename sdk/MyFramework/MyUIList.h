@@ -19,7 +19,7 @@ public:
 	{}
 	virtual ~UIListItem(){}
 
-	virtual void render(SpriteBatch& spriteBatch) = 0;
+	virtual void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr) = 0;
 
 protected:
 	UIList* m_list;
@@ -39,7 +39,7 @@ public:
 
 	void init(const MyString& id, const MyVec2& pos, Texture& background);
 	void update(UserInput& userInput);
-	void render(SpriteBatch& spriteBatch);
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
 	void addItem(UIListItem* item);
 

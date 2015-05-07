@@ -9,3 +9,53 @@
     ResourceID  = "shop_btn_close"
     SrcFileName = "shop_btn_close.png"
 />
+
+<Texture 
+    ResourceID  = "list_item_background"
+    SrcFileName = "list_item_background.png"
+/>
+
+<Texture 
+    ResourceID  = "item_background"
+    SrcFileName = "item_background.png"
+/>
+
+<Texture 
+    ResourceID  = "gold_icon"
+    SrcFileName = "gold_icon.png"
+/>
+
+<Texture 
+    ResourceID  = "shop_btn_background"
+    SrcFileName = "shop_btn_background.png"
+/>
+
+<Texture 
+    ResourceID  = "item_blood_pouch"
+    SrcFileName = "item_blood_pouch.png"
+/>
+
+<Texture 
+    ResourceID  = "item_chain_mail"
+    SrcFileName = "item_chain_mail.png"
+/>
+
+<Texture 
+    ResourceID  = "item_cloak_of_the_resistant"
+    SrcFileName = "item_cloak_of_the_resistant.png"
+/>
+
+<Texture 
+    ResourceID  = "item_life_ward"
+    SrcFileName = "item_life_ward.png"
+/>
+
+<Texture 
+    ResourceID  = "item_light_calvary_hat"
+    SrcFileName = "item_light_calvary_hat.png"
+/>
+
+<Texture 
+    ResourceID  = "item_staff_of_sathlenar"
+    SrcFileName = "item_staff_of_sathlenar.png"
+/>

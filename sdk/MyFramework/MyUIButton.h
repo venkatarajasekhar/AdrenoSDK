@@ -16,7 +16,7 @@ public:
 	~UIImageButton();
 
 	void init(const MyString& id, const MyVec2& pos, Texture& background);
-	void render(SpriteBatch& spriteBatch);
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
 private:
 	Texture* m_background;
@@ -42,7 +42,7 @@ public:
 		Font& textFont,
 		const MyColor& textColor = MyColor(1, 1, 1), 
 		float textSize = 1.0f);
-	void render(SpriteBatch& spriteBatch);
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
 private:
 	UILabel m_label;

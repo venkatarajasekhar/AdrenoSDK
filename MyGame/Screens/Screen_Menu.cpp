@@ -19,31 +19,28 @@ MenuScreen::~MenuScreen()
 
 void MenuScreen::init()
 {
-	// Texture resources
+	// Texture assets
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/gui_menu.pak").c_str());
 
-		m_texture_btns[0].init(resource.GetTexture("btn_start_game"));
-		m_texture_btns[1].init(resource.GetTexture("btn_sign_in"));
-		m_texture_btns[2].init(resource.GetTexture("btn_sign_out"));
-		m_texture_btns[3].init(resource.GetTexture("btn_achievements"));
-		m_texture_btns[4].init(resource.GetTexture("btn_leaderboard"));
+		m_textures[TEXTURE_BTN_BACKGROUND].init(resource.GetTexture("menu_btn_background"));
 	}
 
-	// Buttons
-	m_btns[0].init("btn_menu_start_game", MyVec2(0), m_texture_btns[0]);
-	m_btns[1].init("btn_menu_sign_in", MyVec2(0), m_texture_btns[1]);
-	m_btns[2].init("btn_menu_sign_out", MyVec2(0), m_texture_btns[2]);
-	m_btns[3].init("btn_menu_achievements", MyVec2(0), m_texture_btns[3]);
-	m_btns[4].init("btn_menu_leaderboard", MyVec2(0), m_texture_btns[4]);
+	// Fonts assets
+	m_fonts[FONT_CONSOLAS_12].init(resolveAssetsPath("Fonts/Consolas24.pak"));
 
-	for (int i = 0; i < NUM_BUTTONS; i++)
+	// Buttons
+	m_btns[BTN_START_GAME].init("btn_menu_start_game", MyVec2(0), m_textures[TEXTURE_BTN_BACKGROUND], "Start", m_fonts[FONT_CONSOLAS_12]);
+	m_btns[BTN_SIGN_IN].init("btn_menu_sign_in", MyVec2(0), m_textures[TEXTURE_BTN_BACKGROUND], "Sign-In", m_fonts[FONT_CONSOLAS_12]);
+	m_btns[BTN_SIGN_OUT].init("btn_menu_sign_out", MyVec2(0), m_textures[TEXTURE_BTN_BACKGROUND], "Sign-Out", m_fonts[FONT_CONSOLAS_12]);
+	m_btns[BTN_ACHIEVEMENTS].init("btn_menu_achievements", MyVec2(0), m_textures[TEXTURE_BTN_BACKGROUND], "Achievements", m_fonts[FONT_CONSOLAS_12]);
+	m_btns[BTN_LEADERBOARD].init("btn_menu_leaderboard", MyVec2(0), m_textures[TEXTURE_BTN_BACKGROUND], "Leaderboard", m_fonts[FONT_CONSOLAS_12]);
+
+	for (int i = 0; i < NUM_BTNS; i++)
 	{
 		m_btns[i].addPressListener(this);
 	}
-
-	m_font.init(resolveAssetsPath("Fonts/Rosewood48.pak"));
 }
 
 void MenuScreen::resize(int width, int height)
@@ -57,7 +54,7 @@ void MenuScreen::update(void* utilObjs)
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	// Buttons
-	for (int i = 0; i < NUM_BUTTONS; i++)
+	for (int i = 0; i < NUM_BTNS; i++)
 	{
 		m_btns[i].update(*globalUtilObjs->userInput);
 	}
@@ -69,34 +66,24 @@ void MenuScreen::render(void* utilObjs)
 
 	// Buttons
 	int vDis = 10;
-	int btns_height = vDis * (NUM_BUTTONS - 1);
+	int btns_height = vDis * (NUM_BTNS - 1);
 
-	for (int i = 0; i < NUM_BUTTONS; i++)
+	for (int i = 0; i < NUM_BTNS; i++)
 	{
-		btns_height += m_texture_btns[i].getHeight();
+		btns_height += m_btns[i].getSize().y;
 	}
 
 	int yCoor = (m_height - btns_height) / 2;
 
-	for (int i = 0; i < NUM_BUTTONS; i++)
+	for (int i = 0; i < NUM_BTNS; i++)
 	{
-		int xCoor = (m_width - m_texture_btns[i].getWidth()) / 2;
+		int xCoor = (m_width - m_btns[i].getSize().x) / 2;
 
 		m_btns[i].setPos(MyVec2(xCoor, yCoor));
 		m_btns[i].render(*globalUtilObjs->spriteBatch);
 
-		yCoor += m_texture_btns[i].getHeight() + vDis;
+		yCoor += m_btns[i].getSize().y + vDis;
 	}
-
-	/*
-	{
-		MyVec2 pos((m_width - m_font.getTextWidth("Heroes World")) / 2, 5);
-		float totalTimer = globalUtilObjs->timer->getTotalTime();
-		globalUtilObjs->spriteBatch->renderText2D(m_font, "Heroes World", pos, 
-			50 * totalTimer, 
-			MyColor(dCos(totalTimer * 50), dSin(totalTimer * 70), dCos(totalTimer * 40)));
-	}
-	/**/
 }
 
 void MenuScreen::OnPress(const IOnPressListener::Data& data)

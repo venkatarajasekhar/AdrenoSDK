@@ -6,6 +6,7 @@ BloodBar::BloodBar()
 	m_background(nullptr),
 	m_scale(1)
 {
+
 }
 
 BloodBar::~BloodBar()

@@ -43,6 +43,8 @@ public:
 
 	void addItem(UIListItem* item);
 
+	Rect2D getViewport();
+
 private:
 	std::vector<UIListItem*> m_listItems;
 	Texture* m_background;

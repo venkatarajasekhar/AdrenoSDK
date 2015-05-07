@@ -23,11 +23,7 @@ public:
 
 	void render(SpriteBatch& spriteBatch)
 	{
-		Rect2D viewport;
-		viewport.Pos = m_list->getPos();
-		viewport.Size = m_list->getSize();
-
-		spriteBatch.renderTexture2D(m_texture, m_bounding, nullptr, 0.0f, &viewport);
+		spriteBatch.renderTexture2D(m_texture, m_bounding, nullptr, 0.0f, &m_list->getViewport());
 	}
 
 private:

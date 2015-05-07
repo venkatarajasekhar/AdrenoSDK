@@ -1,6 +1,21 @@
 
 #include "MyUIList.h"
 
+//=========================================================================================================================
+//
+// Constants
+//
+//=========================================================================================================================
+
+static const float LIST_ITEM_MARGIN = 10.0f;
+static const float LIST_PADDING = 5.0f;
+
+//=========================================================================================================================
+//
+// UIList class
+//
+//=========================================================================================================================
+
 UIList::UIList()
 	: m_background(nullptr),
 	m_currPos(0.0f),
@@ -30,7 +45,7 @@ void UIList::update(UserInput& userInput)
 		if (userInput.pointer_Dragging(delta) && userInput.pointer_Holding(pos) && isInside(pos, m_bounding))
 		{
 			m_currPos -= delta.y;
-			m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - getSize().y);
+			m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - LIST_ITEM_MARGIN - getSize().y);
 		}
 	}
 
@@ -49,6 +64,7 @@ void UIList::render(SpriteBatch& spriteBatch)
 	float height(0.0f);
 	MyVec2 listItemPos = getPos();
 	bool flag(false);
+	int count = 0;
 
 	// Render background
 	spriteBatch.renderTexture2D(m_background, m_bounding);
@@ -71,7 +87,7 @@ void UIList::render(SpriteBatch& spriteBatch)
 			}
 
 			// Render item
-			listItem->setPos(listItemPos);
+			listItem->setPos(listItemPos + MyVec2(0.5f * (getSize().x - listItem->getSize().x), LIST_ITEM_MARGIN * (count++)));
 			listItem->render(spriteBatch);
 
 			listItemPos += MyVec2(0, listItem->getSize().y);
@@ -82,11 +98,22 @@ void UIList::render(SpriteBatch& spriteBatch)
 				break;
 			}
 		}
+
+		height += LIST_ITEM_MARGIN;
 	}
 }
 
 void UIList::addItem(UIListItem* item)
 {
 	m_listItems.push_back(item);
-	m_maxCurrPos += item->getSize().y;
+	m_maxCurrPos += item->getSize().y + LIST_ITEM_MARGIN;
+}
+
+Rect2D UIList::getViewport()
+{
+	Rect2D viewport;
+	viewport.Pos = getPos() + MyVec2(0.0f, LIST_PADDING);
+	viewport.Size = getSize() - MyVec2(0.0f, 2.0f * LIST_PADDING);
+
+	return viewport;
 }

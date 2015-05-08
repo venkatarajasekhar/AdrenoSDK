@@ -30,7 +30,9 @@ void Font::init(const MyString& filename)
 	m_pGlyphsGLES = pFontData->pGlyphs;
 
 	// Create the font texture
-	m_texture.init(m_ResourceGLES.GetTexture("FontTexture"));
+	CFrmTexture* texData = m_ResourceGLES.GetTexture("FontTexture");
+	throwIfFailed((texData != nullptr), filename + ": Font resource is invalid");
+	m_texture.init(texData);
 }
 
 // Getter

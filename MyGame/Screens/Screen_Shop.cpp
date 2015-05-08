@@ -46,28 +46,30 @@ public:
 
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr)
 	{
-		spriteBatch.renderTexture2D(m_background, m_bounding, nullptr, 0.0f, &m_list->getViewport());
+		Rect2D listViewport = m_list->getViewport();
+
+		spriteBatch.renderTexture2D(m_background, m_bounding, nullptr, 0.0f, &listViewport);
 
 		{
 			float offset = 0.5f * (getSize().y - m_itemAvatar->getHeight());
 			MyVec2 pos = getPos() + MyVec2(offset);
-			spriteBatch.renderTexture2D(m_itemAvatar, pos, 0.0f, MyVec2(1), &m_list->getViewport());
+			spriteBatch.renderTexture2D(m_itemAvatar, pos, 0.0f, MyVec2(1), &listViewport);
 
 			{
 				pos.x += m_itemAvatar->getWidth() + offset;
 				m_name.setPos(pos);
-				m_name.render(spriteBatch, &m_list->getViewport());
+				m_name.render(spriteBatch, &listViewport);
 			}
 
 			{
 				pos.y += 30;
 				m_price.setPos(pos);
-				m_price.render(spriteBatch, &m_list->getViewport());
+				m_price.render(spriteBatch, &listViewport);
 			}
 
 			{
 				pos.x += m_price.getSize().x + 10;
-				spriteBatch.renderTexture2D(m_goldIcon, pos, 0.0f, MyVec2(1), &m_list->getViewport());
+				spriteBatch.renderTexture2D(m_goldIcon, pos, 0.0f, MyVec2(1), &listViewport);
 			}
 		}
 
@@ -75,7 +77,7 @@ public:
 			float offset = 0.5f * (getSize().y - m_buyBtn.getSize().y);
 			MyVec2 pos = getPos() + MyVec2(getSize().x - m_buyBtn.getSize().x - 5.0f, offset);
 			m_buyBtn.setPos(pos);
-			m_buyBtn.render(spriteBatch, &m_list->getViewport());
+			m_buyBtn.render(spriteBatch, &listViewport);
 		}
 	}
 

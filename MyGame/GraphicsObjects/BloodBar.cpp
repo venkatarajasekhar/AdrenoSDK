@@ -9,7 +9,6 @@ BloodBar::BloodBar()
 
 }
 
-
 BloodBar::~BloodBar()
 {
 }

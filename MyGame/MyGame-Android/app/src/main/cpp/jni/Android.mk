@@ -21,7 +21,6 @@ GAME_AI_PATH             := $(GAME_PATH)/AI
 GAME_BASE_ENTS_PATH      := $(GAME_PATH)/BaseEntities
 GAME_CORE_PATH           := $(GAME_PATH)/Core
 GAME_GAME_OBJS_PATH      := $(GAME_PATH)/GameObjects
-GAME_GAME_OBJS_MNG_PATH  := $(GAME_PATH)/GameObjectsManagers
 GAME_GRAPHICS_OBJS_PATH  := $(GAME_PATH)/GraphicsObjects
 GAME_SCREENS_PATH        := $(GAME_PATH)/Screens
 GAME_UTILS_PATH          := $(GAME_PATH)/Utils
@@ -71,6 +70,8 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_PATH)/MyScreenManager.cpp \
 				   $(SDK_MY_FRM_PATH)/MyTimer.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIButton.cpp \
+				   $(SDK_MY_FRM_PATH)/MyUILabel.cpp \
+				   $(SDK_MY_FRM_PATH)/MyUIList.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIWidget.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUtils.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyGameServer.cpp \
@@ -103,12 +104,14 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower_Main.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/HeroInfo.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_HUD.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_GameOver.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Menu.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Play.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_Shop.cpp \
 				   $(GAME_UTILS_PATH)/EventListener.cpp \
 				   $(GAME_UTILS_PATH)/TPSCamera.cpp
 				   
@@ -126,7 +129,6 @@ LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(GAME_BASE_ENTS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_CORE_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_PATH) \
-					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_MNG_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GRAPHICS_OBJS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_SCREENS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_UTILS_PATH)

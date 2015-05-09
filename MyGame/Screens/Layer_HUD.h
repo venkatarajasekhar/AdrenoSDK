@@ -16,7 +16,7 @@ public:
 
 	struct RenderBundle
 	{
-		MyVec3 PlayerPos;
+		Hero* Player;
 	};
 
 private:

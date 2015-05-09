@@ -94,8 +94,8 @@ void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle
 	m_btns[BTN_FIGHTING].render(spriteBatch);
 
 	// Other HUD-components
-	m_miniMap.render(spriteBatch, bundle.PlayerPos);
-	m_playerInfo.render(spriteBatch);
+	m_miniMap.render(spriteBatch, bundle.Player->getPos());
+	m_playerInfo.render(spriteBatch, *bundle.Player);
 
 	if (SHOW_FPS)
 	{

@@ -52,6 +52,11 @@ void LivingEntity::dead()
 
 // Getter
 
+int LivingEntity::getMaxHealth()const
+{
+	return m_maxHealth;
+}
+
 int LivingEntity::getHealth()const
 {
 	return m_health;

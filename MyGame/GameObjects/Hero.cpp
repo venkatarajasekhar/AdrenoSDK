@@ -364,3 +364,8 @@ void HeroPool::render(Camera& camera, Light& light)
 		m_skinnedMeshes[i].render(camera, &light);
 	}
 }
+
+Hero* HeroPool::getPlayer()
+{
+	return m_heroes[HERO_IN_GAME_MY_HERO_1];
+}

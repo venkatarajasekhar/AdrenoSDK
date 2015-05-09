@@ -50,12 +50,11 @@ void PlayerInfo::init(Font& font)
 	m_progBars[PROG_BAR_MANA].init("", MyVec2(), m_textures[TEXTURE_MANA_BAR_FORE], m_textures[TEXTURE_MANA_BAR_BACK]);
 	m_progBars[PROG_BAR_EXP].init("", MyVec2(), m_textures[TEXTURE_EXP_BAR_FORE], m_textures[TEXTURE_EXP_BAR_BACK]);
 
-	m_progBars[PROG_BAR_HEALTH].setProgress(0.5f);
 	m_progBars[PROG_BAR_MANA].setProgress(0.2f);
 	m_progBars[PROG_BAR_EXP].setProgress(0.9f);
 
 	// Label widgets
-	m_labels[LABEL_HEALTH].init("", MyVec2(), font, "4000/4000");
+	m_labels[LABEL_HEALTH].init("", MyVec2(), font, "");
 	m_labels[LABEL_MANA].init("", MyVec2(), font, "40/4000");
 	m_labels[LABEL_EXP].init("", MyVec2(), font, "1/50");
 	m_labels[LABEL_GOLD].init("", MyVec2(), font, "2003");
@@ -74,8 +73,14 @@ void PlayerInfo::update(Timer& timer, UserInput& userInput)
 	}
 }
 
-void PlayerInfo::render(SpriteBatch& spriteBatch)
+void PlayerInfo::render(SpriteBatch& spriteBatch, Hero& player)
 {
+	{
+		int health = player.getHealth(), maxHealth = player.getMaxHealth();
+		m_labels[LABEL_HEALTH].setText(toString(health) + "/" + toString(maxHealth));
+		m_progBars[PROG_BAR_HEALTH].setProgress((float)health / (float)maxHealth);
+	}
+	
 	{
 		MyVec2 pos = FIRST_BAR_POS;
 

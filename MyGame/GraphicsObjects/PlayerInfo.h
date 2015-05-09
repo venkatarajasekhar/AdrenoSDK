@@ -3,6 +3,7 @@
 
 #include <MyUILabel.h>
 #include <MyUIProgressBar.h>
+#include "Hero.h"
 
 class PlayerInfo
 {
@@ -47,7 +48,7 @@ public:
 
 	void init(Font& font);
 	void update(Timer& timer, UserInput& userInput);
-	void render(SpriteBatch& spriteBatch);
+	void render(SpriteBatch& spriteBatch, Hero& player);
 
 private:
 	// Assets

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Texture 
+    ResourceID  = "exp_bar_background"
+    SrcFileName = "exp_bar_background.png"
+/>
+
+<Texture 
+    ResourceID  = "exp_bar_foreground"
+    SrcFileName = "exp_bar_foreground.png"
+/>
+
+<Texture 
+    ResourceID  = "health_bar_background"
+    SrcFileName = "health_bar_background.png"
+/>
+
+<Texture 
+    ResourceID  = "health_bar_foreground"
+    SrcFileName = "health_bar_foreground.png"
+/>
+
+<Texture 
+    ResourceID  = "mana_bar_background"
+    SrcFileName = "mana_bar_background.png"
+/>
+
+<Texture 
+    ResourceID  = "mana_bar_foreground"
+    SrcFileName = "mana_bar_foreground.png"
+/>
+
+<Texture 
+    ResourceID  = "experience_icon"
+    SrcFileName = "experience_icon.png"
+/>
+
+<Texture 
+    ResourceID  = "health_icon"
+    SrcFileName = "health_icon.png"
+/>
+
+<Texture 
+    ResourceID  = "mana_icon"
+    SrcFileName = "mana_icon.png"
+/>
+
+<Texture 
+    ResourceID  = "gold_icon"
+    SrcFileName = "gold_icon.png"
+/>

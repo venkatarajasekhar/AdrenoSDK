@@ -18,6 +18,8 @@ public:
 		float size = 1.0f);
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
+	void setText(const MyString& text);
+
 private:
 	Font* m_font;
 	MyString m_text;

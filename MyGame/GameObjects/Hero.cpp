@@ -196,27 +196,6 @@ void Hero::update(Timer& timer)
 void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 {
 	if (m_instance->Visible) LivingEntity::render(spriteBatch, camera, light);
-
-	if (getTeamType() == TEAM_TYPE_MY_TEAM)
-	{
-		Font m_font;
-		m_font.init(resolveAssetsPath("Fonts/Consolas12.pak"));
-
-		spriteBatch.renderText2D(
-			m_font,
-			"Money " + toString(m_money),
-			MyVec2(10, 40));
-
-		spriteBatch.renderText2D(
-			m_font,
-			"Exp " + toString(m_exp),
-			MyVec2(10, 70));
-
-		spriteBatch.renderText2D(
-			m_font,
-			"Health " + toString(m_health),
-			MyVec2(10, 100));
-	}
 }
 
 MyVec3 Hero::getPos()

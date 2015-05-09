@@ -57,6 +57,8 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 		bundle.MapCenter,
 		bundle.MapSize);
 	m_miniMap.addPressListener(this);
+
+	m_playerInfo.init(m_fonts[FONT_CONSOLAS_12]);
 }
 
 void Layer_HUD::resize(int width, int height)
@@ -78,23 +80,27 @@ void Layer_HUD::update(Timer& timer, UserInput& userInput)
 
 	// Other HUD-components
 	m_miniMap.update(userInput);
+	m_playerInfo.update(timer, userInput);
+
 	m_fps = timer.getFPS();
 }
 
 void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle)
 {
+	int sWidth, sHeight;
+	getWindowDimension(sWidth, sHeight);
+
 	// Button widgets
 	m_btns[BTN_FIGHTING].render(spriteBatch);
 
 	// Other HUD-components
 	m_miniMap.render(spriteBatch, bundle.PlayerPos);
+	m_playerInfo.render(spriteBatch);
 
 	if (SHOW_FPS)
 	{
-		spriteBatch.renderText2D(
-			m_fonts[FONT_CONSOLAS_12],
-			toString(m_fps),
-			MyVec2(10, 10));
+		MyVec2 pos(10, sHeight - 10 - m_fonts[FONT_CONSOLAS_12].getTextHeight());
+		spriteBatch.renderText2D(m_fonts[FONT_CONSOLAS_12], toString(m_fps), pos);
 	}
 }
 

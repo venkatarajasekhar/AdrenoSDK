@@ -2,6 +2,7 @@
 #pragma once
 
 #include "MiniMap.h"
+#include "PlayerInfo.h"
 
 class Layer_HUD : public IOnPressListener, public OnPressListenee
 {
@@ -67,5 +68,7 @@ private:
 
 	// Other HUD-components
 	MiniMap m_miniMap;
+	PlayerInfo m_playerInfo;
+
 	float m_fps;
 };

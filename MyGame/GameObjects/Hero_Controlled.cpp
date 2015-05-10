@@ -173,12 +173,12 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 		{
 			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_PAWN)
 			{
-				hero->m_money += MONEY_PAWN;
+				hero->m_gold += MONEY_PAWN;
 				hero->m_exp += EXP_PAWN;
 			}
 			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_TOWER)
 			{
-				hero->m_money += MONEY_TOWER;
+				hero->m_gold += MONEY_TOWER;
 				hero->m_exp += EXP_TOWER;
 			}
 			//hero->m_health += 30;

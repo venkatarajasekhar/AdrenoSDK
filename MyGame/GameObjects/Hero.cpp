@@ -151,7 +151,7 @@ void Hero::init(
 	m_inUse = true;
 
 	m_exp = 0;
-	m_money = 600;
+	m_gold = 600;
 	m_countTime = 0;
 	m_revivalTime = 0;
 
@@ -179,8 +179,8 @@ void Hero::update(Timer& timer)
 	m_countTime += timer.getElapsedTime();
 	if (m_countTime >= 1.0f)
 	{
-		if (m_health < m_maxHealth) m_health++;
-		m_money++;
+		if ((m_instance->Visible) && (m_health < m_maxHealth)) m_health++;
+		m_gold++;
 		m_countTime--;
 	}
 
@@ -222,6 +222,11 @@ void Hero::revival()
 	m_health = m_maxHealth;
 	m_instance->Visible = true;
 	m_inUse = true;
+}
+
+int Hero::getGold()
+{
+	return m_gold;
 }
 
 //===================================================================================================================

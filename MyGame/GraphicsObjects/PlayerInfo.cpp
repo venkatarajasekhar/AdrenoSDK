@@ -57,7 +57,7 @@ void PlayerInfo::init(Font& font)
 	m_labels[LABEL_HEALTH].init("", MyVec2(), font, "");
 	m_labels[LABEL_MANA].init("", MyVec2(), font, "40/4000");
 	m_labels[LABEL_EXP].init("", MyVec2(), font, "1/50");
-	m_labels[LABEL_GOLD].init("", MyVec2(), font, "2003");
+	m_labels[LABEL_GOLD].init("", MyVec2(), font, "");
 }
 
 void PlayerInfo::update(Timer& timer, UserInput& userInput)
@@ -73,12 +73,15 @@ void PlayerInfo::update(Timer& timer, UserInput& userInput)
 	}
 }
 
+
 void PlayerInfo::render(SpriteBatch& spriteBatch, Hero& player)
 {
 	{
 		int health = player.getHealth(), maxHealth = player.getMaxHealth();
 		m_labels[LABEL_HEALTH].setText(toString(health) + "/" + toString(maxHealth));
 		m_progBars[PROG_BAR_HEALTH].setProgress((float)health / (float)maxHealth);
+
+		m_labels[LABEL_GOLD].setText(toString(player.getGold()));
 	}
 	
 	{

@@ -93,6 +93,7 @@ public:
 	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
 	MyVec3 getPos();
+	int getGold();
 
 protected:
 	virtual void dead();
@@ -107,8 +108,8 @@ protected:
 
 	float m_time_PAA_Attack_1;
 
-	float m_exp;
-	float m_money;
+	int m_exp;
+	int m_gold;
 	float m_countTime;
 	float m_revivalTime;
 

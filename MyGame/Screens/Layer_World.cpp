@@ -203,3 +203,8 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 		}
 	}
 }
+
+Hero* Layer_World::getPlayer()
+{
+	return m_heroPool.getPlayer();
+}

@@ -96,6 +96,8 @@ public:
 	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch);
 
+	Hero* getPlayer();
+
 private:
 	// Assets
 	Shader                  m_shaders[NUM_SHADERS];

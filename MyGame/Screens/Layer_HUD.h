@@ -2,6 +2,7 @@
 #pragma once
 
 #include "MiniMap.h"
+#include "PlayerInfo.h"
 
 class Layer_HUD : public IOnPressListener, public OnPressListenee
 {
@@ -15,7 +16,7 @@ public:
 
 	struct RenderBundle
 	{
-		MyVec3 PlayerPos;
+		Hero* Player;
 	};
 
 private:
@@ -67,5 +68,7 @@ private:
 
 	// Other HUD-components
 	MiniMap m_miniMap;
+	PlayerInfo m_playerInfo;
+
 	float m_fps;
 };

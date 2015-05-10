@@ -25,6 +25,7 @@ public:
 
 	// Getter
 
+	int getMaxHealth()const;
 	int getHealth()const;
 	int getDamage()const;
 	virtual MyVec3 getPos() = 0;

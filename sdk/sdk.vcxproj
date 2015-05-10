@@ -97,6 +97,7 @@
     <ClCompile Include="MyFramework\MyUIButton.cpp" />
     <ClCompile Include="MyFramework\MyUILabel.cpp" />
     <ClCompile Include="MyFramework\MyUIList.cpp" />
+    <ClCompile Include="MyFramework\MyUIProgressBar.cpp" />
     <ClCompile Include="MyFramework\MyUIWidget.cpp" />
     <ClCompile Include="MyFramework\MyUtils.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyBasicMesh.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="MyFramework\MyUIButton.h" />
     <ClInclude Include="MyFramework\MyUILabel.h" />
     <ClInclude Include="MyFramework\MyUIList.h" />
+    <ClInclude Include="MyFramework\MyUIProgressBar.h" />
     <ClInclude Include="MyFramework\MyUIWidget.h" />
     <ClInclude Include="MyFramework\MyUtils.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h" />

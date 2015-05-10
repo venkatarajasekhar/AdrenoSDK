@@ -83,7 +83,7 @@ void PlayScreen::render(void* utilObjs)
 
 	{
 		Layer_HUD::RenderBundle bundle;
-		bundle.PlayerPos = MyVec3(0);
+		bundle.Player = m_layer_World.getPlayer();
 
 		m_layer_HUD.render(*globalUtilObjs->spriteBatch, bundle);
 	}

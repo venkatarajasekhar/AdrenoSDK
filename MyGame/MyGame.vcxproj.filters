@@ -294,11 +294,14 @@
     <ClCompile Include="..\sdk\MyFramework\MyUIList.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsObjects\HeroInfo.cpp">
-      <Filter>GraphicsObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\sdk\MyFramework\MyUILabel.cpp">
       <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyUIProgressBar.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObjects\PlayerInfo.cpp">
+      <Filter>GraphicsObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -380,7 +383,7 @@
     <ClInclude Include="Screens\Screen_Shop.h">
       <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsObjects\HeroInfo.h">
+    <ClInclude Include="GraphicsObjects\PlayerInfo.h">
       <Filter>GraphicsObjects</Filter>
     </ClInclude>
   </ItemGroup>

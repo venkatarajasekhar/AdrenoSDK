@@ -177,6 +177,8 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 
+	Hero* getPlayer();
+
 private:
 	// Assets
 	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];

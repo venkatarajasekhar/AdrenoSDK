@@ -37,3 +37,9 @@ void UILabel::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 	m_font->setScale(MyVec2(m_size, m_size));
 	spriteBatch.renderText2D(*m_font, m_text, getPos(), 0.0f, viewport, m_color);
 }
+
+void UILabel::setText(const MyString& text)
+{
+	m_text = text;
+	m_bounding.Size.x = m_font->getTextWidth(m_text);
+}

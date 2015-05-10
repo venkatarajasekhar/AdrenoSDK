@@ -102,6 +102,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Projectile.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower_Main.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Item.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/HeroInfo.cpp \

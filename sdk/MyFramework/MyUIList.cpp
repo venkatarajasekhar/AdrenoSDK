@@ -12,6 +12,78 @@ static const float LIST_PADDING = 5.0f;
 
 //=========================================================================================================================
 //
+// UIListItem class
+//
+//=========================================================================================================================
+
+UIListItem::UIListItem(UIList* list)
+	: m_list(list),
+	m_selected(false)
+{}
+
+UIListItem::~UIListItem()
+{}
+
+void UIListItem::select()
+{ 
+	m_selected = true; 
+}
+
+void UIListItem::deselect()
+{ 
+	m_selected = false; 
+}
+
+void UIListItem::throwPressEvent(IOnPressListener::Data& data)
+{
+	data.Tag = this;
+	OnPressListenee::throwPressEvent(data);
+}
+
+//=========================================================================================================================
+//
+// Event class
+//
+//=========================================================================================================================
+
+OnPressListItemListenee::OnPressListItemListenee()
+{}
+
+OnPressListItemListenee::~OnPressListItemListenee()
+{}
+
+void OnPressListItemListenee::addPressListItemListener(IOnPressListItemListener* listener)
+{
+	if (listener == nullptr) return;
+
+	bool existed(false);
+	for (auto i = m_pressListItemListeners.begin(); i != m_pressListItemListeners.end(); ++i)
+	{
+		if ((*i) == listener)
+		{
+			existed = true;
+			break;
+		}
+	}
+	if (!existed)
+	{
+		m_pressListItemListeners.push_back(listener);
+	}
+}
+
+void OnPressListItemListenee::throwPressListItemEvent(IOnPressListItemListener::Data& data)
+{
+	for (auto i = m_pressListItemListeners.begin(); i != m_pressListItemListeners.end(); ++i)
+	{
+		if ((*i) != nullptr)
+		{
+			(*i)->OnPressListItem(data);
+		}
+	}
+}
+
+//=========================================================================================================================
+//
 // UIList class
 //
 //=========================================================================================================================
@@ -105,6 +177,7 @@ void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 
 void UIList::addItem(UIListItem* item)
 {
+	item->addPressListener(this);
 	m_listItems.push_back(item);
 	m_maxCurrPos += item->getSize().y + LIST_ITEM_MARGIN;
 }
@@ -116,4 +189,23 @@ Rect2D UIList::getViewport()
 	viewport.Size = getSize() - MyVec2(0.0f, 2.0f * LIST_PADDING);
 
 	return viewport;
+}
+
+void UIList::OnPress(const IOnPressListener::Data& data)
+{
+	if (data.Tag != nullptr)
+	{
+		UIListItem* item = (UIListItem*)data.Tag;
+
+		for (auto i = m_listItems.begin(); i != m_listItems.end(); ++i)
+		{
+			(*i)->deselect();
+		}
+
+		item->select();
+
+		// Throw press list item event
+		IOnPressListItemListener::Data data(m_id, item);
+		throwPressListItemEvent(data);
+	}
 }

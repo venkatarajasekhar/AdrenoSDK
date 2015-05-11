@@ -14,15 +14,62 @@ class UIList;
 class UIListItem : public UIWidget
 {
 public:
-	UIListItem(UIList* list)
-		: m_list(list)
-	{}
-	virtual ~UIListItem(){}
+	UIListItem(UIList* list);
+	virtual ~UIListItem();
 
 	virtual void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr) = 0;
 
+	void select();
+	void deselect();
+
+protected:
+	virtual void throwPressEvent(IOnPressListener::Data& data);
+
 protected:
 	UIList* m_list;
+	bool m_selected;
+};
+
+//===========================================================================================================
+//
+// Event class
+//
+//===========================================================================================================
+
+class IOnPressListItemListener
+{
+public:
+	struct Data
+	{
+		// ID of listenee
+		MyString Id;
+
+		// Selected list item
+		UIListItem* ListItem;
+
+		Data(const MyString& _id, UIListItem* _listItem)
+			: Id(_id),
+			ListItem(_listItem)
+		{}
+	};
+
+public:
+	virtual void OnPressListItem(const Data& data) = 0;
+};
+
+class OnPressListItemListenee
+{
+public:
+	OnPressListItemListenee();
+	virtual ~OnPressListItemListenee();
+
+	virtual void addPressListItemListener(IOnPressListItemListener* listener);
+
+protected:
+	virtual void throwPressListItemEvent(IOnPressListItemListener::Data& data);
+
+protected:
+	std::vector<IOnPressListItemListener*> m_pressListItemListeners;
 };
 
 //===========================================================================================================
@@ -31,7 +78,7 @@ protected:
 //
 //===========================================================================================================
 
-class UIList : public UIWidget
+class UIList : public UIWidget, public IOnPressListener, public OnPressListItemListenee
 {
 public:
 	UIList();
@@ -42,8 +89,9 @@ public:
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
 	void addItem(UIListItem* item);
-
 	Rect2D getViewport();
+
+	void OnPress(const IOnPressListener::Data& data);
 
 private:
 	std::vector<UIListItem*> m_listItems;

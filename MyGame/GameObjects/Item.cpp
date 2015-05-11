@@ -59,3 +59,8 @@ void Item::sell()
 {
 
 }
+
+int Item::getPrice()
+{
+	return m_price;
+}

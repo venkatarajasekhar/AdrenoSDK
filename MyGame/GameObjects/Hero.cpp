@@ -166,6 +166,11 @@ void Hero::init(
 		heroProp.BloodbarOffset,
 		lEnts, 
 		heroProp.AttackRange);
+
+	for (int i = 0; i < N_MAX_ITEM; i++)
+	{
+		m_lItems[i] = nullptr;
+	}
 }
 
 void Hero::update(Timer& timer)
@@ -201,6 +206,34 @@ void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 MyVec3 Hero::getPos()
 {
 	return m_movingEnt.getPos();
+}
+
+int Hero::findIndexForNewItem()
+{
+	for (int i = 0; i < N_MAX_ITEM; i++)
+		if (m_lItems[i] == nullptr) return i;
+	return -1;
+}
+
+void Hero::sellAnItem(int index)
+{
+	int price = m_lItems[index]->getPrice();
+	m_gold += price / 2;
+	SAFE_DELETE(m_lItems[index]);
+}
+
+int Hero::buyAnItem(Item* item)
+{
+	//not enough gold
+	int price = item->getPrice();
+	if (m_gold < price) return -2;
+
+	//not enough space
+	int index = findIndexForNewItem();
+	if (index == -1) return -1;
+
+	m_gold -= price;
+	m_lItems[index] = item;
 }
 
 void Hero::dead()

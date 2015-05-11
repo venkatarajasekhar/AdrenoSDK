@@ -5,17 +5,23 @@
 #include "Screen_Shop.h"
 #include <MyScreenManager.h>
 
-//==============================================================================================================
-//
-// Constant
-//
-//==============================================================================================================
-
-static const MyVec2 LIST_ITEM_MARGIN = MyVec2(15, 30);
+#pragma region Constants
 
 //==============================================================================================================
 //
-// Some class declarations
+// Constants
+//
+//==============================================================================================================
+
+static const float LIST_ITEM_VMARGIN = 30.0f;
+
+#pragma endregion
+
+#pragma region UIListItem_ShopItem class
+
+//==============================================================================================================
+//
+// UIListItem_ShopItem class
 //
 //==============================================================================================================
 
@@ -25,21 +31,20 @@ public:
 	UIListItem_ShopItem(
 		UIList* list, 
 		Texture& background,
-		Texture& itemAvatar,
 		Texture& goldIcon,
 		Texture& btnBuyBackground,
-		const MyString& name,
-		int price,
-		Font& font)
+		Font& font,
+		ItemInfo& itemInfo)
 		: UIListItem(list)
 	{
+		m_itemInfo = itemInfo;
 		m_background = &background;
-		m_itemAvatar = &itemAvatar;
+		m_itemAvatar = itemInfo.Avatar;
 		m_goldIcon = &goldIcon;
 
 		m_buyBtn.init("", MyVec2(), btnBuyBackground, "Buy", font);
-		m_name.init("", MyVec2(), font, name);
-		m_price.init("", MyVec2(), font, toString(price));
+		m_name.init("", MyVec2(), font, itemInfo.Name, 150.0f, UILabel::CUT_DOWN_WITH_ELLIPSIS);
+		m_price.init("", MyVec2(), font, toString(itemInfo.Price));
 
 		UIWidget::init("", MyVec2(), MyVec2(m_background->getWidth(), m_background->getHeight()));
 	}
@@ -48,7 +53,7 @@ public:
 	{
 		Rect2D listViewport = m_list->getViewport();
 
-		spriteBatch.renderTexture2D(m_background, m_bounding, nullptr, 0.0f, &listViewport);
+		spriteBatch.renderTexture2D(m_background, m_bounding, nullptr, 0.0f, &listViewport, (m_selected ? MyColor(0.7f, 0.7f, 0.7f) : MyColor(1, 1, 1)));
 
 		{
 			float offset = 0.5f * (getSize().y - m_itemAvatar->getHeight());
@@ -81,6 +86,11 @@ public:
 		}
 	}
 
+	ItemInfo getItemInfo()
+	{
+		return m_itemInfo;
+	}
+
 private:
 	Texture* m_background;
 	Texture* m_itemAvatar;
@@ -88,7 +98,11 @@ private:
 	UITextButton m_buyBtn;
 	UILabel m_name;
 	UILabel m_price;
+
+	ItemInfo m_itemInfo;
 };
+
+#pragma endregion
 
 //==============================================================================================================
 //
@@ -107,6 +121,49 @@ ShopScreen::~ShopScreen()
 {
 }
 
+#pragma region Init items info
+
+void ShopScreen::initItemInfo()
+{
+	m_itemInfo[0].Name = "Chain Mail";
+	m_itemInfo[0].Desc = "Painstakingly handmade by craftsmen in the town of Silence.";
+	m_itemInfo[0].Price = 250;
+	m_itemInfo[0].Benefit = "+ 10 Physical Defense";
+	m_itemInfo[0].Avatar = (m_textures + TEXTURE_ITEM_CHAIN_MAIL);
+
+	m_itemInfo[1].Name = "Cloak of the Resistant";
+	m_itemInfo[1].Desc = "A cloak woven of hair from the mane of the Night Horse, which legend says roams the Whispering Islands every blue moon.";
+	m_itemInfo[1].Price = 250;
+	m_itemInfo[1].Benefit = "+ 10 Magical Defense";
+	m_itemInfo[1].Avatar = (m_textures + TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT);
+
+	m_itemInfo[2].Name = "Life Ward";
+	m_itemInfo[2].Desc = "A ring blessed by an Orc mage to bring health to any lucky enough to wear it.";
+	m_itemInfo[2].Price = 450;
+	m_itemInfo[2].Benefit = "+ 3 HP Regeneration";
+	m_itemInfo[2].Avatar = (m_textures + TEXTURE_ITEM_LIFE_WARD);
+
+	m_itemInfo[3].Name = "Blood Pouch";
+	m_itemInfo[3].Desc = "A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.";
+	m_itemInfo[3].Price = 450;
+	m_itemInfo[3].Benefit = "+ 150 HP";
+	m_itemInfo[3].Avatar = (m_textures + TEXTURE_ITEM_BLOOD_POUCH);
+
+	m_itemInfo[4].Name = "Staff of Sathlenar";
+	m_itemInfo[4].Desc = "A staff stolen from the mighty Sathlenar long ago, It still retains remnants of his power.";
+	m_itemInfo[4].Price = 675;
+	m_itemInfo[4].Benefit = "+ 270 MP";
+	m_itemInfo[4].Avatar = (m_textures + TEXTURE_ITEM_STAFF_OF_SATHLENAR);
+
+	m_itemInfo[5].Name = "Light Calvary Hat";
+	m_itemInfo[5].Desc = "A cavalry hat woven from threads of tempered steel, perfected by a skilled seamstress from the East.";
+	m_itemInfo[5].Price = 750;
+	m_itemInfo[5].Benefit = "+ 250 HP";
+	m_itemInfo[5].Avatar = (m_textures + TEXTURE_ITEM_LIGHT_CALVARY_HAT);
+}
+
+#pragma endregion
+
 void ShopScreen::init()
 {
 	// Assets textures
@@ -114,12 +171,20 @@ void ShopScreen::init()
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Textures/shop.pak").c_str());
 
+		// Background panel
 		m_textures[TEXTURE_SHOP_BACKGROUND].init(resource.GetTexture("shop_background"));
-		m_textures[TEXTURE_SHOP_BTN_CLOSE].init(resource.GetTexture("shop_btn_close"));
 		m_textures[TEXTURE_LIST_ITEM_BACKGROUND].init(resource.GetTexture("list_item_background"));
+		m_textures[TEXTURE_DESC_ITEM_BACKGROUND].init(resource.GetTexture("desc_item_background"));
 		m_textures[TEXTURE_ITEM_BACKGROUND].init(resource.GetTexture("item_background"));
-		m_textures[TEXTURE_GOLD_ICON].init(resource.GetTexture("gold_icon"));
+
+		// Button
+		m_textures[TEXTURE_SHOP_BTN_CLOSE].init(resource.GetTexture("shop_btn_close"));
 		m_textures[TEXTURE_SHOP_BTN_BACKGROUND].init(resource.GetTexture("shop_btn_background"));
+		
+		// Icon
+		m_textures[TEXTURE_GOLD_ICON].init(resource.GetTexture("gold_icon"));
+		
+		// Item avatar
 		m_textures[TEXTURE_ITEM_BLOOD_POUCH].init(resource.GetTexture("item_blood_pouch"));
 		m_textures[TEXTURE_ITEM_CHAIN_MAIL].init(resource.GetTexture("item_chain_mail"));
 		m_textures[TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT].init(resource.GetTexture("item_cloak_of_the_resistant"));
@@ -135,62 +200,25 @@ void ShopScreen::init()
 	m_btns[BTN_CLOSE].init("shop_btn_close", MyVec2(), m_textures[TEXTURE_SHOP_BTN_CLOSE]);
 	m_btns[BTN_CLOSE].addPressListener(this);
 
+	// Label widgets
+	m_labels[LABEL_ITEM_DESC].init("", MyVec2(), m_fonts[FONT_CONSOLAS_12], "Please choose an item to show", m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getWidth());
+
 	// List widgets
+	initItemInfo();
+
 	m_shopItemList.init("shop_item_list", MyVec2(0, 0), m_textures[TEXTURE_LIST_ITEM_BACKGROUND]);
-	m_shopItemList.addItem(new UIListItem_ShopItem(
-		&m_shopItemList, 
-		m_textures[TEXTURE_ITEM_BACKGROUND], 
-		m_textures[TEXTURE_ITEM_BLOOD_POUCH], 
-		m_textures[TEXTURE_GOLD_ICON], 
-		m_textures[TEXTURE_SHOP_BTN_BACKGROUND], 
-		"Blood Pouch", 
-		200, 
-		m_fonts[FONT_CONSOLAS_12]));
-	m_shopItemList.addItem(new UIListItem_ShopItem(
-		&m_shopItemList,
-		m_textures[TEXTURE_ITEM_BACKGROUND],
-		m_textures[TEXTURE_ITEM_CHAIN_MAIL],
-		m_textures[TEXTURE_GOLD_ICON],
-		m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
-		"Chain Mail",
-		1600,
-		m_fonts[FONT_CONSOLAS_12]));
-	m_shopItemList.addItem(new UIListItem_ShopItem(
-		&m_shopItemList,
-		m_textures[TEXTURE_ITEM_BACKGROUND],
-		m_textures[TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT],
-		m_textures[TEXTURE_GOLD_ICON],
-		m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
-		"Cloak of the...",
-		3000,
-		m_fonts[FONT_CONSOLAS_12]));
-	m_shopItemList.addItem(new UIListItem_ShopItem(
-		&m_shopItemList,
-		m_textures[TEXTURE_ITEM_BACKGROUND],
-		m_textures[TEXTURE_ITEM_LIFE_WARD],
-		m_textures[TEXTURE_GOLD_ICON],
-		m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
-		"Life Ward",
-		550,
-		m_fonts[FONT_CONSOLAS_12]));
-	m_shopItemList.addItem(new UIListItem_ShopItem(
-		&m_shopItemList,
-		m_textures[TEXTURE_ITEM_BACKGROUND],
-		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
-		m_textures[TEXTURE_GOLD_ICON],
-		m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
-		"Light Cal...",
-		5000,
-		m_fonts[FONT_CONSOLAS_12]));
-	m_shopItemList.addItem(new UIListItem_ShopItem(
-		&m_shopItemList,
-		m_textures[TEXTURE_ITEM_BACKGROUND],
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
-		m_textures[TEXTURE_GOLD_ICON],
-		m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
-		"Staff of Sa...",
-		790,
-		m_fonts[FONT_CONSOLAS_12]));
+	m_shopItemList.addPressListItemListener(this);
+
+	for (int i = 0; i < NUM_ITEMS; i++)
+	{
+		m_shopItemList.addItem(new UIListItem_ShopItem(
+			&m_shopItemList,
+			m_textures[TEXTURE_ITEM_BACKGROUND],
+			m_textures[TEXTURE_GOLD_ICON],
+			m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
+			m_fonts[FONT_CONSOLAS_12],
+			m_itemInfo[i]));
+	}
 }
 
 void ShopScreen::resize(int width, int height)
@@ -209,6 +237,12 @@ void ShopScreen::update(void* utilObjs)
 		m_btns[i].update(*globalUtilObjs->userInput);
 	}
 
+	// Label widgets
+	for (int i = 0; i < NUM_LABELS; i++)
+	{
+		m_labels[i].update(*globalUtilObjs->userInput);
+	}
+
 	// List widgets
 	m_shopItemList.update(*globalUtilObjs->userInput);
 }
@@ -224,8 +258,22 @@ void ShopScreen::render(void* utilObjs)
 
 		globalUtilObjs->spriteBatch->renderTexture2D(&m_textures[TEXTURE_SHOP_BACKGROUND], pos);
 
-		m_shopItemList.setPos(pos + LIST_ITEM_MARGIN);
+		{
+			float xOffset = (
+				m_textures[TEXTURE_SHOP_BACKGROUND].getWidth() - 
+				m_shopItemList.getSize().x - 
+				m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getWidth()) / 3.0f;
 
+			m_shopItemList.setPos(pos + MyVec2(xOffset, LIST_ITEM_VMARGIN));
+
+			xOffset = 2 * xOffset + m_shopItemList.getSize().x;
+			float yOffset = LIST_ITEM_VMARGIN + m_shopItemList.getSize().y - m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getHeight();
+
+			globalUtilObjs->spriteBatch->renderTexture2D(&m_textures[TEXTURE_DESC_ITEM_BACKGROUND], pos + MyVec2(xOffset, yOffset));
+			m_labels[LABEL_ITEM_DESC].setPos(pos + MyVec2(xOffset, yOffset) + MyVec2(5.0f));
+			m_labels[LABEL_ITEM_DESC].render(*globalUtilObjs->spriteBatch);
+		}
+		
 		pos.x += m_textures[TEXTURE_SHOP_BACKGROUND].getWidth() - m_btns[BTN_CLOSE].getSize().x;
 		m_btns[BTN_CLOSE].setPos(pos);
 	}
@@ -245,5 +293,23 @@ void ShopScreen::OnPress(const IOnPressListener::Data& data)
 	if (data.Id == "shop_btn_close")
 	{
 		m_screenManager->activeScreen("PlayScreen");
+	}
+}
+
+void ShopScreen::OnPressListItem(const IOnPressListItemListener::Data& data)
+{
+	if (data.Id == "shop_item_list")
+	{
+		UIListItem_ShopItem* item = (UIListItem_ShopItem*)data.ListItem;
+
+		MyString desc = item->getItemInfo().Name;
+		desc += "\n\n";
+		desc += "Cost: " + toString(item->getItemInfo().Price);
+		desc += "\n";
+		desc += "Benefit: " + item->getItemInfo().Benefit;
+		desc += "\n\n";
+		desc += item->getItemInfo().Desc;
+
+		m_labels[LABEL_ITEM_DESC].setText(desc);
 	}
 }

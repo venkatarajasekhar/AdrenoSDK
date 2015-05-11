@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
+<!-- Background panel -->
+
 <Texture 
     ResourceID  = "shop_background"
     SrcFileName = "shop_background.png"
-/>
-
-<Texture 
-    ResourceID  = "shop_btn_close"
-    SrcFileName = "shop_btn_close.png"
 />
 
 <Texture 
@@ -16,19 +13,35 @@
 />
 
 <Texture 
+    ResourceID  = "desc_item_background"
+    SrcFileName = "desc_item_background.png"
+/>
+
+<Texture 
     ResourceID  = "item_background"
     SrcFileName = "item_background.png"
 />
 
+<!-- Button -->
+
 <Texture 
-    ResourceID  = "gold_icon"
-    SrcFileName = "gold_icon.png"
+    ResourceID  = "shop_btn_close"
+    SrcFileName = "shop_btn_close.png"
 />
 
 <Texture 
     ResourceID  = "shop_btn_background"
     SrcFileName = "shop_btn_background.png"
 />
+
+<!-- Icon -->
+
+<Texture 
+    ResourceID  = "gold_icon"
+    SrcFileName = "gold_icon.png"
+/>
+
+<!-- Item avatar -->
 
 <Texture 
     ResourceID  = "item_blood_pouch"

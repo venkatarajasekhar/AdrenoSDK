@@ -9,6 +9,7 @@ enum ITEM_TYPE
 	PASSIVE,
 };
 
+
 class Item
 {
 public:

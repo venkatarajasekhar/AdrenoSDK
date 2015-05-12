@@ -5,6 +5,7 @@
 #include <MyEventListener.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
+#include "Item.h"
 
 //===================================================================================================================
 //
@@ -75,6 +76,8 @@ const float EXP_TOWER = 500;
 //
 //===================================================================================================================
 
+const int N_MAX_ITEM = 6;
+
 class Hero : public LivingEntity
 {
 public:
@@ -94,6 +97,10 @@ public:
 
 	MyVec3 getPos();
 	int getGold();
+
+	int findIndexForNewItem();
+	void sellAnItem(int index);
+	int buyAnItem(Item* item);
 
 protected:
 	virtual void dead();
@@ -115,6 +122,8 @@ protected:
 
 	MyVec3 m_positionStart;
 	MyVec3 m_rotationStart;
+
+	Item* m_lItems[N_MAX_ITEM];
 };
 
 //===================================================================================================================

@@ -10,6 +10,7 @@ Item::~Item()
 
 }
 
+
 void Item::init()
 {
 	m_countTimeUsed = 0;
@@ -57,4 +58,9 @@ void Item::pick()
 void Item::sell()
 {
 
+}
+
+int Item::getPrice()
+{
+	return m_price;
 }

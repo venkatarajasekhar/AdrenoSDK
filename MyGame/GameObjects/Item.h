@@ -21,6 +21,8 @@ public:
 	void drop();
 	void pick();
 	Item clone();
+
+	int getPrice();
 private:
 	//Texture m_icon;
 	//UILabel m_name;

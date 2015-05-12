@@ -72,6 +72,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIButton.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUILabel.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIList.cpp \
+				   $(SDK_MY_FRM_PATH)/MyUIProgressBar.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIWidget.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUtils.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyGameServer.cpp \
@@ -98,15 +99,15 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_AI.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_Controlled.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Item.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Pawn.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Projectile.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower_Main.cpp \
-				   $(GAME_GAME_OBJS_PATH)/Item.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
-				   $(GAME_GRAPHICS_OBJS_PATH)/HeroInfo.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/PlayerInfo.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_HUD.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_GameOver.cpp \

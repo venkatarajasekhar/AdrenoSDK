@@ -13,6 +13,11 @@
 />
 
 <Texture 
+    ResourceID  = "list_selected_item_background"
+    SrcFileName = "list_selected_item_background.png"
+/>
+
+<Texture 
     ResourceID  = "desc_item_background"
     SrcFileName = "desc_item_background.png"
 />

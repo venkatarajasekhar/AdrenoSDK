@@ -5,6 +5,12 @@
 #include <MyUIButton.h>
 #include <MyUIList.h>
 
+//===================================================================================================================
+//
+// ItemInfo class
+//
+//===================================================================================================================
+
 struct ItemInfo
 {
 	MyString Name;
@@ -14,7 +20,59 @@ struct ItemInfo
 	Texture* Avatar;
 };
 
-class ShopScreen : public Screen, public IOnPressListener, public IOnPressListItemListener
+#pragma region Event class
+
+//===========================================================================================================
+//
+// Event class
+//
+//===========================================================================================================
+
+class IOnBuyItemListener
+{
+public:
+	struct Data
+	{
+		// ID of listenee
+		MyString Id;
+
+		// Bought item
+		ItemInfo* BoughtItem;
+
+		Data(const MyString& _id, ItemInfo* _boughtItem)
+			: Id(_id),
+			BoughtItem(_boughtItem)
+		{}
+	};
+
+public:
+	virtual void OnBuyItemItem(const Data& data) = 0;
+};
+
+class OnBuyItemListenee
+{
+public:
+	OnBuyItemListenee(){}
+	virtual ~OnBuyItemListenee(){}
+
+	virtual void addBuyItemListener(IOnBuyItemListener* listener);
+
+protected:
+	virtual void throwBuyItemEvent(IOnBuyItemListener::Data& data);
+
+protected:
+	std::vector<IOnBuyItemListener*> m_buyItemListeners;
+};
+
+#pragma endregion
+
+//===================================================================================================================
+//
+// ShopScreen class
+//
+//===================================================================================================================
+
+class ShopScreen : public Screen, public IOnPressListener, public IOnPressListItemListener, public IOnBuyItemListener
 {
 private:
 	static const int NUM_ITEMS = 6;
@@ -26,6 +84,7 @@ private:
 		// Background panel
 		TEXTURE_SHOP_BACKGROUND,
 		TEXTURE_LIST_ITEM_BACKGROUND,
+		TEXTURE_LIST_SELECTED_ITEM_BACKGROUND,
 		TEXTURE_DESC_ITEM_BACKGROUND,
 		TEXTURE_ITEM_BACKGROUND,
 
@@ -65,6 +124,13 @@ private:
 		NUM_LABELS,
 	};
 
+	enum
+	{
+		LIST_ITEM,
+		LIST_SELECTED_ITEM,
+		NUM_LISTS,
+	};
+
 public:
 	ShopScreen(ScreenManager* screenManager);
 	~ShopScreen();
@@ -76,6 +142,7 @@ public:
 
 	void OnPress(const IOnPressListener::Data& data);
 	void OnPressListItem(const IOnPressListItemListener::Data& data);
+	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
 
 private:
 	void initItemInfo();
@@ -90,7 +157,7 @@ private:
 	// UI Widgets
 	UIImageButton m_btns[NUM_BTNS];
 	UILabel m_labels[NUM_LABELS];
-	UIList m_shopItemList;
+	UIList m_list[NUM_LISTS];
 
 	ItemInfo m_itemInfo[NUM_ITEMS];
 };

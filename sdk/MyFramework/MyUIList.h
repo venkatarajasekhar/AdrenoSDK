@@ -3,6 +3,8 @@
 
 #include "MyUIWidget.h"
 
+#pragma region UIListItem class
+
 //===========================================================================================================
 //
 // UIListItem class
@@ -29,6 +31,10 @@ protected:
 	UIList* m_list;
 	bool m_selected;
 };
+
+#pragma endregion
+
+#pragma region Event class
 
 //===========================================================================================================
 //
@@ -72,6 +78,8 @@ protected:
 	std::vector<IOnPressListItemListener*> m_pressListItemListeners;
 };
 
+#pragma endregion
+
 //===========================================================================================================
 //
 // UIList class
@@ -81,10 +89,17 @@ protected:
 class UIList : public UIWidget, public IOnPressListener, public OnPressListItemListenee
 {
 public:
+	enum ORIENTATION
+	{
+		VERTICAL,
+		HORIZONTAL,
+	};
+
+public:
 	UIList();
 	~UIList();
 
-	void init(const MyString& id, const MyVec2& pos, Texture& background);
+	void init(const MyString& id, const MyVec2& pos, Texture& background, UIList::ORIENTATION orientation = UIList::VERTICAL);
 	void update(UserInput& userInput);
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
@@ -99,4 +114,6 @@ private:
 
 	float m_currPos;
 	float m_maxCurrPos;
+
+	ORIENTATION m_orientation;
 };

@@ -1,6 +1,8 @@
 
 #include "MyUIList.h"
 
+#pragma region Constants
+
 //=========================================================================================================================
 //
 // Constants
@@ -9,6 +11,10 @@
 
 static const float LIST_ITEM_MARGIN = 10.0f;
 static const float LIST_PADDING = 5.0f;
+
+#pragma endregion
+
+#pragma region UIListItem class
 
 //=========================================================================================================================
 //
@@ -39,6 +45,10 @@ void UIListItem::throwPressEvent(IOnPressListener::Data& data)
 	data.Tag = this;
 	OnPressListenee::throwPressEvent(data);
 }
+
+#pragma endregion
+
+#pragma region Event class
 
 //=========================================================================================================================
 //
@@ -82,6 +92,8 @@ void OnPressListItemListenee::throwPressListItemEvent(IOnPressListItemListener::
 	}
 }
 
+#pragma endregion
+
 //=========================================================================================================================
 //
 // UIList class
@@ -91,7 +103,8 @@ void OnPressListItemListenee::throwPressListItemEvent(IOnPressListItemListener::
 UIList::UIList()
 	: m_background(nullptr),
 	m_currPos(0.0f),
-	m_maxCurrPos(0.0f)
+	m_maxCurrPos(0.0f),
+	m_orientation(VERTICAL)
 {
 }
 
@@ -103,9 +116,11 @@ UIList::~UIList()
 	}
 }
 
-void UIList::init(const MyString& id, const MyVec2& pos, Texture& background)
+void UIList::init(const MyString& id, const MyVec2& pos, Texture& background, UIList::ORIENTATION orientation)
 {
 	m_background = &background;
+	m_orientation = orientation;
+
 	UIWidget::init(id, pos, MyVec2(m_background->getWidth(), m_background->getHeight()));
 }
 
@@ -113,11 +128,25 @@ void UIList::update(UserInput& userInput)
 {
 	// Update list
 	{
-		MyVec2 delta, pos;
-		if (userInput.pointer_Dragging(delta) && userInput.pointer_Holding(pos) && isInside(pos, m_bounding))
+		if (
+			((m_orientation == VERTICAL) && (m_maxCurrPos - LIST_ITEM_MARGIN - getSize().y > 0)) ||
+			((m_orientation == HORIZONTAL) && (m_maxCurrPos - LIST_ITEM_MARGIN - getSize().x > 0))
+			)
 		{
-			m_currPos -= delta.y;
-			m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - LIST_ITEM_MARGIN - getSize().y);
+			MyVec2 delta, pos;
+			if (userInput.pointer_Dragging(delta) && userInput.pointer_Holding(pos) && isInside(pos, m_bounding))
+			{
+				if (m_orientation == VERTICAL)
+				{
+					m_currPos -= delta.y;
+					m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - LIST_ITEM_MARGIN - getSize().y);
+				}
+				else
+				{
+					m_currPos -= delta.x;
+					m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - LIST_ITEM_MARGIN - getSize().x);
+				}
+			}
 		}
 	}
 
@@ -133,7 +162,7 @@ void UIList::update(UserInput& userInput)
 
 void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 {
-	float height(0.0f);
+	float length(0.0f);
 	MyVec2 listItemPos = getPos();
 	bool flag(false);
 	int count = 0;
@@ -146,32 +175,59 @@ void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 	{
 		UIListItem* listItem = (*i);
 
-		height += listItem->getSize().y;
-
+		if (m_orientation == VERTICAL)
+		{
+			length += listItem->getSize().y;
+		}
+		else
+		{
+			length += listItem->getSize().x;
+		}
+		
 		// Begin rendering items
-		if (height >= m_currPos)
+		if (length >= m_currPos)
 		{
 			if (!flag)
 			{
-				listItemPos.y += height - m_currPos - listItem->getSize().y;
-
+				if (m_orientation == VERTICAL)
+				{
+					listItemPos.y += length - m_currPos - listItem->getSize().y;
+				}
+				else
+				{
+					listItemPos.x += length - m_currPos - listItem->getSize().x;
+				}
+				
 				flag = true;
 			}
 
 			// Render item
-			listItem->setPos(listItemPos + MyVec2(0.5f * (getSize().x - listItem->getSize().x), LIST_ITEM_MARGIN * (count++)));
-			listItem->render(spriteBatch);
+			if (m_orientation == VERTICAL)
+			{
+				listItem->setPos(listItemPos + MyVec2(0.5f * (getSize().x - listItem->getSize().x), LIST_ITEM_MARGIN * (count++)));
+				listItem->render(spriteBatch);
 
-			listItemPos += MyVec2(0, listItem->getSize().y);
+				listItemPos += MyVec2(0, listItem->getSize().y);
+			}
+			else
+			{
+				listItem->setPos(listItemPos + MyVec2(LIST_ITEM_MARGIN * (count++), 0.5f * (getSize().y - listItem->getSize().y)));
+				listItem->render(spriteBatch);
 
+				listItemPos += MyVec2(listItem->getSize().x, 0);
+			}
+			
 			// End rendering items
-			if (height >= m_currPos + getSize().y)
+			if (
+				((m_orientation == VERTICAL) && (length >= m_currPos + getSize().y)) ||
+				((m_orientation == HORIZONTAL) && (length >= m_currPos + getSize().x))
+				)
 			{
 				break;
 			}
 		}
 
-		height += LIST_ITEM_MARGIN;
+		length += LIST_ITEM_MARGIN;
 	}
 }
 
@@ -179,15 +235,30 @@ void UIList::addItem(UIListItem* item)
 {
 	item->addPressListener(this);
 	m_listItems.push_back(item);
-	m_maxCurrPos += item->getSize().y + LIST_ITEM_MARGIN;
+	if (m_orientation == VERTICAL)
+	{
+		m_maxCurrPos += item->getSize().y + LIST_ITEM_MARGIN;
+	}
+	else
+	{
+		m_maxCurrPos += item->getSize().x + LIST_ITEM_MARGIN;
+	}
 }
 
 Rect2D UIList::getViewport()
 {
 	Rect2D viewport;
-	viewport.Pos = getPos() + MyVec2(0.0f, LIST_PADDING);
-	viewport.Size = getSize() - MyVec2(0.0f, 2.0f * LIST_PADDING);
-
+	if (m_orientation == VERTICAL)
+	{
+		viewport.Pos = getPos() + MyVec2(0.0f, LIST_PADDING);
+		viewport.Size = getSize() - MyVec2(0.0f, 2.0f * LIST_PADDING);
+	}
+	else
+	{
+		viewport.Pos = getPos() + MyVec2(LIST_PADDING, 0.0f);
+		viewport.Size = getSize() - MyVec2(2.0f * LIST_PADDING, 0.0f);
+	}
+	
 	return viewport;
 }
 

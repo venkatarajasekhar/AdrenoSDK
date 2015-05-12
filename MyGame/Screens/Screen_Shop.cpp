@@ -5,15 +5,43 @@
 #include "Screen_Shop.h"
 #include <MyScreenManager.h>
 
-#pragma region Constants
+#pragma region Event class
 
-//==============================================================================================================
+//===========================================================================================================
 //
-// Constants
+// Event class
 //
-//==============================================================================================================
+//===========================================================================================================
 
-static const float LIST_ITEM_VMARGIN = 30.0f;
+void OnBuyItemListenee::addBuyItemListener(IOnBuyItemListener* listener)
+{
+	if (listener == nullptr) return;
+
+	bool existed(false);
+	for (auto i = m_buyItemListeners.begin(); i != m_buyItemListeners.end(); ++i)
+	{
+		if ((*i) == listener)
+		{
+			existed = true;
+			break;
+		}
+	}
+	if (!existed)
+	{
+		m_buyItemListeners.push_back(listener);
+	}
+}
+
+void OnBuyItemListenee::throwBuyItemEvent(IOnBuyItemListener::Data& data)
+{
+	for (auto i = m_buyItemListeners.begin(); i != m_buyItemListeners.end(); ++i)
+	{
+		if ((*i) != nullptr)
+		{
+			(*i)->OnBuyItemItem(data);
+		}
+	}
+}
 
 #pragma endregion
 
@@ -25,11 +53,12 @@ static const float LIST_ITEM_VMARGIN = 30.0f;
 //
 //==============================================================================================================
 
-class UIListItem_ShopItem : public UIListItem
+class UIListItem_ShopItem : public UIListItem, public IOnPressListener, public OnBuyItemListenee
 {
 public:
 	UIListItem_ShopItem(
 		UIList* list, 
+		IOnBuyItemListener* buyItemListener,
 		Texture& background,
 		Texture& goldIcon,
 		Texture& btnBuyBackground,
@@ -42,11 +71,21 @@ public:
 		m_itemAvatar = itemInfo.Avatar;
 		m_goldIcon = &goldIcon;
 
-		m_buyBtn.init("", MyVec2(), btnBuyBackground, "Buy", font);
+		addBuyItemListener(buyItemListener);
+
+		m_buyBtn.init("buy_item_btn", MyVec2(), btnBuyBackground, "Buy", font);
+		m_buyBtn.addPressListener(this);
 		m_name.init("", MyVec2(), font, itemInfo.Name, 150.0f, UILabel::CUT_DOWN_WITH_ELLIPSIS);
 		m_price.init("", MyVec2(), font, toString(itemInfo.Price));
 
 		UIWidget::init("", MyVec2(), MyVec2(m_background->getWidth(), m_background->getHeight()));
+	}
+
+	void update(UserInput& userInput)
+	{
+		m_buyBtn.update(userInput);
+
+		UIWidget::update(userInput);
 	}
 
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr)
@@ -86,6 +125,15 @@ public:
 		}
 	}
 
+	void OnPress(const IOnPressListener::Data& data)
+	{
+		if (data.Id == "buy_item_btn")
+		{
+			IOnBuyItemListener::Data data("", &m_itemInfo);
+			throwBuyItemEvent(data);
+		}
+	}
+
 	ItemInfo getItemInfo()
 	{
 		return m_itemInfo;
@@ -100,6 +148,44 @@ private:
 	UILabel m_price;
 
 	ItemInfo m_itemInfo;
+};
+
+#pragma endregion
+
+#pragma region UIListItem_SelectedItem class
+
+//==============================================================================================================
+//
+// UIListItem_SelectedItem class
+//
+//==============================================================================================================
+
+class UIListItem_SelectedItem : public UIListItem
+{
+public:
+	UIListItem_SelectedItem(UIList* list, Texture& texture)
+		: UIListItem(list)
+	{
+		m_texture = &texture;
+
+		UIWidget::init("", MyVec2(), MyVec2(m_texture->getWidth(), m_texture->getHeight()));
+	}
+
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr)
+	{
+		Rect2D listViewport = m_list->getViewport();
+
+		spriteBatch.renderTexture2D(
+			m_texture, 
+			m_bounding, 
+			nullptr, 
+			0.0f, 
+			&listViewport, 
+			(m_selected ? MyColor(0, 1, 1) : MyColor(1, 1, 1)));
+	}
+
+private:
+	Texture* m_texture;
 };
 
 #pragma endregion
@@ -174,6 +260,7 @@ void ShopScreen::init()
 		// Background panel
 		m_textures[TEXTURE_SHOP_BACKGROUND].init(resource.GetTexture("shop_background"));
 		m_textures[TEXTURE_LIST_ITEM_BACKGROUND].init(resource.GetTexture("list_item_background"));
+		m_textures[TEXTURE_LIST_SELECTED_ITEM_BACKGROUND].init(resource.GetTexture("list_selected_item_background"));
 		m_textures[TEXTURE_DESC_ITEM_BACKGROUND].init(resource.GetTexture("desc_item_background"));
 		m_textures[TEXTURE_ITEM_BACKGROUND].init(resource.GetTexture("item_background"));
 
@@ -206,19 +293,22 @@ void ShopScreen::init()
 	// List widgets
 	initItemInfo();
 
-	m_shopItemList.init("shop_item_list", MyVec2(0, 0), m_textures[TEXTURE_LIST_ITEM_BACKGROUND]);
-	m_shopItemList.addPressListItemListener(this);
+	m_list[LIST_ITEM].init("shop_item_list", MyVec2(0, 0), m_textures[TEXTURE_LIST_ITEM_BACKGROUND]);
+	m_list[LIST_ITEM].addPressListItemListener(this);
 
 	for (int i = 0; i < NUM_ITEMS; i++)
 	{
-		m_shopItemList.addItem(new UIListItem_ShopItem(
-			&m_shopItemList,
+		m_list[LIST_ITEM].addItem(new UIListItem_ShopItem(
+			&m_list[LIST_ITEM],
+			this,
 			m_textures[TEXTURE_ITEM_BACKGROUND],
 			m_textures[TEXTURE_GOLD_ICON],
 			m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
 			m_fonts[FONT_CONSOLAS_12],
 			m_itemInfo[i]));
 	}
+
+	m_list[LIST_SELECTED_ITEM].init("selected_item_list", MyVec2(), m_textures[TEXTURE_LIST_SELECTED_ITEM_BACKGROUND], UIList::HORIZONTAL);
 }
 
 void ShopScreen::resize(int width, int height)
@@ -244,7 +334,10 @@ void ShopScreen::update(void* utilObjs)
 	}
 
 	// List widgets
-	m_shopItemList.update(*globalUtilObjs->userInput);
+	for (int i = 0; i < NUM_LISTS; i++)
+	{
+		m_list[i].update(*globalUtilObjs->userInput);
+	}
 }
 
 void ShopScreen::render(void* utilObjs)
@@ -261,13 +354,18 @@ void ShopScreen::render(void* utilObjs)
 		{
 			float xOffset = (
 				m_textures[TEXTURE_SHOP_BACKGROUND].getWidth() - 
-				m_shopItemList.getSize().x - 
+				m_list[LIST_ITEM].getSize().x -
 				m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getWidth()) / 3.0f;
+			float yOffset = (
+				m_textures[TEXTURE_SHOP_BACKGROUND].getHeight() -
+				m_list[LIST_ITEM].getSize().y -
+				m_list[LIST_SELECTED_ITEM].getSize().y) / 3.0f;
 
-			m_shopItemList.setPos(pos + MyVec2(xOffset, LIST_ITEM_VMARGIN));
+			m_list[LIST_ITEM].setPos(pos + MyVec2(xOffset, yOffset));
+			m_list[LIST_SELECTED_ITEM].setPos(pos + MyVec2(xOffset, 2 * yOffset + m_list[LIST_ITEM].getSize().y));
 
-			xOffset = 2 * xOffset + m_shopItemList.getSize().x;
-			float yOffset = LIST_ITEM_VMARGIN + m_shopItemList.getSize().y - m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getHeight();
+			xOffset = 2 * xOffset + m_list[LIST_ITEM].getSize().x;
+			yOffset = yOffset + m_list[LIST_ITEM].getSize().y - m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getHeight();
 
 			globalUtilObjs->spriteBatch->renderTexture2D(&m_textures[TEXTURE_DESC_ITEM_BACKGROUND], pos + MyVec2(xOffset, yOffset));
 			m_labels[LABEL_ITEM_DESC].setPos(pos + MyVec2(xOffset, yOffset) + MyVec2(5.0f));
@@ -285,7 +383,10 @@ void ShopScreen::render(void* utilObjs)
 	}
 
 	// List widgets
-	m_shopItemList.render(*globalUtilObjs->spriteBatch);
+	for (int i = 0; i < NUM_LISTS; i++)
+	{
+		m_list[i].render(*globalUtilObjs->spriteBatch);
+	}
 }
 
 void ShopScreen::OnPress(const IOnPressListener::Data& data)
@@ -312,4 +413,9 @@ void ShopScreen::OnPressListItem(const IOnPressListItemListener::Data& data)
 
 		m_labels[LABEL_ITEM_DESC].setText(desc);
 	}
+}
+
+void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
+{
+	m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
 }

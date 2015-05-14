@@ -278,6 +278,9 @@ void ShopScreen::init()
 		m_textures[TEXTURE_ITEM_LIFE_WARD].init(resource.GetTexture("item_life_ward"));
 		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT].init(resource.GetTexture("item_light_calvary_hat"));
 		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR].init(resource.GetTexture("item_staff_of_sathlenar"));
+
+		// Misc
+		m_textures[TEXTURE_EMPTY].init(resource.GetTexture("empty"));
 	}
 
 	// Fonts assets
@@ -345,6 +348,13 @@ void ShopScreen::render(void* utilObjs)
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	{
+		Rect2D desc;
+		desc.Pos = MyVec2(0);
+		desc.Size = MyVec2(m_width, m_height);
+		globalUtilObjs->spriteBatch->renderTexture2D(&m_textures[TEXTURE_EMPTY], desc);
+	}
+
+	{
 		MyVec2 pos = 0.5f * MyVec2(
 			m_width - m_textures[TEXTURE_SHOP_BACKGROUND].getWidth(),
 			m_height - m_textures[TEXTURE_SHOP_BACKGROUND].getHeight());
@@ -393,7 +403,7 @@ void ShopScreen::OnPress(const IOnPressListener::Data& data)
 {
 	if (data.Id == "shop_btn_close")
 	{
-		m_screenManager->activeScreen("PlayScreen");
+		m_screenManager->deactivePopupScreen();
 	}
 }
 

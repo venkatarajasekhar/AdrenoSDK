@@ -14,6 +14,9 @@ public:
 	virtual void update(void* utilObjs) = 0;
 	virtual void render(void* utilObjs) = 0;
 
+	virtual void lockUserInput(void* utilObjs){}
+	virtual void unlockUserInput(void* utilObjs){}
+
 protected:
 	ScreenManager* m_screenManager;
 };

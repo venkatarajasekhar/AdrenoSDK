@@ -77,3 +77,10 @@
     ResourceID  = "item_staff_of_sathlenar"
     SrcFileName = "item_staff_of_sathlenar.png"
 />
+
+<!-- Misc -->
+
+<Texture 
+    ResourceID  = "empty"
+    SrcFileName = "empty.png"
+/>

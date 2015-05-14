@@ -1,4 +1,4 @@
-#include "Item.h"
+#include "HeroItem.h"
 
 Item::Item()
 {

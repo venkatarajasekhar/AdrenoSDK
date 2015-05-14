@@ -5,7 +5,7 @@
 #include <MyEventListener.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
-#include "Item.h"
+#include "HeroItem.h"
 
 //===================================================================================================================
 //

@@ -4,21 +4,7 @@
 #include <MyScreen.h>
 #include <MyUIButton.h>
 #include <MyUIList.h>
-
-//===================================================================================================================
-//
-// ItemInfo class
-//
-//===================================================================================================================
-
-struct ItemInfo
-{
-	MyString Name;
-	MyString Desc;
-	int Price;
-	MyString Benefit;
-	Texture* Avatar;
-};
+#include "HeroItem.h"
 
 #pragma region Event class
 
@@ -37,9 +23,9 @@ public:
 		MyString Id;
 
 		// Bought item
-		ItemInfo* BoughtItem;
+		HeroItem* BoughtItem;
 
-		Data(const MyString& _id, ItemInfo* _boughtItem)
+		Data(const MyString& _id, HeroItem* _boughtItem)
 			: Id(_id),
 			BoughtItem(_boughtItem)
 		{}
@@ -75,7 +61,7 @@ protected:
 class ShopScreen : public Screen, public IOnPressListener, public IOnPressListItemListener, public IOnBuyItemListener
 {
 private:
-	static const int NUM_ITEMS = 6;
+	static const int TOTAL_HERO_ITEMS = 6;
 
 private:
 	// Assets
@@ -149,7 +135,7 @@ public:
 	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
 
 private:
-	void initItemInfo();
+	void initItems();
 
 private:
 	int m_width, m_height;
@@ -163,5 +149,5 @@ private:
 	UILabel m_labels[NUM_LABELS];
 	UIList m_list[NUM_LISTS];
 
-	ItemInfo m_itemInfo[NUM_ITEMS];
+	HeroItem* m_totalItems[TOTAL_HERO_ITEMS];
 };

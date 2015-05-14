@@ -63,20 +63,21 @@ public:
 		Texture& goldIcon,
 		Texture& btnBuyBackground,
 		Font& font,
-		ItemInfo& itemInfo)
+		HeroItem* heroItem)
 		: UIListItem(list)
 	{
-		m_itemInfo = itemInfo;
+		m_heroItem = heroItem;
+
 		m_background = &background;
-		m_itemAvatar = itemInfo.Avatar;
+		m_itemAvatar = m_heroItem->Avatar;
 		m_goldIcon = &goldIcon;
 
 		addBuyItemListener(buyItemListener);
 
 		m_buyBtn.init("buy_item_btn", MyVec2(), btnBuyBackground, "Buy", font);
 		m_buyBtn.addPressListener(this);
-		m_name.init("", MyVec2(), font, itemInfo.Name, 150.0f, UILabel::CUT_DOWN_WITH_ELLIPSIS);
-		m_price.init("", MyVec2(), font, toString(itemInfo.Price));
+		m_name.init("", MyVec2(), font, m_heroItem->Name, 150.0f, UILabel::CUT_DOWN_WITH_ELLIPSIS);
+		m_price.init("", MyVec2(), font, toString(m_heroItem->Price));
 
 		UIWidget::init("", MyVec2(), MyVec2(m_background->getWidth(), m_background->getHeight()));
 	}
@@ -129,14 +130,14 @@ public:
 	{
 		if (data.Id == "buy_item_btn")
 		{
-			IOnBuyItemListener::Data data("", &m_itemInfo);
+			IOnBuyItemListener::Data data("", m_heroItem);
 			throwBuyItemEvent(data);
 		}
 	}
 
-	ItemInfo getItemInfo()
+	HeroItem* getHeroItem()
 	{
-		return m_itemInfo;
+		return m_heroItem;
 	}
 
 private:
@@ -147,7 +148,7 @@ private:
 	UILabel m_name;
 	UILabel m_price;
 
-	ItemInfo m_itemInfo;
+	HeroItem* m_heroItem;
 };
 
 #pragma endregion
@@ -201,51 +202,77 @@ ShopScreen::ShopScreen(ScreenManager* screenManager)
 	m_width(0),
 	m_height(0)
 {
+	for (int i = 0; i < TOTAL_HERO_ITEMS; i++)
+	{
+		m_totalItems[i] = nullptr;
+	}
 }
 
 ShopScreen::~ShopScreen()
 {
+	for (int i = 0; i < TOTAL_HERO_ITEMS; i++)
+	{
+		SAFE_DELETE(m_totalItems[i]);
+	}
 }
 
 #pragma region Init items info
 
-void ShopScreen::initItemInfo()
+void ShopScreen::initItems()
 {
-	m_itemInfo[0].Name = "Chain Mail";
-	m_itemInfo[0].Desc = "Painstakingly handmade by craftsmen in the town of Silence.";
-	m_itemInfo[0].Price = 250;
-	m_itemInfo[0].Benefit = "+ 10 Physical Defense";
-	m_itemInfo[0].Avatar = (m_textures + TEXTURE_ITEM_CHAIN_MAIL);
+	m_totalItems[0] = new HeroItem_ChainMail(
+		"Chain Mail",
+		"Painstakingly handmade by craftsmen in the town of Silence.",
+		250,
+		"+ 10 Physical Defense",
+		m_textures[TEXTURE_ITEM_CHAIN_MAIL],
+		HeroItem::ACTIVE
+		);
 
-	m_itemInfo[1].Name = "Cloak of the Resistant";
-	m_itemInfo[1].Desc = "A cloak woven of hair from the mane of the Night Horse, which legend says roams the Whispering Islands every blue moon.";
-	m_itemInfo[1].Price = 250;
-	m_itemInfo[1].Benefit = "+ 10 Magical Defense";
-	m_itemInfo[1].Avatar = (m_textures + TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT);
+	m_totalItems[1] = new HeroItem_CloakOfTheResistant(
+		"Cloak of the Resistant",
+		"A cloak woven of hair from the mane of the Night Horse, which legend says roams the Whispering Islands every blue moon.",
+		250,
+		"+ 10 Magical Defense",
+		m_textures[TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT],
+		HeroItem::ACTIVE
+		);
 
-	m_itemInfo[2].Name = "Life Ward";
-	m_itemInfo[2].Desc = "A ring blessed by an Orc mage to bring health to any lucky enough to wear it.";
-	m_itemInfo[2].Price = 450;
-	m_itemInfo[2].Benefit = "+ 3 HP Regeneration";
-	m_itemInfo[2].Avatar = (m_textures + TEXTURE_ITEM_LIFE_WARD);
+	m_totalItems[2] = new HeroItem_LifeWard(
+		"Life Ward", 
+		"A ring blessed by an Orc mage to bring health to any lucky enough to wear it.",
+		450,
+		"+ 3 HP Regeneration",
+		m_textures[TEXTURE_ITEM_LIFE_WARD],
+		HeroItem::ACTIVE
+		);
 
-	m_itemInfo[3].Name = "Blood Pouch";
-	m_itemInfo[3].Desc = "A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.";
-	m_itemInfo[3].Price = 450;
-	m_itemInfo[3].Benefit = "+ 150 HP";
-	m_itemInfo[3].Avatar = (m_textures + TEXTURE_ITEM_BLOOD_POUCH);
+	m_totalItems[3] = new HeroItem_BloodPouch(
+		"Blood Pouch",
+		"A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.",
+		450, 
+		"+ 150 HP",
+		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
+		HeroItem::ACTIVE
+		);
 
-	m_itemInfo[4].Name = "Staff of Sathlenar";
-	m_itemInfo[4].Desc = "A staff stolen from the mighty Sathlenar long ago, It still retains remnants of his power.";
-	m_itemInfo[4].Price = 675;
-	m_itemInfo[4].Benefit = "+ 270 MP";
-	m_itemInfo[4].Avatar = (m_textures + TEXTURE_ITEM_STAFF_OF_SATHLENAR);
+	m_totalItems[4] = new HeroItem_StaffOfTheSathlenar(
+		"Staff of Sathlenar",
+		"A staff stolen from the mighty Sathlenar long ago, It still retains remnants of his power.",
+		675,
+		"+ 270 MP",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::ACTIVE
+		);
 
-	m_itemInfo[5].Name = "Light Calvary Hat";
-	m_itemInfo[5].Desc = "A cavalry hat woven from threads of tempered steel, perfected by a skilled seamstress from the East.";
-	m_itemInfo[5].Price = 750;
-	m_itemInfo[5].Benefit = "+ 250 HP";
-	m_itemInfo[5].Avatar = (m_textures + TEXTURE_ITEM_LIGHT_CALVARY_HAT);
+	m_totalItems[5] = new HeroItem_LightCalvaryHat(
+		"Light Calvary Hat",
+		"A cavalry hat woven from threads of tempered steel, perfected by a skilled seamstress from the East.",
+		750,
+		"+ 250 HP",
+		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
+		HeroItem::ACTIVE
+		);
 }
 
 #pragma endregion
@@ -294,12 +321,12 @@ void ShopScreen::init()
 	m_labels[LABEL_ITEM_DESC].init("", MyVec2(), m_fonts[FONT_CONSOLAS_12], "Please choose an item to show", m_textures[TEXTURE_DESC_ITEM_BACKGROUND].getWidth());
 
 	// List widgets
-	initItemInfo();
+	initItems();
 
 	m_list[LIST_ITEM].init("shop_item_list", MyVec2(0, 0), m_textures[TEXTURE_LIST_ITEM_BACKGROUND]);
 	m_list[LIST_ITEM].addPressListItemListener(this);
 
-	for (int i = 0; i < NUM_ITEMS; i++)
+	for (int i = 0; i < TOTAL_HERO_ITEMS; i++)
 	{
 		m_list[LIST_ITEM].addItem(new UIListItem_ShopItem(
 			&m_list[LIST_ITEM],
@@ -308,7 +335,7 @@ void ShopScreen::init()
 			m_textures[TEXTURE_GOLD_ICON],
 			m_textures[TEXTURE_SHOP_BTN_BACKGROUND],
 			m_fonts[FONT_CONSOLAS_12],
-			m_itemInfo[i]));
+			m_totalItems[i]));
 	}
 
 	m_list[LIST_SELECTED_ITEM].init("selected_item_list", MyVec2(), m_textures[TEXTURE_LIST_SELECTED_ITEM_BACKGROUND], UIList::HORIZONTAL);
@@ -413,13 +440,13 @@ void ShopScreen::OnPressListItem(const IOnPressListItemListener::Data& data)
 	{
 		UIListItem_ShopItem* item = (UIListItem_ShopItem*)data.ListItem;
 
-		MyString desc = item->getItemInfo().Name;
+		MyString desc = item->getHeroItem()->Name;
 		desc += "\n\n";
-		desc += "Cost: " + toString(item->getItemInfo().Price);
+		desc += "Cost: " + toString(item->getHeroItem()->Price);
 		desc += "\n";
-		desc += "Benefit: " + item->getItemInfo().Benefit;
+		desc += "Benefit: " + item->getHeroItem()->Benefit;
 		desc += "\n\n";
-		desc += item->getItemInfo().Desc;
+		desc += item->getHeroItem()->Desc;
 
 		m_labels[LABEL_ITEM_DESC].setText(desc);
 	}

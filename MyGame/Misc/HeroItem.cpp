@@ -1,5 +1,7 @@
+
 #include "HeroItem.h"
 
+/*
 Item::Item()
 {
 
@@ -63,4 +65,24 @@ void Item::sell()
 int Item::getPrice()
 {
 	return m_price;
+}
+/**/
+
+HeroItem::HeroItem(const MyString& _name,
+	const MyString& _desc,
+	int _price,
+	const MyString& _benefit,
+	Texture& _avatar,
+	ITEM_TYPE _type)
+	: Name(_name),
+	Desc(_desc),
+	Price(_price),
+	Benefit(_benefit),
+	Avatar(&_avatar),
+	m_type(_type)
+{
+}
+
+HeroItem::~HeroItem()
+{
 }

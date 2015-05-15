@@ -7,6 +7,8 @@
 #include "MovingEntity.h"
 #include "HeroItem.h"
 
+#pragma region Structs
+
 //===================================================================================================================
 //
 // Structs
@@ -39,6 +41,7 @@ struct HeroInGameProps
 	MyVec3 Scale;
 };
 
+#pragma endregion
 
 #pragma region Constants
 
@@ -69,17 +72,17 @@ const float EXP_TOWER = 500;
 
 #pragma endregion
 
-
 //===================================================================================================================
 //
 // Hero class
 //
 //===================================================================================================================
 
-const int N_MAX_ITEM = 6;
-
 class Hero : public LivingEntity
 {
+public:
+	static const int MAX_NUM_ITEMS = 6;
+
 public:
 	Hero();
 	virtual ~Hero();
@@ -98,11 +101,7 @@ public:
 	MyVec3 getPos();
 	int getGold();
 
-	/*
-	int findIndexForNewItem();
-	void sellAnItem(int index);
-	int buyAnItem(Item* item);
-	/**/
+	void addItem(HeroItem* item);
 
 protected:
 	virtual void dead();
@@ -125,8 +124,10 @@ protected:
 	MyVec3 m_positionStart;
 	MyVec3 m_rotationStart;
 
-	//Item* m_lItems[N_MAX_ITEM];
+	std::vector<HeroItem*> m_itemBag;
 };
+
+#pragma region HeroPool class
 
 //===================================================================================================================
 //
@@ -201,3 +202,5 @@ private:
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
 	Hero*        m_heroes[MAX_NUM_HEROES_IN_GAME];
 };
+
+#pragma endregion

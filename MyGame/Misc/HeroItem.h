@@ -96,7 +96,7 @@ public:
 	{}
 	~HeroItem_ChainMail(){}
 
-	HeroItem* clone(){ return nullptr; }
+	HeroItem* clone();
 
 private:
 
@@ -116,7 +116,7 @@ public:
 	{}
 	~HeroItem_CloakOfTheResistant(){}
 
-	HeroItem* clone(){ return nullptr; }
+	HeroItem* clone();
 
 private:
 
@@ -136,7 +136,7 @@ public:
 	{}
 	~HeroItem_LifeWard(){}
 
-	HeroItem* clone(){ return nullptr; }
+	HeroItem* clone();
 
 private:
 
@@ -156,7 +156,7 @@ public:
 	{}
 	~HeroItem_BloodPouch(){}
 
-	HeroItem* clone(){ return nullptr; }
+	HeroItem* clone();
 
 private:
 
@@ -176,7 +176,7 @@ public:
 	{}
 	~HeroItem_StaffOfTheSathlenar(){}
 
-	HeroItem* clone(){ return nullptr; }
+	HeroItem* clone();
 
 private:
 
@@ -196,7 +196,7 @@ public:
 	{}
 	~HeroItem_LightCalvaryHat(){}
 
-	HeroItem* clone(){ return nullptr; }
+	HeroItem* clone();
 
 private:
 

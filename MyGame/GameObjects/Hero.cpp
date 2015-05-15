@@ -123,10 +123,15 @@ static const std::vector<MyVec3> ENEMY_HERO_PATH =
 Hero::Hero()
 	: m_instance(nullptr)
 {
+	m_itemBag.reserve(MAX_NUM_ITEMS);
 }
 
 Hero::~Hero()
 {
+	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
+	{
+		delete(*i);
+	}
 }
 
 // Core functions
@@ -166,13 +171,6 @@ void Hero::init(
 		heroProp.BloodbarOffset,
 		lEnts, 
 		heroProp.AttackRange);
-
-	/*
-	for (int i = 0; i < N_MAX_ITEM; i++)
-	{
-		m_lItems[i] = nullptr;
-	}
-	/**/
 }
 
 void Hero::update(Timer& timer)
@@ -202,7 +200,10 @@ void Hero::update(Timer& timer)
 
 void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 {
-	if (m_instance->Visible) LivingEntity::render(spriteBatch, camera, light);
+	if (m_instance->Visible)
+	{
+		LivingEntity::render(spriteBatch, camera, light);
+	}
 }
 
 MyVec3 Hero::getPos()
@@ -210,35 +211,25 @@ MyVec3 Hero::getPos()
 	return m_movingEnt.getPos();
 }
 
-/*
-int Hero::findIndexForNewItem()
+int Hero::getGold()
 {
-	for (int i = 0; i < N_MAX_ITEM; i++)
-		if (m_lItems[i] == nullptr) return i;
-	return -1;
+	return m_gold;
 }
 
-void Hero::sellAnItem(int index)
+void Hero::addItem(HeroItem* item)
 {
-	int price = m_lItems[index]->getPrice();
-	m_gold += price / 2;
-	SAFE_DELETE(m_lItems[index]);
+	if (item != nullptr)
+	{
+		if (m_itemBag.size() < MAX_NUM_ITEMS)
+		{
+			m_itemBag.push_back(item);
+		}
+		else
+		{
+			delete item;
+		}
+	}
 }
-
-int Hero::buyAnItem(Item* item)
-{
-	//not enough gold
-	int price = item->getPrice();
-	if (m_gold < price) return -2;
-
-	//not enough space
-	int index = findIndexForNewItem();
-	if (index == -1) return -1;
-
-	m_gold -= price;
-	m_lItems[index] = item;
-}
-/**/
 
 void Hero::dead()
 {
@@ -261,10 +252,7 @@ void Hero::revival()
 	m_inUse = true;
 }
 
-int Hero::getGold()
-{
-	return m_gold;
-}
+#pragma region HeroPool class
 
 //===================================================================================================================
 //
@@ -411,3 +399,5 @@ Hero* HeroPool::getPlayer()
 {
 	return m_heroes[HERO_IN_GAME_MY_HERO_1];
 }
+
+#pragma endregion

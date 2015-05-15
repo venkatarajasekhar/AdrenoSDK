@@ -1,18 +1,51 @@
 
 #include "Layer_World.h"
 
+#pragma region Constants
+
 //========================================================================================================
 //
-// Parameters
+// Constants
 //
 //========================================================================================================
 
 static const float  MAIN_CAM_FAR       = 100.0f;
 static const MyVec3 INITIAL_PLAYER_POS = MyVec3(0);
 
+#pragma endregion
+
+#pragma region Helper functions
+
 //========================================================================================================
 //
-// Layer_World
+// Helper functions
+//
+//========================================================================================================
+
+static bool isPressTerrain(UserInput& userInput, Camera& camera, MyVec3& pressedPoint)
+{
+	MyVec2 screenPos;
+	bool isPressed = userInput.pointer_Releasing(screenPos);
+
+	if (isPressed)
+	{
+		Plane terrainPlane = { 0.0f, MyVec3(0, 1, 0) };
+		int width, height;
+		getWindowDimension(width, height);
+
+		// Convert pressed point on screen to point in world
+		Ray ray = createRayInWorld(screenPos, width, height, camera.getView(), camera.getProj());
+		pressedPoint = intersect(ray, terrainPlane);
+	}
+
+	return isPressed;
+}
+
+#pragma endregion
+
+//========================================================================================================
+//
+// Layer_World class
 //
 //========================================================================================================
 
@@ -81,6 +114,16 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_spriteSheets[SPRITE_SHEET_ENERGY_BALL].init(resource.GetTexture("energy_ball"), 8, MyIVec2(3, 1), MyIVec2(100, 100));
 	}
 
+	// Assets mesh data
+	m_mesh1Datas[MESH_1_DATA_SHOP].init(resolveAssetsPath("Meshes/Accessories/shop/shop.model"));
+
+	// Assets mesh texture
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Meshes/Accessories/shop/shop.pak").c_str());
+		m_meshTextures[TEXTURES_MESH_SHOP].init(m_mesh1Datas[MESH_1_DATA_SHOP], resource);
+	}
+
 	// Core objects
 	m_camera_main.init(INITIAL_PLAYER_POS, 45.0f, 0.1f, MAIN_CAM_FAR);
 
@@ -102,6 +145,15 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 			properties);
 	}
 
+	m_shop.init(
+		m_mesh1Datas[MESH_1_DATA_SHOP],
+		m_meshTextures[TEXTURES_MESH_SHOP],
+		m_shaders[SHADER_MESH],
+		MyVec3(-39.195f, 0, -14.0f),
+		MyVec3(0, -45, 0),
+		MyVec3(1.5f));
+	m_shop.addPressListener(bundle.ShopListener);
+
 	// Graphics objects
 	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
 	m_bloodBar[BLOOD_BAR_ENEMY].init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
@@ -122,17 +174,20 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_projectilePool,
 		m_livingEnts, 
 		bundle.GameOverListener);
+
 	m_pawnPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1], 
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
 		m_livingEnts);
+
 	m_heroPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1], 
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
 		m_livingEnts, 
 		m_mesh_terrain);
+
 	m_projectilePool.init();
 }
 
@@ -160,14 +215,24 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	}
 
 	// Mesh objects
-	m_mesh_terrain.update(timer, userInput, m_camera_main);
+	{
+		MyVec3 pressedPoint;
+		bool isPressed = isPressTerrain(userInput, m_camera_main, pressedPoint);
 
+		//---------------- Test ------------------------------------------------------------------------------------------
+		//smartLog("Pressed at: " + toString(pressedPoint.x) + " " + toString(pressedPoint.y) + " " + toString(pressedPoint.z));
+		//---------------- Test ------------------------------------------------------------------------------------------
+
+		m_mesh_terrain.update(timer, isPressed, pressedPoint);
+		m_shop.update(timer, isPressed, pressedPoint);
+	}
+	
+	// Game objects
 	m_towerPool.update(timer);
 	m_pawnPool.update(timer);
 	m_heroPool.update(timer);
 	m_projectilePool.update(timer);
 
-	// Game objects
 	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 	{
 		if ((*i)->inUse())
@@ -175,31 +240,28 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 			(*i)->update(timer);
 		}
 	}
-
-	
 }
 
 void Layer_World::render(SpriteBatch& spriteBatch)
 {
+	Light light;
+	light.PosOrDir = MyVec4(0, -1, -1, 0);
+
 	// Mesh objects
 	m_mesh_terrain.render(m_camera_main);
+	m_shop.render(m_camera_main, light);
 
 	// Game objects
+	m_towerPool.render(m_camera_main, light);
+	m_pawnPool.render(m_camera_main, light);
+	m_heroPool.render(m_camera_main, light);
+	m_projectilePool.render(m_camera_main);
+
+	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 	{
-		Light light;
-		light.PosOrDir = MyVec4(0, -1, -1, 0);
-
-		m_towerPool.render(m_camera_main, light);
-		m_pawnPool.render(m_camera_main, light);
-		m_heroPool.render(m_camera_main, light);
-		m_projectilePool.render(m_camera_main);
-
-		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
+		if ((*i)->inUse())
 		{
-			if ((*i)->inUse())
-			{
-				(*i)->render(spriteBatch, m_camera_main, light);
-			}
+			(*i)->render(spriteBatch, m_camera_main, light);
 		}
 	}
 }

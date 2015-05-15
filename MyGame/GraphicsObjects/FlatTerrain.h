@@ -46,7 +46,7 @@ public:
 		const MyVec3& center,
 		const MyVec2& size,
 		FlatTerrainProperties& properties);
-	void update(Timer& timer, UserInput& userInput, Camera& camera);
+	void update(Timer& timer, bool isPressed, MyVec3& pressedPoint);
 	void render(Camera& camera);
 
 private:

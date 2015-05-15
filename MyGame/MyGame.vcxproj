@@ -159,6 +159,7 @@
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
     <ClCompile Include="GraphicsObjects\MiniMap.cpp" />
     <ClCompile Include="GraphicsObjects\PlayerInfo.cpp" />
+    <ClCompile Include="GraphicsObjects\Shop.cpp" />
     <ClCompile Include="Misc\EventListener.cpp" />
     <ClCompile Include="Misc\HeroItem.cpp" />
     <ClCompile Include="Misc\TPSCamera.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />
     <ClInclude Include="GraphicsObjects\MiniMap.h" />
     <ClInclude Include="GraphicsObjects\PlayerInfo.h" />
+    <ClInclude Include="GraphicsObjects\Shop.h" />
     <ClInclude Include="Misc\EventListener.h" />
     <ClInclude Include="Misc\HeroItem.h" />
     <ClInclude Include="Misc\TPSCamera.h" />

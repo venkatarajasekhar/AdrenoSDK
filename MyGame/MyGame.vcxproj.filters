@@ -306,6 +306,9 @@
     <ClCompile Include="Misc\HeroItem.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsObjects\Shop.cpp">
+      <Filter>GraphicsObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="Misc\HeroItem.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObjects\Shop.h">
+      <Filter>GraphicsObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

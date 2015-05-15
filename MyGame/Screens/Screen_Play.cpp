@@ -47,6 +47,7 @@ void PlayScreen::init()
 		bundle.MapCenter = MAP_CENTER;
 		bundle.MapSize = MAP_SIZE;
 		bundle.GameOverListener = this;
+		bundle.ShopListener = this;
 
 		m_layer_World.init(bundle);
 	}
@@ -109,7 +110,7 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	{
 		m_lockedUserInput = true;
 	}
-	else if (data.Id == "hud_btn_fighting")
+	else if (data.Id == "shop")
 	{
 		m_screenManager->activePopupScreen("ShopScreen");
 	}

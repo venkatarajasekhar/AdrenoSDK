@@ -6,6 +6,7 @@
 #include <MySkinnedMesh1.h>
 #include <MyBillboard.h>
 #include "FlatTerrain.h"
+#include "Shop.h"
 #include "LivingEntity.h"
 #include "TPSCamera.h"
 #include "Tower.h"
@@ -22,6 +23,7 @@ public:
 		MyVec2 MapSize;
 
 		IOnGameOverListener* GameOverListener;
+		IOnPressListener* ShopListener;
 	};
 
 private:
@@ -55,7 +57,7 @@ private:
 
 	enum
 	{
-		MESH_1_DATA_DUMP,
+		MESH_1_DATA_SHOP,
 		NUM_MESH_1_DATAS,
 	};
 
@@ -67,7 +69,7 @@ private:
 
 	enum
 	{
-		TEXTURES_MESH_DUMP,
+		TEXTURES_MESH_SHOP,
 		NUM_TEXTURES_MESHES,
 	};
 
@@ -112,6 +114,7 @@ private:
 
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
+	Shop m_shop;
 
 	// Game objects
 	std::vector<LivingEntity*> m_livingEnts;

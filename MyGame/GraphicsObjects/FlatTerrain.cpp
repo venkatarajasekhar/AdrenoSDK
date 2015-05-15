@@ -75,31 +75,12 @@ void FlatTerrain::init(
 	}
 }
 
-void FlatTerrain::update(Timer& timer, UserInput& userInput, Camera& camera)
+void FlatTerrain::update(Timer& timer, bool isPressed, MyVec3& pressedPoint)
 {
+	if (isPressed && isValidPos(pressedPoint))
 	{
-		MyVec2 screenPos;
-		if (userInput.pointer_Releasing(screenPos))
-		{
-			Plane terrainPlane = { 0.0f, MyVec3(0, 1, 0) };
-			int width, height;
-			getWindowDimension(width, height);
-
-			// Convert pressed point on screen to point in world
-			Ray ray = createRayInWorld(screenPos, width, height, camera.getView(), camera.getProj());
-			MyVec3 worldPos = intersect(ray, terrainPlane);
-
-			//---------------- Test ------------------------
-			//smartLog("Pressed at: " + toString(worldPos.x) + " " + toString(worldPos.y) + " " + toString(worldPos.z));
-			//----------------------------------------------
-
-			// If player can reach to that point, go ahead
-			if (isValidPos(worldPos))
-			{
-				IOnPressListener::Data data("map", screenPos.x, screenPos.y, &worldPos);
-				throwPressEvent(data);
-			}
-		}
+		IOnPressListener::Data data("map", 0, 0, &pressedPoint);
+		throwPressEvent(data);
 	}
 
 	m_mesh.update(timer);

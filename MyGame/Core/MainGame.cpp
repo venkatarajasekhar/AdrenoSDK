@@ -4,7 +4,6 @@
 #include "Screen_Play.h"
 #include "Screen_GameOver.h"
 #include "Screen_Shop.h"
-//#include "TestScreen.h"
 
 #pragma region Global implementations
 
@@ -81,8 +80,6 @@ BOOL MainGame::Initialize()
 	m_screenManager.addScreen("GameOverScreen", new GameOverScreen(&m_screenManager));
 	m_screenManager.addScreen("ShopScreen", new ShopScreen(&m_screenManager));
 	m_screenManager.activeScreen("MenuScreen");
-	//m_screenManager.addScreen("TestScreen", new TestScreen(&m_screenManager));
-	//m_screenManager.activeScreen("TestScreen");
 
 	// End init
 	m_initialized = true;

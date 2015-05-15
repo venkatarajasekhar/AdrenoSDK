@@ -167,10 +167,12 @@ void Hero::init(
 		lEnts, 
 		heroProp.AttackRange);
 
+	/*
 	for (int i = 0; i < N_MAX_ITEM; i++)
 	{
 		m_lItems[i] = nullptr;
 	}
+	/**/
 }
 
 void Hero::update(Timer& timer)
@@ -208,6 +210,7 @@ MyVec3 Hero::getPos()
 	return m_movingEnt.getPos();
 }
 
+/*
 int Hero::findIndexForNewItem()
 {
 	for (int i = 0; i < N_MAX_ITEM; i++)
@@ -235,6 +238,7 @@ int Hero::buyAnItem(Item* item)
 	m_gold -= price;
 	m_lItems[index] = item;
 }
+/**/
 
 void Hero::dead()
 {

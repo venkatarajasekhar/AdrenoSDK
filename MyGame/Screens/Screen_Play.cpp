@@ -89,6 +89,20 @@ void PlayScreen::render(void* utilObjs)
 	}
 }
 
+void PlayScreen::lockUserInput(void* utilObjs)
+{
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	globalUtilObjs->userInput->lock();
+}
+
+void PlayScreen::unlockUserInput(void* utilObjs)
+{
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	globalUtilObjs->userInput->unlock();
+}
+
 void PlayScreen::OnPress(const IOnPressListener::Data& data)
 {
 	if (data.Id == "hud")
@@ -97,7 +111,7 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "hud_btn_fighting")
 	{
-		m_screenManager->activeScreen("ShopScreen");
+		m_screenManager->activePopupScreen("ShopScreen");
 	}
 }
 

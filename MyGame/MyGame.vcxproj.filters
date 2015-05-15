@@ -25,9 +25,6 @@
     <Filter Include="sdk\MyFramework\Win32">
       <UniqueIdentifier>{ee9afe6e-d3b5-46ca-bf97-cf20ac6e59b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{1966a6da-b2ed-429c-a215-79c196c0be6b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Screens">
       <UniqueIdentifier>{3fb4a543-e031-4dfb-8d78-01c73ce14c9c}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,9 @@
     </Filter>
     <Filter Include="BaseEntities">
       <UniqueIdentifier>{a1155c06-aa34-4374-a173-d80f5b1ec759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{1966a6da-b2ed-429c-a215-79c196c0be6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -258,9 +258,6 @@
     <ClCompile Include="Screens\Layer_World.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\TPSCamera.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="BaseEntities\MovingEntity.cpp">
       <Filter>BaseEntities</Filter>
     </ClCompile>
@@ -272,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="GameObjects\Tower_Main.cpp">
       <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\EventListener.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Screens\Screen_Menu.cpp">
       <Filter>Screens</Filter>
@@ -303,16 +297,19 @@
     <ClCompile Include="GraphicsObjects\PlayerInfo.cpp">
       <Filter>GraphicsObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\Item.cpp">
-      <Filter>GameObjects</Filter>
+    <ClCompile Include="Misc\EventListener.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\TPSCamera.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\HeroItem.cpp">
+      <Filter>Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\Utils.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsObjects\BloodBar.h">
       <Filter>GraphicsObjects</Filter>
@@ -353,9 +350,6 @@
     <ClInclude Include="Screens\Layer_World.h">
       <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\TPSCamera.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="BaseEntities\MovingEntity.h">
       <Filter>BaseEntities</Filter>
     </ClInclude>
@@ -367,9 +361,6 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Tower_Main.h">
       <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\EventListener.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Screens\Screen_Menu.h">
       <Filter>Screens</Filter>
@@ -389,8 +380,17 @@
     <ClInclude Include="GraphicsObjects\PlayerInfo.h">
       <Filter>GraphicsObjects</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\Item.h">
-      <Filter>GameObjects</Filter>
+    <ClInclude Include="Misc\EventListener.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\TPSCamera.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Utils.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\HeroItem.h">
+      <Filter>Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

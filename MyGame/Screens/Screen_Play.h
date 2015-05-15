@@ -16,6 +16,9 @@ public:
 	void update(void* utilObjs);
 	void render(void* utilObjs);
 
+	void lockUserInput(void* utilObjs);
+	void unlockUserInput(void* utilObjs);
+
 	void OnPress(const IOnPressListener::Data& data);
 	void OnGameOver(const IOnGameOverListener::Data& data);
 

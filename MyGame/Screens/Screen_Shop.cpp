@@ -200,7 +200,8 @@ private:
 ShopScreen::ShopScreen(ScreenManager* screenManager)
 	: Screen(screenManager),
 	m_width(0),
-	m_height(0)
+	m_height(0),
+	m_numBoughtItems(0)
 {
 	for (int i = 0; i < TOTAL_HERO_ITEMS; i++)
 	{
@@ -454,5 +455,9 @@ void ShopScreen::OnPressListItem(const IOnPressListItemListener::Data& data)
 
 void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
-	m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
+	if (m_numBoughtItems < Hero::MAX_NUM_ITEMS)
+	{
+		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
+		m_numBoughtItems++;
+	}
 }

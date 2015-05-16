@@ -5,6 +5,7 @@
 #include <MyUIButton.h>
 #include <MyUIList.h>
 #include "HeroItem.h"
+#include "Hero.h"
 
 #pragma region Event class
 
@@ -150,4 +151,5 @@ private:
 	UIList m_list[NUM_LISTS];
 
 	HeroItem* m_totalItems[TOTAL_HERO_ITEMS];
+	int m_numBoughtItems;
 };

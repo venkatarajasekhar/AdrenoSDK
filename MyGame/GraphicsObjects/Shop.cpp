@@ -42,6 +42,7 @@ void Shop::update(Timer& timer, bool isPressed, MyVec3& pressedPoint)
 	m_mesh.update(timer);
 }
 
+
 void Shop::render(Camera& camera, Light& light)
 {
 	m_mesh.render(camera, &light);

@@ -19,8 +19,8 @@ public:
 	void render(void* utilObjs);
 
 	// Active screens
-	void activeScreen(const MyString& id);
-	void activePopupScreen(const MyString& id);
+	void activeScreen(const MyString& id, void* tag = nullptr);
+	void activePopupScreen(const MyString& id, void* tag = nullptr);
 	void deactivePopupScreen();
 
 	// Misc

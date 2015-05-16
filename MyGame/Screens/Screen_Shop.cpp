@@ -458,6 +458,13 @@ void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 	if (m_numBoughtItems < Hero::MAX_NUM_ITEMS)
 	{
 		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
+		
+		if (m_tag != nullptr)
+		{
+			Hero* buyer = (Hero*)m_tag;
+			buyer->addItem(data.BoughtItem->clone());
+		}
+
 		m_numBoughtItems++;
 	}
 }

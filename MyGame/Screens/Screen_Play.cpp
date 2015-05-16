@@ -112,7 +112,7 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "shop")
 	{
-		m_screenManager->activePopupScreen("ShopScreen");
+		m_screenManager->activePopupScreen("ShopScreen", m_layer_World.getPlayer());
 	}
 }
 

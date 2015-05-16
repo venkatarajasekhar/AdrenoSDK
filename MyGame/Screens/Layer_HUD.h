@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <MyUIList.h>
 #include "MiniMap.h"
 #include "PlayerInfo.h"
 
@@ -43,6 +44,12 @@ private:
 		NUM_BTNS,
 	};
 
+	enum
+	{
+		LIST_ITEM,
+		NUM_LISTS,
+	};
+
 public:
 	Layer_HUD();
 	~Layer_HUD();
@@ -65,6 +72,7 @@ private:
 
 	// UI Widgets
 	UIImageButton m_btns[NUM_BTNS];
+	UIList m_list[NUM_LISTS];
 
 	// Other HUD-components
 	MiniMap m_miniMap;

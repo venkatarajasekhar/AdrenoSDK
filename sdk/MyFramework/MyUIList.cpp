@@ -119,9 +119,15 @@ UIList::~UIList()
 void UIList::init(const MyString& id, const MyVec2& pos, Texture& background, UIList::ORIENTATION orientation)
 {
 	m_background = &background;
+
+	init(id, pos, m_background->getWidth(), m_background->getHeight(), orientation);
+}
+
+void UIList::init(const MyString& id, const MyVec2& pos, int width, int height, UIList::ORIENTATION orientation)
+{
 	m_orientation = orientation;
 
-	UIWidget::init(id, pos, MyVec2(m_background->getWidth(), m_background->getHeight()));
+	UIWidget::init(id, pos, MyVec2(width, height));
 }
 
 void UIList::update(UserInput& userInput)
@@ -168,8 +174,11 @@ void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 	int count = 0;
 
 	// Render background
-	spriteBatch.renderTexture2D(m_background, m_bounding);
-
+	if (m_background != nullptr)
+	{
+		spriteBatch.renderTexture2D(m_background, m_bounding);
+	}
+	
 	// Render list items
 	for (auto i = m_listItems.begin(); i != m_listItems.end(); ++i)
 	{

@@ -1,6 +1,8 @@
 
 #include "Layer_HUD.h"
 
+#pragma region Constants
+
 //==========================================================================================================
 //
 // Constants
@@ -9,6 +11,46 @@
 
 static const bool   SHOW_FPS            = true;
 static const MyVec2 BTN_FIGHTING_MARGIN = MyVec2(30, 20);
+static const MyVec2 LIST_ITEM_MARGIN    = MyVec2(100, 20);
+
+#pragma endregion
+
+#pragma region UIListItem_ActiveItem class
+
+//==========================================================================================================
+//
+// UIListItem_ActiveItem class
+//
+//==========================================================================================================
+
+class UIListItem_ActiveItem : public UIListItem
+{
+public:
+	UIListItem_ActiveItem(UIList* list, Texture& texture)
+		: UIListItem(list)
+	{
+		m_texture = &texture;
+
+		UIWidget::init("", MyVec2(), MyVec2(m_texture->getWidth(), m_texture->getHeight()));
+	}
+
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr)
+	{
+		Rect2D listViewport = m_list->getViewport();
+
+		spriteBatch.renderTexture2D(
+			m_texture,
+			m_bounding,
+			nullptr,
+			0.0f,
+			&listViewport);
+	}
+
+private:
+	Texture* m_texture;
+};
+
+#pragma endregion
 
 //==========================================================================================================
 //
@@ -49,6 +91,9 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	m_btns[BTN_FIGHTING].addPressListener(this);
 	m_btns[BTN_FIGHTING].addPressListener(bundle.OpenShopListener);
 
+	// List widgets
+	m_list[LIST_ITEM].init("hud_list_item", MyVec2(), 400, 60, UIList::HORIZONTAL);
+
 	// Other HUD-components
 	m_miniMap.init(
 		m_textures[TEXTURE_MINIMAP_BACKGROUND],
@@ -69,6 +114,12 @@ void Layer_HUD::resize(int width, int height)
 		m_btns[BTN_FIGHTING].setPos(pos);
 	}
 
+	// List widgets
+	{
+		MyVec2 pos = MyVec2(LIST_ITEM_MARGIN.x, height - LIST_ITEM_MARGIN.y - m_list[LIST_ITEM].getSize().y);
+		m_list[LIST_ITEM].setPos(pos);
+	}
+
 	// Other HUD-components
 	m_miniMap.resize(width, height);
 }
@@ -76,8 +127,17 @@ void Layer_HUD::resize(int width, int height)
 void Layer_HUD::update(Timer& timer, UserInput& userInput)
 {
 	// Button widgets
-	m_btns[BTN_FIGHTING].update(userInput);
+	for (int i = 0; i < NUM_BTNS; i++)
+	{
+		m_btns[i].update(userInput);
+	}
 
+	// List widgets
+	for (size_t i = 0; i < NUM_LISTS; i++)
+	{
+		m_list[i].update(userInput);
+	}
+	
 	// Other HUD-components
 	m_miniMap.update(userInput);
 	m_playerInfo.update(timer, userInput);
@@ -91,7 +151,16 @@ void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle
 	getWindowDimension(sWidth, sHeight);
 
 	// Button widgets
-	m_btns[BTN_FIGHTING].render(spriteBatch);
+	for (int i = 0; i < NUM_BTNS; i++)
+	{
+		m_btns[i].render(spriteBatch);
+	}
+
+	// List widgets
+	for (size_t i = 0; i < NUM_LISTS; i++)
+	{
+		m_list[i].render(spriteBatch);
+	}
 
 	// Other HUD-components
 	m_miniMap.render(spriteBatch, bundle.Player->getPos());

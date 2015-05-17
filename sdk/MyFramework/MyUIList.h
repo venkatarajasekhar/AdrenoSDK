@@ -100,6 +100,7 @@ public:
 	~UIList();
 
 	void init(const MyString& id, const MyVec2& pos, Texture& background, UIList::ORIENTATION orientation = UIList::VERTICAL);
+	void init(const MyString& id, const MyVec2& pos, int width, int height, UIList::ORIENTATION orientation = UIList::VERTICAL);
 	void update(UserInput& userInput);
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 

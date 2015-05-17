@@ -2,6 +2,7 @@
 #pragma once
 
 #include <MyTexture.h>
+#include <MyTimer.h>
 
 /*
 enum ITEM_TYPE
@@ -64,6 +65,12 @@ public:
 
 	virtual HeroItem* clone() = 0;
 
+	void update(Timer& timer);
+	void use();
+	void sell();
+
+	int getPrice();
+
 public:
 	// Item info
 	MyString Name;
@@ -74,6 +81,10 @@ public:
 
 protected:
 	ITEM_TYPE m_type;
+	bool m_isUsing;
+	float m_timeUse;
+	float m_timeWait;
+	float m_countTimeUsed;
 };
 
 //==================================================================================================================

@@ -63,7 +63,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 {
 	// Assets shaders
 	m_shaders[SHADER_TERRAIN].init(
-		resolveAssetsPath("Shaders/terrain.vs"),
+		resolveAssetsPath("Shaders/textured_mesh.vs"),
 		resolveAssetsPath("Shaders/terrain.fs"),
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
@@ -86,6 +86,12 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
 
+	m_shaders[SHADER_TEXTURED_MESH].init(
+		resolveAssetsPath("Shaders/textured_mesh.vs"),
+		resolveAssetsPath("Shaders/textured_mesh.fs"),
+		PosTexVertex::ShaderAttribsDesc,
+		PosTexVertex::NumShaderAttribsDesc);
+
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
@@ -94,6 +100,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_textures[TEXTURE_TERRAIN_DIFF_1].init(resource.GetTexture("diffuse_1"));
 		m_textures[TEXTURE_TERRAIN_DIFF_2].init(resource.GetTexture("diffuse_2"));
 		m_textures[TEXTURE_TERRAIN_BLEND].init(resource.GetTexture("blend"));
+		m_textures[TEXTURE_TERRAIN_DECAL_SELECTED].init(resource.GetTexture("decal_selected"));
 	}
 
 	{
@@ -145,13 +152,21 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 			properties);
 	}
 
+	m_selectedDecal.init(
+		&m_textures[TEXTURE_TERRAIN_DECAL_SELECTED],
+		m_shaders[SHADER_TEXTURED_MESH],
+		MyVec3(0, 0.5f, 0),
+		MyVec3(),
+		MyVec2(3.0f));
+
 	m_shop.init(
 		m_mesh1Datas[MESH_1_DATA_SHOP],
 		m_meshTextures[TEXTURES_MESH_SHOP],
 		m_shaders[SHADER_MESH],
 		MyVec3(-39.195f, 0, -14.0f),
 		MyVec3(0, -45, 0),
-		MyVec3(1.5f));
+		MyVec3(1.5f),
+		m_selectedDecal);
 	m_shop.addPressListener(bundle.ShopListener);
 
 	// Graphics objects
@@ -226,6 +241,8 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 		m_mesh_terrain.update(timer, isPressed, pressedPoint);
 		m_shop.update(timer, isPressed, pressedPoint);
 	}
+
+	m_selectedDecal.update(timer);
 	
 	// Game objects
 	m_towerPool.update(timer);

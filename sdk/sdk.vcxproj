@@ -106,6 +106,7 @@
     <ClCompile Include="MyFramework\OpenGLES\MyFont.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyInputLayout.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyMesh.cpp" />
+    <ClCompile Include="MyFramework\OpenGLES\MyQuad3D.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyShader.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="MyFramework\OpenGLES\MyFont.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyInputLayout.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyMesh.h" />
+    <ClInclude Include="MyFramework\OpenGLES\MyQuad3D.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyShader.h" />
     <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh1.h" />
     <ClInclude Include="MyFramework\OpenGLES\MySkinnedMesh2.h" />

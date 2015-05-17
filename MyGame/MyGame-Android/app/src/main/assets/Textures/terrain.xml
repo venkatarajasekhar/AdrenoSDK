@@ -2,7 +2,7 @@
 
 <Texture 
     ResourceID  = "diffuse_1"
-    SrcFileName = "grass.png"
+    SrcFileName = "tilable-IMG_0044-lush.png"
 />
 
 <Texture 
@@ -12,5 +12,10 @@
 
 <Texture 
     ResourceID  = "blend"
-    SrcFileName = "terrain_map.png"
+    SrcFileName = "terrain_map - blurred.png"
+/>
+
+<Texture 
+    ResourceID  = "decal_selected"
+    SrcFileName = "decal_selected.png"
 />

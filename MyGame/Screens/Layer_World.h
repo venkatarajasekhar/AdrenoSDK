@@ -34,6 +34,7 @@ private:
 		SHADER_MESH,
 		SHADER_SKINNED_MESH_1,
 		SHADER_BILLBOARD,
+		SHADER_TEXTURED_MESH,
 		NUM_SHADERS,
 	};
 
@@ -42,6 +43,7 @@ private:
 		TEXTURE_TERRAIN_DIFF_1,
 		TEXTURE_TERRAIN_DIFF_2,
 		TEXTURE_TERRAIN_BLEND,
+		TEXTURE_TERRAIN_DECAL_SELECTED,
 		TEXTURE_BLOODBAR_GREEN_FORE,
 		TEXTURE_BLOODBAR_GREEN_BACK,
 		TEXTURE_BLOODBAR_RED_FORE,
@@ -115,6 +117,7 @@ private:
 	// Mesh objects
 	FlatTerrain m_mesh_terrain;
 	Shop m_shop;
+	Quad3D m_selectedDecal;
 
 	// Game objects
 	std::vector<LivingEntity*> m_livingEnts;

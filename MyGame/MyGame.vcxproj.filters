@@ -309,6 +309,9 @@
     <ClCompile Include="GraphicsObjects\Shop.cpp">
       <Filter>GraphicsObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyQuad3D.cpp">
+      <Filter>sdk\MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">

@@ -126,6 +126,9 @@
     <ClCompile Include="MyFramework\MyUIProgressBar.cpp">
       <Filter>MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\OpenGLES\MyQuad3D.cpp">
+      <Filter>MyFramework\OpenGLES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="MyFramework\MyUIProgressBar.h">
       <Filter>MyFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\OpenGLES\MyQuad3D.h">
+      <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

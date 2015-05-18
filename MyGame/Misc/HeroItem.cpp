@@ -38,7 +38,9 @@ void HeroItem::update(Timer& timer, Hero* hero)
 		execute(hero);
 	else
 	{
+		//smartLog(toString(timer.getElapsedTime()));
 		if (m_isUsing) m_countTimeUsed += timer.getElapsedTime();
+		//smartLog(toString(m_countTimeUsed));
 		if ((m_isUsing) && (m_countTimeUsed <= m_timeUse))
 		{
 			execute(hero);
@@ -93,7 +95,7 @@ HeroItem* HeroItem_HealingPotion::clone()
 
 void HeroItem_HealingPotion::execute(Hero* hero)
 {
-	float exp = 1.0f;
+	static float exp = 1.0f;
 	if (m_countTimeUsed >= exp)
 	{
 		hero->accHealth(20);

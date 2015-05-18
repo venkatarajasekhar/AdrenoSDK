@@ -19,7 +19,7 @@ public:
 		const MyVec3& rot,
 		const MyVec3& scale,
 		Quad3D& selectedDecal);
-	void update(Timer& timer, bool isPressed, MyVec3& pressedPoint);
+	void update(Timer& timer, bool& isPressed, MyVec3& pressedPoint);
 	void render(Camera& camera, Light& light);
 
 private:

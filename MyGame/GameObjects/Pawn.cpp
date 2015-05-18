@@ -134,6 +134,7 @@ Pawn::~Pawn()
 void Pawn::init(
 	SkinnedMesh1& mesh,
 	BloodBar& bloodBar,
+	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts,
 	PawnProps& pawnProp,
 	TEAM_TYPE team)
@@ -163,7 +164,8 @@ void Pawn::init(
 		PAWN_BLOOD_BAR_SCALE, 
 		pawnProp.BloodbarOffset,
 		lEnts, 
-		pawnProp.AttackRange);
+		pawnProp.AttackRange,
+		&selectedDecal);
 }
 
 void Pawn::update(Timer& timer)
@@ -217,7 +219,12 @@ PawnPool::~PawnPool()
 {
 }
 
-void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts)
+void PawnPool::init(
+	Shader& skinnedShader, 
+	BloodBar& myBloodBar, 
+	BloodBar& enemyBloodBar, 
+	Quad3D& selectedDecal,
+	std::vector<LivingEntity*>& lEnts)
 {
 	initPawnProps();
 
@@ -278,8 +285,20 @@ void PawnPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 	// Pawns
 	for (size_t i = 0; i < MAX_NUM_PAWNS_EACH_SIDE; i++)
 	{
-		m_myPawns[i].init(m_skinnedMeshes[SKINNED_MESH_BROWNIE], myBloodBar, lEnts, g_PawnProps[PAWN_BROWNIE], TEAM_TYPE_MY_TEAM);
-		m_enemyPawns[i].init(m_skinnedMeshes[SKINNED_MESH_SKELETON], enemyBloodBar, lEnts, g_PawnProps[PAWN_SKELETON], TEAM_TYPE_ENEMY);
+		m_myPawns[i].init(
+			m_skinnedMeshes[SKINNED_MESH_BROWNIE], 
+			myBloodBar,
+			selectedDecal,
+			lEnts, 
+			g_PawnProps[PAWN_BROWNIE], 
+			TEAM_TYPE_MY_TEAM);
+		m_enemyPawns[i].init(
+			m_skinnedMeshes[SKINNED_MESH_SKELETON], 
+			enemyBloodBar,
+			selectedDecal, 
+			lEnts, 
+			g_PawnProps[PAWN_SKELETON], 
+			TEAM_TYPE_ENEMY);
 
 		lEnts.push_back(&m_myPawns[i]);
 		lEnts.push_back(&m_enemyPawns[i]);

@@ -121,6 +121,7 @@ private:
 
 	// Game objects
 	std::vector<LivingEntity*> m_livingEnts;
+	LivingEntity* m_selectedGameObj;
 
 	TowerPool m_towerPool;
 	PawnPool m_pawnPool;

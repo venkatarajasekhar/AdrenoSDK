@@ -37,13 +37,15 @@ void Shop::init(
 	m_mesh.addInstance(Mesh::buildMeshInstance(pos, rot, scale));
 }
 
-void Shop::update(Timer& timer, bool isPressed, MyVec3& pressedPoint)
+void Shop::update(Timer& timer, bool& isPressed, MyVec3& pressedPoint)
 {
 	MyVec3 pos = m_mesh.getInstance(0)->Position;
 	if (isPressed && (distance_optimized(pos + MODEL_OFFSET, pressedPoint) <= SELECTED_RADIUS))
 	{
 		IOnPressListener::Data data("shop", 0, 0);
 		throwPressEvent(data);
+
+		isPressed = false;
 	}
 
 	m_mesh.update(timer);

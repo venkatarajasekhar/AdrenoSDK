@@ -10,7 +10,10 @@ LivingEntity::LivingEntity()
 	m_lEnts(nullptr),
 	m_atkTarget(nullptr),
 	m_atkRange(0),
-	m_inUse(false)
+	m_inUse(false),
+	m_selectedDecal(nullptr),
+	m_selectedRadius(2.0f),
+	m_selected(false)
 {
 }
 
@@ -25,7 +28,8 @@ void LivingEntity::init(
 	const MyVec2& bloodBarScale,
 	const MyVec3& bloodBarOffset,
 	std::vector<LivingEntity*>& lEnts,
-	float atkRange)
+	float atkRange,
+	Quad3D* selectedDecal)
 {
 	m_maxHealth = maxHealth;
 	m_health = m_maxHealth;
@@ -37,12 +41,23 @@ void LivingEntity::init(
 
 	m_lEnts = &lEnts;
 	m_atkRange = atkRange;
+	
+	m_selectedDecal = selectedDecal;
 }
 
 void LivingEntity::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 {
+	// Render blood bar
 	m_bloodBar->setScale(m_bloodBarScale);
 	m_bloodBar->render(spriteBatch, camera, getPos() + m_bloodBarOffset, (float)m_health / (float)m_maxHealth);
+
+	// Render selection indicator
+	if (m_selected && (m_selectedDecal != nullptr))
+	{
+		m_selectedDecal->setPos(getPos() + MyVec3(0, 0.1f, 0));
+		m_selectedDecal->setSize(MyVec2(2.0f * m_selectedRadius));
+		m_selectedDecal->render(camera);
+	}
 }
 
 void LivingEntity::dead()
@@ -70,6 +85,11 @@ int LivingEntity::getDamage()const
 bool LivingEntity::inUse()const
 {
 	return m_inUse;
+}
+
+bool LivingEntity::isSelect(bool isPressed, MyVec3& pressedPoint)
+{
+	return (isPressed && (distance_optimized(getPos(), pressedPoint) <= m_selectedRadius));
 }
 
 // Setter
@@ -101,4 +121,14 @@ void LivingEntity::accDamage(int delta)
 	{
 		m_damage = 0;
 	}
+}
+
+void LivingEntity::select()
+{
+	m_selected = true;
+}
+
+void LivingEntity::deselect()
+{
+	m_selected = false;
 }

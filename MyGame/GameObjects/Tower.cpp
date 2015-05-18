@@ -172,6 +172,7 @@ Tower::~Tower()
 void Tower::init(
 	FileMesh1& mesh,
 	BloodBar& bloodBar,
+	Quad3D& selectedDecal,
 	Billboard& projtBillboard,
 	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
@@ -200,7 +201,8 @@ void Tower::init(
 		towerProp.BloodbarScale, 
 		towerProp.BloodbarOffset, 
 		lEnts, 
-		towerProp.AttackRange);
+		towerProp.AttackRange,
+		&selectedDecal);
 }
 
 void Tower::update(Timer& timer)
@@ -251,6 +253,7 @@ void TowerPool::init(
 	Shader& meshShader,
 	BloodBar& myBloodBar,
 	BloodBar& enemyBloodBar,
+	Quad3D& selectedDecal,
 	Billboard& projtBillboard,
 	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
@@ -313,6 +316,7 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_MY_MAIN_TOWER]->init(
 		m_fileMeshes[FILE_MESH_WHITE_PAGODA], 
 		myBloodBar, 
+		selectedDecal,
 		projtBillboard,
 		projectilePool,
 		lEnts, 
@@ -322,6 +326,7 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_MY_TOWER_1]->init(
 		m_fileMeshes[FILE_MESH_OUTPOST], 
 		myBloodBar, 
+		selectedDecal,
 		projtBillboard,
 		projectilePool,
 		lEnts, 
@@ -331,6 +336,7 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_MY_TOWER_2]->init(
 		m_fileMeshes[FILE_MESH_OUTPOST], 
 		myBloodBar, 
+		selectedDecal,
 		projtBillboard,
 		projectilePool,
 		lEnts, 
@@ -341,6 +347,7 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_ENEMY_MAIN_TOWER]->init(
 		m_fileMeshes[FILE_MESH_HOUSE_WIND], 
 		enemyBloodBar,
+		selectedDecal,
 		projtBillboard,
 		projectilePool,
 		lEnts, 
@@ -350,6 +357,7 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_ENEMY_TOWER_1]->init(
 		m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], 
 		enemyBloodBar, 
+		selectedDecal,
 		projtBillboard,
 		projectilePool,
 		lEnts, 
@@ -359,6 +367,7 @@ void TowerPool::init(
 	m_towers[TOWER_IN_GAME_ENEMY_TOWER_2]->init(
 		m_fileMeshes[FILE_MESH_TOWER_OF_VICTORY], 
 		enemyBloodBar, 
+		selectedDecal,
 		projtBillboard,
 		projectilePool,
 		lEnts, 

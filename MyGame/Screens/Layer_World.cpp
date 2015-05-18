@@ -50,6 +50,7 @@ static bool isPressTerrain(UserInput& userInput, Camera& camera, MyVec3& pressed
 //========================================================================================================
 
 Layer_World::Layer_World()
+	: m_selectedGameObj(nullptr)
 {
 }
 
@@ -185,6 +186,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_shaders[SHADER_MESH],
 		m_bloodBar[BLOOD_BAR_MY_TEAM],
 		m_bloodBar[BLOOD_BAR_ENEMY],
+		m_selectedDecal,
 		m_billboards[BILLBOARD_ENERGY_BALL],
 		m_projectilePool,
 		m_livingEnts, 
@@ -194,6 +196,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_shaders[SHADER_SKINNED_MESH_1], 
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
+		m_selectedDecal,
 		m_livingEnts);
 
 	m_heroPool.init(
@@ -239,6 +242,27 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 		//---------------- Test ------------------------------------------------------------------------------------------
 
 		m_shop.update(timer, isPressed, pressedPoint);
+
+		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
+		{
+			LivingEntity* lEnt = (*i);
+			if (lEnt->inUse() && (lEnt->getTeamType() == TEAM_TYPE_ENEMY))
+			{
+				if (lEnt->isSelect(isPressed, pressedPoint))
+				{
+					lEnt->select();
+					if (m_selectedGameObj != nullptr)
+					{
+						m_selectedGameObj->deselect();
+					}
+
+					m_selectedGameObj = lEnt;
+					isPressed = false;
+					break;
+				}
+			}
+		}
+
 		m_mesh_terrain.update(timer, isPressed, pressedPoint);
 	}
 

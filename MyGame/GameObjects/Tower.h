@@ -7,6 +7,8 @@
 #include "StateMachine.h"
 #include "Projectile.h"
 
+#pragma region Struct
+
 //=========================================================================================================
 //
 // Struct
@@ -33,6 +35,8 @@ struct TowerInGameProp
 	MyVec3 Scale;
 };
 
+#pragma endregion
+
 //=========================================================================================================
 //
 // Tower class
@@ -48,6 +52,7 @@ public:
 	virtual void init(
 		FileMesh1& mesh,
 		BloodBar& bloodBar,
+		Quad3D& selectedDecal,
 		Billboard& projtBillboard,
 		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
@@ -135,6 +140,7 @@ public:
 		Shader& meshShader, 
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
+		Quad3D& selectedDecal,
 		Billboard& projtBillboard,
 		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,

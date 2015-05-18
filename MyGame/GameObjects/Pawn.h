@@ -49,6 +49,7 @@ public:
 	void init(
 		SkinnedMesh1& mesh,
 		BloodBar& bloodBar, 
+		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts,
 		PawnProps& pawnProp,
 		TEAM_TYPE team);
@@ -127,7 +128,12 @@ public:
 	PawnPool();
 	~PawnPool();
 
-	void init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemyBloodBar, std::vector<LivingEntity*>& lEnts);
+	void init(
+		Shader& skinnedShader, 
+		BloodBar& myBloodBar, 
+		BloodBar& enemyBloodBar, 
+		Quad3D& selectedDecal,
+		std::vector<LivingEntity*>& lEnts);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

@@ -38,6 +38,8 @@ private:
 };
 /**/
 
+class Hero;
+
 //==================================================================================================================
 //
 // HeroItem class
@@ -60,13 +62,16 @@ public:
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type);
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait);
 	virtual ~HeroItem();
 
 	virtual HeroItem* clone() = 0;
 
-	void update(Timer& timer);
-	void use();
+	void update(Timer& timer, Hero* hero);
+	void useItem();
+	virtual void execute(Hero* hero);
 	void sell();
 
 	int getPrice();
@@ -93,27 +98,30 @@ protected:
 //
 //==================================================================================================================
 
-class HeroItem_ChainMail : public HeroItem
+class HeroItem_HealingPotion : public HeroItem
 {
 public:
-	HeroItem_ChainMail(
+	HeroItem_HealingPotion(
 		const MyString& _name,
 		const MyString& _desc,
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type)
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait)
 	{}
-	~HeroItem_ChainMail(){}
+	~HeroItem_HealingPotion(){}
 
 	HeroItem* clone();
+	void execute(Hero* hero);
 
 private:
 
 };
 
-class HeroItem_CloakOfTheResistant : public HeroItem
+/*class HeroItem_CloakOfTheResistant : public HeroItem
 {
 public:
 	HeroItem_CloakOfTheResistant(
@@ -211,4 +219,4 @@ public:
 
 private:
 
-};
+};*/

@@ -1,4 +1,4 @@
-
+#include "Hero.h"
 #include "HeroItem.h"
 
 //==================================================================================================================
@@ -12,13 +12,17 @@ HeroItem::HeroItem(const MyString& _name,
 	int _price,
 	const MyString& _benefit,
 	Texture& _avatar,
-	ITEM_TYPE _type)
+	ITEM_TYPE _type,
+	float _timeUse,
+	float _timeWait)
 	: Name(_name),
 	Desc(_desc),
 	Price(_price),
 	Benefit(_benefit),
 	Avatar(&_avatar),
-	m_type(_type)
+	m_type(_type),
+	m_timeUse(_timeUse),
+	m_timeWait(_timeWait)
 {
 	m_countTimeUsed = 0;
 	m_isUsing = false;
@@ -28,18 +32,18 @@ HeroItem::~HeroItem()
 {
 }
 
-void HeroItem::update(Timer& timer)
+void HeroItem::update(Timer& timer, Hero* hero)
 {
 	if (m_type == PASSIVE)
-		use();
+		execute(hero);
 	else
 	{
 		if (m_isUsing) m_countTimeUsed += timer.getElapsedTime();
 		if ((m_isUsing) && (m_countTimeUsed <= m_timeUse))
 		{
-			use();
+			execute(hero);
 		}
-		if (m_countTimeUsed < m_timeUse + m_timeWait)
+		if (m_countTimeUsed > m_timeUse + m_timeWait)
 		{
 			m_countTimeUsed = 0;
 			m_isUsing = false;
@@ -47,9 +51,15 @@ void HeroItem::update(Timer& timer)
 	}
 }
 
-void HeroItem::use()
+void HeroItem::execute(Hero* hero)
 {
 
+}
+
+void HeroItem::useItem()
+{
+	m_isUsing = true;
+	//m_countTimeUsed = 0;
 }
 
 void HeroItem::sell()
@@ -68,17 +78,30 @@ int HeroItem::getPrice()
 //
 //==================================================================================================================
 
-HeroItem* HeroItem_ChainMail::clone()
+HeroItem* HeroItem_HealingPotion::clone()
 {
-	return new HeroItem_ChainMail(
+	return new HeroItem_HealingPotion(
 		this->Name,
 		this->Desc,
 		this->Price,
 		this->Benefit,
 		*(this->Avatar),
-		this->m_type);
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait);
 }
 
+void HeroItem_HealingPotion::execute(Hero* hero)
+{
+	float exp = 1.0f;
+	if (m_countTimeUsed >= exp)
+	{
+		hero->accHealth(20);
+		exp++;
+	}
+}
+
+/*
 //==================================================================================================================
 //
 // HeroItem_CloakOfTheResistant class
@@ -163,3 +186,4 @@ HeroItem* HeroItem_LightCalvaryHat::clone()
 		*(this->Avatar),
 		this->m_type);
 }
+*/

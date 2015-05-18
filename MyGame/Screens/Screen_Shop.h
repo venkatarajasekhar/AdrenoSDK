@@ -4,8 +4,8 @@
 #include <MyScreen.h>
 #include <MyUIButton.h>
 #include <MyUIList.h>
-#include "HeroItem.h"
 #include "Hero.h"
+#include "HeroItem.h"
 
 #pragma region Event class
 
@@ -62,7 +62,7 @@ protected:
 class ShopScreen : public Screen, public IOnPressListener, public IOnPressListItemListener, public IOnBuyItemListener
 {
 private:
-	static const int TOTAL_HERO_ITEMS = 6;
+	static const int TOTAL_HERO_ITEMS = 1;
 
 private:
 	// Assets

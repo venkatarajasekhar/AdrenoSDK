@@ -1,4 +1,4 @@
-
+#include "HeroItem.h"
 #include "Hero.h"
 #include "Hero_AI.h"
 #include "Hero_Controlled.h"
@@ -123,7 +123,7 @@ static const std::vector<MyVec3> ENEMY_HERO_PATH =
 Hero::Hero()
 	: m_instance(nullptr)
 {
-	m_itemBag.reserve(MAX_NUM_ITEMS);
+	//m_itemBag.reserve(MAX_NUM_ITEMS);
 }
 
 Hero::~Hero()
@@ -196,6 +196,13 @@ void Hero::update(Timer& timer)
 		m_revivalTime = 0;
 		revival();
 	}
+	
+	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
+	{
+		((HeroItem*)(*i))->useItem();
+		((HeroItem*)(*i))->update(timer, this);
+	}
+
 }
 
 void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)

@@ -221,16 +221,16 @@ ShopScreen::~ShopScreen()
 
 void ShopScreen::initItems()
 {
-	m_totalItems[0] = new HeroItem_ChainMail(
-		"Chain Mail",
-		"Painstakingly handmade by craftsmen in the town of Silence.",
-		250,
-		"+ 10 Physical Defense",
+	m_totalItems[0] = new HeroItem_HealingPotion(
+		"Healing Potion",
+		"An alchemical concoction crafted with curative herbs grown deep within the Arcadian Forest.",
+		100,
+		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
 		m_textures[TEXTURE_ITEM_CHAIN_MAIL],
-		HeroItem::ACTIVE
-		);
+		HeroItem::ACTIVE,
+		5, 2);
 
-	m_totalItems[1] = new HeroItem_CloakOfTheResistant(
+	/*m_totalItems[1] = new HeroItem_CloakOfTheResistant(
 		"Cloak of the Resistant",
 		"A cloak woven of hair from the mane of the Night Horse, which legend says roams the Whispering Islands every blue moon.",
 		250,
@@ -273,7 +273,7 @@ void ShopScreen::initItems()
 		"+ 250 HP",
 		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
 		HeroItem::ACTIVE
-		);
+		);*/
 }
 
 #pragma endregion

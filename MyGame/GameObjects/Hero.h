@@ -5,7 +5,6 @@
 #include <MyEventListener.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
-#include "HeroItem.h"
 
 #pragma region Structs
 
@@ -71,6 +70,8 @@ const float EXP_PAWN = 100;
 const float EXP_TOWER = 500;
 
 #pragma endregion
+
+class HeroItem;
 
 //===================================================================================================================
 //

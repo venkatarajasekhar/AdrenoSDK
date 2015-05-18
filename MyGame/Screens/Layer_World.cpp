@@ -238,8 +238,8 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 		//smartLog("Pressed at: " + toString(pressedPoint.x) + " " + toString(pressedPoint.y) + " " + toString(pressedPoint.z));
 		//---------------- Test ------------------------------------------------------------------------------------------
 
-		m_mesh_terrain.update(timer, isPressed, pressedPoint);
 		m_shop.update(timer, isPressed, pressedPoint);
+		m_mesh_terrain.update(timer, isPressed, pressedPoint);
 	}
 
 	m_selectedDecal.update(timer);

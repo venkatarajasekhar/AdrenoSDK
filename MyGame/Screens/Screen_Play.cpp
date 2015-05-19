@@ -112,7 +112,11 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "shop")
 	{
-		m_screenManager->activePopupScreen("ShopScreen", m_layer_World.getPlayer());
+		std::vector<IOnBuyItemListener* > listener;
+		listener.push_back(m_layer_World.getPlayer());
+		listener.push_back(&m_layer_HUD);
+
+		m_screenManager->activePopupScreen("ShopScreen", &listener);
 	}
 }
 

@@ -4,8 +4,9 @@
 #include <MyUIList.h>
 #include "MiniMap.h"
 #include "PlayerInfo.h"
+#include "EventListener.h"
 
-class Layer_HUD : public IOnPressListener, public OnPressListenee
+class Layer_HUD : public IOnPressListener, public OnPressListenee, public IOnBuyItemListener
 {
 public:
 	struct InitBundle
@@ -64,6 +65,7 @@ public:
 	// Event handling
 
 	void OnPress(const IOnPressListener::Data& data);
+	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
 
 private:
 	// Assets

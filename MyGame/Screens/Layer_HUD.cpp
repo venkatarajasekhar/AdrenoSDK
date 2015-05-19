@@ -180,3 +180,8 @@ void Layer_HUD::OnPress(const IOnPressListener::Data& data)
 	IOnPressListener::Data hudData("hud", data.x, data.y);
 	throwPressEvent(hudData);
 }
+
+void Layer_HUD::OnBuyItemItem(const IOnBuyItemListener::Data& data)
+{
+	m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], *data.BoughtItem->Avatar));
+}

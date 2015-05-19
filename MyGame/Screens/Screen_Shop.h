@@ -5,53 +5,7 @@
 #include <MyUIButton.h>
 #include <MyUIList.h>
 #include "Hero.h"
-#include "HeroItem.h"
-
-#pragma region Event class
-
-//===========================================================================================================
-//
-// Event class
-//
-//===========================================================================================================
-
-class IOnBuyItemListener
-{
-public:
-	struct Data
-	{
-		// ID of listenee
-		MyString Id;
-
-		// Bought item
-		HeroItem* BoughtItem;
-
-		Data(const MyString& _id, HeroItem* _boughtItem)
-			: Id(_id),
-			BoughtItem(_boughtItem)
-		{}
-	};
-
-public:
-	virtual void OnBuyItemItem(const Data& data) = 0;
-};
-
-class OnBuyItemListenee
-{
-public:
-	OnBuyItemListenee(){}
-	virtual ~OnBuyItemListenee(){}
-
-	virtual void addBuyItemListener(IOnBuyItemListener* listener);
-
-protected:
-	virtual void throwBuyItemEvent(IOnBuyItemListener::Data& data);
-
-protected:
-	std::vector<IOnBuyItemListener*> m_buyItemListeners;
-};
-
-#pragma endregion
+#include "EventListener.h"
 
 //===================================================================================================================
 //
@@ -59,7 +13,12 @@ protected:
 //
 //===================================================================================================================
 
-class ShopScreen : public Screen, public IOnPressListener, public IOnPressListItemListener, public IOnBuyItemListener
+class ShopScreen : 
+	public Screen, 
+	public IOnPressListener, 
+	public IOnPressListItemListener, 
+	public OnBuyItemListenee,
+	public IOnBuyItemListener
 {
 private:
 	static const int TOTAL_HERO_ITEMS = 1;
@@ -134,6 +93,8 @@ public:
 	void OnPress(const IOnPressListener::Data& data);
 	void OnPressListItem(const IOnPressListItemListener::Data& data);
 	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
+
+	void setTag(void* tag);
 
 private:
 	void initItems();

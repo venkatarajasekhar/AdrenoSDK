@@ -5,6 +5,7 @@
 #include <MyEventListener.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
+#include "EventListener.h"
 
 #pragma region Structs
 
@@ -79,7 +80,7 @@ class HeroItem;
 //
 //===================================================================================================================
 
-class Hero : public LivingEntity
+class Hero : public LivingEntity, public IOnBuyItemListener
 {
 public:
 	static const int MAX_NUM_ITEMS = 6;
@@ -103,6 +104,8 @@ public:
 	int getGold();
 
 	void addItem(HeroItem* item);
+
+	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
 
 protected:
 	virtual void dead();

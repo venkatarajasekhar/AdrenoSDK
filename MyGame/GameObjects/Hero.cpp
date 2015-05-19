@@ -26,7 +26,7 @@ static void initHeroProps()
 	g_HeroProps[HERO_BEAST_SEWON].InitialMaxHealth = 200;
 	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 20;
 
-	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 4;
+	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 7;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
 	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 4.5f;

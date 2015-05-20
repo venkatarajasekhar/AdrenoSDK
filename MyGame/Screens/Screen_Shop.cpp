@@ -419,8 +419,8 @@ void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 	{
 		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
 		
-		IOnBuyItemListener::Data data("", data.BoughtItem);
-		throwBuyItemEvent(data);
+		IOnBuyItemListener::Data data1("", data.BoughtItem);
+		throwBuyItemEvent(data1);
 
 		m_numBoughtItems++;
 	}

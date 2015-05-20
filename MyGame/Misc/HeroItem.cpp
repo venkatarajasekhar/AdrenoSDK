@@ -109,7 +109,7 @@ void HeroItem_HealingPotion::execute(Hero* hero)
 	}
 }
 
-/*
+
 //==================================================================================================================
 //
 // HeroItem_CloakOfTheResistant class
@@ -124,7 +124,10 @@ HeroItem* HeroItem_CloakOfTheResistant::clone()
 		this->Price,
 		this->Benefit,
 		*(this->Avatar),
-		this->m_type);
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
 }
 
 //==================================================================================================================
@@ -141,7 +144,10 @@ HeroItem* HeroItem_LifeWard::clone()
 		this->Price,
 		this->Benefit,
 		*(this->Avatar),
-		this->m_type);
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
 }
 
 //==================================================================================================================
@@ -158,7 +164,10 @@ HeroItem* HeroItem_BloodPouch::clone()
 		this->Price,
 		this->Benefit,
 		*(this->Avatar),
-		this->m_type);
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
 }
 
 //==================================================================================================================
@@ -175,7 +184,10 @@ HeroItem* HeroItem_StaffOfTheSathlenar::clone()
 		this->Price,
 		this->Benefit,
 		*(this->Avatar),
-		this->m_type);
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
 }
 
 //==================================================================================================================
@@ -192,6 +204,8 @@ HeroItem* HeroItem_LightCalvaryHat::clone()
 		this->Price,
 		this->Benefit,
 		*(this->Avatar),
-		this->m_type);
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
 }
-*/

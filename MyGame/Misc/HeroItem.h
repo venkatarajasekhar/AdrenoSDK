@@ -124,7 +124,7 @@ private:
 
 };
 
-/*class HeroItem_CloakOfTheResistant : public HeroItem
+class HeroItem_CloakOfTheResistant : public HeroItem
 {
 public:
 	HeroItem_CloakOfTheResistant(
@@ -133,8 +133,11 @@ public:
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type)
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_CloakOfTheResistant(){}
 
@@ -153,8 +156,11 @@ public:
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type)
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_LifeWard(){}
 
@@ -173,8 +179,11 @@ public:
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type)
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_BloodPouch(){}
 
@@ -193,8 +202,11 @@ public:
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type)
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_StaffOfTheSathlenar(){}
 
@@ -213,8 +225,11 @@ public:
 		int _price,
 		const MyString& _benefit,
 		Texture& _avatar,
-		ITEM_TYPE _type)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type)
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_LightCalvaryHat(){}
 
@@ -222,4 +237,4 @@ public:
 
 private:
 
-};*/
+};

@@ -188,16 +188,16 @@ void ShopScreen::initItems()
 		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
 		m_textures[TEXTURE_ITEM_CHAIN_MAIL],
 		HeroItem::ACTIVE,
-		5, 2, 1);
+		5.5, 0, 1);
 
-	/*m_totalItems[1] = new HeroItem_CloakOfTheResistant(
+	m_totalItems[1] = new HeroItem_CloakOfTheResistant(
 		"Cloak of the Resistant",
 		"A cloak woven of hair from the mane of the Night Horse, which legend says roams the Whispering Islands every blue moon.",
 		250,
 		"+ 10 Magical Defense",
 		m_textures[TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT],
-		HeroItem::ACTIVE
-		);
+		HeroItem::ACTIVE,
+		5.5, 0, 1);
 
 	m_totalItems[2] = new HeroItem_LifeWard(
 		"Life Ward", 
@@ -205,8 +205,8 @@ void ShopScreen::initItems()
 		450,
 		"+ 3 HP Regeneration",
 		m_textures[TEXTURE_ITEM_LIFE_WARD],
-		HeroItem::ACTIVE
-		);
+		HeroItem::ACTIVE,
+		5.5, 0, 1);
 
 	m_totalItems[3] = new HeroItem_BloodPouch(
 		"Blood Pouch",
@@ -214,8 +214,8 @@ void ShopScreen::initItems()
 		450, 
 		"+ 150 HP",
 		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
-		HeroItem::ACTIVE
-		);
+		HeroItem::ACTIVE,
+		5.5, 0, 1);
 
 	m_totalItems[4] = new HeroItem_StaffOfTheSathlenar(
 		"Staff of Sathlenar",
@@ -223,8 +223,8 @@ void ShopScreen::initItems()
 		675,
 		"+ 270 MP",
 		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
-		HeroItem::ACTIVE
-		);
+		HeroItem::ACTIVE,
+		5.5, 0, 1);
 
 	m_totalItems[5] = new HeroItem_LightCalvaryHat(
 		"Light Calvary Hat",
@@ -232,8 +232,8 @@ void ShopScreen::initItems()
 		750,
 		"+ 250 HP",
 		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
-		HeroItem::ACTIVE
-		);*/
+		HeroItem::ACTIVE,
+		5.5, 0, 1);
 }
 
 #pragma endregion

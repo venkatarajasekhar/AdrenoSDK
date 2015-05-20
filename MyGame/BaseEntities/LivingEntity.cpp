@@ -12,7 +12,8 @@ LivingEntity::LivingEntity()
 	m_atkRange(0),
 	m_inUse(false),
 	m_selectedDecal(nullptr),
-	m_selectedRadius(1.2f),
+	//m_selectedRadius(1.2f),
+	m_selectedRadius(2.0f),
 	m_selected(false)
 {
 }

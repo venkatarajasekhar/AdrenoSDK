@@ -21,7 +21,7 @@ class ShopScreen :
 	public IOnBuyItemListener
 {
 private:
-	static const int TOTAL_HERO_ITEMS = 1;
+	static const int TOTAL_HERO_ITEMS = 6;
 
 private:
 	// Assets

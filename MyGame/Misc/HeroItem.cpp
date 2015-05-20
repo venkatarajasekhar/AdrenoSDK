@@ -14,7 +14,8 @@ HeroItem::HeroItem(const MyString& _name,
 	Texture& _avatar,
 	ITEM_TYPE _type,
 	float _timeUse,
-	float _timeWait)
+	float _timeWait,
+	int _nTime)
 	: Name(_name),
 	Desc(_desc),
 	Price(_price),
@@ -22,7 +23,8 @@ HeroItem::HeroItem(const MyString& _name,
 	Avatar(&_avatar),
 	m_type(_type),
 	m_timeUse(_timeUse),
-	m_timeWait(_timeWait)
+	m_timeWait(_timeWait),
+	m_nTime(_nTime)
 {
 	m_countTimeUsed = 0;
 	m_isUsing = false;
@@ -38,17 +40,20 @@ void HeroItem::update(Timer& timer, Hero* hero)
 		execute(hero);
 	else
 	{
-		//smartLog(toString(timer.getElapsedTime()));
-		if (m_isUsing) m_countTimeUsed += timer.getElapsedTime();
-		//smartLog(toString(m_countTimeUsed));
-		if ((m_isUsing) && (m_countTimeUsed <= m_timeUse))
+		if (m_isUsing)
 		{
-			execute(hero);
-		}
-		if (m_countTimeUsed > m_timeUse + m_timeWait)
-		{
-			m_countTimeUsed = 0;
-			m_isUsing = false;
+			m_countTimeUsed += timer.getElapsedTime();
+
+			if (m_countTimeUsed <= m_timeUse)
+			{
+				execute(hero);
+			}
+
+			if (m_countTimeUsed > m_timeUse + m_timeWait)
+			{
+				m_countTimeUsed = 0;
+				m_isUsing = false;
+			}
 		}
 	}
 }
@@ -90,7 +95,8 @@ HeroItem* HeroItem_HealingPotion::clone()
 		*(this->Avatar),
 		this->m_type,
 		this->m_timeUse,
-		this->m_timeWait);
+		this->m_timeWait,
+		this->m_nTime);
 }
 
 void HeroItem_HealingPotion::execute(Hero* hero)

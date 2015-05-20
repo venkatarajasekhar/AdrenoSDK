@@ -45,6 +45,20 @@ void Hero_Controlled::update(Timer& timer)
 {
 	Hero::update(timer);
 
+	for (auto i = m_lEnts->begin(); i != m_lEnts->end(); ++i)
+	{
+		if ((*i)->getSelected() && ((*i)->getTeamType() == TEAM_TYPE_ENEMY))
+		{
+			m_atkTarget = (*i);
+			if (distance_optimized(getPos(), (*i)->getPos()) > m_atkRange)
+			{
+				MyVec3 u = (*i)->getPos() - getPos();
+				u = normalize(u);
+				m_movingEnt.setTarget((*i)->getPos() - MyVec3(2)*u);
+			}
+		}
+	}
+
 	// States manager
 	m_stateMachine->Update();
 }

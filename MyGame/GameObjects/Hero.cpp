@@ -197,6 +197,11 @@ void Hero::update(Timer& timer)
 		revival();
 	}
 	
+	//if (m_itemBag.begin() != m_itemBag.end())
+	//for (auto i = m_itemBag.end() - 1; i != m_itemBag.begin(); --i)
+		//m_itemBag.erase(i);
+
+
 	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
 	{
 		((HeroItem*)(*i))->useItem();

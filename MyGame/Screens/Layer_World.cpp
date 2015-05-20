@@ -246,6 +246,7 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 		{
 			LivingEntity* lEnt = (*i);
+			if (isPressed) lEnt->deselect(); 
 			if (lEnt->inUse() && (lEnt->getTeamType() == TEAM_TYPE_ENEMY))
 			{
 				if (lEnt->isSelect(isPressed, pressedPoint))

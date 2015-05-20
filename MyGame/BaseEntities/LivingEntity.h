@@ -30,6 +30,7 @@ public:
 	int getMaxHealth()const;
 	int getHealth()const;
 	int getDamage()const;
+	bool getSelected() const;
 	virtual MyVec3 getPos() = 0;
 
 	bool inUse()const;

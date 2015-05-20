@@ -22,9 +22,8 @@ GAME_BASE_ENTS_PATH      := $(GAME_PATH)/BaseEntities
 GAME_CORE_PATH           := $(GAME_PATH)/Core
 GAME_GAME_OBJS_PATH      := $(GAME_PATH)/GameObjects
 GAME_GRAPHICS_OBJS_PATH  := $(GAME_PATH)/GraphicsObjects
+GAME_MISC_PATH           := $(GAME_PATH)/Misc
 GAME_SCREENS_PATH        := $(GAME_PATH)/Screens
-GAME_UTILS_PATH          := $(GAME_PATH)/Utils
-
 
 include $(CLEAR_VARS)
 
@@ -84,6 +83,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFont.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyInputLayout.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyMesh.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MyQuad3D.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyShader.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh2.cpp \
@@ -99,7 +99,6 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_AI.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_Controlled.cpp \
-				   $(GAME_GAME_OBJS_PATH)/Item.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Pawn.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Projectile.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
@@ -108,15 +107,16 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/PlayerInfo.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/Shop.cpp \
+				   $(GAME_MISC_PATH)/EventListener.cpp \
+				   $(GAME_MISC_PATH)/HeroItem.cpp \
+				   $(GAME_MISC_PATH)/TPSCamera.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_HUD.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_GameOver.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Menu.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Play.cpp \
-				   $(GAME_SCREENS_PATH)/Screen_Shop.cpp \
-				   $(GAME_UTILS_PATH)/EventListener.cpp \
-				   $(GAME_UTILS_PATH)/TPSCamera.cpp
-				   
+				   $(GAME_SCREENS_PATH)/Screen_Shop.cpp
 				   
 LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(SDK_FRM_INC_PATH) \
@@ -132,9 +132,9 @@ LOCAL_C_INCLUDES	:= $(LOCAL_PATH)/$(SDK_EXTERNAL_PATH) \
 					   $(LOCAL_PATH)/$(GAME_CORE_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GAME_OBJS_PATH) \
 					   $(LOCAL_PATH)/$(GAME_GRAPHICS_OBJS_PATH) \
-					   $(LOCAL_PATH)/$(GAME_SCREENS_PATH) \
-					   $(LOCAL_PATH)/$(GAME_UTILS_PATH)
-				   
+					   $(LOCAL_PATH)/$(GAME_MISC_PATH) \
+					   $(LOCAL_PATH)/$(GAME_SCREENS_PATH)
+					   
 LOCAL_LDLIBS    := -llog -landroid -lEGL -lGLESv2 -lOpenSLES -lz
 
 LOCAL_CFLAGS	+= -Wno-write-strings -Wno-conversion-null

@@ -83,6 +83,11 @@ int LivingEntity::getDamage()const
 	return m_damage;
 }
 
+bool LivingEntity::getSelected()const
+{
+	return m_selected;
+}
+
 bool LivingEntity::inUse()const
 {
 	return m_inUse;

@@ -188,7 +188,7 @@ void ShopScreen::initItems()
 		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
 		m_textures[TEXTURE_ITEM_CHAIN_MAIL],
 		HeroItem::ACTIVE,
-		5, 2);
+		5, 2, 1);
 
 	/*m_totalItems[1] = new HeroItem_CloakOfTheResistant(
 		"Cloak of the Resistant",

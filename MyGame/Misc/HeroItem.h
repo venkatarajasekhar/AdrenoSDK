@@ -64,7 +64,8 @@ public:
 		Texture& _avatar,
 		ITEM_TYPE _type,
 		float _timeUse,
-		float _timeWait);
+		float _timeWait,
+		int _nTime);
 	virtual ~HeroItem();
 
 	virtual HeroItem* clone() = 0;
@@ -90,6 +91,7 @@ protected:
 	float m_timeUse;
 	float m_timeWait;
 	float m_countTimeUsed;
+	int m_nTime;
 };
 
 //==================================================================================================================
@@ -109,8 +111,9 @@ public:
 		Texture& _avatar,
 		ITEM_TYPE _type,
 		float _timeUse,
-		float _timeWait)
-		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait)
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_HealingPotion(){}
 

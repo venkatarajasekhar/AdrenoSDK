@@ -5,46 +5,6 @@
 #include "Screen_Shop.h"
 #include <MyScreenManager.h>
 
-#pragma region Event class
-
-//===========================================================================================================
-//
-// Event class
-//
-//===========================================================================================================
-
-void OnBuyItemListenee::addBuyItemListener(IOnBuyItemListener* listener)
-{
-	if (listener == nullptr) return;
-
-	bool existed(false);
-	for (auto i = m_buyItemListeners.begin(); i != m_buyItemListeners.end(); ++i)
-	{
-		if ((*i) == listener)
-		{
-			existed = true;
-			break;
-		}
-	}
-	if (!existed)
-	{
-		m_buyItemListeners.push_back(listener);
-	}
-}
-
-void OnBuyItemListenee::throwBuyItemEvent(IOnBuyItemListener::Data& data)
-{
-	for (auto i = m_buyItemListeners.begin(); i != m_buyItemListeners.end(); ++i)
-	{
-		if ((*i) != nullptr)
-		{
-			(*i)->OnBuyItemItem(data);
-		}
-	}
-}
-
-#pragma endregion
-
 #pragma region UIListItem_ShopItem class
 
 //==============================================================================================================
@@ -459,12 +419,22 @@ void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 	{
 		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
 		
-		if (m_tag != nullptr)
-		{
-			Hero* buyer = (Hero*)m_tag;
-			buyer->addItem(data.BoughtItem->clone());
-		}
+		IOnBuyItemListener::Data data("", data.BoughtItem);
+		throwBuyItemEvent(data);
 
 		m_numBoughtItems++;
+	}
+}
+
+void ShopScreen::setTag(void* tag)
+{
+	if (tag != nullptr)
+	{
+		std::vector<IOnBuyItemListener* >* listener = (std::vector<IOnBuyItemListener* >*)tag;
+
+		for (auto i = listener->begin(); i != listener->end(); ++i)
+		{
+			addBuyItemListener(*i);
+		}
 	}
 }

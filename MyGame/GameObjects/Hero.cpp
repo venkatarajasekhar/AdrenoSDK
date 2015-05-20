@@ -243,6 +243,11 @@ void Hero::addItem(HeroItem* item)
 	}
 }
 
+void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
+{
+	addItem(data.BoughtItem->clone());
+}
+
 void Hero::dead()
 {
 	m_instance->Visible = false;

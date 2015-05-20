@@ -3,10 +3,11 @@
 
 #include <MyUtils.h>
 #include "BaseEntity.h"
+#include "HeroItem.h"
 
 //======================================================================================================
 //
-// Listeners
+// Game over event
 //
 //======================================================================================================
 
@@ -26,12 +27,6 @@ public:
 	virtual void OnGameOver(const Data& data) = 0;
 };
 
-//======================================================================================================
-//
-// Listenees
-//
-//======================================================================================================
-
 class OnGameOverListenee
 {
 public:
@@ -45,4 +40,46 @@ protected:
 
 protected:
 	std::vector<IOnGameOverListener*> m_gameOverListeners;
+};
+
+//======================================================================================================
+//
+// Buy an item event
+//
+//======================================================================================================
+
+class IOnBuyItemListener
+{
+public:
+	struct Data
+	{
+		// ID of listenee
+		MyString Id;
+
+		// Bought item
+		HeroItem* BoughtItem;
+
+		Data(const MyString& _id, HeroItem* _boughtItem)
+			: Id(_id),
+			BoughtItem(_boughtItem)
+		{}
+	};
+
+public:
+	virtual void OnBuyItemItem(const Data& data) = 0;
+};
+
+class OnBuyItemListenee
+{
+public:
+	OnBuyItemListenee(){}
+	virtual ~OnBuyItemListenee(){}
+
+	virtual void addBuyItemListener(IOnBuyItemListener* listener);
+
+protected:
+	virtual void throwBuyItemEvent(IOnBuyItemListener::Data& data);
+
+protected:
+	std::vector<IOnBuyItemListener*> m_buyItemListeners;
 };

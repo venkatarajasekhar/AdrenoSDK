@@ -124,6 +124,7 @@ private:
 
 };
 
+
 class HeroItem_AcolyteStaff : public HeroItem
 {
 public:

@@ -225,6 +225,16 @@ MyVec3 Hero::getPos()
 	return m_movingEnt.getPos();
 }
 
+void Hero::accPos(MyVec3 dPos)
+{
+	m_movingEnt.setPos(m_movingEnt.getPos() + dPos);
+}
+
+MyVec3 Hero::getRot()
+{
+	return m_movingEnt.getRot() + MyVec3(0, m_movingEnt.getRotYOffset(), 0);
+}
+
 int Hero::getGold()
 {
 	return m_gold;

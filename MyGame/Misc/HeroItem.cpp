@@ -37,7 +37,7 @@ HeroItem::~HeroItem()
 void HeroItem::update(Timer& timer, Hero* hero)
 {
 	if (m_type == PASSIVE)
-		execute(hero);
+		execute(hero, timer.getElapsedTime());
 	else
 	{
 		if (m_isUsing)
@@ -46,7 +46,7 @@ void HeroItem::update(Timer& timer, Hero* hero)
 
 			if (m_countTimeUsed <= m_timeUse)
 			{
-				execute(hero);
+				execute(hero, timer.getElapsedTime());
 			}
 
 			if (m_countTimeUsed > m_timeUse + m_timeWait)
@@ -58,7 +58,7 @@ void HeroItem::update(Timer& timer, Hero* hero)
 	}
 }
 
-void HeroItem::execute(Hero* hero)
+void HeroItem::execute(Hero* hero, float elapsedTime)
 {
 
 }
@@ -99,14 +99,16 @@ HeroItem* HeroItem_HealingPotion::clone()
 		this->m_nTime);
 }
 
-void HeroItem_HealingPotion::execute(Hero* hero)
+void HeroItem_HealingPotion::execute(Hero* hero, float elapsedTime)
 {
-	static float exp = 1.0f;
+	/*static float exp = 1.0f;
 	if (m_countTimeUsed >= exp)
 	{
 		hero->accHealth(20);
 		exp++;
-	}
+	}*/
+	float health = 100 / 5.0f * elapsedTime;
+	hero->accHealth(health);
 }
 
 
@@ -116,9 +118,9 @@ void HeroItem_HealingPotion::execute(Hero* hero)
 //
 //==================================================================================================================
 
-HeroItem* HeroItem_CloakOfTheResistant::clone()
+HeroItem* HeroItem_AcolyteStaff::clone()
 {
-	return new HeroItem_CloakOfTheResistant(
+	return new HeroItem_AcolyteStaff(
 		this->Name,
 		this->Desc,
 		this->Price,
@@ -130,6 +132,14 @@ HeroItem* HeroItem_CloakOfTheResistant::clone()
 		this->m_nTime);
 }
 
+
+void HeroItem_AcolyteStaff::execute(Hero* hero, float elapsedTime)
+{
+	static float rot = hero->getRot().y;
+	float dx = 10 * dSin(rot) * elapsedTime / 0.4f;
+	float dz = 10 * dCos(rot) * elapsedTime / 0.4f;
+	hero->accPos(MyVec3(dx, 0, dz));
+}
 //==================================================================================================================
 //
 // HeroItem_LifeWard class

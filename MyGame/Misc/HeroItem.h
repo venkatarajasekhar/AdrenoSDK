@@ -72,7 +72,7 @@ public:
 
 	void update(Timer& timer, Hero* hero);
 	void useItem();
-	virtual void execute(Hero* hero);
+	virtual void execute(Hero* hero, float elapsedTime);
 	void sell();
 
 	int getPrice();
@@ -118,16 +118,16 @@ public:
 	~HeroItem_HealingPotion(){}
 
 	HeroItem* clone();
-	void execute(Hero* hero);
+	void execute(Hero* hero, float elapsedTime);
 
 private:
 
 };
 
-class HeroItem_CloakOfTheResistant : public HeroItem
+class HeroItem_AcolyteStaff : public HeroItem
 {
 public:
-	HeroItem_CloakOfTheResistant(
+	HeroItem_AcolyteStaff(
 		const MyString& _name,
 		const MyString& _desc,
 		int _price,
@@ -139,9 +139,10 @@ public:
 		int _nTime)
 		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
-	~HeroItem_CloakOfTheResistant(){}
+	~HeroItem_AcolyteStaff(){}
 
 	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
 
 private:
 

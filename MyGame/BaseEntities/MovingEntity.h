@@ -32,7 +32,7 @@ public:
 
 	MyVec3 getPos();
 	MyVec3 getRot();
-
+	float getRotYOffset();
 	bool isMoving();
 
 	// Setter

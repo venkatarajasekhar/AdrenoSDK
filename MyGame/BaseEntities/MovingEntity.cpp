@@ -139,6 +139,12 @@ MyVec3 MovingEntity::getRot()
 	return m_rotation;
 }
 
+float MovingEntity::getRotYOffset()
+{
+	return m_rotYOffset;
+}
+
+
 bool MovingEntity::isMoving()
 {
 	return m_isMoving;

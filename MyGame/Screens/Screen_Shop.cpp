@@ -186,18 +186,18 @@ void ShopScreen::initItems()
 		"An alchemical concoction crafted with curative herbs grown deep within the Arcadian Forest.",
 		100,
 		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
-		m_textures[TEXTURE_ITEM_CHAIN_MAIL],
+		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
 		HeroItem::ACTIVE,
-		5.5, 0, 1);
+		5, 0, 1);
 
-	m_totalItems[1] = new HeroItem_CloakOfTheResistant(
-		"Cloak of the Resistant",
-		"A cloak woven of hair from the mane of the Night Horse, which legend says roams the Whispering Islands every blue moon.",
-		250,
-		"+ 10 Magical Defense",
-		m_textures[TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT],
+	m_totalItems[1] = new HeroItem_AcolyteStaff(
+		"Acolyte Staff",
+		"Rumor has it that the soul of an ancient mage is imprisoned in the glass ball atop this staff.",
+		500,
+		"Pushes yourself 600 units in the direction you are facing over a 0.4s duration.Does not interrupt the target's actions. Costs 25 mana, has a 20 second cooldown.",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
 		HeroItem::ACTIVE,
-		5.5, 0, 1);
+		0.4, 20, -1);
 
 	m_totalItems[2] = new HeroItem_LifeWard(
 		"Life Ward", 

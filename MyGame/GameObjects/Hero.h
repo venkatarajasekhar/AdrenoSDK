@@ -101,6 +101,8 @@ public:
 	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
 	MyVec3 getPos();
+	MyVec3 getRot();
+	void accPos(MyVec3 dPos);
 	int getGold();
 
 	void addItem(HeroItem* item);

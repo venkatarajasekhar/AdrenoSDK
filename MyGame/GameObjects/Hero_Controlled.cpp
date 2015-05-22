@@ -195,9 +195,9 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 				hero->m_gold += MONEY_TOWER;
 				hero->m_exp += EXP_TOWER;
 			}
-			//hero->m_health += 30;
 		}
 		hero->m_atkTarget->accHealth(-hero->m_damage);
+		hero->accHealth(hero->m_healthPerAttack);
 	}
 }
 

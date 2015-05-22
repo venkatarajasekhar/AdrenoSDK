@@ -198,7 +198,23 @@ void Hero_AIState_Attack::OnPerformAAct(void* tag)
 	if (tag != nullptr)
 	{
 		Hero_AI* hero = (Hero_AI*)tag;
+
+		if (hero->m_atkTarget->getHealth() - hero->m_damage <= 0)
+		{
+			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_PAWN)
+			{
+				hero->m_gold += MONEY_PAWN;
+				hero->m_exp += EXP_PAWN;
+			}
+			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_TOWER)
+			{
+				hero->m_gold += MONEY_TOWER;
+				hero->m_exp += EXP_TOWER;
+			}
+		}
+
 		hero->m_atkTarget->accHealth(-hero->m_damage);
+		hero->accHealth(hero->m_healthPerAttack);
 	}
 }
 

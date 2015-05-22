@@ -102,6 +102,7 @@ public:
 
 	MyVec3 getPos();
 	MyVec3 getRot();
+	void setHealthPerAttack(int health);
 	void accPos(MyVec3 dPos);
 	int getGold();
 
@@ -124,6 +125,8 @@ protected:
 
 	int m_exp;
 	int m_gold;
+	int m_healthPerSecond;
+	int m_healthPerAttack;
 	float m_countTime;
 	float m_revivalTime;
 

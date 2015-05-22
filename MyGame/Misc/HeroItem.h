@@ -167,6 +167,7 @@ public:
 	~HeroItem_LifeWard(){}
 
 	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
 
 private:
 
@@ -236,6 +237,7 @@ public:
 	~HeroItem_LightCalvaryHat(){}
 
 	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
 
 private:
 

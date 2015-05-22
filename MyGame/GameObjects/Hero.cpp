@@ -29,9 +29,9 @@ static void initHeroProps()
 	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 7;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
-	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 4.5f;
+	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 5.0f;
 	g_HeroProps[HERO_BEAST_SEWON].MovingRotYOffset = 0;
-	g_HeroProps[HERO_BEAST_SEWON].MovingTurnSpeed = 500;
+	g_HeroProps[HERO_BEAST_SEWON].MovingTurnSpeed = 1000;
 
 	g_HeroProps[HERO_BEAST_SEWON].BloodbarOffset = MyVec3(-2, 5, 0);
 
@@ -49,9 +49,9 @@ static void initHeroProps()
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 7;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
 
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 4.5f;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 5.0f;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingRotYOffset = 0;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingTurnSpeed = 500;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingTurnSpeed = 1000;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].BloodbarOffset = MyVec3(-1, 5, 0);
 
@@ -157,6 +157,8 @@ void Hero::init(
 
 	m_exp = 0;
 	m_gold = 600;
+	m_healthPerSecond = 1;
+	m_healthPerAttack = 0;
 	m_countTime = 0;
 	m_revivalTime = 0;
 
@@ -184,7 +186,7 @@ void Hero::update(Timer& timer)
 	m_countTime += timer.getElapsedTime();
 	if (m_countTime >= 1.0f)
 	{
-		if ((m_instance->Visible) && (m_health < m_maxHealth)) m_health++;
+		if (m_instance->Visible) accHealth(m_healthPerSecond);
 		m_gold++;
 		m_countTime--;
 	}
@@ -238,6 +240,11 @@ MyVec3 Hero::getRot()
 int Hero::getGold()
 {
 	return m_gold;
+}
+
+void Hero::setHealthPerAttack(int health)
+{
+	m_healthPerAttack = health;
 }
 
 void Hero::addItem(HeroItem* item)

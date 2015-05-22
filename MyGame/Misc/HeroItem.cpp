@@ -37,7 +37,10 @@ HeroItem::~HeroItem()
 void HeroItem::update(Timer& timer, Hero* hero)
 {
 	if (m_type == PASSIVE)
+	{
+		m_countTimeUsed += timer.getElapsedTime();
 		execute(hero, timer.getElapsedTime());
+	}
 	else
 	{
 		if (m_isUsing)
@@ -160,6 +163,15 @@ HeroItem* HeroItem_LifeWard::clone()
 		this->m_nTime);
 }
 
+void HeroItem_LifeWard::execute(Hero* hero, float elapsedTime)
+{
+	if (m_countTimeUsed >= 1.0f)
+	{
+		hero->accHealth(4);
+		m_countTimeUsed--;
+	}
+}
+
 //==================================================================================================================
 //
 // HeroItem_BloodPouch class
@@ -218,4 +230,9 @@ HeroItem* HeroItem_LightCalvaryHat::clone()
 		this->m_timeUse,
 		this->m_timeWait,
 		this->m_nTime);
+}
+
+void HeroItem_LightCalvaryHat::execute(Hero* hero, float elapsedTime)
+{
+	hero->setHealthPerAttack(hero->getDamage()/4);
 }

@@ -193,7 +193,7 @@ void ShopScreen::initItems()
 	m_totalItems[1] = new HeroItem_AcolyteStaff(
 		"Acolyte Staff",
 		"Rumor has it that the soul of an ancient mage is imprisoned in the glass ball atop this staff.",
-		500,
+		1500,
 		"Pushes yourself 600 units in the direction you are facing over a 0.4s duration.Does not interrupt the target's actions. Costs 25 mana, has a 20 second cooldown.",
 		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
 		HeroItem::ACTIVE,
@@ -202,19 +202,19 @@ void ShopScreen::initItems()
 	m_totalItems[2] = new HeroItem_LifeWard(
 		"Life Ward", 
 		"A ring blessed by an Orc mage to bring health to any lucky enough to wear it.",
-		450,
-		"+ 3 HP Regeneration",
+		850,
+		"+ 5 HP Regeneration",
 		m_textures[TEXTURE_ITEM_LIFE_WARD],
-		HeroItem::ACTIVE,
-		5.5, 0, 1);
+		HeroItem::PASSIVE,
+		0, 0, -1);
 
-	m_totalItems[3] = new HeroItem_BloodPouch(
-		"Blood Pouch",
-		"A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.",
-		450, 
-		"+ 150 HP",
-		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
-		HeroItem::ACTIVE,
+	m_totalItems[3] = new HeroItem_LightCalvaryHat(
+		"Light Calvary Hat",
+		"A cavalry hat woven from threads of tempered steel, perfected by a skilled seamstress from the East.",
+		700,
+		"Lifesteal: Gives 15 % Lifesteal on attacks",
+		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
+		HeroItem::PASSIVE,
 		5.5, 0, 1);
 
 	m_totalItems[4] = new HeroItem_StaffOfTheSathlenar(
@@ -226,12 +226,12 @@ void ShopScreen::initItems()
 		HeroItem::ACTIVE,
 		5.5, 0, 1);
 
-	m_totalItems[5] = new HeroItem_LightCalvaryHat(
-		"Light Calvary Hat",
-		"A cavalry hat woven from threads of tempered steel, perfected by a skilled seamstress from the East.",
-		750,
-		"+ 250 HP",
-		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
+	m_totalItems[5] = new HeroItem_BloodPouch(
+		"Blood Pouch",
+		"A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.",
+		450,
+		"+ 150 HP",
+		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
 		HeroItem::ACTIVE,
 		5.5, 0, 1);
 }

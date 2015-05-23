@@ -6,19 +6,18 @@
 #include "PlayerInfo.h"
 #include "EventListener.h"
 
-class Layer_HUD : public IOnPressListener, public OnPressListenee, public IOnBuyItemListener
+class Layer_HUD : public IOnPressListener, public OnPressListenee, public IOnBuyItemListener, public IOnPressListItemListener
 {
 public:
 	struct InitBundle
 	{
 		MyVec3 MapCenter;
 		MyVec2 MapSize;
-		IOnPressListener* OpenShopListener;
+		Hero* Player;
 	};
 
 	struct RenderBundle
 	{
-		Hero* Player;
 	};
 
 private:
@@ -66,6 +65,7 @@ public:
 
 	void OnPress(const IOnPressListener::Data& data);
 	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
+	void OnPressListItem(const IOnPressListItemListener::Data& data);
 
 private:
 	// Assets
@@ -81,4 +81,5 @@ private:
 	PlayerInfo m_playerInfo;
 
 	float m_fps;
+	Hero* m_player;
 };

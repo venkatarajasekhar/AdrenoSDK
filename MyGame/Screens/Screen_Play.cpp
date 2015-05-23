@@ -33,16 +33,6 @@ PlayScreen::~PlayScreen()
 void PlayScreen::init()
 {
 	{
-		Layer_HUD::InitBundle bundle;
-		bundle.MapCenter = MAP_CENTER;
-		bundle.MapSize = MAP_SIZE;
-		bundle.OpenShopListener = this;
-
-		m_layer_HUD.init(bundle);
-		m_layer_HUD.addPressListener(this);
-	}
-
-	{
 		Layer_World::InitBundle bundle;
 		bundle.MapCenter = MAP_CENTER;
 		bundle.MapSize = MAP_SIZE;
@@ -50,6 +40,16 @@ void PlayScreen::init()
 		bundle.ShopListener = this;
 
 		m_layer_World.init(bundle);
+	}
+
+	{
+		Layer_HUD::InitBundle bundle;
+		bundle.MapCenter = MAP_CENTER;
+		bundle.MapSize = MAP_SIZE;
+		bundle.Player = m_layer_World.getPlayer();
+
+		m_layer_HUD.init(bundle);
+		m_layer_HUD.addPressListener(this);
 	}
 }
 
@@ -84,7 +84,6 @@ void PlayScreen::render(void* utilObjs)
 
 	{
 		Layer_HUD::RenderBundle bundle;
-		bundle.Player = m_layer_World.getPlayer();
 
 		m_layer_HUD.render(*globalUtilObjs->spriteBatch, bundle);
 	}

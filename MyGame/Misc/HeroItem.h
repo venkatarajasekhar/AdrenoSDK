@@ -76,6 +76,7 @@ public:
 	void sell();
 
 	int getPrice();
+	ITEM_TYPE getType();
 
 public:
 	// Item info

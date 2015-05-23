@@ -208,7 +208,7 @@ void Hero::update(Timer& timer)
 
 	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
 	{
-		((HeroItem*)(*i))->useItem();
+		//((HeroItem*)(*i))->useItem();
 		((HeroItem*)(*i))->update(timer, this);
 	}
 
@@ -264,7 +264,8 @@ void Hero::addItem(HeroItem* item)
 
 void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
-	addItem(data.BoughtItem->clone());
+	//addItem(data.BoughtItem->clone());
+	addItem(data.BoughtItem);
 }
 
 void Hero::dead()

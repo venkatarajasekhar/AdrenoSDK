@@ -195,7 +195,8 @@ void Layer_HUD::OnPress(const IOnPressListener::Data& data)
 
 void Layer_HUD::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
-	m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem));
+	if (data.BoughtItem->getType()==data.BoughtItem->ACTIVE)
+		m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem));
 }
 
 void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)
@@ -207,7 +208,8 @@ void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)
 
 		// Use 'heroItem' for hero 'm_player' here ...
 
-		smartLog("Pressed item: " + heroItem->Name);
+		//smartLog("Pressed item: " + heroItem->Name);
+		heroItem->useItem();
 
 		IOnPressListener::Data hudData("hud", 0, 0);
 		throwPressEvent(hudData);

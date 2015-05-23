@@ -26,28 +26,37 @@ static const MyVec2 LIST_ITEM_MARGIN    = MyVec2(100, 20);
 class UIListItem_ActiveItem : public UIListItem
 {
 public:
-	UIListItem_ActiveItem(UIList* list, Texture& texture)
+	UIListItem_ActiveItem(UIList* list, HeroItem* heroItem)
 		: UIListItem(list)
 	{
-		m_texture = &texture;
+		m_heroItem = heroItem;
 
-		UIWidget::init("", MyVec2(), MyVec2(m_texture->getWidth(), m_texture->getHeight()));
+		Texture* texture = m_heroItem->Avatar;
+
+		UIWidget::init("", MyVec2(), MyVec2(texture->getWidth(), texture->getHeight()));
 	}
 
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr)
 	{
 		Rect2D listViewport = m_list->getViewport();
 
+		Texture* texture = m_heroItem->Avatar;
+
 		spriteBatch.renderTexture2D(
-			m_texture,
+			texture,
 			m_bounding,
 			nullptr,
 			0.0f,
 			&listViewport);
 	}
 
+	HeroItem* getHeroItem()
+	{
+		return m_heroItem;
+	}
+
 private:
-	Texture* m_texture;
+	HeroItem* m_heroItem;
 };
 
 #pragma endregion
@@ -59,7 +68,8 @@ private:
 //==========================================================================================================
 
 Layer_HUD::Layer_HUD()
-	: m_fps(0.0f)
+	: m_fps(0.0f),
+	m_player(nullptr)
 {
 }
 
@@ -71,6 +81,8 @@ Layer_HUD::~Layer_HUD()
 
 void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 {
+	m_player = bundle.Player;
+
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
@@ -89,10 +101,10 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	// Button widgets
 	m_btns[BTN_FIGHTING].init("hud_btn_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
 	m_btns[BTN_FIGHTING].addPressListener(this);
-	m_btns[BTN_FIGHTING].addPressListener(bundle.OpenShopListener);
 
 	// List widgets
 	m_list[LIST_ITEM].init("hud_list_item", MyVec2(), 400, 60, UIList::HORIZONTAL);
+	m_list[LIST_ITEM].addPressListItemListener(this);
 
 	// Other HUD-components
 	m_miniMap.init(
@@ -163,8 +175,8 @@ void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle
 	}
 
 	// Other HUD-components
-	m_miniMap.render(spriteBatch, bundle.Player->getPos());
-	m_playerInfo.render(spriteBatch, *bundle.Player);
+	m_miniMap.render(spriteBatch, m_player->getPos());
+	m_playerInfo.render(spriteBatch, *m_player);
 
 	if (SHOW_FPS)
 	{
@@ -183,5 +195,21 @@ void Layer_HUD::OnPress(const IOnPressListener::Data& data)
 
 void Layer_HUD::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
-	m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], *data.BoughtItem->Avatar));
+	m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem));
+}
+
+void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)
+{
+	if (data.Id == "hud_list_item")
+	{
+		UIListItem_ActiveItem* listItem = (UIListItem_ActiveItem*)data.ListItem;
+		HeroItem* heroItem = listItem->getHeroItem();
+
+		// Use 'heroItem' for hero 'm_player' here ...
+
+		smartLog("Pressed item: " + heroItem->Name);
+
+		IOnPressListener::Data hudData("hud", 0, 0);
+		throwPressEvent(hudData);
+	}
 }

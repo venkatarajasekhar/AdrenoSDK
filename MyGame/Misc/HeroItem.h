@@ -219,6 +219,7 @@ private:
 
 };
 
+
 class HeroItem_LightCalvaryHat : public HeroItem
 {
 public:

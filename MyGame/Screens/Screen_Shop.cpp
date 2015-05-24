@@ -188,7 +188,7 @@ void ShopScreen::initItems()
 		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
 		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
 		HeroItem::ACTIVE,
-		5, 0, 1);
+		1, 0, 1);
 
 	m_totalItems[1] = new HeroItem_AcolyteStaff(
 		"Acolyte Staff",
@@ -419,7 +419,7 @@ void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 	{
 		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
 		
-		IOnBuyItemListener::Data data1("", data.BoughtItem);
+		IOnBuyItemListener::Data data1("", data.BoughtItem->clone());
 		throwBuyItemEvent(data1);
 
 		m_numBoughtItems++;

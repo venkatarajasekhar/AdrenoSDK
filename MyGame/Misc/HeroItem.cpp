@@ -66,10 +66,11 @@ void HeroItem::execute(Hero* hero, float elapsedTime)
 
 }
 
+
 void HeroItem::useItem()
 {
 	m_isUsing = true;
-	//m_countTimeUsed = 0;
+	m_countTimeUsed = 0;
 }
 
 void HeroItem::sell()
@@ -80,6 +81,11 @@ void HeroItem::sell()
 int HeroItem::getPrice()
 {
 	return Price;
+}
+
+HeroItem::ITEM_TYPE HeroItem::getType()
+{
+	return m_type;
 }
 
 //==================================================================================================================
@@ -110,7 +116,8 @@ void HeroItem_HealingPotion::execute(Hero* hero, float elapsedTime)
 		hero->accHealth(20);
 		exp++;
 	}*/
-	float health = 100 / 5.0f * elapsedTime;
+	//smartLog(toString(elapsedTime));
+	float health = 100 / m_timeUse * elapsedTime;
 	hero->accHealth(health);
 }
 

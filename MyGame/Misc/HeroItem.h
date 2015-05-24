@@ -76,6 +76,7 @@ public:
 	void sell();
 
 	int getPrice();
+	ITEM_TYPE getType();
 
 public:
 	// Item info
@@ -218,7 +219,6 @@ public:
 private:
 
 };
-
 
 class HeroItem_LightCalvaryHat : public HeroItem
 {

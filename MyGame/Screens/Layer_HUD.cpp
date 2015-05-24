@@ -106,6 +106,8 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	m_list[LIST_ITEM].init("hud_list_item", MyVec2(), 400, 60, UIList::HORIZONTAL);
 	m_list[LIST_ITEM].addPressListItemListener(this);
 
+	m_list[LIST_SKILL].init("hud_list_skill", MyVec2(20, 200), 60, 400);
+
 	// Other HUD-components
 	m_miniMap.init(
 		m_textures[TEXTURE_MINIMAP_BACKGROUND],

@@ -112,6 +112,12 @@ static const std::vector<MyVec3> ENEMY_HERO_PATH =
 	MyVec3(-37.9492f, 0, -0.463198f),
 };
 
+static const float RANGE_OF_MAIN_TOWER = 10.0f;
+static const int HEALTH_PER_SECOND_IN_RANGE_MAINTOWER = 20;
+static const int HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER = 1;
+static const MyVec3 POSITION_MY_MAIN_TOWER = MyVec3(-43.0f, 0, 0.39f);
+static const MyVec3 POSITION_ENEMY_MAIN_TOWER = MyVec3(39.0f, 0, -1.5f);
+
 #pragma endregion
 
 //===================================================================================================================
@@ -157,7 +163,7 @@ void Hero::init(
 
 	m_exp = 0;
 	m_gold = 600;
-	m_healthPerSecond = 1;
+	m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
 	m_healthPerAttack = 0;
 	m_countTime = 0;
 	m_revivalTime = 0;
@@ -186,6 +192,19 @@ void Hero::update(Timer& timer)
 	m_countTime += timer.getElapsedTime();
 	if (m_countTime >= 1.0f)
 	{
+		if (m_teamType == TEAM_TYPE_MY_TEAM)
+		{
+			if (distance_optimized(getPos(), POSITION_MY_MAIN_TOWER) <= RANGE_OF_MAIN_TOWER)
+				m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
+			else m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+		}
+		else
+		{
+			if (distance_optimized(getPos(), POSITION_ENEMY_MAIN_TOWER) <= RANGE_OF_MAIN_TOWER)
+				m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
+			else m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+		}
+
 		if (m_instance->Visible) accHealth(m_healthPerSecond);
 		m_gold++;
 		m_countTime--;

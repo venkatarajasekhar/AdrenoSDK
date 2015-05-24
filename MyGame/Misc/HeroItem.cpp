@@ -66,6 +66,7 @@ void HeroItem::execute(Hero* hero, float elapsedTime)
 
 }
 
+
 void HeroItem::useItem()
 {
 	m_isUsing = true;

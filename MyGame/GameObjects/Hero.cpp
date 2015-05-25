@@ -129,12 +129,17 @@ static const MyVec3 POSITION_ENEMY_MAIN_TOWER = MyVec3(39.0f, 0, -1.5f);
 Hero::Hero()
 	: m_instance(nullptr)
 {
-	//m_itemBag.reserve(MAX_NUM_ITEMS);
+	m_itemBag.reserve(MAX_NUM_ITEMS);
 }
 
 Hero::~Hero()
 {
 	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
+	{
+		delete(*i);
+	}
+
+	for (auto i = m_skillBag.begin(); i != m_skillBag.end(); ++i)
 	{
 		delete(*i);
 	}
@@ -280,6 +285,14 @@ void Hero::addItem(HeroItem* item)
 	}
 }
 
+void Hero::addSkill(HeroSkill* skill)
+{
+	if (skill != nullptr)
+	{
+		m_skillBag.push_back(skill);
+	}
+}
+
 void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
 	//addItem(data.BoughtItem->clone());
@@ -335,6 +348,17 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 {
 	initHeroProps();
 	initHeroInGameProps();
+
+	// Assets texture
+	{
+		CFrmPackedResourceGLES resource;
+		resource.LoadFromFile(resolveAssetsPath("Textures/skill.pak").c_str());
+
+		m_textures[TEXTURE_SKILL_BATTLE_BORN].init(resource.GetTexture("Battle_Born"));
+		m_textures[TEXTURE_SKILL_BLADEFALL].init(resource.GetTexture("Bladefall"));
+		m_textures[TEXTURE_SKILL_DECIMATION_DAY].init(resource.GetTexture("Decimation_Day"));
+		m_textures[TEXTURE_SKILL_JUST_DESSERTS].init(resource.GetTexture("Just_Desserts"));
+	}
 
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_BEAST_SEWON].init(resolveAssetsPath("Meshes/Heroes/Beast/sewon/Sewon.model"));
@@ -408,6 +432,8 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 			g_HeroProps[HERO_FIGHTER_DAN_MEI], 
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
 			TEAM_TYPE_MY_TEAM);
+
+		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 0, 0, &m_textures[TEXTURE_SKILL_BATTLE_BORN]));
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
 

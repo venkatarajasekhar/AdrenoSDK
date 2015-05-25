@@ -47,6 +47,7 @@ private:
 	enum
 	{
 		LIST_ITEM,
+		LIST_SKILL,
 		NUM_LISTS,
 	};
 

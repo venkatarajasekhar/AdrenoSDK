@@ -224,7 +224,6 @@ void Hero::update(Timer& timer)
 		//m_itemBag.erase(i);
 	}*/
 
-
 	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
 	{
 		//((HeroItem*)(*i))->useItem();

@@ -312,6 +312,9 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyQuad3D.cpp">
       <Filter>sdk\MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="Misc\HeroSkill.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -400,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="GraphicsObjects\Shop.h">
       <Filter>GraphicsObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\HeroSkill.h">
+      <Filter>Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

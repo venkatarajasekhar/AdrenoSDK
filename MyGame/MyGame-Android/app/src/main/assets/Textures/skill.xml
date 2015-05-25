@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Texture 
+	ResourceID = "Battle_Born" 
+	SrcFileName   = "Battle_Born.png"
+/>
+
+<Texture 
+	ResourceID = "Bladefall" 
+	SrcFileName   = "Bladefall.png"
+/>
+
+<Texture 
+	ResourceID = "Decimation_Day" 
+	SrcFileName   = "Decimation_Day.png"
+/>
+
+<Texture 
+	ResourceID = "Just_Desserts" 
+	SrcFileName   = "Just_Desserts.png"
+/>

@@ -1,5 +1,6 @@
 
 #include "Layer_HUD.h"
+#include "HeroSkill.h"
 
 #pragma region Constants
 
@@ -61,6 +62,52 @@ private:
 
 #pragma endregion
 
+#pragma region UIListItem_Skill class
+
+//==========================================================================================================
+//
+// UIListItem_Skill class
+//
+//==========================================================================================================
+
+class UIListItem_Skill : public UIListItem
+{
+public:
+	UIListItem_Skill(UIList* list, HeroSkill* heroSkill)
+		: UIListItem(list)
+	{
+		m_heroSkill = heroSkill;
+
+		Texture* texture = m_heroSkill->Avatar;
+
+		UIWidget::init("", MyVec2(), MyVec2(texture->getWidth(), texture->getHeight()));
+	}
+
+	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr)
+	{
+		Rect2D listViewport = m_list->getViewport();
+
+		Texture* texture = m_heroSkill->Avatar;
+
+		spriteBatch.renderTexture2D(
+			texture,
+			m_bounding,
+			nullptr,
+			0.0f,
+			&listViewport);
+	}
+
+	HeroSkill* getHeroSkill()
+	{
+		return m_heroSkill;
+	}
+
+private:
+	HeroSkill* m_heroSkill;
+};
+
+#pragma endregion
+
 //==========================================================================================================
 //
 // Layer_HUD class
@@ -106,8 +153,15 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	m_list[LIST_ITEM].init("hud_list_item", MyVec2(), 400, 60, UIList::HORIZONTAL);
 	m_list[LIST_ITEM].addPressListItemListener(this);
 
-	m_list[LIST_SKILL].init("hud_list_skill", MyVec2(20, 200), 60, 400);
-
+	{
+		m_list[LIST_SKILL].init("hud_list_skill", MyVec2(20, 200), 60, 400);
+		auto& skillBag = m_player->getSkillBag();
+		for (auto i = skillBag.begin(); i != skillBag.end(); ++i)
+		{
+			m_list[LIST_SKILL].addItem(new UIListItem_Skill(&m_list[LIST_SKILL], *i));
+		}
+	}
+	
 	// Other HUD-components
 	m_miniMap.init(
 		m_textures[TEXTURE_MINIMAP_BACKGROUND],

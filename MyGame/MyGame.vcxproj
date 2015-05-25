@@ -163,6 +163,7 @@
     <ClCompile Include="GraphicsObjects\Shop.cpp" />
     <ClCompile Include="Misc\EventListener.cpp" />
     <ClCompile Include="Misc\HeroItem.cpp" />
+    <ClCompile Include="Misc\HeroSkill.cpp" />
     <ClCompile Include="Misc\TPSCamera.cpp" />
     <ClCompile Include="Screens\Layer_HUD.cpp" />
     <ClCompile Include="Screens\Layer_World.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="GraphicsObjects\Shop.h" />
     <ClInclude Include="Misc\EventListener.h" />
     <ClInclude Include="Misc\HeroItem.h" />
+    <ClInclude Include="Misc\HeroSkill.h" />
     <ClInclude Include="Misc\TPSCamera.h" />
     <ClInclude Include="Misc\Utils.h" />
     <ClInclude Include="Screens\Layer_HUD.h" />

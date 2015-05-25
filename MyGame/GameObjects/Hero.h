@@ -6,6 +6,7 @@
 #include "LivingEntity.h"
 #include "MovingEntity.h"
 #include "EventListener.h"
+#include "HeroSkill.h"
 
 #pragma region Structs
 
@@ -107,6 +108,9 @@ public:
 	int getGold();
 
 	void addItem(HeroItem* item);
+	void addSkill(HeroSkill* skill);
+
+	std::vector<HeroSkill*>& getSkillBag(){ return m_skillBag; }
 
 	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
 
@@ -134,6 +138,7 @@ protected:
 	MyVec3 m_rotationStart;
 
 	std::vector<HeroItem*> m_itemBag;
+	std::vector<HeroSkill*> m_skillBag;
 };
 
 #pragma region HeroPool class
@@ -157,6 +162,15 @@ public:
 
 private:
 	// Assets
+	enum
+	{
+		TEXTURE_SKILL_BATTLE_BORN,
+		TEXTURE_SKILL_BLADEFALL,
+		TEXTURE_SKILL_DECIMATION_DAY,
+		TEXTURE_SKILL_JUST_DESSERTS,
+		NUM_TEXTURES,
+	};
+
 	enum
 	{
 		MESH_1_DATA_BEAST_SEWON,
@@ -203,6 +217,7 @@ public:
 
 private:
 	// Assets
+	Texture                 m_textures[NUM_TEXTURES];
 	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
 	SkinnedMesh1::AnimData  m_anim1Datas[NUM_ANIM_1_DATAS];
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];

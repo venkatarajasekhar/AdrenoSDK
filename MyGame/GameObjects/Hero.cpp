@@ -438,6 +438,9 @@ void HeroPool::init(Shader& skinnedShader, BloodBar& myBloodBar, BloodBar& enemy
 			TEAM_TYPE_MY_TEAM);
 
 		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 0, 0, &m_textures[TEXTURE_SKILL_BATTLE_BORN]));
+		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 0, 0, &m_textures[TEXTURE_SKILL_BLADEFALL]));
+		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 0, 0, &m_textures[TEXTURE_SKILL_DECIMATION_DAY]));
+		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 0, 0, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
 

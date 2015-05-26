@@ -188,7 +188,7 @@ void ShopScreen::initItems()
 		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
 		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
 		HeroItem::ACTIVE,
-		1, 0, 1);
+		5.1, 0, 1);
 
 	m_totalItems[1] = new HeroItem_AcolyteStaff(
 		"Acolyte Staff",

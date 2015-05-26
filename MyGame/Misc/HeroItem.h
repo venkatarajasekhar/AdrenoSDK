@@ -125,7 +125,7 @@ public:
 	void execute(Hero* hero, float elapsedTime);
 
 private:
-
+	int m_count = 1;
 };
 
 

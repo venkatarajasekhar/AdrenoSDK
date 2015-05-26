@@ -225,8 +225,12 @@ void Hero::update(Timer& timer)
 
 	/*for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)
 	{
-		delete(*i);
-		//m_itemBag.erase(i);
+		if (((*i)->getNTime() == 0) && (!(*i)->getIsUsing()))
+		{
+			delete(*i);
+			m_itemBag.erase(i);
+			break;
+		}
 	}*/
 
 	for (auto i = m_itemBag.begin(); i != m_itemBag.end(); ++i)

@@ -105,7 +105,7 @@ void HeroItem::accNTime(int n)
 
 //==================================================================================================================
 //
-// HeroItem_ChainMail class
+// HeroItem_HealingPotion class
 //
 //==================================================================================================================
 
@@ -125,15 +125,11 @@ HeroItem* HeroItem_HealingPotion::clone()
 
 void HeroItem_HealingPotion::execute(Hero* hero, float elapsedTime)
 {
-	/*static float exp = 1.0f;
-	if (m_countTimeUsed >= exp)
+	if (m_countTimeUsed >= m_count)
 	{
 		hero->accHealth(20);
-		exp++;
-	}*/
-	//smartLog(toString(elapsedTime));
-	float health = 100 / m_timeUse * elapsedTime;
-	hero->accHealth(health);
+		m_count++;
+	}
 }
 
 

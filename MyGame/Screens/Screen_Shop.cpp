@@ -197,7 +197,7 @@ void ShopScreen::initItems()
 		"Pushes yourself 600 units in the direction you are facing over a 0.4s duration.Does not interrupt the target's actions. Costs 25 mana, has a 20 second cooldown.",
 		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
 		HeroItem::ACTIVE,
-		0.4, 20, -1);
+		0.3, 10, -1);
 
 	m_totalItems[2] = new HeroItem_LifeWard(
 		"Life Ward", 

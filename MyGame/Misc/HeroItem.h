@@ -77,6 +77,9 @@ public:
 
 	int getPrice();
 	ITEM_TYPE getType();
+	bool getIsUsing();
+	int getNTime();
+	void accNTime(int n);
 
 public:
 	// Item info

@@ -104,6 +104,7 @@ public:
 	MyVec3 getPos();
 	MyVec3 getRot();
 	void setHealthPerAttack(int health);
+	void setTarget(MyVec3 target);
 	void accPos(MyVec3 dPos);
 	int getGold();
 

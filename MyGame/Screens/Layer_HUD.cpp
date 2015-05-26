@@ -265,7 +265,11 @@ void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)
 		// Use 'heroItem' for hero 'm_player' here ...
 
 		//smartLog("Pressed item: " + heroItem->Name);
-		heroItem->useItem();
+		if ((heroItem->getNTime() != 0) && (!heroItem->getIsUsing()))
+		{
+			heroItem->accNTime(1);
+			heroItem->useItem();
+		}
 
 		IOnPressListener::Data hudData("hud", 0, 0);
 		throwPressEvent(hudData);

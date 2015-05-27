@@ -128,7 +128,6 @@ private:
 	int m_count = 1;
 };
 
-
 class HeroItem_AcolyteStaff : public HeroItem
 {
 public:

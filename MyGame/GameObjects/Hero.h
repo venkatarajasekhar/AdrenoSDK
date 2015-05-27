@@ -3,6 +3,8 @@
 
 #include <MySkinnedMesh1.h>
 #include <MyEventListener.h>
+#include <MyBillboard.h>
+#include <MySpriteSheet.h>
 #include "LivingEntity.h"
 #include "MovingEntity.h"
 #include "EventListener.h"
@@ -174,6 +176,12 @@ private:
 
 	enum
 	{
+		SPRITE_SHEET_SKILL_BATTLE_BORN,
+		NUM_SPRITE_SHEETS,
+	};
+
+	enum
+	{
 		MESH_1_DATA_BEAST_SEWON,
 		MESH_1_DATA_FIGHTER_DAN_MEI,
 		NUM_MESH_1_DATAS,
@@ -193,6 +201,13 @@ private:
 		NUM_TEXTURES_MESHES,
 	};
 
+	// Graphics objects
+	enum
+	{
+		BILLBOARD_SKILL_BATTLE_BORN,
+		NUM_BILLBOARDS,
+	};
+
 	// Meshes
 	enum
 	{
@@ -207,6 +222,7 @@ public:
 
 	void init(
 		Shader& skinnedShader, 
+		Shader& billboardShader,
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
 		std::vector<LivingEntity*>& lEnts, 
@@ -219,9 +235,13 @@ public:
 private:
 	// Assets
 	Texture                 m_textures[NUM_TEXTURES];
+	SpriteSheet             m_spriteSheets[NUM_SPRITE_SHEETS];
 	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
 	SkinnedMesh1::AnimData  m_anim1Datas[NUM_ANIM_1_DATAS];
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
+
+	// Graphics objects
+	Billboard m_billboards[NUM_BILLBOARDS];
 
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];

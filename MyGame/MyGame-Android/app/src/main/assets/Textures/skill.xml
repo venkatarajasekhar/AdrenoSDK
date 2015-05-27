@@ -6,6 +6,11 @@
 />
 
 <Texture 
+	ResourceID = "Battle_Born_Effect" 
+	SrcFileName   = "Battle_Born_Effect.png"
+/>
+
+<Texture 
 	ResourceID = "Bladefall" 
 	SrcFileName   = "Bladefall.png"
 />

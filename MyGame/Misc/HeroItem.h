@@ -77,6 +77,9 @@ public:
 
 	int getPrice();
 	ITEM_TYPE getType();
+	bool getIsUsing();
+	int getNTime();
+	void accNTime(int n);
 
 public:
 	// Item info
@@ -122,7 +125,7 @@ public:
 	void execute(Hero* hero, float elapsedTime);
 
 private:
-
+	int m_count = 1;
 };
 
 

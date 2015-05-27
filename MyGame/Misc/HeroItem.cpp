@@ -88,9 +88,24 @@ HeroItem::ITEM_TYPE HeroItem::getType()
 	return m_type;
 }
 
+bool HeroItem::getIsUsing()
+{
+	return m_isUsing;
+}
+
+int HeroItem::getNTime()
+{
+	return m_nTime;
+}
+
+void HeroItem::accNTime(int n)
+{
+	m_nTime -= n;
+}
+
 //==================================================================================================================
 //
-// HeroItem_ChainMail class
+// HeroItem_HealingPotion class
 //
 //==================================================================================================================
 
@@ -110,15 +125,11 @@ HeroItem* HeroItem_HealingPotion::clone()
 
 void HeroItem_HealingPotion::execute(Hero* hero, float elapsedTime)
 {
-	/*static float exp = 1.0f;
-	if (m_countTimeUsed >= exp)
+	if (m_countTimeUsed >= m_count)
 	{
 		hero->accHealth(20);
-		exp++;
-	}*/
-	//smartLog(toString(elapsedTime));
-	float health = 100 / m_timeUse * elapsedTime;
-	hero->accHealth(health);
+		m_count++;
+	}
 }
 
 
@@ -145,10 +156,12 @@ HeroItem* HeroItem_AcolyteStaff::clone()
 
 void HeroItem_AcolyteStaff::execute(Hero* hero, float elapsedTime)
 {
-	static float rot = hero->getRot().y;
-	float dx = 10 * dSin(rot) * elapsedTime / 0.4f;
-	float dz = 10 * dCos(rot) * elapsedTime / 0.4f;
+	float rot = hero->getRot().y;
+
+	float dx = 5 * dSin(rot) * elapsedTime / m_timeUse;
+	float dz = 5 * dCos(rot) * elapsedTime / m_timeUse;
 	hero->accPos(MyVec3(dx, 0, dz));
+	//hero->setTarget(hero->getPos());
 }
 //==================================================================================================================
 //

@@ -155,6 +155,8 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 
 	{
 		m_list[LIST_SKILL].init("hud_list_skill", MyVec2(20, 200), 60, 400);
+		m_list[LIST_SKILL].addPressListItemListener(this);
+
 		auto& skillBag = m_player->getSkillBag();
 		for (auto i = skillBag.begin(); i != skillBag.end(); ++i)
 		{
@@ -263,11 +265,16 @@ void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)
 		HeroItem* heroItem = listItem->getHeroItem();
 
 		// Use 'heroItem' for hero 'm_player' here ...
-
-		//smartLog("Pressed item: " + heroItem->Name);
 		heroItem->useItem();
-
-		IOnPressListener::Data hudData("hud", 0, 0);
-		throwPressEvent(hudData);
 	}
+	else if (data.Id == "hud_list_skill")
+	{
+		UIListItem_Skill* listItem = (UIListItem_Skill*)data.ListItem;
+		HeroSkill* heroSkill = listItem->getHeroSkill();
+		
+		heroSkill->use(m_player);
+	}
+
+	IOnPressListener::Data hudData("hud", 0, 0);
+	throwPressEvent(hudData);
 }

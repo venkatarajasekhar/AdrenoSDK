@@ -201,6 +201,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 
 	m_heroPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1], 
+		m_shaders[SHADER_BILLBOARD],
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
 		m_livingEnts, 

@@ -1,13 +1,16 @@
 
 #pragma once
 
-#include <MyTexture.h>
+#include <MyBillboard.h>
+//#include <MyTexture.h>
 
 //==================================================================================================================
 //
 // HeroSkill class
 //
 //==================================================================================================================
+
+class Hero;
 
 class HeroSkill
 {
@@ -17,8 +20,12 @@ public:
 		int _damage,
 		int _cost,
 		float _coolDownTime,
-		Texture* _avatar);
+		Texture* _avatar,
+		Billboard* effect = nullptr);
 	virtual ~HeroSkill();
+
+	virtual void use(Hero* hero);
+	virtual void render(Camera& camera);
 
 public:
 	MyString Name;
@@ -26,6 +33,9 @@ public:
 	int Cost;
 	float CoolDownTime;
 	Texture* Avatar;
+
+private:
+	Billboard* m_effect;
 };
 
 //==================================================================================================================
@@ -42,8 +52,9 @@ public:
 		int _damage,
 		int _cost,
 		float _coolDownTime,
-		Texture* _avatar)
-		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar)
+		Texture* _avatar,
+		Billboard* effect)
+		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
 	{}
 	~HeroSkill_BattleBorn(){}
 

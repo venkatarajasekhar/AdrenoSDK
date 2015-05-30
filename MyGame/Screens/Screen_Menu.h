@@ -5,6 +5,7 @@
 
 #include <MyUIButton.h>
 #include <MyFont.h>
+#include <MyAudio.h>
 
 class MenuScreen : public Screen, public IOnPressListener
 {
@@ -20,6 +21,14 @@ private:
 	{
 		FONT_CONSOLAS_12,
 		NUM_FONTS,
+	};
+
+	enum
+	{
+		AUDIO_WELCOME,
+		AUDIO_GOODBYE,
+		AUDIO_WIN,
+		NUM_AUDIOS,
 	};
 
 	// UI Widgets
@@ -50,6 +59,7 @@ private:
 	// Assets
 	Texture m_textures[NUM_TEXTURES];
 	Font    m_fonts[NUM_FONTS];
+	Audio   m_audios[NUM_AUDIOS];
 
 	// UI Widgets
 	UITextButton m_btns[NUM_BTNS];

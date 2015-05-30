@@ -129,6 +129,9 @@
     <ClCompile Include="MyFramework\OpenGLES\MyQuad3D.cpp">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClCompile>
+    <ClCompile Include="MyFramework\MyAudio.cpp">
+      <Filter>MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyFramework\OpenGLES\MyBasicMesh.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="MyFramework\OpenGLES\MyQuad3D.h">
       <Filter>MyFramework\OpenGLES</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\MyAudio.h">
+      <Filter>MyFramework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

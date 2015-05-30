@@ -27,8 +27,15 @@ void MenuScreen::init()
 		m_textures[TEXTURE_BTN_BACKGROUND].init(resource.GetTexture("menu_btn_background"));
 	}
 
-	// Fonts assets
+	// Font assets
 	m_fonts[FONT_CONSOLAS_12].init(resolveAssetsPath("Fonts/Consolas24.pak"));
+
+	// Audio assets
+	m_audios[AUDIO_WELCOME].init(resolveAssetsPath("Audios/Welcome.wav"));
+	m_audios[AUDIO_GOODBYE].init(resolveAssetsPath("Audios/GoodBye.wav"));
+	m_audios[AUDIO_WIN].init(resolveAssetsPath("Audios/Win.wav"), true);
+	m_audios[AUDIO_WIN].setVolume(0.3f);
+	m_audios[AUDIO_WIN].play();
 
 	// Buttons
 	m_btns[BTN_START_GAME].init("btn_menu_start_game", MyVec2(0), m_textures[TEXTURE_BTN_BACKGROUND], "Start", m_fonts[FONT_CONSOLAS_12]);
@@ -90,14 +97,17 @@ void MenuScreen::OnPress(const IOnPressListener::Data& data)
 {
 	if (data.Id == "btn_menu_start_game")
 	{
+		m_audios[AUDIO_WIN].stop();
 		m_screenManager->activeScreen("PlayScreen");
 	}
 	else if (data.Id == "btn_menu_sign_in")
 	{
+		m_audios[AUDIO_WELCOME].play();
 		//globalUtilObjs->gameServer->beginUserInitiatedSignIn();
 	}
 	else if (data.Id == "btn_menu_sign_out")
 	{
+		m_audios[AUDIO_GOODBYE].play();
 		//globalUtilObjs->gameServer->signOut();
 	}
 	else if (data.Id == "btn_menu_achievements")

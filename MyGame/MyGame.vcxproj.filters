@@ -315,6 +315,9 @@
     <ClCompile Include="Misc\HeroSkill.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\MyAudio.cpp">
+      <Filter>sdk\MyFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">

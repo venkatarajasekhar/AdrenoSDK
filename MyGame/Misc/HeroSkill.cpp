@@ -35,6 +35,8 @@ void HeroSkill::use(Hero* hero)
 	{
 		smartLog("Used skill: " + Name);
 
+		hero->useSkill();
+
 		if (m_effect != nullptr)
 		{
 			m_effect->setPos(hero->getPos() + MyVec3(0, 5, -1));

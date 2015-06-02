@@ -113,6 +113,8 @@ public:
 	void addItem(HeroItem* item);
 	void addSkill(HeroSkill* skill);
 
+	virtual void useSkill(){}
+
 	std::vector<HeroSkill*>& getSkillBag(){ return m_skillBag; }
 
 	void OnBuyItemItem(const IOnBuyItemListener::Data& data);

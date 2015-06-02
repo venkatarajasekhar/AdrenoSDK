@@ -53,7 +53,7 @@ void Hero_Controlled::update(Timer& timer)
 			if (distance_optimized(getPos(), (*i)->getPos()) > m_atkRange)
 			{
 				MyVec3 u = (*i)->getPos() - getPos();
-				u = normalize(u);
+				u = normalize_optimized(u);
 				m_movingEnt.setTarget((*i)->getPos() - MyVec3(2)*u);
 			}
 		}
@@ -73,6 +73,11 @@ void Hero_Controlled::OnPress(const IOnPressListener::Data& data)
 			m_movingEnt.setTarget(*pos);
 		}
 	}
+}
+
+void Hero_Controlled::useSkill()
+{
+	m_stateMachine->ChangeState(Hero_ControlledState_SkillAttack::instance());
 }
 
 #pragma region Hero_Controlled states
@@ -199,6 +204,32 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 		hero->accHealth(hero->m_healthPerAttack);
 	}
+}
+
+//===================================================================================================================
+//
+// Hero_Controlled state skill attack
+//
+//===================================================================================================================
+
+void Hero_ControlledState_SkillAttack::Enter(Hero_Controlled* hero)
+{
+	hero->m_instance->setAction("attack_2", "idle", false);
+}
+
+void Hero_ControlledState_SkillAttack::Execute(Hero_Controlled* hero)
+{
+
+}
+
+void Hero_ControlledState_SkillAttack::Exit(Hero_Controlled* hero)
+{
+
+}
+
+void Hero_ControlledState_SkillAttack::OnPerformAAct(void* tag)
+{
+
 }
 
 #pragma endregion

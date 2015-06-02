@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -59,7 +59,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freeglut.lib;glew32.lib;libOpenSLES.lib;libOpenSLESExt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,6 +110,7 @@
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmPlatform.cpp" />
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmStdlib_Platform.cpp" />
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmUtils_Platform.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\MyAudio.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera2D.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp" />

@@ -20,7 +20,8 @@ HeroSkill::HeroSkill(
 	Cost(_cost),
 	CoolDownTime(_coolDownTime),
 	Avatar(_avatar),
-	m_effect(effect)
+	m_effect(effect),
+	m_coolDownTimeRemain(-1.0f)
 {
 }
 
@@ -30,10 +31,23 @@ HeroSkill::~HeroSkill()
 
 void HeroSkill::use(Hero* hero)
 {
-	if (m_effect != nullptr)
+	if (isUsable())
 	{
-		m_effect->setPos(hero->getPos() + MyVec3(0, 5, -1));
+		smartLog("Used skill: " + Name);
+
+		hero->useSkill();
+
+		if (m_effect != nullptr)
+		{
+			m_effect->setPos(hero->getPos() + MyVec3(0, 5, -1));
+		}
+		m_coolDownTimeRemain = CoolDownTime;
 	}
+}
+
+void HeroSkill::update(Timer& timer)
+{
+	m_coolDownTimeRemain -= timer.getElapsedTime();
 }
 
 void HeroSkill::render(Camera& camera)
@@ -42,4 +56,14 @@ void HeroSkill::render(Camera& camera)
 	{
 		//m_effect->render(camera);
 	}
+}
+
+bool HeroSkill::isUsable()
+{
+	return (m_coolDownTimeRemain < 0);
+}
+
+float HeroSkill::getCoolDownTimeRemain()
+{
+	return m_coolDownTimeRemain;
 }

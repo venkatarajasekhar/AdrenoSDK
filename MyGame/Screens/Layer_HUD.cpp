@@ -73,8 +73,9 @@ private:
 class UIListItem_Skill : public UIListItem
 {
 public:
-	UIListItem_Skill(UIList* list, HeroSkill* heroSkill)
-		: UIListItem(list)
+	UIListItem_Skill(UIList* list, HeroSkill* heroSkill, Font& font)
+		: UIListItem(list),
+		m_font(&font)
 	{
 		m_heroSkill = heroSkill;
 
@@ -94,7 +95,21 @@ public:
 			m_bounding,
 			nullptr,
 			0.0f,
-			&listViewport);
+			&listViewport,
+			(m_heroSkill->isUsable() ? MyColor(1) : MyColor(0.5f)));
+
+		if (!m_heroSkill->isUsable())
+		{
+			m_font->setScale(MyVec2(1.5f));
+
+			MyString text = toString((int)m_heroSkill->getCoolDownTimeRemain());
+			MyVec2 textSize(m_font->getTextWidth(text), m_font->getTextHeight());
+			MyVec2 offset = 0.5f * (getSize() - textSize);
+
+			spriteBatch.renderText2D(*m_font, text, getPos() + offset, 0.0f, &listViewport);
+
+			m_font->setScale(MyVec2(1.0f));
+		}
 	}
 
 	HeroSkill* getHeroSkill()
@@ -104,6 +119,7 @@ public:
 
 private:
 	HeroSkill* m_heroSkill;
+	Font* m_font;
 };
 
 #pragma endregion
@@ -160,7 +176,7 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 		auto& skillBag = m_player->getSkillBag();
 		for (auto i = skillBag.begin(); i != skillBag.end(); ++i)
 		{
-			m_list[LIST_SKILL].addItem(new UIListItem_Skill(&m_list[LIST_SKILL], *i));
+			m_list[LIST_SKILL].addItem(new UIListItem_Skill(&m_list[LIST_SKILL], *i, m_fonts[FONT_CONSOLAS_12]));
 		}
 	}
 	

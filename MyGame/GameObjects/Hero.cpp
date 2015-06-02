@@ -238,6 +238,10 @@ void Hero::update(Timer& timer)
 		((HeroItem*)(*i))->update(timer, this);
 	}
 
+	for (auto i = m_skillBag.begin(); i != m_skillBag.end(); ++i)
+	{
+		(*i)->update(timer);
+	}
 }
 
 void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
@@ -465,10 +469,10 @@ void HeroPool::init(
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
 			TEAM_TYPE_MY_TEAM);
 
-		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 0, 0, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_billboards[BILLBOARD_SKILL_BATTLE_BORN]));
-		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 0, 0, &m_textures[TEXTURE_SKILL_BLADEFALL]));
-		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 0, 0, &m_textures[TEXTURE_SKILL_DECIMATION_DAY]));
-		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 0, 0, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
+		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 0, 10, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_billboards[BILLBOARD_SKILL_BATTLE_BORN]));
+		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 0, 10, &m_textures[TEXTURE_SKILL_BLADEFALL]));
+		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 0, 10, &m_textures[TEXTURE_SKILL_DECIMATION_DAY]));
+		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 0, 10, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
 

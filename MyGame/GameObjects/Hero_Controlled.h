@@ -27,6 +27,8 @@ public:
 
 	void OnPress(const IOnPressListener::Data& data);
 
+	void useSkill();
+
 private:
 	// States manager
 	StateMachine<Hero_Controlled>* m_stateMachine;
@@ -35,6 +37,7 @@ private:
 	friend class Hero_ControlledState_Idle;
 	friend class Hero_ControlledState_Walk;
 	friend class Hero_ControlledState_Attack;
+	friend class Hero_ControlledState_SkillAttack;
 };
 
 //===================================================================================================================
@@ -84,6 +87,24 @@ private:
 
 public:
 	static Hero_ControlledState_Attack* instance(){ static Hero_ControlledState_Attack ins; return &ins; }
+
+public:
+	virtual void Enter(Hero_Controlled* hero);
+	virtual void Execute(Hero_Controlled* hero);
+	virtual void Exit(Hero_Controlled* hero);
+
+	void OnPerformAAct(void* tag);
+};
+
+class Hero_ControlledState_SkillAttack : public State<Hero_Controlled>, public SkinnedMesh1::IOnPerformAActListener
+{
+private:
+	Hero_ControlledState_SkillAttack(){}
+	Hero_ControlledState_SkillAttack(const Hero_ControlledState_SkillAttack&);
+	Hero_ControlledState_SkillAttack& operator=(const Hero_ControlledState_SkillAttack&);
+
+public:
+	static Hero_ControlledState_SkillAttack* instance(){ static Hero_ControlledState_SkillAttack ins; return &ins; }
 
 public:
 	virtual void Enter(Hero_Controlled* hero);

@@ -2,7 +2,6 @@
 #pragma once
 
 #include <MyBillboard.h>
-//#include <MyTexture.h>
 
 //==================================================================================================================
 //
@@ -25,17 +24,22 @@ public:
 	virtual ~HeroSkill();
 
 	virtual void use(Hero* hero);
+	virtual void update(Timer& timer);
 	virtual void render(Camera& camera);
+
+	virtual bool isUsable();
+	virtual float getCoolDownTimeRemain();
 
 public:
 	MyString Name;
-	int Damage;
-	int Cost;
-	float CoolDownTime;
+	int      Damage;
+	int      Cost;
+	float    CoolDownTime;
 	Texture* Avatar;
 
 private:
 	Billboard* m_effect;
+	float m_coolDownTimeRemain;
 };
 
 //==================================================================================================================

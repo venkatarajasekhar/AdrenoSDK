@@ -214,7 +214,7 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 
 void Hero_ControlledState_SkillAttack::Enter(Hero_Controlled* hero)
 {
-	hero->m_instance->setAction("attack_2", "idle", false);
+	hero->m_instance->setAction("attack_2", "idle", false, this, 0.95f, hero);
 }
 
 void Hero_ControlledState_SkillAttack::Execute(Hero_Controlled* hero)
@@ -229,7 +229,11 @@ void Hero_ControlledState_SkillAttack::Exit(Hero_Controlled* hero)
 
 void Hero_ControlledState_SkillAttack::OnPerformAAct(void* tag)
 {
-
+	if (tag != nullptr)
+	{
+		Hero_Controlled* hero = (Hero_Controlled*)tag;
+		hero->m_stateMachine->ChangeState(Hero_ControlledState_Idle::instance());
+	}
 }
 
 #pragma endregion

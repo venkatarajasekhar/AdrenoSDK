@@ -13,7 +13,7 @@
 //=================================================================================================================================
 
 static const float BTN_CONTAINER_HMARGIN = 30.0f;
-static const float BTN_VDIST = 10.0f;
+static const float BTN_VDIST = 1.0f;
 
 //=================================================================================================================================
 //
@@ -60,41 +60,54 @@ void MenuScreen::init()
 	{
 		MyColor textColor = MyColor(212.0f / 255.0f, 170.0f / 225.0f, 0.0f / 255.0f);
 
-		m_btns[BTN_START_GAME].init(
-			"btn_menu_start_game",
+		m_btns[BTN_PLAY_GAME].init(
+			"btn_menu_play_game",
 			MyVec2(0),
 			m_textures[TEXTURE_BTN_BACKGROUND],
-			"START",
+			"PLAY GAME",
 			m_fonts[FONT_BAUHAUS93_26],
-			textColor);
-		m_btns[BTN_SIGN_IN].init(
-			"btn_menu_sign_in",
+			textColor,
+			0.8f);
+		m_btns[BTN_HEROES].init(
+			"btn_menu_heroes",
 			MyVec2(0),
 			m_textures[TEXTURE_BTN_BACKGROUND],
-			"Sign-In",
+			"HEROES",
 			m_fonts[FONT_BAUHAUS93_26],
-			textColor);
-		m_btns[BTN_SIGN_OUT].init(
-			"btn_menu_sign_out",
-			MyVec2(0),
-			m_textures[TEXTURE_BTN_BACKGROUND],
-			"Sign-Out",
-			m_fonts[FONT_BAUHAUS93_26],
-			textColor);
+			textColor,
+			0.9f);
 		m_btns[BTN_ACHIEVEMENTS].init(
 			"btn_menu_achievements",
 			MyVec2(0),
 			m_textures[TEXTURE_BTN_BACKGROUND],
-			"Achievements",
+			"ACHIEVEMENTS",
 			m_fonts[FONT_BAUHAUS93_26],
-			textColor);
+			textColor,
+			0.7f);
 		m_btns[BTN_LEADERBOARD].init(
 			"btn_menu_leaderboard",
 			MyVec2(0),
 			m_textures[TEXTURE_BTN_BACKGROUND],
-			"Leaderboard",
+			"LEADERBOARD",
 			m_fonts[FONT_BAUHAUS93_26],
-			textColor);
+			textColor,
+			0.7f);
+		m_btns[BTN_SETTINGS].init(
+			"btn_menu_settings",
+			MyVec2(0),
+			m_textures[TEXTURE_BTN_BACKGROUND],
+			"SETTINGS",
+			m_fonts[FONT_BAUHAUS93_26],
+			textColor,
+			0.9f);
+		m_btns[BTN_PROFILE].init(
+			"btn_menu_profile",
+			MyVec2(0),
+			m_textures[TEXTURE_BTN_BACKGROUND],
+			"PROFILE",
+			m_fonts[FONT_BAUHAUS93_26],
+			textColor,
+			0.9f);
 	}
 	
 	for (int i = 0; i < NUM_BTNS; i++)
@@ -169,26 +182,27 @@ void MenuScreen::render(void* utilObjs)
 
 void MenuScreen::OnPress(const IOnPressListener::Data& data)
 {
-	if (data.Id == "btn_menu_start_game")
+	if (data.Id == "btn_menu_play_game")
 	{
 		m_audios[AUDIO_WIN].stop();
 		m_screenManager->activeScreen("PlayScreen");
 	}
-	else if (data.Id == "btn_menu_sign_in")
+	else if (data.Id == "btn_menu_heroes")
 	{
-		m_audios[AUDIO_WELCOME].play();
-		//globalUtilObjs->gameServer->beginUserInitiatedSignIn();
-	}
-	else if (data.Id == "btn_menu_sign_out")
-	{
-		m_audios[AUDIO_GOODBYE].play();
-		//globalUtilObjs->gameServer->signOut();
 	}
 	else if (data.Id == "btn_menu_achievements")
 	{
+		m_audios[AUDIO_WELCOME].play();
 		//globalUtilObjs->gameServer->showAchievements();
 	}
 	else if (data.Id == "btn_menu_leaderboard")
+	{
+		m_audios[AUDIO_GOODBYE].play();
+	}
+	else if (data.Id == "btn_menu_settings")
+	{
+	}
+	else if (data.Id == "btn_menu_profile")
 	{
 
 	}

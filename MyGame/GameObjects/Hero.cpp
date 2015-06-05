@@ -337,6 +337,11 @@ void Hero::revival()
 	m_inUse = true;
 }
 
+void Hero::turnToTarget()
+{
+	m_movingEnt.turnTo(m_atkTarget->getPos());
+}
+
 #pragma region HeroPool class
 
 //===================================================================================================================

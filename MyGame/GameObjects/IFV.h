@@ -5,6 +5,7 @@
 #include "LivingEntity.h"
 #include "MovingEntity.h"
 #include "StateMachine.h"
+#include "Projectile.h"
 
 #pragma region Structs
 
@@ -14,7 +15,7 @@
 //
 //=========================================================================================================
 
-struct PawnProps
+struct IFVProps
 {
 	float AttackRange;
 	float ChasingRange;
@@ -36,22 +37,24 @@ struct PawnProps
 
 //=========================================================================================================
 //
-// Pawn class
+// IFV class
 //
 //=========================================================================================================
 
-class Pawn : public LivingEntity
+class IFV : public LivingEntity
 {
 public:
-	Pawn();
-	~Pawn();
+	IFV();
+	~IFV();
 
 	void init(
 		SkinnedMesh1& mesh,
-		BloodBar& bloodBar, 
+		BloodBar& bloodBar,
 		Quad3D& selectedDecal,
+		Billboard& projtBillboard,
+		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
-		PawnProps& pawnProp,
+		IFVProps& pawnProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
 
@@ -72,75 +75,80 @@ private:
 	MovingEntity m_movingEnt;
 
 	// States manager
-	StateMachine<Pawn>* m_stateMachine;
+	StateMachine<IFV>* m_stateMachine;
 
 	float m_chasingRange;
 	float m_time_PAA_Attack_1;
 
+	Billboard* m_projtBillboard;
+	ProjectilePool* m_projectilePool;
+
 private:
-	friend class PawnState_Idle;
-	friend class PawnState_Walk;
-	friend class PawnState_Chase;
-	friend class PawnState_Attack;
+	friend class IFVState_Idle;
+	friend class IFVState_Walk;
+	friend class IFVState_Chase;
+	friend class IFVState_Attack;
 };
 
 //=========================================================================================================
 //
-// PawnPool class
+// IFVPool class
 //
 //=========================================================================================================
 
-class PawnPool
+class IFVPool
 {
 public:
-	static const int MAX_NUM_PAWNS_EACH_SIDE = 20;
+	static const int MAX_NUM_IFVS_EACH_SIDE = 8;
 
 private:
 	// Assets
 	enum
 	{
-		MESH_1_DATA_BROWNIE,
-		MESH_1_DATA_SKELETON,
+		MESH_1_DATA_CATAPULT,
+		MESH_1_DATA_TANK,
 		NUM_MESH_1_DATAS,
 	};
 
 	enum
 	{
-		ANIM_1_DATA_BROWNIE,
-		ANIM_1_DATA_SKELETON,
+		ANIM_1_DATA_CATAPULT,
+		ANIM_1_DATA_TANK,
 		NUM_ANIM_1_DATAS,
 	};
 
 	enum
 	{
-		TEXTURES_MESH_BROWNIE,
-		TEXTURES_MESH_SKELETON,
+		TEXTURES_MESH_CATAPULT,
+		TEXTURES_MESH_TANK,
 		NUM_TEXTURES_MESHES,
 	};
 
 	// Meshes
 	enum
 	{
-		SKINNED_MESH_BROWNIE,
-		SKINNED_MESH_SKELETON,
+		SKINNED_MESH_CATAPULT,
+		SKINNED_MESH_TANK,
 		NUM_SKINNED_MESHES,
 	};
 
 public:
-	PawnPool();
-	~PawnPool();
+	IFVPool();
+	~IFVPool();
 
 	void init(
-		Shader& skinnedShader, 
-		BloodBar& myBloodBar, 
-		BloodBar& enemyBloodBar, 
+		Shader& skinnedShader,
+		BloodBar& myBloodBar,
+		BloodBar& enemyBloodBar,
 		Quad3D& selectedDecal,
+		Billboard& projtBillboard,
+		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 
 private:
-	Pawn* getFreeSlot(Pawn* container, int size);
+	IFV* getFreeSlot(IFV* container, int size);
 
 	void spawnMyTeam();
 	void spawnEnemyTeam();
@@ -154,8 +162,8 @@ private:
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
 
-	Pawn m_myPawns[MAX_NUM_PAWNS_EACH_SIDE];
-	Pawn m_enemyPawns[MAX_NUM_PAWNS_EACH_SIDE];
+	IFV m_myIFVs[MAX_NUM_IFVS_EACH_SIDE];
+	IFV m_enemyIFVs[MAX_NUM_IFVS_EACH_SIDE];
 
 	float m_spawnTime;
 };
@@ -164,72 +172,72 @@ private:
 
 //=========================================================================================================
 //
-// Pawn state
+// IFV state
 //
 //=========================================================================================================
 
-class PawnState_Idle : public State<Pawn>
+class IFVState_Idle : public State<IFV>
 {
 private:
-	PawnState_Idle(){}
-	PawnState_Idle(const PawnState_Idle&);
-	PawnState_Idle& operator=(const PawnState_Idle&);
+	IFVState_Idle(){}
+	IFVState_Idle(const IFVState_Idle&);
+	IFVState_Idle& operator=(const IFVState_Idle&);
 
 public:
-	static PawnState_Idle* instance(){ static PawnState_Idle ins; return &ins; }
+	static IFVState_Idle* instance(){ static IFVState_Idle ins; return &ins; }
 
 public:
-	virtual void Enter(Pawn* pawn);
-	virtual void Execute(Pawn* pawn);
-	virtual void Exit(Pawn* pawn);
+	virtual void Enter(IFV* iFV);
+	virtual void Execute(IFV* iFV);
+	virtual void Exit(IFV* iFV);
 };
 
-class PawnState_Walk : public State<Pawn>
+class IFVState_Walk : public State<IFV>
 {
 private:
-	PawnState_Walk(){}
-	PawnState_Walk(const PawnState_Walk&);
-	PawnState_Walk& operator=(const PawnState_Walk&);
+	IFVState_Walk(){}
+	IFVState_Walk(const IFVState_Walk&);
+	IFVState_Walk& operator=(const IFVState_Walk&);
 
 public:
-	static PawnState_Walk* instance(){ static PawnState_Walk ins; return &ins; }
+	static IFVState_Walk* instance(){ static IFVState_Walk ins; return &ins; }
 
 public:
-	virtual void Enter(Pawn* pawn);
-	virtual void Execute(Pawn* pawn);
-	virtual void Exit(Pawn* pawn);
+	virtual void Enter(IFV* iFV);
+	virtual void Execute(IFV* iFV);
+	virtual void Exit(IFV* iFV);
 };
 
-class PawnState_Chase : public State<Pawn>
+class IFVState_Chase : public State<IFV>
 {
 private:
-	PawnState_Chase(){}
-	PawnState_Chase(const PawnState_Chase&);
-	PawnState_Chase& operator=(const PawnState_Chase&);
+	IFVState_Chase(){}
+	IFVState_Chase(const IFVState_Chase&);
+	IFVState_Chase& operator=(const IFVState_Chase&);
 
 public:
-	static PawnState_Chase* instance(){ static PawnState_Chase ins; return &ins; }
+	static IFVState_Chase* instance(){ static IFVState_Chase ins; return &ins; }
 
 public:
-	virtual void Enter(Pawn* pawn);
-	virtual void Execute(Pawn* pawn);
-	virtual void Exit(Pawn* pawn);
+	virtual void Enter(IFV* iFV);
+	virtual void Execute(IFV* iFV);
+	virtual void Exit(IFV* iFV);
 };
 
-class PawnState_Attack : public State<Pawn>, public SkinnedMesh1::IOnPerformAActListener
+class IFVState_Attack : public State<IFV>, public SkinnedMesh1::IOnPerformAActListener
 {
 private:
-	PawnState_Attack(){}
-	PawnState_Attack(const PawnState_Attack&);
-	PawnState_Attack& operator=(const PawnState_Attack&);
+	IFVState_Attack(){}
+	IFVState_Attack(const IFVState_Attack&);
+	IFVState_Attack& operator=(const IFVState_Attack&);
 
 public:
-	static PawnState_Attack* instance(){ static PawnState_Attack ins; return &ins; }
+	static IFVState_Attack* instance(){ static IFVState_Attack ins; return &ins; }
 
 public:
-	virtual void Enter(Pawn* pawn);
-	virtual void Execute(Pawn* pawn);
-	virtual void Exit(Pawn* pawn);
+	virtual void Enter(IFV* iFV);
+	virtual void Execute(IFV* iFV);
+	virtual void Exit(IFV* iFV);
 
 	void OnPerformAAct(void* tag);
 };

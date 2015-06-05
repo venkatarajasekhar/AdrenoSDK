@@ -119,6 +119,8 @@ public:
 
 	void OnBuyItemItem(const IOnBuyItemListener::Data& data);
 
+	void turnToTarget();
+
 protected:
 	virtual void dead();
 	void revival();

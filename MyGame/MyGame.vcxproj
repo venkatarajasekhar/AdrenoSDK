@@ -153,6 +153,7 @@
     <ClCompile Include="GameObjects\Hero.cpp" />
     <ClCompile Include="GameObjects\Hero_AI.cpp" />
     <ClCompile Include="GameObjects\Hero_Controlled.cpp" />
+    <ClCompile Include="GameObjects\IFV.cpp" />
     <ClCompile Include="GameObjects\Pawn.cpp" />
     <ClCompile Include="GameObjects\Projectile.cpp" />
     <ClCompile Include="GameObjects\Tower.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="GameObjects\Hero.h" />
     <ClInclude Include="GameObjects\Hero_AI.h" />
     <ClInclude Include="GameObjects\Hero_Controlled.h" />
+    <ClInclude Include="GameObjects\IFV.h" />
     <ClInclude Include="GameObjects\Pawn.h" />
     <ClInclude Include="GameObjects\Projectile.h" />
     <ClInclude Include="GameObjects\Tower.h" />

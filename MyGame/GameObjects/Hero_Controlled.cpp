@@ -153,7 +153,7 @@ void Hero_ControlledState_Attack::Enter(Hero_Controlled* hero)
 {
 	if (hero->m_atkTarget != nullptr)
 	{
-		hero->m_movingEnt.turnTo(hero->m_atkTarget->getPos());
+		hero->turnToTarget();
 		hero->m_instance->setAction("attack_1", "", true, this, hero->m_time_PAA_Attack_1, hero);
 	}
 }

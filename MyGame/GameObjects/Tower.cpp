@@ -461,7 +461,8 @@ void TowerState_Attack::Execute(Tower* tower)
 				tower->m_projectilePool->spawnProjectile(
 					*tower->m_projtBillboard,
 					tower,
-					tower->m_atkTarget);
+					tower->m_atkTarget,
+					MyVec3(0, 0, 0));
 
 				tower->m_timeElapsed = 0;
 			}

@@ -21,7 +21,7 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera);
 
-	void respawn(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget);
+	void respawn(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget, MyVec3 attackerOffset);
 
 	// Getter
 
@@ -54,7 +54,7 @@ private:
 class ProjectilePool
 {
 private:
-	static const int MAX_NUM_PROJECTILES = 5;
+	static const int MAX_NUM_PROJECTILES = 10;
 
 public:
 	ProjectilePool();
@@ -64,7 +64,7 @@ public:
 	void update(Timer& timer);
 	void render(Camera& camera);
 
-	void spawnProjectile(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget);
+	void spawnProjectile(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget, MyVec3 attackerOffset);
 
 private:
 	Projectile* getFreeSlot();

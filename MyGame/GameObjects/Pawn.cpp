@@ -72,7 +72,7 @@ static void initPawnProps()
 static const int    PAWN_INITIAL_MAX_HEALTH = 60;
 static const int    PAWN_INITIAL_DAMAGE = 10;
 static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
-static const float  PAWN_TIME_TO_SPAWN = 20.0f;
+static const float  PAWN_TIME_TO_SPAWN = 35.0f;
 
 static const std::vector<MyVec3> MY_PAWN_PATH = 
 {
@@ -204,6 +204,11 @@ void Pawn::dead()
 	LivingEntity::dead();
 }
 
+void Pawn::turnToTarget()
+{
+	m_movingEnt.turnTo(m_atkTarget->getPos());
+}
+
 //=========================================================================================================
 //
 // PawnPool class
@@ -231,6 +236,7 @@ void PawnPool::init(
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_BROWNIE].init(resolveAssetsPath("Meshes/Pawns/brownie/Brownie5.model"));
 	m_mesh1Datas[MESH_1_DATA_SKELETON].init(resolveAssetsPath("Meshes/Pawns/skeleton/Skeleton.model"));
+	//m_mesh1Datas[MESH_1_DATA_SKELETON].init(resolveAssetsPath("Meshes/Pawns/catapult/Catapult.model"));
 
 	// Assets anim data
 	{
@@ -251,6 +257,9 @@ void PawnPool::init(
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/skeleton/1hmattacka.anim"), "attack"),
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/skeleton/1hmidle.anim"), "idle"),
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/skeleton/1hmfastforward.anim"), "run"),
+			//SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/catapult/CatapultFire.anim"), "attack"),
+			//SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/catapult/CatapultRun.anim"), "idle"),
+			//SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/catapult/CatapultRun.anim"), "run"),
 		};
 		m_anim1Datas[ANIM_1_DATA_SKELETON].init(animFiles, numAnimFiles);
 	}
@@ -264,6 +273,7 @@ void PawnPool::init(
 	{
 		CFrmPackedResourceGLES resource;
 		resource.LoadFromFile(resolveAssetsPath("Meshes/Pawns/skeleton/Skeleton.pak").c_str());
+		//resource.LoadFromFile(resolveAssetsPath("Meshes/Pawns/catapult/Catapult.pak").c_str());
 		m_meshTextures[TEXTURES_MESH_SKELETON].init(m_mesh1Datas[MESH_1_DATA_SKELETON], resource);
 	}
 
@@ -349,7 +359,7 @@ Pawn* PawnPool::getFreeSlot(Pawn* container, int size)
 
 void PawnPool::spawnMyTeam()
 {
-	for (int i = 1; i <= 3; i++)
+	for (int i = 1; i <= 4; i++)
 	{
 		Pawn* pawn = getFreeSlot(m_myPawns, MAX_NUM_PAWNS_EACH_SIDE);
 		if (pawn != nullptr)
@@ -361,7 +371,7 @@ void PawnPool::spawnMyTeam()
 
 void PawnPool::spawnEnemyTeam()
 {
-	for (int i = 1; i <= 3; i++)
+	for (int i = 1; i <= 4; i++)
 	{
 		Pawn* pawn = getFreeSlot(m_enemyPawns, MAX_NUM_PAWNS_EACH_SIDE);
 		if (pawn != nullptr)
@@ -489,6 +499,7 @@ void PawnState_Attack::Enter(Pawn* pawn)
 {
 	pawn->m_instance->setAction("attack", "", true, this, pawn->m_time_PAA_Attack_1, pawn);
 	pawn->m_movingEnt.setTarget(pawn->getPos());
+	pawn->turnToTarget();
 }
 
 void PawnState_Attack::Execute(Pawn* pawn)

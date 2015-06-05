@@ -318,6 +318,12 @@
     <ClCompile Include="..\sdk\MyFramework\MyAudio.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="Screens\Screen_Menu_Main.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens\Screen_Menu_GameMode.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -409,6 +415,12 @@
     </ClInclude>
     <ClInclude Include="Misc\HeroSkill.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Screen_Menu_Main.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screens\Screen_Menu_GameMode.h">
+      <Filter>Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

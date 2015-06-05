@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
+<!-- Common -->
+
 <Texture 
-    ResourceID  = "menu_background"
-    SrcFileName = "menu_background.png"
+    ResourceID  = "menu_common_background"
+    SrcFileName = "menu_common_background.png"
 />
 
 <Texture 
-    ResourceID  = "btn_container"
-    SrcFileName = "btn_container.png"
+    ResourceID  = "menu_common_hpanel"
+    SrcFileName = "menu_common_hpanel.png"
 />
 
 <Texture 
-    ResourceID  = "menu_btn_background"
-    SrcFileName = "menu_btn_background.png"
+    ResourceID  = "menu_common_vpanel"
+    SrcFileName = "menu_common_vpanel.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_common_btn_background"
+    SrcFileName = "menu_common_btn_background.png"
+/>
+
+<!-- Game mode menu -->
+
+<Texture 
+    ResourceID  = "menu_game_mode_btn_online"
+    SrcFileName = "menu_game_mode_btn_online.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_game_mode_btn_solo"
+    SrcFileName = "menu_game_mode_btn_solo.png"
 />

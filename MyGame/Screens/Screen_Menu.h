@@ -3,19 +3,25 @@
 
 #include <MyScreen.h>
 
-#include <MyUIButton.h>
 #include <MyFont.h>
 #include <MyAudio.h>
 
-class MenuScreen : public Screen, public IOnPressListener
+class MenuScreen : public Screen
 {
-private:
+protected:
 	// Assets
 	enum
 	{
-		TEXTURE_MENU_BACKGROUND,
-		TEXTURE_BTN_CONTAINER,
-		TEXTURE_BTN_BACKGROUND,
+		// Common
+		TEXTURE_COMMON_BACKGROUND,
+		TEXTURE_COMMON_HPANEL,
+		TEXTURE_COMMON_VPANEL,
+		TEXTURE_COMMON_BTN_BACKGROUND,
+
+		// Game mode menu
+		TEXTURE_GAME_MODE_BTN_ONLINE,
+		TEXTURE_GAME_MODE_BTN_SOLO,
+
 		NUM_TEXTURES,
 	};
 
@@ -33,39 +39,21 @@ private:
 		NUM_AUDIOS,
 	};
 
-	// UI Widgets
-	enum
-	{
-		BTN_PLAY_GAME,
-		BTN_HEROES,
-		BTN_ACHIEVEMENTS,
-		BTN_LEADERBOARD,
-		BTN_SETTINGS,
-		BTN_PROFILE,
-		NUM_BTNS,
-	};
-
 public:
 	MenuScreen(ScreenManager* screenManager);
-	~MenuScreen();
+	virtual ~MenuScreen();
 
-	void init();
-	void resize(int width, int height);
-	void update(void* utilObjs);
-	void render(void* utilObjs);
+	virtual void init();
+	virtual void resize(int width, int height);
+	virtual void update(void* utilObjs);
+	virtual void render(void* utilObjs);
 
-	void OnPress(const IOnPressListener::Data& data);
-
-private:
-	int m_width, m_height;
+protected:
+	static bool m_initedStatic;
+	static int m_width, m_height;
 
 	// Assets
-	Texture m_textures[NUM_TEXTURES];
-	Font    m_fonts[NUM_FONTS];
-	Audio   m_audios[NUM_AUDIOS];
-
-	// UI Widgets
-	UITextButton m_btns[NUM_BTNS];
-
-	Rect2D m_btnContainerDest;
+	static Texture m_textures[NUM_TEXTURES];
+	static Font    m_fonts[NUM_FONTS];
+	static Audio   m_audios[NUM_AUDIOS];
 };

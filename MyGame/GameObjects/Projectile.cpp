@@ -70,10 +70,10 @@ void Projectile::render(Camera& camera)
 	}
 }
 
-void Projectile::respawn(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget)
+void Projectile::respawn(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget, MyVec3 attackerOffset)
 {
 	m_billboard = &billboard;
-	setPos(attacker->getPos());
+	setPos(attacker->getPos() + attackerOffset);
 	setTarget(atkTarget->getPos());
 	m_inUse = true;
 	m_attacker = attacker;
@@ -146,12 +146,12 @@ void ProjectilePool::render(Camera& camera)
 	}
 }
 
-void ProjectilePool::spawnProjectile(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget)
+void ProjectilePool::spawnProjectile(Billboard& billboard, LivingEntity* attacker, LivingEntity* atkTarget, MyVec3 attackerOffset)
 {
 	Projectile* projectile = getFreeSlot();
 	if (projectile != nullptr)
 	{
-		projectile->respawn(billboard, attacker, atkTarget);
+		projectile->respawn(billboard, attacker, atkTarget, attackerOffset);
 	}
 }
 

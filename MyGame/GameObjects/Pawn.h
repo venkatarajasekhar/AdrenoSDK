@@ -59,6 +59,8 @@ public:
 
 	MyVec3 getPos();
 
+	void turnToTarget();
+
 private:
 	void dead();
 
@@ -91,7 +93,7 @@ private:
 class PawnPool
 {
 public:
-	static const int MAX_NUM_PAWNS_EACH_SIDE = 12;
+	static const int MAX_NUM_PAWNS_EACH_SIDE = 20;
 
 private:
 	// Assets

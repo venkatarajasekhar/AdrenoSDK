@@ -168,6 +168,7 @@ void Hero_AIState_Attack::Enter(Hero_AI* hero)
 {
 	hero->m_instance->setAction("attack_1", "", true, this, hero->m_time_PAA_Attack_1, hero);
 	hero->m_movingEnt.setTarget(hero->getPos());
+	hero->turnToTarget();
 }
 
 void Hero_AIState_Attack::Execute(Hero_AI* hero)

@@ -199,6 +199,15 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_selectedDecal,
 		m_livingEnts);
 
+	m_iFVPool.init(
+		m_shaders[SHADER_SKINNED_MESH_1],
+		m_bloodBar[BLOOD_BAR_MY_TEAM],
+		m_bloodBar[BLOOD_BAR_ENEMY],
+		m_selectedDecal,
+		m_billboards[BILLBOARD_ENERGY_BALL],
+		m_projectilePool,
+		m_livingEnts);
+
 	m_heroPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1], 
 		m_shaders[SHADER_BILLBOARD],
@@ -273,6 +282,7 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	// Game objects
 	m_towerPool.update(timer);
 	m_pawnPool.update(timer);
+	m_iFVPool.update(timer);
 	m_heroPool.update(timer);
 	m_projectilePool.update(timer);
 
@@ -297,6 +307,7 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 	// Game objects
 	m_towerPool.render(m_camera_main, light);
 	m_pawnPool.render(m_camera_main, light);
+	m_iFVPool.render(m_camera_main, light);
 	m_heroPool.render(m_camera_main, light);
 	m_projectilePool.render(m_camera_main);
 

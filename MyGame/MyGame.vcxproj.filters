@@ -318,6 +318,9 @@
     <ClCompile Include="..\sdk\MyFramework\MyAudio.cpp">
       <Filter>sdk\MyFramework</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\IFV.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -409,6 +412,9 @@
     </ClInclude>
     <ClInclude Include="Misc\HeroSkill.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\IFV.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

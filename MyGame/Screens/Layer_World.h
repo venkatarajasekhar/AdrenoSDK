@@ -11,6 +11,7 @@
 #include "TPSCamera.h"
 #include "Tower.h"
 #include "Pawn.h"
+#include "IFV.h"
 #include "Hero.h"
 #include "EventListener.h"
 
@@ -125,6 +126,7 @@ private:
 
 	TowerPool m_towerPool;
 	PawnPool m_pawnPool;
+	IFVPool m_iFVPool;
 	HeroPool m_heroPool;
 	ProjectilePool m_projectilePool;
 

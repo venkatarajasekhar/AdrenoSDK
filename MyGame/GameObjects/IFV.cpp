@@ -26,7 +26,7 @@ static void initIFVProps()
 
 	g_IFVProps[IFV_CATAPULT].MovingSpeed = 2.5f;
 	g_IFVProps[IFV_CATAPULT].MovingRotYOffset = 0;
-	g_IFVProps[IFV_CATAPULT].MovingTurnSpeed = 500;
+	g_IFVProps[IFV_CATAPULT].MovingTurnSpeed = 300;
 
 	g_IFVProps[IFV_CATAPULT].Scale = MyVec3(0.01f);
 
@@ -37,17 +37,17 @@ static void initIFVProps()
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Shininess = 16.0f;
 
-	g_IFVProps[IFV_CATAPULT].Time_PAA_Attack_1 = 0.2f;
+	g_IFVProps[IFV_CATAPULT].Time_PAA_Attack_1 = 0.392f;
 
 	// Tank
 	g_IFVProps[IFV_TANK].AttackRange = 15;
 	g_IFVProps[IFV_TANK].ChasingRange = 10;
 
 	g_IFVProps[IFV_TANK].MovingSpeed = 2.5f;
-	g_IFVProps[IFV_TANK].MovingRotYOffset = 0;
-	g_IFVProps[IFV_TANK].MovingTurnSpeed = 500;
+	g_IFVProps[IFV_TANK].MovingRotYOffset = 80;
+	g_IFVProps[IFV_TANK].MovingTurnSpeed = 300;
 
-	g_IFVProps[IFV_TANK].Scale = MyVec3(0.01f);
+	g_IFVProps[IFV_TANK].Scale = MyVec3(0.005f);
 
 	g_IFVProps[IFV_TANK].BloodbarOffset = MyVec3(-1.5f, 4.3f, 0);
 
@@ -56,7 +56,7 @@ static void initIFVProps()
 	g_IFVProps[IFV_TANK].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_IFVProps[IFV_TANK].MeshMaterial.Shininess = 16.0f;
 
-	g_IFVProps[IFV_TANK].Time_PAA_Attack_1 = 0.392f;
+	g_IFVProps[IFV_TANK].Time_PAA_Attack_1 = 0.2f;
 }
 
 #pragma endregion
@@ -72,7 +72,7 @@ static void initIFVProps()
 static const int    IFV_INITIAL_MAX_HEALTH = 60;
 static const int    IFV_INITIAL_DAMAGE = 10;
 static const MyVec2 IFV_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
-static const float  IFV_TIME_TO_SPAWN = 20.0f;
+static const float  IFV_TIME_TO_SPAWN = 35.0f;
 
 static const std::vector<MyVec3> MY_IFV_PATH =
 {
@@ -242,7 +242,7 @@ void IFVPool::init(
 
 	// Assets mesh data
 	m_mesh1Datas[MESH_1_DATA_CATAPULT].init(resolveAssetsPath("Meshes/Pawns/catapult/Catapult.model"));
-	m_mesh1Datas[MESH_1_DATA_TANK].init(resolveAssetsPath("Meshes/Pawns/catapult/Catapult.model"));
+	m_mesh1Datas[MESH_1_DATA_TANK].init(resolveAssetsPath("Meshes/Pawns/tank/Tank.model"));
 
 	// Assets anim data
 	{
@@ -260,9 +260,9 @@ void IFVPool::init(
 		const int numAnimFiles = 3;
 		SkinnedMesh1::AnimFile animFiles[numAnimFiles] =
 		{
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/catapult/CatapultFire.anim"), "attack"),
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/catapult/CatapultRun.anim"), "idle"),
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/catapult/CatapultRun.anim"), "run"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/tank/TankFire.anim"), "attack"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/tank/TankIdle.anim"), "idle"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Pawns/tank/TankRun.anim"), "run"),
 		};
 		m_anim1Datas[ANIM_1_DATA_TANK].init(animFiles, numAnimFiles);
 	}
@@ -275,7 +275,7 @@ void IFVPool::init(
 	}
 	{
 		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Meshes/Pawns/catapult/Catapult.pak").c_str());
+		resource.LoadFromFile(resolveAssetsPath("Meshes/Pawns/tank/Tank.pak").c_str());
 		m_meshTextures[TEXTURES_MESH_TANK].init(m_mesh1Datas[MESH_1_DATA_TANK], resource);
 	}
 
@@ -293,28 +293,28 @@ void IFVPool::init(
 		m_meshTextures[TEXTURES_MESH_TANK],
 		skinnedShader,
 		&g_IFVProps[IFV_TANK].MeshMaterial,
-		0.5f);
+		1.0f);
 
 	// IFVs
 	for (size_t i = 0; i < MAX_NUM_IFVS_EACH_SIDE; i++)
 	{
 		m_myIFVs[i].init(
-			m_skinnedMeshes[SKINNED_MESH_CATAPULT],
+			m_skinnedMeshes[SKINNED_MESH_TANK],
 			myBloodBar,
 			selectedDecal,
 			projtBillboard,
 			projectilePool,
 			lEnts,
-			g_IFVProps[IFV_CATAPULT],
+			g_IFVProps[IFV_TANK],
 			TEAM_TYPE_MY_TEAM);
 		m_enemyIFVs[i].init(
-			m_skinnedMeshes[SKINNED_MESH_TANK],
+			m_skinnedMeshes[SKINNED_MESH_CATAPULT],
 			enemyBloodBar,
 			selectedDecal,
 			projtBillboard,
 			projectilePool,
 			lEnts,
-			g_IFVProps[IFV_TANK],
+			g_IFVProps[IFV_CATAPULT],
 			TEAM_TYPE_ENEMY);
 
 		lEnts.push_back(&m_myIFVs[i]);
@@ -539,7 +539,7 @@ void IFVState_Attack::OnPerformAAct(void* tag)
 		IFV* iFV = (IFV*)tag;
 		MyVec3 offSet;
 
-		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) offSet = MyVec3(-1.2, -3.5, 0);
+		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) offSet = MyVec3(0, -3.5, 0);
 		if (iFV->getTeamType() == TEAM_TYPE_ENEMY) offSet = MyVec3(0, -3, 0);
 		iFV->m_projectilePool->spawnProjectile(
 			*iFV->m_projtBillboard,

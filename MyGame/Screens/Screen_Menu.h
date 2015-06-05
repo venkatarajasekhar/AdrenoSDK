@@ -13,13 +13,15 @@ private:
 	// Assets
 	enum
 	{
+		TEXTURE_MENU_BACKGROUND,
+		TEXTURE_BTN_CONTAINER,
 		TEXTURE_BTN_BACKGROUND,
 		NUM_TEXTURES,
 	};
 
 	enum
 	{
-		FONT_CONSOLAS_12,
+		FONT_BAUHAUS93_26,
 		NUM_FONTS,
 	};
 
@@ -34,11 +36,12 @@ private:
 	// UI Widgets
 	enum
 	{
-		BTN_START_GAME,
-		BTN_SIGN_IN,
-		BTN_SIGN_OUT,
+		BTN_PLAY_GAME,
+		BTN_HEROES,
 		BTN_ACHIEVEMENTS,
 		BTN_LEADERBOARD,
+		BTN_SETTINGS,
+		BTN_PROFILE,
 		NUM_BTNS,
 	};
 
@@ -63,4 +66,6 @@ private:
 
 	// UI Widgets
 	UITextButton m_btns[NUM_BTNS];
+
+	Rect2D m_btnContainerDest;
 };

@@ -17,7 +17,7 @@ GameOverScreen::~GameOverScreen()
 
 void GameOverScreen::init()
 {
-	m_font.init(resolveAssetsPath("Fonts/Rosewood48.pak"));
+	m_font.init(resolveAssetsPath("Fonts/Consolas12.pak"));
 }
 
 void GameOverScreen::resize(int width, int height)

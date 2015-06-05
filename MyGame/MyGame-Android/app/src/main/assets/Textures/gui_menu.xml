@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <Texture 
+    ResourceID  = "menu_background"
+    SrcFileName = "menu_background.png"
+/>
+
+<Texture 
+    ResourceID  = "btn_container"
+    SrcFileName = "btn_container.png"
+/>
+
+<Texture 
     ResourceID  = "menu_btn_background"
     SrcFileName = "menu_btn_background.png"
 />

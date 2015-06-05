@@ -1,6 +1,7 @@
 
 #include "MainGame.h"
-#include "Screen_Menu.h"
+#include "Screen_Menu_Main.h"
+#include "Screen_Menu_GameMode.h"
 #include "Screen_Play.h"
 #include "Screen_GameOver.h"
 #include "Screen_Shop.h"
@@ -75,11 +76,12 @@ BOOL MainGame::Initialize()
 	//m_gameServer.init();
 
 	// Core objects
-	m_screenManager.addScreen("MenuScreen", new MenuScreen(&m_screenManager));
+	m_screenManager.addScreen("MainMenuScreen", new MainMenuScreen(&m_screenManager));
+	m_screenManager.addScreen("GameModeMenuScreen", new GameModeMenuScreen(&m_screenManager));
 	m_screenManager.addScreen("PlayScreen", new PlayScreen(&m_screenManager));
 	m_screenManager.addScreen("GameOverScreen", new GameOverScreen(&m_screenManager));
 	m_screenManager.addScreen("ShopScreen", new ShopScreen(&m_screenManager));
-	m_screenManager.activeScreen("MenuScreen");
+	m_screenManager.activeScreen("MainMenuScreen");
 
 	// End init
 	m_initialized = true;

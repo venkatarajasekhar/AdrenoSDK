@@ -36,6 +36,7 @@ public:
 	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
 	void setText(const MyString& text);
+	void accSize(float size);
 
 private:
 	Font* m_font;

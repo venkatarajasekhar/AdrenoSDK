@@ -129,3 +129,8 @@ void UILabel::setText(const MyString& text)
 	
 	m_bounding.Size.x = m_font->getTextWidth(m_text);
 }
+
+void UILabel::accSize(float size)
+{
+	m_size *= size;
+}

@@ -13,13 +13,15 @@ class UIImageButton : public UIWidget
 {
 public:
 	UIImageButton();
-	~UIImageButton();
+	virtual ~UIImageButton();
 
-	void init(const MyString& id, const MyVec2& pos, Texture& background);
-	void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
+	virtual void init(const MyString& id, const MyVec2& pos, Texture& background);
+	virtual void update(UserInput& userInput);
+	virtual void render(SpriteBatch& spriteBatch, const Rect2D* viewport = nullptr);
 
-private:
+protected:
 	Texture* m_background;
+	float m_scale;
 };
 
 //===========================================================================================================

@@ -2,6 +2,7 @@
 #include "MainGame.h"
 #include "Screen_Menu_Main.h"
 #include "Screen_Menu_GameMode.h"
+#include "Screen_Menu_BuyHero.h"
 #include "Screen_Play.h"
 #include "Screen_GameOver.h"
 #include "Screen_Shop.h"
@@ -78,6 +79,7 @@ BOOL MainGame::Initialize()
 	// Core objects
 	m_screenManager.addScreen("MainMenuScreen", new MainMenuScreen(&m_screenManager));
 	m_screenManager.addScreen("GameModeMenuScreen", new GameModeMenuScreen(&m_screenManager));
+	m_screenManager.addScreen("BuyHeroMenuScreen", new BuyHeroMenuScreen(&m_screenManager));
 	m_screenManager.addScreen("PlayScreen", new PlayScreen(&m_screenManager));
 	m_screenManager.addScreen("GameOverScreen", new GameOverScreen(&m_screenManager));
 	m_screenManager.addScreen("ShopScreen", new ShopScreen(&m_screenManager));

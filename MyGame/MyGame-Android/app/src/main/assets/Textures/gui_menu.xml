@@ -33,3 +33,55 @@
     ResourceID  = "menu_game_mode_btn_solo"
     SrcFileName = "menu_game_mode_btn_solo.png"
 />
+
+<!-- Buy hero menu -->
+
+<Texture 
+    ResourceID  = "menu_buy_hero_diamond_bar"
+    SrcFileName = "menu_buy_hero_diamond_bar.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_btn_buy"
+    SrcFileName = "menu_buy_hero_btn_buy.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Fighter_DanMei"
+    SrcFileName = "menu_buy_hero_Fighter_DanMei.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Fighter_Elrath"
+    SrcFileName = "menu_buy_hero_Fighter_Elrath.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Fighter_Tiac"
+    SrcFileName = "menu_buy_hero_Fighter_Tiac.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Fighter_Valle"
+    SrcFileName = "menu_buy_hero_Fighter_Valle.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Guardian_Dick"
+    SrcFileName = "menu_buy_hero_Guardian_Dick.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Guardian_Sewon"
+    SrcFileName = "menu_buy_hero_Guardian_Sewon.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Mage_Cezanne"
+    SrcFileName = "menu_buy_hero_Mage_Cezanne.png"
+/>
+
+<Texture 
+    ResourceID  = "menu_buy_hero_Shooter_Renoah"
+    SrcFileName = "menu_buy_hero_Shooter_Renoah.png"
+/>

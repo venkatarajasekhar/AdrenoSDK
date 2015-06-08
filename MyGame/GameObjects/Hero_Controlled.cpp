@@ -39,6 +39,8 @@ void Hero_Controlled::init(
 	m_stateMachine->SetCurrentState(Hero_ControlledState_Idle::instance());
 
 	Hero::init(mesh, bloodBar, lEnts, heroProp, heroInGameProp, team);
+
+	m_notifyPool.init();
 }
 
 void Hero_Controlled::update(Timer& timer)
@@ -61,6 +63,13 @@ void Hero_Controlled::update(Timer& timer)
 
 	// States manager
 	m_stateMachine->Update();
+	m_notifyPool.update(timer);
+}
+
+void Hero_Controlled::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
+{
+	Hero::render(spriteBatch, camera, light);
+	m_notifyPool.render(camera, spriteBatch);
 }
 
 void Hero_Controlled::OnPress(const IOnPressListener::Data& data)
@@ -185,20 +194,26 @@ void Hero_ControlledState_Attack::Exit(Hero_Controlled* hero)
 
 void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 {
+	Notify* data;
 	if (tag != nullptr)
 	{
 		Hero_Controlled* hero = (Hero_Controlled*)tag;
 		if (hero->m_atkTarget->getHealth() - hero->m_damage <= 0)
 		{
+			MyVec3 pos = hero->m_atkTarget->getPos();
+			MyVec3 offset = MyVec3(-1, 3, 0);
+
 			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_PAWN)
 			{
 				hero->m_gold += MONEY_PAWN;
 				hero->m_exp += EXP_PAWN;
+				hero->m_notifyPool.spawnNotify("+" + toString(MONEY_PAWN), pos + offset, MyVec2(0, -0.5f), 1.5f);
 			}
 			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_TOWER)
 			{
 				hero->m_gold += MONEY_TOWER;
 				hero->m_exp += EXP_TOWER;
+				hero->m_notifyPool.spawnNotify("+" + toString(MONEY_PAWN), pos + offset, MyVec2(0, -0.5f), 1.5f);
 			}
 		}
 		hero->m_atkTarget->accHealth(-hero->m_damage);

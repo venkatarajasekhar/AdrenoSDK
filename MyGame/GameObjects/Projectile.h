@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "LivingEntity.h"
@@ -10,7 +9,6 @@
 // Projectile class
 //
 //==============================================================================================================
-
 
 class Projectile : public BaseEntity
 {

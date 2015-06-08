@@ -327,8 +327,8 @@
     <ClCompile Include="Screens\Screen_Menu_Main.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
-    <ClCompile Include="Screens\Screen_Menu_BuyHero.cpp">
-      <Filter>Screens</Filter>
+    <ClCompile Include="GameObjects\Notify.cpp">
+      <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsObjects\InfoBar.cpp">
       <Filter>GraphicsObjects</Filter>
@@ -434,8 +434,8 @@
     <ClInclude Include="Screens\Screen_Menu_Main.h">
       <Filter>Screens</Filter>
     </ClInclude>
-    <ClInclude Include="Screens\Screen_Menu_BuyHero.h">
-      <Filter>Screens</Filter>
+    <ClInclude Include="GameObjects\Notify.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsObjects\InfoBar.h">
       <Filter>GraphicsObjects</Filter>

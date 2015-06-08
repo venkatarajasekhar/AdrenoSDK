@@ -327,6 +327,9 @@
     <ClCompile Include="Screens\Screen_Menu_Main.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Notify.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="Screens\Screen_Menu_Main.h">
       <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Notify.h">
+      <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

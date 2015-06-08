@@ -3,6 +3,7 @@
 
 #include "Hero.h"
 #include "StateMachine.h"
+#include "Notify.h"
 
 //===================================================================================================================
 //
@@ -24,6 +25,7 @@ public:
 		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
+	void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
 	void OnPress(const IOnPressListener::Data& data);
 
@@ -32,6 +34,7 @@ public:
 private:
 	// States manager
 	StateMachine<Hero_Controlled>* m_stateMachine;
+	NotifyPool m_notifyPool;
 
 private:
 	friend class Hero_ControlledState_Idle;

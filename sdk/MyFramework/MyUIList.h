@@ -109,6 +109,9 @@ public:
 
 	void OnPress(const IOnPressListener::Data& data);
 
+	void setListPadding(float padding);
+	void setListItemDist(float dist);
+
 private:
 	std::vector<UIListItem*> m_listItems;
 	Texture* m_background;
@@ -117,4 +120,7 @@ private:
 	float m_maxCurrPos;
 
 	ORIENTATION m_orientation;
+
+	float m_listPadding;
+	float m_listItemDist;
 };

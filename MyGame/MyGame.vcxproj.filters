@@ -330,6 +330,9 @@
     <ClCompile Include="Screens\Screen_Menu_BuyHero.cpp">
       <Filter>Screens</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsObjects\InfoBar.cpp">
+      <Filter>GraphicsObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\MainGame.h">
@@ -433,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="Screens\Screen_Menu_BuyHero.h">
       <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObjects\InfoBar.h">
+      <Filter>GraphicsObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

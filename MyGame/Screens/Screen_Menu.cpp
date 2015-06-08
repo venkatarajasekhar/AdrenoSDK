@@ -46,6 +46,17 @@ void MenuScreen::init()
 
 			m_textures[TEXTURE_GAME_MODE_BTN_ONLINE].init(resource.GetTexture("menu_game_mode_btn_online"));
 			m_textures[TEXTURE_GAME_MODE_BTN_SOLO].init(resource.GetTexture("menu_game_mode_btn_solo"));
+
+			m_textures[TEXTURE_BUY_HERO_DIAMOND_BAR].init(resource.GetTexture("menu_buy_hero_diamond_bar"));
+			m_textures[TEXTURE_BUY_HERO_BTN_BUY].init(resource.GetTexture("menu_buy_hero_btn_buy"));
+			m_textures[TEXTURE_BUY_HERO_FIGHTER_DANMEI].init(resource.GetTexture("menu_buy_hero_Fighter_DanMei"));
+			m_textures[TEXTURE_BUY_HERO_FIGHTER_ELRATH].init(resource.GetTexture("menu_buy_hero_Fighter_Elrath"));
+			m_textures[TEXTURE_BUY_HERO_FIGHTER_TIAC].init(resource.GetTexture("menu_buy_hero_Fighter_Tiac"));
+			m_textures[TEXTURE_BUY_HERO_FIGHTER_VALLE].init(resource.GetTexture("menu_buy_hero_Fighter_Valle"));
+			m_textures[TEXTURE_BUY_HERO_GUARDIAN_DICK].init(resource.GetTexture("menu_buy_hero_Guardian_Dick"));
+			m_textures[TEXTURE_BUY_HERO_GUARDIAN_SEWON].init(resource.GetTexture("menu_buy_hero_Guardian_Sewon"));
+			m_textures[TEXTURE_BUY_HERO_MAGE_CEZANNE].init(resource.GetTexture("menu_buy_hero_Mage_Cezanne"));
+			m_textures[TEXTURE_BUY_HERO_SHOOTER_RENOAH].init(resource.GetTexture("menu_buy_hero_Shooter_Renoah"));
 		}
 
 		// Font assets

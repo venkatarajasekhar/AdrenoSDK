@@ -163,6 +163,7 @@ void MainMenuScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "btn_menu_heroes")
 	{
+		m_screenManager->activeScreen("BuyHeroMenuScreen");
 	}
 	else if (data.Id == "btn_menu_achievements")
 	{

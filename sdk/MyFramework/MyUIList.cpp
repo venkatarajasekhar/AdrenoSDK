@@ -9,8 +9,8 @@
 //
 //=========================================================================================================================
 
-static const float LIST_ITEM_MARGIN = 10.0f;
-static const float LIST_PADDING = 5.0f;
+static const float DEFAULT_LIST_ITEM_DIST = 10.0f;
+static const float DEFAULT_LIST_PADDING = 5.0f;
 
 #pragma endregion
 
@@ -106,6 +106,8 @@ UIList::UIList()
 	m_maxCurrPos(0.0f),
 	m_orientation(VERTICAL)
 {
+	setListPadding(DEFAULT_LIST_PADDING);
+	setListItemDist(DEFAULT_LIST_ITEM_DIST);
 }
 
 UIList::~UIList()
@@ -135,8 +137,8 @@ void UIList::update(UserInput& userInput)
 	// Update list
 	{
 		if (
-			((m_orientation == VERTICAL) && (m_maxCurrPos - LIST_ITEM_MARGIN - getSize().y > 0)) ||
-			((m_orientation == HORIZONTAL) && (m_maxCurrPos - LIST_ITEM_MARGIN - getSize().x > 0))
+			((m_orientation == VERTICAL) && (m_maxCurrPos - m_listItemDist - getSize().y > 0)) ||
+			((m_orientation == HORIZONTAL) && (m_maxCurrPos - m_listItemDist - getSize().x > 0))
 			)
 		{
 			MyVec2 delta, pos;
@@ -145,12 +147,12 @@ void UIList::update(UserInput& userInput)
 				if (m_orientation == VERTICAL)
 				{
 					m_currPos -= delta.y;
-					m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - LIST_ITEM_MARGIN - getSize().y);
+					m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - m_listItemDist - getSize().y);
 				}
 				else
 				{
 					m_currPos -= delta.x;
-					m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - LIST_ITEM_MARGIN - getSize().x);
+					m_currPos = clamp(m_currPos, 0.0f, m_maxCurrPos - m_listItemDist - getSize().x);
 				}
 			}
 		}
@@ -213,14 +215,14 @@ void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 			// Render item
 			if (m_orientation == VERTICAL)
 			{
-				listItem->setPos(listItemPos + MyVec2(0.5f * (getSize().x - listItem->getSize().x), LIST_ITEM_MARGIN * (count++)));
+				listItem->setPos(listItemPos + MyVec2(0.5f * (getSize().x - listItem->getSize().x), m_listItemDist * (count++)));
 				listItem->render(spriteBatch);
 
 				listItemPos += MyVec2(0, listItem->getSize().y);
 			}
 			else
 			{
-				listItem->setPos(listItemPos + MyVec2(LIST_ITEM_MARGIN * (count++), 0.5f * (getSize().y - listItem->getSize().y)));
+				listItem->setPos(listItemPos + MyVec2(m_listItemDist * (count++), 0.5f * (getSize().y - listItem->getSize().y)));
 				listItem->render(spriteBatch);
 
 				listItemPos += MyVec2(listItem->getSize().x, 0);
@@ -236,7 +238,7 @@ void UIList::render(SpriteBatch& spriteBatch, const Rect2D* viewport)
 			}
 		}
 
-		length += LIST_ITEM_MARGIN;
+		length += m_listItemDist;
 	}
 }
 
@@ -246,11 +248,11 @@ void UIList::addItem(UIListItem* item)
 	m_listItems.push_back(item);
 	if (m_orientation == VERTICAL)
 	{
-		m_maxCurrPos += item->getSize().y + LIST_ITEM_MARGIN;
+		m_maxCurrPos += item->getSize().y + m_listItemDist;
 	}
 	else
 	{
-		m_maxCurrPos += item->getSize().x + LIST_ITEM_MARGIN;
+		m_maxCurrPos += item->getSize().x + m_listItemDist;
 	}
 }
 
@@ -259,13 +261,13 @@ Rect2D UIList::getViewport()
 	Rect2D viewport;
 	if (m_orientation == VERTICAL)
 	{
-		viewport.Pos = getPos() + MyVec2(0.0f, LIST_PADDING);
-		viewport.Size = getSize() - MyVec2(0.0f, 2.0f * LIST_PADDING);
+		viewport.Pos = getPos() + MyVec2(0.0f, m_listPadding);
+		viewport.Size = getSize() - MyVec2(0.0f, 2.0f * m_listPadding);
 	}
 	else
 	{
-		viewport.Pos = getPos() + MyVec2(LIST_PADDING, 0.0f);
-		viewport.Size = getSize() - MyVec2(2.0f * LIST_PADDING, 0.0f);
+		viewport.Pos = getPos() + MyVec2(m_listPadding, 0.0f);
+		viewport.Size = getSize() - MyVec2(2.0f * m_listPadding, 0.0f);
 	}
 	
 	return viewport;
@@ -288,4 +290,14 @@ void UIList::OnPress(const IOnPressListener::Data& data)
 		IOnPressListItemListener::Data data(m_id, item);
 		throwPressListItemEvent(data);
 	}
+}
+
+void UIList::setListPadding(float padding)
+{
+	m_listPadding = padding;
+}
+
+void UIList::setListItemDist(float dist)
+{
+	m_listItemDist = dist;
 }

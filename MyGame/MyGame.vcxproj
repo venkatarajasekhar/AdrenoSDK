@@ -161,6 +161,7 @@
     <ClCompile Include="GameObjects\Tower_Main.cpp" />
     <ClCompile Include="GraphicsObjects\BloodBar.cpp" />
     <ClCompile Include="GraphicsObjects\FlatTerrain.cpp" />
+    <ClCompile Include="GraphicsObjects\InfoBar.cpp" />
     <ClCompile Include="GraphicsObjects\MiniMap.cpp" />
     <ClCompile Include="GraphicsObjects\PlayerInfo.cpp" />
     <ClCompile Include="GraphicsObjects\Shop.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="GameObjects\Tower_Main.h" />
     <ClInclude Include="GraphicsObjects\BloodBar.h" />
     <ClInclude Include="GraphicsObjects\FlatTerrain.h" />
+    <ClInclude Include="GraphicsObjects\InfoBar.h" />
     <ClInclude Include="GraphicsObjects\MiniMap.h" />
     <ClInclude Include="GraphicsObjects\PlayerInfo.h" />
     <ClInclude Include="GraphicsObjects\Shop.h" />

@@ -103,6 +103,11 @@ void HeroItem::accNTime(int n)
 	m_nTime -= n;
 }
 
+int HeroItem::getCoolDownTime()
+{
+	return m_timeUse + m_timeWait - m_countTimeUsed;
+}
+
 //==================================================================================================================
 //
 // HeroItem_HealingPotion class

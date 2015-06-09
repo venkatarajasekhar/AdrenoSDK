@@ -24,6 +24,7 @@ static void initHeroProps()
 {
 	// Beast sewon
 	g_HeroProps[HERO_BEAST_SEWON].InitialMaxHealth = 200;
+	g_HeroProps[HERO_BEAST_SEWON].InitialMaxMana = 100;
 	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 20;
 
 	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 7;
@@ -44,6 +45,7 @@ static void initHeroProps()
 
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 200;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxMana = 100;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 7;
@@ -115,6 +117,8 @@ static const std::vector<MyVec3> ENEMY_HERO_PATH =
 static const float RANGE_OF_MAIN_TOWER = 10.0f;
 static const int HEALTH_PER_SECOND_IN_RANGE_MAINTOWER = 20;
 static const int HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER = 1;
+static const int MANA_PER_SECOND_IN_RANGE_MAINTOWER = 20;
+static const int MANA_PER_SECOND_OUT_RANGE_MAINTOWER = 1;
 static const MyVec3 POSITION_MY_MAIN_TOWER = MyVec3(-43.0f, 0, 0.39f);
 static const MyVec3 POSITION_ENEMY_MAIN_TOWER = MyVec3(39.0f, 0, -1.5f);
 
@@ -168,7 +172,10 @@ void Hero::init(
 
 	m_exp = 0;
 	m_gold = 600;
-	m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+	m_maxMana = heroProp.InitialMaxMana;
+	m_mana = m_maxMana;
+	m_level = 1;
+	m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
 	m_healthPerAttack = 0;
 	m_countTime = 0;
 	m_revivalTime = 0;
@@ -188,7 +195,6 @@ void Hero::init(
 
 void Hero::update(Timer& timer)
 {
-	// Moving elements
 	m_movingEnt.update(timer);
 
 	m_instance->Position = m_movingEnt.getPos();
@@ -200,17 +206,35 @@ void Hero::update(Timer& timer)
 		if (m_teamType == TEAM_TYPE_MY_TEAM)
 		{
 			if (distance_optimized(getPos(), POSITION_MY_MAIN_TOWER) <= RANGE_OF_MAIN_TOWER)
+			{
 				m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
-			else m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+				m_manaPerSecond = MANA_PER_SECOND_IN_RANGE_MAINTOWER;
+			}
+			else
+			{
+				m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+				m_manaPerSecond = MANA_PER_SECOND_OUT_RANGE_MAINTOWER;
+			}
 		}
 		else
 		{
 			if (distance_optimized(getPos(), POSITION_ENEMY_MAIN_TOWER) <= RANGE_OF_MAIN_TOWER)
+			{
 				m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
-			else m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+				m_manaPerSecond = MANA_PER_SECOND_IN_RANGE_MAINTOWER;
+			}
+			else
+			{
+				m_healthPerSecond = HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER;
+				m_manaPerSecond = MANA_PER_SECOND_OUT_RANGE_MAINTOWER;
+			}
 		}
 
-		if (m_instance->Visible) accHealth(m_healthPerSecond);
+		if (m_instance->Visible)
+		{
+			accHealth(m_healthPerSecond);
+			accMana(m_manaPerSecond);
+		}
 		m_gold++;
 		m_countTime--;
 	}
@@ -267,6 +291,12 @@ void Hero::accPos(MyVec3 dPos)
 	m_movingEnt.setPos(m_movingEnt.getPos() + dPos);
 }
 
+void Hero::accMana(int mana)
+{
+	m_mana += mana;
+	if (m_mana > m_maxMana) m_mana = m_maxMana;
+}
+
 MyVec3 Hero::getRot()
 {
 	return m_movingEnt.getRot() + MyVec3(0, m_movingEnt.getRotYOffset(), 0);
@@ -275,6 +305,26 @@ MyVec3 Hero::getRot()
 int Hero::getGold()
 {
 	return m_gold;
+}
+
+int Hero::getMana()
+{
+	return m_mana;
+} 
+
+int Hero::getMaxMana()
+{
+	return m_maxMana;
+}
+
+int Hero::getExp()
+{
+	return m_exp;
+}
+
+int Hero::getMaxExp()
+{
+	return EXP_LEVEL[m_level - 1];
 }
 
 void Hero::setHealthPerAttack(int health)

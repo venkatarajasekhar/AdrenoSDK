@@ -13,6 +13,7 @@
 static const bool   SHOW_FPS            = true;
 static const MyVec2 BTN_FIGHTING_MARGIN = MyVec2(30, 20);
 static const MyVec2 LIST_ITEM_MARGIN    = MyVec2(100, 20);
+static const MyVec2 LIST_SKILL_MARGIN = MyVec2(20, 250);
 
 #pragma endregion
 
@@ -27,8 +28,9 @@ static const MyVec2 LIST_ITEM_MARGIN    = MyVec2(100, 20);
 class UIListItem_ActiveItem : public UIListItem
 {
 public:
-	UIListItem_ActiveItem(UIList* list, HeroItem* heroItem)
-		: UIListItem(list)
+	UIListItem_ActiveItem(UIList* list, HeroItem* heroItem, Font& font)
+		: UIListItem(list),
+		m_font(&font)
 	{
 		m_heroItem = heroItem;
 
@@ -48,7 +50,21 @@ public:
 			m_bounding,
 			nullptr,
 			0.0f,
-			&listViewport);
+			&listViewport,
+			(!m_heroItem->getIsUsing() ? MyColor(1) : MyColor(0.5f)));
+
+		if (m_heroItem->getIsUsing())
+		{
+			m_font->setScale(MyVec2(1.5f));
+
+			MyString text = toString((int)m_heroItem->getCoolDownTime());
+			MyVec2 textSize(m_font->getTextWidth(text), m_font->getTextHeight());
+			MyVec2 offset = 0.5f * (getSize() - textSize);
+
+			spriteBatch.renderText2D(*m_font, text, getPos() + offset, 0.0f, &listViewport);
+
+			m_font->setScale(MyVec2(1.0f));
+		}
 	}
 
 	HeroItem* getHeroItem()
@@ -58,6 +74,7 @@ public:
 
 private:
 	HeroItem* m_heroItem;
+	Font* m_font;
 };
 
 #pragma endregion
@@ -170,7 +187,7 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	m_list[LIST_ITEM].addPressListItemListener(this);
 
 	{
-		m_list[LIST_SKILL].init("hud_list_skill", MyVec2(20, 200), 60, 400);
+		m_list[LIST_SKILL].init("hud_list_skill", MyVec2(0), 60, 400);
 		m_list[LIST_SKILL].addPressListItemListener(this);
 
 		auto& skillBag = m_player->getSkillBag();
@@ -204,6 +221,11 @@ void Layer_HUD::resize(int width, int height)
 	{
 		MyVec2 pos = MyVec2(LIST_ITEM_MARGIN.x, height - LIST_ITEM_MARGIN.y - m_list[LIST_ITEM].getSize().y);
 		m_list[LIST_ITEM].setPos(pos);
+	}
+
+	{
+		MyVec2 pos = MyVec2(width - LIST_SKILL_MARGIN.x - m_list[LIST_SKILL].getSize().x, LIST_SKILL_MARGIN.y);
+		m_list[LIST_SKILL].setPos(pos);
 	}
 
 	// Other HUD-components
@@ -270,7 +292,7 @@ void Layer_HUD::OnPress(const IOnPressListener::Data& data)
 void Layer_HUD::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
 	if (data.BoughtItem->getType()==data.BoughtItem->ACTIVE)
-		m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem));
+		m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem, m_fonts[FONT_CONSOLAS_12]));
 }
 
 void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)

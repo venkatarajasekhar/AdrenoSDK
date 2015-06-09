@@ -81,6 +81,14 @@ void PlayerInfo::render(SpriteBatch& spriteBatch, Hero& player)
 		m_labels[LABEL_HEALTH].setText(toString(health) + "/" + toString(maxHealth));
 		m_progBars[PROG_BAR_HEALTH].setProgress((float)health / (float)maxHealth);
 
+		int mana = player.getMana(), maxMana = player.getMaxMana();
+		m_labels[LABEL_MANA].setText(toString(mana) + "/" + toString(maxMana));
+		m_progBars[PROG_BAR_MANA].setProgress((float)mana / (float)maxMana);
+
+		int exp = player.getExp(), maxExp = player.getMaxExp();
+		m_labels[LABEL_EXP].setText(toString(exp) + "/" + toString(maxExp));
+		m_progBars[PROG_BAR_EXP].setProgress((float)exp / (float)maxExp);
+		
 		m_labels[LABEL_GOLD].setText(toString(player.getGold()));
 	}
 	

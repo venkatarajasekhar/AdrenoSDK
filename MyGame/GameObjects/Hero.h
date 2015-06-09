@@ -21,6 +21,7 @@
 struct HeroProps
 {
 	int InitialMaxHealth;
+	int InitialMaxMana;
 	int InitialDamage;
 
 	float AttackRange;
@@ -108,7 +109,12 @@ public:
 	void setHealthPerAttack(int health);
 	void setTarget(MyVec3 target);
 	void accPos(MyVec3 dPos);
+	void accMana(int mana);
 	int getGold();
+	int getMana();
+	int getMaxMana();
+	int getExp();
+	int getMaxExp();
 
 	void addItem(HeroItem* item);
 	void addSkill(HeroSkill* skill);
@@ -134,9 +140,13 @@ protected:
 
 	float m_time_PAA_Attack_1;
 
-	int m_exp;
+	int m_mana;
+	int m_maxMana;
+	int m_level;
 	int m_gold;
+	int m_exp;
 	int m_healthPerSecond;
+	int m_manaPerSecond;
 	int m_healthPerAttack;
 	float m_countTime;
 	float m_revivalTime;

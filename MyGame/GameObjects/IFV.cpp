@@ -37,7 +37,7 @@ static void initIFVProps()
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Shininess = 16.0f;
 
-	g_IFVProps[IFV_CATAPULT].Time_PAA_Attack_1 = 0.392f;
+	g_IFVProps[IFV_CATAPULT].Time_PAA_Attack_1 = 0.38f;
 
 	// Tank
 	g_IFVProps[IFV_TANK].AttackRange = 15;
@@ -47,7 +47,7 @@ static void initIFVProps()
 	g_IFVProps[IFV_TANK].MovingRotYOffset = 80;
 	g_IFVProps[IFV_TANK].MovingTurnSpeed = 300;
 
-	g_IFVProps[IFV_TANK].Scale = MyVec3(0.005f);
+	g_IFVProps[IFV_TANK].Scale = MyVec3(0.004f);
 
 	g_IFVProps[IFV_TANK].BloodbarOffset = MyVec3(-1.5f, 4.3f, 0);
 
@@ -56,7 +56,7 @@ static void initIFVProps()
 	g_IFVProps[IFV_TANK].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_IFVProps[IFV_TANK].MeshMaterial.Shininess = 16.0f;
 
-	g_IFVProps[IFV_TANK].Time_PAA_Attack_1 = 0.2f;
+	g_IFVProps[IFV_TANK].Time_PAA_Attack_1 = 0.15f;
 }
 
 #pragma endregion
@@ -539,7 +539,7 @@ void IFVState_Attack::OnPerformAAct(void* tag)
 		IFV* iFV = (IFV*)tag;
 		MyVec3 offSet;
 
-		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) offSet = MyVec3(0, -3.5, 0);
+		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) offSet = MyVec3(0, -3.7, 0);
 		if (iFV->getTeamType() == TEAM_TYPE_ENEMY) offSet = MyVec3(0, -3, 0);
 		iFV->m_projectilePool->spawnProjectile(
 			*iFV->m_projtBillboard,

@@ -20,6 +20,7 @@ public:
 	void init(
 		SkinnedMesh1& mesh,
 		BloodBar& bloodBar,
+		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts,
 		HeroProps& heroProp,
 		HeroInGameProps& heroInGameProp,

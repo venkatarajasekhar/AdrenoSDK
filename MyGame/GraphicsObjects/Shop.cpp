@@ -35,10 +35,12 @@ void Shop::init(
 	}
 
 	m_mesh.addInstance(Mesh::buildMeshInstance(pos, rot, scale));
+	m_isPressed = false;
 }
 
 void Shop::update(Timer& timer, bool& isPressed, MyVec3& pressedPoint)
 {
+	//m_isPressed = isPressed;
 	MyVec3 pos = m_mesh.getInstance(0)->Position;
 	if (isPressed && (distance_optimized(pos + MODEL_OFFSET, pressedPoint) <= SELECTED_RADIUS))
 	{
@@ -53,12 +55,13 @@ void Shop::update(Timer& timer, bool& isPressed, MyVec3& pressedPoint)
 
 void Shop::render(Camera& camera, Light& light)
 {
+	/*if (m_isPressed)
 	{
 		MyVec3 pos = m_mesh.getInstance(0)->Position;
 		m_selectedDecal->setPos(pos + MODEL_OFFSET + MyVec3(0, 0.1f, 0));
 		m_selectedDecal->setSize(MyVec2(2.0f * SELECTED_RADIUS));
 		m_selectedDecal->render(camera);
-	}
+	}*/
 
 	m_mesh.render(camera, &light);
 }

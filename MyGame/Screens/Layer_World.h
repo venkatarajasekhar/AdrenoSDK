@@ -55,6 +55,7 @@ private:
 	enum
 	{
 		SPRITE_SHEET_ENERGY_BALL,
+		SPRITE_SHEET_BULLET,
 		NUM_SPRITE_SHEETS,
 	};
 
@@ -80,6 +81,7 @@ private:
 	enum
 	{
 		BILLBOARD_ENERGY_BALL,
+		BILLBOARD_BULLET,
 		NUM_BILLBOARDS,
 	};
 

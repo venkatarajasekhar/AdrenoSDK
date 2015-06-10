@@ -19,6 +19,7 @@ public:
 	void init(
 		SkinnedMesh1& mesh,
 		BloodBar& bloodBar,
+		Quad3D& selectedDecal,
 		const std::vector<MyVec3>& path,
 		std::vector<LivingEntity*>& lEnts,
 		HeroProps& heroProp,

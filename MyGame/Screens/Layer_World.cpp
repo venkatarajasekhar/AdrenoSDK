@@ -120,6 +120,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		resource.LoadFromFile(resolveAssetsPath("Textures/sprite_sheet.pak").c_str());
 
 		m_spriteSheets[SPRITE_SHEET_ENERGY_BALL].init(resource.GetTexture("energy_ball"), 8, MyIVec2(3, 1), MyIVec2(100, 100));
+		m_spriteSheets[SPRITE_SHEET_BULLET].init(resource.GetTexture("energy_ball"), 8, MyIVec2(3, 1), MyIVec2(100, 100));
 	}
 
 	// Assets mesh data
@@ -181,6 +182,13 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		MyVec2(1.5f),
 		0);
 
+	m_billboards[BILLBOARD_BULLET].init(
+		&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL],
+		m_shaders[SHADER_BILLBOARD],
+		MyVec3(0),
+		MyVec2(0.5f),
+		0);
+
 	// Game objects
 	m_towerPool.init(
 		m_shaders[SHADER_MESH],
@@ -204,7 +212,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_bloodBar[BLOOD_BAR_MY_TEAM],
 		m_bloodBar[BLOOD_BAR_ENEMY],
 		m_selectedDecal,
-		m_billboards[BILLBOARD_ENERGY_BALL],
+		m_billboards[BILLBOARD_BULLET],
 		m_projectilePool,
 		m_livingEnts);
 
@@ -213,6 +221,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_shaders[SHADER_BILLBOARD],
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
+		m_selectedDecal,
 		m_livingEnts, 
 		m_mesh_terrain);
 
@@ -261,12 +270,12 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 			{
 				if (lEnt->isSelect(isPressed, pressedPoint))
 				{
-					lEnt->select();
 					if (m_selectedGameObj != nullptr)
 					{
 						m_selectedGameObj->deselect();
 					}
 
+					lEnt->select();
 					m_selectedGameObj = lEnt;
 					isPressed = false;
 					break;

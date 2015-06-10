@@ -96,7 +96,8 @@ public:
 	// Core functions
 	virtual void init(
 		SkinnedMesh1& mesh,
-		BloodBar& bloodBar, 
+		BloodBar& bloodBar,
+		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts,
 		HeroProps& heroProp,
 		HeroInGameProps& heroInGameProp,
@@ -239,6 +240,7 @@ public:
 		Shader& billboardShader,
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
+		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts, 
 		OnPressListenee& map);
 	void update(Timer& timer);

@@ -154,6 +154,7 @@ Hero::~Hero()
 void Hero::init(
 	SkinnedMesh1& mesh,
 	BloodBar& bloodBar,
+	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts,
 	HeroProps& heroProp,
 	HeroInGameProps& heroInGameProp,
@@ -190,7 +191,8 @@ void Hero::init(
 		HERO_BLOOD_BAR_SCALE, 
 		heroProp.BloodbarOffset,
 		lEnts, 
-		heroProp.AttackRange);
+		heroProp.AttackRange,
+		&selectedDecal);
 }
 
 void Hero::update(Timer& timer)
@@ -420,7 +422,8 @@ void HeroPool::init(
 	Shader& skinnedShader, 
 	Shader& billboardShader,
 	BloodBar& myBloodBar, 
-	BloodBar& enemyBloodBar, 
+	BloodBar& enemyBloodBar,
+	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts, 
 	OnPressListenee& map)
 {
@@ -519,6 +522,7 @@ void HeroPool::init(
 		hero->init(
 			m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI], 
 			myBloodBar, 
+			selectedDecal,
 			lEnts, 
 			g_HeroProps[HERO_FIGHTER_DAN_MEI], 
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
@@ -538,6 +542,7 @@ void HeroPool::init(
 		hero->init(
 			m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON], 
 			enemyBloodBar, 
+			selectedDecal,
 			ENEMY_HERO_PATH, 
 			lEnts, 
 			g_HeroProps[HERO_BEAST_SEWON], 

@@ -25,4 +25,5 @@ public:
 private:
 	FileMesh1 m_mesh;
 	Quad3D* m_selectedDecal;
+	bool m_isPressed;
 };

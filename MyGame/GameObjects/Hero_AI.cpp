@@ -21,6 +21,7 @@ Hero_AI::~Hero_AI()
 void Hero_AI::init(
 	SkinnedMesh1& mesh,
 	BloodBar& bloodBar,
+	Quad3D& selectedDecal,
 	const std::vector<MyVec3>& path,
 	std::vector<LivingEntity*>& lEnts,
 	HeroProps& heroProp,
@@ -39,7 +40,7 @@ void Hero_AI::init(
 
 	m_chasingRange = heroProp.ChasingRange;
 
-	Hero::init(mesh, bloodBar, lEnts, heroProp, heroInGameProp, team);
+	Hero::init(mesh, bloodBar, selectedDecal, lEnts, heroProp, heroInGameProp, team);
 }
 
 void Hero_AI::update(Timer& timer)

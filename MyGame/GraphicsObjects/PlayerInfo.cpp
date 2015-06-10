@@ -73,7 +73,6 @@ void PlayerInfo::update(Timer& timer, UserInput& userInput)
 	}
 }
 
-
 void PlayerInfo::render(SpriteBatch& spriteBatch, Hero& player)
 {
 	{

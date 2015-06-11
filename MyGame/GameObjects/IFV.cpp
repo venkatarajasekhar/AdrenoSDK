@@ -532,6 +532,7 @@ void IFVState_Attack::Exit(IFV* iFV)
 {
 }
 
+
 void IFVState_Attack::OnPerformAAct(void* tag)
 {
 	if (tag != nullptr)

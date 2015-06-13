@@ -104,7 +104,7 @@ static const MyVec2 HERO_BLOOD_BAR_SCALE = MyVec2(1.5f, 0.8f);
 
 static const std::vector<MyVec3> ENEMY_HERO_PATH =
 {
-	MyVec3(40.0f, 0, 0.0f),
+	MyVec3(34.0f, 0, 0.0f),
 	MyVec3(30.6013f, 0, 2.89223f),
 	MyVec3(14.6958f, 0, -3.19085f),
 	MyVec3(0.451345f, 0, -1.58377f),

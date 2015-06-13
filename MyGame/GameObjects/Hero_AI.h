@@ -33,6 +33,7 @@ private:
 	StateMachine<Hero_AI>* m_stateMachine;
 
 	float m_chasingRange;
+	bool m_isEmptyHealth;
 
 private:
 	friend class Hero_AIState_Idle;

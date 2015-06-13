@@ -49,6 +49,7 @@ MovingEntity::MovingEntity()
 	m_turnSpeed(0),
 	m_isMoving(false),
 	m_pathPivot(0),
+	m_deltaPathPivot(1),
 	m_followingPath(true)
 {
 }
@@ -104,8 +105,8 @@ void MovingEntity::update(Timer& timer)
 	{
 		if (!m_path.empty() && m_followingPath)
 		{
-			m_pathPivot++;
-			if (m_pathPivot < m_path.size())
+			m_pathPivot += m_deltaPathPivot;
+			if ((m_pathPivot < m_path.size()) && (m_pathPivot >= 0))
 			{
 				setTarget(m_path[m_pathPivot]);
 			}
@@ -184,6 +185,22 @@ void MovingEntity::setPath(const std::vector<MyVec3>& path)
 		MyVec3 target = ((m_path.size() >= 2) ? m_path[1] : m_path[0]);
 		setTarget(target);
 	}
+}
+
+void MovingEntity::setDeltaPathPivot(int delta)
+{
+	m_deltaPathPivot = delta;
+}
+
+void MovingEntity::setPathPivot(int pivot)
+{
+	if ((pivot < m_path.size()) && (pivot >= 0))
+		m_pathPivot = pivot;
+}
+
+int MovingEntity::getPathPivot()
+{
+	return m_pathPivot;
 }
 
 void MovingEntity::accelerate(float dSpeed)

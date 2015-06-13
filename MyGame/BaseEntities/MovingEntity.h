@@ -43,6 +43,9 @@ public:
 	void setSpeed(float speed);
 
 	void setPath(const std::vector<MyVec3>& path);
+	void setDeltaPathPivot(int delta);
+	void setPathPivot(int pivot);
+	int getPathPivot();
 
 	void accelerate(float dSpeed);
 
@@ -64,5 +67,6 @@ protected:
 
 	std::vector<MyVec3> m_path;
 	int m_pathPivot;
+	int m_deltaPathPivot;
 	bool m_followingPath;
 };

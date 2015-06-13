@@ -40,12 +40,32 @@ void Hero_AI::init(
 
 	m_chasingRange = heroProp.ChasingRange;
 
+	m_isEmptyHealth = false;
+
 	Hero::init(mesh, bloodBar, selectedDecal, lEnts, heroProp, heroInGameProp, team);
 }
 
 void Hero_AI::update(Timer& timer)
 {
 	Hero::update(timer);
+
+	if ((!m_isEmptyHealth) && (m_health <= 2 * m_maxHealth / 5.0))
+	{
+		m_isEmptyHealth = true;
+		m_atkTarget = nullptr;
+		m_movingEnt.setPathPivot(m_movingEnt.getPathPivot() - 1);
+		m_movingEnt.setDeltaPathPivot(-1);
+		m_movingEnt.reFollowPath();
+
+		m_stateMachine->ChangeState(Hero_AIState_Walk::instance());
+	}
+
+	if ((m_isEmptyHealth) && (abs(m_health - m_maxHealth) <= 0.1))
+	{
+		m_isEmptyHealth = false;
+		m_movingEnt.setDeltaPathPivot(1);
+		m_movingEnt.setPathPivot(1);
+	}
 
 	// States manager
 	m_stateMachine->Update();
@@ -89,25 +109,31 @@ void Hero_AIState_Walk::Enter(Hero_AI* hero)
 
 void Hero_AIState_Walk::Execute(Hero_AI* hero)
 {
-	if (!hero->m_movingEnt.isMoving())
-	{
-		hero->m_stateMachine->ChangeState(Hero_AIState_Idle::instance());
-	}
-	else
-	{
-		for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
+	//if (!hero->m_isEmptyHealth)
+	//{
+		if (!hero->m_movingEnt.isMoving())
 		{
-			if ((hero != (*i)) &&
-				((*i)->inUse()) &&
-				(hero->getTeamType() != (*i)->getTeamType()) &&
-				(distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_chasingRange))
+			hero->m_stateMachine->ChangeState(Hero_AIState_Idle::instance());
+		}
+		else
+		{
+			if (!hero->m_isEmptyHealth)
 			{
-				hero->m_atkTarget = (*i);
-				hero->m_stateMachine->ChangeState(Hero_AIState_Chase::instance());
-				break;
+				for (auto i = hero->m_lEnts->begin(); i != hero->m_lEnts->end(); ++i)
+				{
+					if ((hero != (*i)) &&
+						((*i)->inUse()) &&
+						(hero->getTeamType() != (*i)->getTeamType()) &&
+						(distance_optimized(hero->getPos(), (*i)->getPos()) <= hero->m_chasingRange))
+					{
+						hero->m_atkTarget = (*i);
+						hero->m_stateMachine->ChangeState(Hero_AIState_Chase::instance());
+						break;
+					}
+				}
 			}
 		}
-	}
+	//}
 }
 
 void Hero_AIState_Walk::Exit(Hero_AI* hero)

@@ -268,6 +268,18 @@ void Hero::update(Timer& timer)
 	{
 		(*i)->update(timer);
 	}
+
+	if (m_exp >= EXP_LEVEL[m_level - 1])
+	{
+		for (int i = 0; i < EXP_LEVEL.size(); i++)
+		{
+			if (EXP_LEVEL[i] > m_exp)
+			{
+				levelUp(i);
+				break;
+			}
+		}
+	}
 }
 
 void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
@@ -321,12 +333,23 @@ int Hero::getMaxMana()
 
 int Hero::getExp()
 {
-	return m_exp;
+	return m_exp - EXP_LEVEL[m_level - 1];
 }
 
 int Hero::getMaxExp()
 {
-	return EXP_LEVEL[m_level - 1];
+	return EXP_LEVEL[m_level] - EXP_LEVEL[m_level - 1];
+}
+
+int Hero::getLevel()
+{
+	return m_level;
+}
+
+void Hero::levelUp(int newLevel)
+{
+	m_level = newLevel;
+
 }
 
 void Hero::setHealthPerAttack(int health)

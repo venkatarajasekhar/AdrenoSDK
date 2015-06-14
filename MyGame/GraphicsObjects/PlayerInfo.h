@@ -39,6 +39,7 @@ private:
 		LABEL_MANA,
 		LABEL_EXP,
 		LABEL_GOLD,
+		LABEL_LEVEL,
 		NUM_LABELS,
 	};
 

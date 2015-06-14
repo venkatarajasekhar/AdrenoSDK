@@ -56,17 +56,19 @@ struct HeroInGameProps
 //===================================================================================================================
 const std::vector<float> EXP_LEVEL =
 {
+	0,
+	500,
 	1000,
-	2000,
-	4000,
+	1600,
+	2200,
+	2900,
+	3600,
+	4400,
+	5200,
+	6100,
+	7000,
 	8000,
-	16000,
-	32000,
-	64000,
-	128000,
-	256000,
-	512000,
-	1024000,
+	9000,
 };
 
 const float MONEY_PAWN = 50;
@@ -116,7 +118,9 @@ public:
 	int getMaxMana();
 	int getExp();
 	int getMaxExp();
+	int getLevel();
 
+	void levelUp(int newLevel);
 	void addItem(HeroItem* item);
 	void addSkill(HeroSkill* skill);
 

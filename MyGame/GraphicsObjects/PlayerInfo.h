@@ -43,7 +43,6 @@ private:
 		NUM_LABELS,
 	};
 
-
 public:
 	PlayerInfo();
 	~PlayerInfo();

@@ -5,12 +5,12 @@ SDK_PATH                 := ../../../../../../../sdk
 
 SDK_EXTERNAL_PATH        := $(SDK_PATH)/External
 
-SDK_FRM_INC_PATH		 := $(SDK_PATH)/Framework/Inc
+SDK_FRM_INC_PATH		    := $(SDK_PATH)/Framework/Inc
 
-SDK_FRM_PATH			 := $(SDK_PATH)/Framework/Framework
-SDK_FRM_ANDROID_PATH	 := $(SDK_FRM_PATH)/Android
-SDK_FRM_MODEL_PATH	     := $(SDK_FRM_PATH)/Model
-SDK_FRM_OPENGL_PATH		 := $(SDK_FRM_PATH)/OpenGLES
+SDK_FRM_PATH			    := $(SDK_PATH)/Framework/Framework
+SDK_FRM_ANDROID_PATH	    := $(SDK_FRM_PATH)/Android
+SDK_FRM_MODEL_PATH	    := $(SDK_FRM_PATH)/Model
+SDK_FRM_OPENGL_PATH		:= $(SDK_FRM_PATH)/OpenGLES
 
 SDK_MY_FRM_PATH          := $(SDK_PATH)/MyFramework
 SDK_MY_FRM_ANDROID_PATH  := $(SDK_MY_FRM_PATH)/Android
@@ -58,6 +58,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmShader.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmUtilsGLES.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera.cpp \
+				   $(SDK_MY_FRM_PATH)/MyAudio.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera2D.cpp \
 				   $(SDK_MY_FRM_PATH)/MyEventListener.cpp \
 				   $(SDK_MY_FRM_PATH)/MyInitFile.cpp \
@@ -99,22 +100,29 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_AI.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Hero_Controlled.cpp \
+				   $(GAME_GAME_OBJS_PATH)/IFV.cpp \
+				   $(GAME_GAME_OBJS_PATH)/Notify.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Pawn.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Projectile.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower.cpp \
 				   $(GAME_GAME_OBJS_PATH)/Tower_Main.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/BloodBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/FlatTerrain.cpp \
+				   $(GAME_GRAPHICS_OBJS_PATH)/InfoBar.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/MiniMap.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/PlayerInfo.cpp \
 				   $(GAME_GRAPHICS_OBJS_PATH)/Shop.cpp \
 				   $(GAME_MISC_PATH)/EventListener.cpp \
 				   $(GAME_MISC_PATH)/HeroItem.cpp \
+				   $(GAME_MISC_PATH)/HeroSkill.cpp \
 				   $(GAME_MISC_PATH)/TPSCamera.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_HUD.cpp \
 				   $(GAME_SCREENS_PATH)/Layer_World.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_GameOver.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Menu.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_Menu_BuyHero.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_Menu_GameMode.cpp \
+				   $(GAME_SCREENS_PATH)/Screen_Menu_Main.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Play.cpp \
 				   $(GAME_SCREENS_PATH)/Screen_Shop.cpp
 				   

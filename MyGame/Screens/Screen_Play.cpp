@@ -121,5 +121,6 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 
 void PlayScreen::OnGameOver(const IOnGameOverListener::Data& data)
 {
-	m_screenManager->activeScreen("GameOverScreen");
+	TEAM_TYPE winner = data.WinnerTeam;
+	m_screenManager->activeScreen("GameOverScreen", &winner);
 }

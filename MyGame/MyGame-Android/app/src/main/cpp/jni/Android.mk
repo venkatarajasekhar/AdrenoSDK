@@ -58,7 +58,6 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmShader.cpp \
 				   $(SDK_FRM_OPENGL_PATH)/FrmUtilsGLES.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera.cpp \
-				   $(SDK_MY_FRM_PATH)/MyAudio.cpp \
 				   $(SDK_MY_FRM_PATH)/MyCamera2D.cpp \
 				   $(SDK_MY_FRM_PATH)/MyEventListener.cpp \
 				   $(SDK_MY_FRM_PATH)/MyInitFile.cpp \
@@ -75,6 +74,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIProgressBar.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUIWidget.cpp \
 				   $(SDK_MY_FRM_PATH)/MyUtils.cpp \
+				   $(SDK_MY_FRM_ANDROID_PATH)/MyAudio.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyGameServer.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyJNIBridge.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyUtils_Platform.cpp \

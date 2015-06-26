@@ -110,7 +110,6 @@
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmPlatform.cpp" />
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmStdlib_Platform.cpp" />
     <ClCompile Include="..\sdk\Framework\Framework\Win32\FrmUtils_Platform.cpp" />
-    <ClCompile Include="..\sdk\MyFramework\MyAudio.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyCamera2D.cpp" />
     <ClCompile Include="..\sdk\MyFramework\MyEventListener.cpp" />
@@ -144,6 +143,7 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\FrmApplication_Platform.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\Win32\MyAudio.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="..\sdk\MyFramework\Win32\MyUtils_Platform.cpp" />
     <ClCompile Include="BaseEntities\BaseEntity.cpp" />

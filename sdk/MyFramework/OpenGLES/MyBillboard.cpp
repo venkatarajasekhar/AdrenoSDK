@@ -44,6 +44,10 @@ void Billboard::init(Texture* texture, Shader& shader, const MyVec3& pos, const 
 
 		m_initedStatic = true;
 	}
+	else
+	{
+		m_mesh.setShader(shader);
+	}
 }
 
 void Billboard::update(Timer& timer)

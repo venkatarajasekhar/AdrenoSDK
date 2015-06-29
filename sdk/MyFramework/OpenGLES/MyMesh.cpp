@@ -112,6 +112,11 @@ Mesh::Instance* Mesh::getInstance(int id)
 
 // Setter
 
+void Mesh::setShader(Shader& shader)
+{
+	m_shader = &shader;
+}
+
 void Mesh::addInstance(Instance* instance)
 {
 	for (auto i = m_instances.begin(); i != m_instances.end(); ++i)

@@ -315,9 +315,6 @@
     <ClCompile Include="Misc\HeroSkill.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\sdk\MyFramework\MyAudio.cpp">
-      <Filter>sdk\MyFramework</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\IFV.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -335,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="Screens\Screen_Menu_BuyHero.cpp">
       <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\MyFramework\Win32\MyAudio.cpp">
+      <Filter>sdk\MyFramework\Win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

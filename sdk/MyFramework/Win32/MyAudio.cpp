@@ -67,9 +67,9 @@ static SLresult GetMimeType(const SLchar* pUri, SLchar* pMimeType)
 		return SL_RESULT_PARAMETER_INVALID;
 
 	*pMimeType = '\0';
-	if (strstr(pUri, ".wav"))        strcpy(pMimeType, "audio/wave");
-	else if (strstr(pUri, ".ogg"))   strcpy(pMimeType, "audio/ogg");
-	else if (strstr(pUri, ".mp3"))   strcpy(pMimeType, "audio/mpeg");
+	if (strstr((const char*)pUri, ".wav"))        strcpy((char*)pMimeType, "audio/wave");
+	else if (strstr((const char*)pUri, ".ogg"))   strcpy((char*)pMimeType, "audio/ogg");
+	else if (strstr((const char*)pUri, ".mp3"))   strcpy((char*)pMimeType, "audio/mpeg");
 
 	return (*pMimeType != '\0') ? SL_RESULT_SUCCESS : SL_RESULT_PARAMETER_INVALID;
 }

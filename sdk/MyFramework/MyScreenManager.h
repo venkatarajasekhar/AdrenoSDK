@@ -24,7 +24,8 @@ public:
 	void deactivePopupScreen();
 
 	// Misc
-	void addScreen(const MyString& id, Screen* screen);
+	void addScreen(const MyString& id, Screen* screen, bool replaceIfExist = false);
+	void removeScreen(const MyString& id);
 
 private:
 	Screen* getScreen(const MyString& id);

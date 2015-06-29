@@ -129,8 +129,11 @@
     <ClCompile Include="MyFramework\OpenGLES\MyQuad3D.cpp">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClCompile>
-    <ClCompile Include="MyFramework\MyAudio.cpp">
-      <Filter>MyFramework</Filter>
+    <ClCompile Include="MyFramework\Win32\MyAudio.cpp">
+      <Filter>MyFramework\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFramework\Android\MyAudio.cpp">
+      <Filter>MyFramework\Android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,8 +242,11 @@
     <ClInclude Include="MyFramework\OpenGLES\MyQuad3D.h">
       <Filter>MyFramework\OpenGLES</Filter>
     </ClInclude>
-    <ClInclude Include="MyFramework\MyAudio.h">
-      <Filter>MyFramework</Filter>
+    <ClInclude Include="MyFramework\Win32\MyAudio.h">
+      <Filter>MyFramework\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFramework\Android\MyAudio.h">
+      <Filter>MyFramework\Android</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

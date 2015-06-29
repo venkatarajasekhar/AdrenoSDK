@@ -3,6 +3,7 @@
 #include "Utils.h"
 
 #include "Screen_Menu_GameMode.h"
+#include "Screen_Play.h"
 #include <MyScreenManager.h>
 
 //=================================================================================================================================
@@ -168,6 +169,7 @@ void GameModeMenuScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "btn_play_solo")
 	{
+		m_screenManager->addScreen("PlayScreen", new PlayScreen(m_screenManager), true);
 		m_screenManager->activeScreen("PlayScreen");
 	}
 	else if (data.Id == "btn_back")

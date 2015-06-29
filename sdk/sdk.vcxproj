@@ -80,10 +80,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyFramework\Android\MyAudio.cpp" />
     <ClCompile Include="MyFramework\Android\MyGameServer.cpp" />
     <ClCompile Include="MyFramework\Android\MyJNIBridge.cpp" />
     <ClCompile Include="MyFramework\Android\MyUtils_Platform.cpp" />
-    <ClCompile Include="MyFramework\MyAudio.cpp" />
     <ClCompile Include="MyFramework\MyCamera.cpp" />
     <ClCompile Include="MyFramework\MyCamera2D.cpp" />
     <ClCompile Include="MyFramework\MyEventListener.cpp" />
@@ -117,12 +117,13 @@
     <ClCompile Include="MyFramework\OpenGLES\MyUtilsGLES.cpp" />
     <ClCompile Include="MyFramework\OpenGLES\MyVertex.cpp" />
     <ClCompile Include="MyFramework\Win32\FrmApplication_Platform.cpp" />
+    <ClCompile Include="MyFramework\Win32\MyAudio.cpp" />
     <ClCompile Include="MyFramework\Win32\MyGameServer.cpp" />
     <ClCompile Include="MyFramework\Win32\MyUtils_Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyFramework\Android\MyAudio.h" />
     <ClInclude Include="MyFramework\Android\MyGameServer.h" />
-    <ClInclude Include="MyFramework\MyAudio.h" />
     <ClInclude Include="MyFramework\MyCamera.h" />
     <ClInclude Include="MyFramework\MyCamera2D.h" />
     <ClInclude Include="MyFramework\MyEventListener.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="MyFramework\OpenGLES\MySpriteSheet.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyTexture.h" />
     <ClInclude Include="MyFramework\OpenGLES\MyVertex.h" />
+    <ClInclude Include="MyFramework\Win32\MyAudio.h" />
     <ClInclude Include="MyFramework\Win32\MyGameServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

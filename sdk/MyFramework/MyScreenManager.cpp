@@ -14,7 +14,10 @@ ScreenManager::~ScreenManager()
 {
 	for (auto i = m_screens.begin(); i != m_screens.end(); ++i)
 	{
-		delete(i->second);
+		if (i->second != nullptr)
+		{
+			delete(i->second);
+		}
 	}
 }
 
@@ -133,7 +136,7 @@ void ScreenManager::deactivePopupScreen()
 //
 //===========================================================================================================
 
-void ScreenManager::addScreen(const MyString& id, Screen* screen)
+void ScreenManager::addScreen(const MyString& id, Screen* screen, bool replaceIfExist)
 {
 	if (getScreen(id) == nullptr)
 	{
@@ -145,6 +148,25 @@ void ScreenManager::addScreen(const MyString& id, Screen* screen)
 
 		m_screens[id] = screen;
 	}
+	else
+	{
+		if (replaceIfExist)
+		{
+			removeScreen(id);
+			addScreen(id, screen);
+		}
+		else
+		{
+			SAFE_DELETE(screen);
+		}
+	}
+}
+
+void ScreenManager::removeScreen(const MyString& id)
+{
+	Screen* scr = getScreen(id);
+	SAFE_DELETE(scr);
+	m_screens[id] = nullptr;
 }
 
 Screen* ScreenManager::getScreen(const MyString& id)

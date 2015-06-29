@@ -37,6 +37,8 @@ public:
 
 	// Setter
 
+	void setShader(Shader& shader);
+
 	// An instance must be initialized on heap (i.e. using 'new' operator)
 	void addInstance(Instance* instance);
 	void removeInstance(Instance* instance);

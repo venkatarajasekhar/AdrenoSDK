@@ -311,6 +311,11 @@ void Hero::accMana(int mana)
 	if (m_mana > m_maxMana) m_mana = m_maxMana;
 }
 
+void Hero::accGold(int gold)
+{
+	m_gold += gold;
+}
+
 MyVec3 Hero::getRot()
 {
 	return m_movingEnt.getRot() + MyVec3(0, m_movingEnt.getRotYOffset(), 0);

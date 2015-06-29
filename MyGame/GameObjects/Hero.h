@@ -113,6 +113,7 @@ public:
 	void setTarget(MyVec3 target);
 	void accPos(MyVec3 dPos);
 	void accMana(int mana);
+	void accGold(int gold);
 	int getGold();
 	int getMana();
 	int getMaxMana();

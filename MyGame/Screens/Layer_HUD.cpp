@@ -291,8 +291,12 @@ void Layer_HUD::OnPress(const IOnPressListener::Data& data)
 
 void Layer_HUD::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
-	if (data.BoughtItem->getType()==data.BoughtItem->ACTIVE)
-		m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem, m_fonts[FONT_CONSOLAS_12]));
+	if (m_player->getGold() >= data.BoughtItem->getPrice())
+	{
+		if (data.BoughtItem->getType() == data.BoughtItem->ACTIVE)
+			m_list[LIST_ITEM].addItem(new UIListItem_ActiveItem(&m_list[LIST_ITEM], data.BoughtItem, m_fonts[FONT_CONSOLAS_12]));
+		m_player->accGold(-data.BoughtItem->getPrice());
+	}
 }
 
 void Layer_HUD::OnPressListItem(const IOnPressListItemListener::Data& data)

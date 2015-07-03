@@ -22,6 +22,13 @@
     SrcFileName = "menu_common_btn_background.png"
 />
 
+<!-- Main menu -->
+
+<Texture 
+    ResourceID  = "menu_main_game_title"
+    SrcFileName = "menu_main_game_title.png"
+/>
+
 <!-- Game mode menu -->
 
 <Texture 

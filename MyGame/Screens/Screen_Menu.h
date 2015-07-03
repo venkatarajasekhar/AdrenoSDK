@@ -5,6 +5,7 @@
 
 #include <MyFont.h>
 #include <MyAudio.h>
+#include <MySpriteSheet.h>
 
 class MenuScreen : public Screen
 {
@@ -39,6 +40,12 @@ protected:
 
 	enum
 	{
+		SPRITE_SHEET_MAIN_TITLE,
+		NUM_SPRITE_SHEETS,
+	};
+
+	enum
+	{
 		FONT_BAUHAUS93_26,
 		NUM_FONTS,
 	};
@@ -65,7 +72,8 @@ protected:
 	static int m_width, m_height;
 
 	// Assets
-	static Texture m_textures[NUM_TEXTURES];
-	static Font    m_fonts[NUM_FONTS];
-	static Audio   m_audios[NUM_AUDIOS];
+	static Texture     m_textures[NUM_TEXTURES];
+	static SpriteSheet m_spriteSheets[NUM_SPRITE_SHEETS];
+	static Font        m_fonts[NUM_FONTS];
+	static Audio       m_audios[NUM_AUDIOS];
 };

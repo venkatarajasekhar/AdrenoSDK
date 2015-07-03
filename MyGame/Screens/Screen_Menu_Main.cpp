@@ -34,6 +34,7 @@ void MainMenuScreen::init()
 	MenuScreen::init();
 
 	m_btnContainerDest.Size = MyVec2(m_textures[TEXTURE_COMMON_VPANEL].getWidth(), m_textures[TEXTURE_COMMON_VPANEL].getHeight());
+	m_titleDest.Size = MyVec2(m_spriteSheets[SPRITE_SHEET_MAIN_TITLE].getWidth(), m_spriteSheets[SPRITE_SHEET_MAIN_TITLE].getHeight());
 
 	// Buttons
 	{
@@ -104,6 +105,11 @@ void MainMenuScreen::resize(int width, int height)
 		m_width - BTN_CONTAINER_HMARGIN - m_btnContainerDest.Size.x,
 		0.5f * (m_height - m_btnContainerDest.Size.y));
 
+	// Title
+	m_titleDest.Pos = 0.5f * MyVec2(
+		m_btnContainerDest.Pos.x - m_titleDest.Size.x,
+		m_height - m_titleDest.Size.y);
+
 	// Buttons
 	{
 		float btns_height = BTN_VDIST * (NUM_BTNS - 1);
@@ -146,6 +152,7 @@ void MainMenuScreen::render(void* utilObjs)
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
 
 	globalUtilObjs->spriteBatch->renderTexture2D(&m_textures[TEXTURE_COMMON_VPANEL], m_btnContainerDest);
+	globalUtilObjs->spriteBatch->renderTexture2D(&m_spriteSheets[SPRITE_SHEET_MAIN_TITLE], m_titleDest);
 
 	// Buttons
 	for (int i = 0; i < NUM_BTNS; i++)

@@ -34,5 +34,5 @@ private:
 	// UI Widgets
 	UITextButton m_btns[NUM_BTNS];
 
-	Rect2D m_btnContainerDest;
+	Rect2D m_btnContainerDest, m_titleDest;
 };

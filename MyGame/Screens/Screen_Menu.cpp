@@ -17,9 +17,10 @@ int MenuScreen::m_width = 0;
 int MenuScreen::m_height = 0;
 
 // Assets
-Texture MenuScreen::m_textures[NUM_TEXTURES];
-Font    MenuScreen::m_fonts[NUM_FONTS];
-Audio   MenuScreen::m_audios[NUM_AUDIOS];
+Texture     MenuScreen::m_textures[NUM_TEXTURES];
+SpriteSheet MenuScreen::m_spriteSheets[NUM_SPRITE_SHEETS];
+Font        MenuScreen::m_fonts[NUM_FONTS];
+Audio       MenuScreen::m_audios[NUM_AUDIOS];
 
 MenuScreen::MenuScreen(ScreenManager* screenManager)
 	: Screen(screenManager)
@@ -39,6 +40,7 @@ void MenuScreen::init()
 			CFrmPackedResourceGLES resource;
 			resource.LoadFromFile(resolveAssetsPath("Textures/gui_menu.pak").c_str());
 
+			// Texture
 			m_textures[TEXTURE_COMMON_BACKGROUND].init(resource.GetTexture("menu_common_background"));
 			m_textures[TEXTURE_COMMON_HPANEL].init(resource.GetTexture("menu_common_hpanel"));
 			m_textures[TEXTURE_COMMON_VPANEL].init(resource.GetTexture("menu_common_vpanel"));
@@ -57,6 +59,9 @@ void MenuScreen::init()
 			m_textures[TEXTURE_BUY_HERO_GUARDIAN_SEWON].init(resource.GetTexture("menu_buy_hero_Guardian_Sewon"));
 			m_textures[TEXTURE_BUY_HERO_MAGE_CEZANNE].init(resource.GetTexture("menu_buy_hero_Mage_Cezanne"));
 			m_textures[TEXTURE_BUY_HERO_SHOOTER_RENOAH].init(resource.GetTexture("menu_buy_hero_Shooter_Renoah"));
+
+			// Sprite sheet
+			m_spriteSheets[SPRITE_SHEET_MAIN_TITLE].init(resource.GetTexture("menu_main_game_title"), 10, MyIVec2(5, 1), MyIVec2(395, 406));
 		}
 
 		// Font assets
@@ -81,6 +86,12 @@ void MenuScreen::resize(int width, int height)
 
 void MenuScreen::update(void* utilObjs)
 {
+	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
+
+	for (int i = 0; i < NUM_SPRITE_SHEETS; i++)
+	{
+		m_spriteSheets[i].update(*globalUtilObjs->timer);
+	}
 }
 
 void MenuScreen::render(void* utilObjs)

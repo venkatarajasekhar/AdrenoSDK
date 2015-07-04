@@ -16,7 +16,7 @@ class BasicMesh : public Mesh
 {
 public:
 	BasicMesh();
-	~BasicMesh();
+	virtual ~BasicMesh();
 
 	template <typename VertexType>
 	void init(
@@ -29,7 +29,7 @@ public:
 		const MyVec3& scale,
 		Material* material = nullptr);
 
-	void render(Camera& camera, Light* light = nullptr);
+	virtual void render(Camera& camera, Light* light = nullptr);
 
 	// Getter
 
@@ -47,7 +47,7 @@ public:
 
 	void setPrimitive(GLenum primitive);
 
-private:
+protected:
 	GLuint m_vbo;
 	GLuint m_ibo;
 	GLuint m_numIndices;

@@ -14,6 +14,9 @@
 #include "IFV.h"
 #include "Hero.h"
 #include "EventListener.h"
+#include <MyBox.h>
+#include <MySphere.h>
+#include <MyCylinder.h>
 
 class Layer_World
 {
@@ -36,6 +39,7 @@ private:
 		SHADER_SKINNED_MESH_1,
 		SHADER_BILLBOARD,
 		SHADER_TEXTURED_MESH,
+		SHADER_TEST_SHAPE,
 		NUM_SHADERS,
 	};
 
@@ -121,6 +125,9 @@ private:
 	FlatTerrain m_mesh_terrain;
 	Shop m_shop;
 	Quad3D m_selectedDecal;
+	Box m_dumpBox;
+	Sphere m_dumpSphere;
+	Cylinder m_dumpCylinder;
 
 	// Game objects
 	std::vector<LivingEntity*> m_livingEnts;

@@ -93,6 +93,12 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		PosTexVertex::ShaderAttribsDesc,
 		PosTexVertex::NumShaderAttribsDesc);
 
+	m_shaders[SHADER_TEST_SHAPE].init(
+		resolveAssetsPath("Shaders/test_shape.vs"),
+		resolveAssetsPath("Shaders/test_shape.fs"),
+		PosNorTexVertex::ShaderAttribsDesc,
+		PosNorTexVertex::NumShaderAttribsDesc);
+
 	// Assets textures
 	{
 		CFrmPackedResourceGLES resource;
@@ -170,6 +176,10 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		MyVec3(1.5f),
 		m_selectedDecal);
 	m_shop.addPressListener(bundle.ShopListener);
+
+	m_dumpBox.init(m_shaders[SHADER_TEST_SHAPE], MyVec3(0, 2, 0), MyVec3(0, 0, 0), MyVec3(3));
+	m_dumpSphere.init(m_shaders[SHADER_TEST_SHAPE], MyVec3(8, 4, 0), MyVec3(3), 30, 30);
+	m_dumpCylinder.init(m_shaders[SHADER_TEST_SHAPE], MyVec3(-8, 4, 2), MyVec3(0, 0, 0), MyVec3(2, 3, 2), 20, 20);
 
 	// Graphics objects
 	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
@@ -287,6 +297,9 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	}
 
 	m_selectedDecal.update(timer);
+	m_dumpBox.update(timer);
+	m_dumpSphere.update(timer);
+	m_dumpCylinder.update(timer);
 	
 	// Game objects
 	m_towerPool.update(timer);
@@ -312,6 +325,9 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 	// Mesh objects
 	m_mesh_terrain.render(m_camera_main);
 	m_shop.render(m_camera_main, light);
+	m_dumpBox.render(m_camera_main);
+	m_dumpSphere.render(m_camera_main);
+	m_dumpCylinder.render(m_camera_main);
 
 	// Game objects
 	m_towerPool.render(m_camera_main, light);

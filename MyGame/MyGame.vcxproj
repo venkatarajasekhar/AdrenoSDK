@@ -129,6 +129,8 @@
     <ClCompile Include="..\sdk\MyFramework\MyUtils.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBasicMesh.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBillboard.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyBox.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyCylinder.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFileMesh1.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyFont.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyInputLayout.cpp" />
@@ -137,6 +139,7 @@
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyShader.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh1.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySkinnedMesh2.cpp" />
+    <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySphere.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteBatch.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MySpriteSheet.cpp" />
     <ClCompile Include="..\sdk\MyFramework\OpenGLES\MyTexture.cpp" />

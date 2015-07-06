@@ -116,6 +116,7 @@ public:
 		NUM_AUDIOS,
 	};
 
+
 	Hero();
 	virtual ~Hero();
 

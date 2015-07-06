@@ -132,6 +132,7 @@ void HeroItem_HealingPotion::execute(Hero* hero, float elapsedTime)
 {
 	if (m_countTimeUsed >= m_count)
 	{
+		hero->getAudio(hero->AUDIO_HEALTH_SKILL)->play();
 		hero->accHealth(20);
 		m_count++;
 	}

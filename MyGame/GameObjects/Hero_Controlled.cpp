@@ -53,7 +53,9 @@ void Hero_Controlled::update(Timer& timer)
 	{
 		if ((*i)->getSelected() && ((*i)->getTeamType() == TEAM_TYPE_ENEMY))
 		{
+			//if ((m_atkTarget != nullptr) && (&m_atkTarget != &(*i))) turnToTarget();
 			m_atkTarget = (*i);
+			
 			if (distance_optimized(getPos(), (*i)->getPos()) > m_atkRange)
 			{
 				MyVec3 u = (*i)->getPos() - getPos();
@@ -89,6 +91,12 @@ void Hero_Controlled::OnPress(const IOnPressListener::Data& data)
 void Hero_Controlled::useSkill()
 {
 	m_stateMachine->ChangeState(Hero_ControlledState_SkillAttack::instance());
+}
+
+void Hero_Controlled::dead()
+{
+	m_audios[AUDIO_MYHERO_DEATH]->play();
+	Hero::dead();
 }
 
 #pragma region Hero_Controlled states
@@ -218,6 +226,9 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 				hero->m_notifyPool.spawnNotify("+" + toString(MONEY_PAWN), pos + offset, MyVec2(0, -0.5f), 1.5f);
 			}
 		}
+
+		hero->m_audios[hero->AUDIO_MYHERO_ATTACK]->play();
+
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 		hero->accHealth(hero->m_healthPerAttack);
 	}

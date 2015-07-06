@@ -29,6 +29,9 @@ public:
 
 	void update(Timer& timer);
 
+protected:
+	virtual void dead();
+
 private:
 	// States manager
 	StateMachine<Hero_AI>* m_stateMachine;

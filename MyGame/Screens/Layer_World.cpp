@@ -206,15 +206,36 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 
 	// Audio assets
 	m_audios[AUDIO_MYPAWN_ATTACK].init(resolveAssetsPath("Audios/MyPawnAttack.wav"));
+	m_audios[AUDIO_MYPAWN_ATTACK].setVolume(0.1f);
 	m_audios[AUDIO_MYPAWN_DEATH].init(resolveAssetsPath("Audios/MyPawnDeath.wav"));
+	m_audios[AUDIO_MYPAWN_DEATH].setVolume(0.3f);
 	m_audios[AUDIO_ENEMYPAWN_ATTACK].init(resolveAssetsPath("Audios/EnemyPawnAttack.wav"));
+	m_audios[AUDIO_ENEMYPAWN_ATTACK].setVolume(0.1f);
 	m_audios[AUDIO_ENEMYPAWN_DEATH].init(resolveAssetsPath("Audios/EnemyPawnDeath.wav"));
+	m_audios[AUDIO_ENEMYPAWN_DEATH].setVolume(0.3f);
+
 	m_audios[AUDIO_MYIFV_ATTACK].init(resolveAssetsPath("Audios/MyTankAttack.wav"));
+	m_audios[AUDIO_MYIFV_ATTACK].setVolume(0.2f);
 	m_audios[AUDIO_ENEMYIFV_ATTACK].init(resolveAssetsPath("Audios/EnemyTankAttack.wav"));
+	m_audios[AUDIO_ENEMYIFV_ATTACK].setVolume(0.2f);
 	m_audios[AUDIO_IFV_DEATH].init(resolveAssetsPath("Audios/TankDeath.wav"));
+	m_audios[AUDIO_IFV_DEATH].setVolume(0.3f);
+
 	m_audios[AUDIO_MYTOWER_ATTACK].init(resolveAssetsPath("Audios/MyTowerAttack.wav"));
+	m_audios[AUDIO_MYTOWER_ATTACK].setVolume(0.5f);
 	m_audios[AUDIO_ENEMYTOWER_ATTACK].init(resolveAssetsPath("Audios/EnemyTowerAttack.wav"));
+	m_audios[AUDIO_ENEMYTOWER_ATTACK].setVolume(0.5f);
 	m_audios[AUDIO_TOWER_DEATH].init(resolveAssetsPath("Audios/TowerDeath.wav"));
+	m_audios[AUDIO_TOWER_DEATH].setVolume(0.5f);
+
+	m_audios[AUDIO_MYHERO_ATTACK].init(resolveAssetsPath("Audios/MyHeroAttack.wav"));
+	m_audios[AUDIO_MYHERO_DEATH].init(resolveAssetsPath("Audios/MyHeroDeath.wav"));
+	m_audios[AUDIO_ENEMYHERO_ATTACK].init(resolveAssetsPath("Audios/EnemyHeroAttack.wav"));
+	m_audios[AUDIO_ENEMYHERO_ATTACK2].init(resolveAssetsPath("Audios/EnemyHeroAttack2.wav"));
+	m_audios[AUDIO_ENEMYHERO_DEATH].init(resolveAssetsPath("Audios/EnemyHeroDeath.wav"));
+
+	m_audios[AUDIO_HEALTH_SKILL].init(resolveAssetsPath("Audios/HealthSkill.wav"));
+	m_audios[AUDIO_UPGRADE_SKILL].init(resolveAssetsPath("Audios/UpgradeSkill.wav"));
 
 	// Game objects
 	m_towerPool.init(

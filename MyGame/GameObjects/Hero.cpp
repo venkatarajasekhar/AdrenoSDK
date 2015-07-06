@@ -194,6 +194,9 @@ void Hero::init(
 		lEnts, 
 		heroProp.AttackRange,
 		&selectedDecal);
+
+	for (int i = 0; i < NUM_AUDIOS; i++)
+		m_audios[i] = &lAudios[i];
 }
 
 void Hero::update(Timer& timer)
@@ -270,7 +273,7 @@ void Hero::update(Timer& timer)
 		(*i)->update(timer);
 	}
 
-	if (m_exp >= EXP_LEVEL[m_level - 1])
+	if (m_exp >= EXP_LEVEL[m_level])
 	{
 		for (int i = 0; i < EXP_LEVEL.size(); i++)
 		{
@@ -352,10 +355,15 @@ int Hero::getLevel()
 	return m_level;
 }
 
+Audio* Hero::getAudio(int id)
+{
+	return m_audios[id];
+}
+
 void Hero::levelUp(int newLevel)
 {
+	m_audios[AUDIO_UPGRADE_SKILL]->play();
 	m_level = newLevel;
-
 }
 
 void Hero::setHealthPerAttack(int health)
@@ -405,6 +413,9 @@ void Hero::dead()
 		m_movingEnt.setPath(ENEMY_HERO_PATH);
 	else
 	{
+		for (auto i = m_lEnts->begin(); i != m_lEnts->end(); ++i)
+			(*i)->deselect();
+		m_atkTarget = nullptr;
 		m_movingEnt.setTarget(m_positionStart);
 		m_movingEnt.setPos(m_positionStart);
 		m_movingEnt.setRot(m_rotationStart);

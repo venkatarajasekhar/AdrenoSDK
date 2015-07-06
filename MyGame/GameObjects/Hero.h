@@ -106,6 +106,13 @@ public:
 		AUDIO_MYTOWER_ATTACK,
 		AUDIO_ENEMYTOWER_ATTACK,
 		AUDIO_TOWER_DEATH,
+		AUDIO_MYHERO_ATTACK,
+		AUDIO_MYHERO_DEATH,
+		AUDIO_ENEMYHERO_ATTACK,
+		AUDIO_ENEMYHERO_ATTACK2,
+		AUDIO_ENEMYHERO_DEATH,
+		AUDIO_HEALTH_SKILL,
+		AUDIO_UPGRADE_SKILL,
 		NUM_AUDIOS,
 	};
 
@@ -138,6 +145,7 @@ public:
 	int getExp();
 	int getMaxExp();
 	int getLevel();
+	Audio* getAudio(int id);
 
 	void levelUp(int newLevel);
 	void addItem(HeroItem* item);

@@ -33,6 +33,9 @@ public:
 
 	void useSkill();
 
+protected:
+	virtual void dead();
+
 private:
 	// States manager
 	StateMachine<Hero_Controlled>* m_stateMachine;

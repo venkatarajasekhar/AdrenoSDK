@@ -102,6 +102,7 @@ Cylinder::~Cylinder()
 
 void Cylinder::init(
 	Shader& shader,
+	Texture* diffuseMap,
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
@@ -198,7 +199,7 @@ void Cylinder::init(
 	BuildCylinderBottomCap(bottomRadius, topRadius, height, sliceCount, stackCount, vertices, indices);
 
 	// Init base
-	BasicMesh::init(vertices, indices, shader, nullptr, pos, rot, scale);
+	BasicMesh::init(vertices, indices, shader, diffuseMap, pos, rot, scale);
 }
 
 void Cylinder::update(Timer& timer)
@@ -209,4 +210,17 @@ void Cylinder::update(Timer& timer)
 	setRot(rot);
 
 	Mesh::update(timer);
+}
+
+void Cylinder::render(Camera& camera, Light* light)
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+
+	m_shader->apply();
+	m_shader->setUniform("u_texMat", m_diffuseMap->getTexMat());
+
+	BasicMesh::render(camera, light);
+
+	glDisable(GL_BLEND);
 }

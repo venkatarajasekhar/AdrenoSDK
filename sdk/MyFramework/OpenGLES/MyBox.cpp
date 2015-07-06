@@ -11,6 +11,7 @@ Box::~Box()
 
 void Box::init(
 	Shader& shader,
+	Texture* diffuseMap,
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale)
@@ -117,15 +118,28 @@ void Box::init(
 	indices[34] = 22;
 	indices[35] = 23;
 
-	BasicMesh::init(vertices, indices, shader, nullptr, pos, rot, scale);
+	BasicMesh::init(vertices, indices, shader, diffuseMap, pos, rot, scale);
 }
 
 void Box::update(Timer& timer)
 {
 	MyVec3 rot = getRot();
 	rot.y += timer.getElapsedTime() * 50;
-	rot.x += timer.getElapsedTime() * 30;
+	//rot.x += timer.getElapsedTime() * 30;
 	setRot(rot);
 
 	Mesh::update(timer);
+}
+
+void Box::render(Camera& camera, Light* light)
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+
+	m_shader->apply();
+	m_shader->setUniform("u_texMat", m_diffuseMap->getTexMat());
+
+	BasicMesh::render(camera, light);
+
+	glDisable(GL_BLEND);
 }

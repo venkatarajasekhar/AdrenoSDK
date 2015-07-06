@@ -199,6 +199,18 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		MyVec2(0.5f),
 		0);
 
+	// Audio assets
+	m_audios[AUDIO_MYPAWN_ATTACK].init(resolveAssetsPath("Audios/MyPawnAttack.wav"));
+	m_audios[AUDIO_MYPAWN_DEATH].init(resolveAssetsPath("Audios/MyPawnDeath.wav"));
+	m_audios[AUDIO_ENEMYPAWN_ATTACK].init(resolveAssetsPath("Audios/EnemyPawnAttack.wav"));
+	m_audios[AUDIO_ENEMYPAWN_DEATH].init(resolveAssetsPath("Audios/EnemyPawnDeath.wav"));
+	m_audios[AUDIO_MYIFV_ATTACK].init(resolveAssetsPath("Audios/MyTankAttack.wav"));
+	m_audios[AUDIO_ENEMYIFV_ATTACK].init(resolveAssetsPath("Audios/EnemyTankAttack.wav"));
+	m_audios[AUDIO_IFV_DEATH].init(resolveAssetsPath("Audios/TankDeath.wav"));
+	m_audios[AUDIO_MYTOWER_ATTACK].init(resolveAssetsPath("Audios/MyTowerAttack.wav"));
+	m_audios[AUDIO_ENEMYTOWER_ATTACK].init(resolveAssetsPath("Audios/EnemyTowerAttack.wav"));
+	m_audios[AUDIO_TOWER_DEATH].init(resolveAssetsPath("Audios/TowerDeath.wav"));
+
 	// Game objects
 	m_towerPool.init(
 		m_shaders[SHADER_MESH],
@@ -207,7 +219,8 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_selectedDecal,
 		m_billboards[BILLBOARD_ENERGY_BALL],
 		m_projectilePool,
-		m_livingEnts, 
+		m_livingEnts,
+		m_audios,
 		bundle.GameOverListener);
 
 	m_pawnPool.init(
@@ -215,7 +228,8 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
 		m_selectedDecal,
-		m_livingEnts);
+		m_livingEnts,
+		m_audios);
 
 	m_iFVPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1],
@@ -224,7 +238,8 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_selectedDecal,
 		m_billboards[BILLBOARD_BULLET],
 		m_projectilePool,
-		m_livingEnts);
+		m_livingEnts,
+		m_audios);
 
 	m_heroPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1], 
@@ -233,6 +248,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_bloodBar[BLOOD_BAR_ENEMY], 
 		m_selectedDecal,
 		m_livingEnts, 
+		m_audios,
 		m_mesh_terrain);
 
 	m_projectilePool.init();

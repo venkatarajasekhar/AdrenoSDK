@@ -6,6 +6,7 @@
 #include "EventListener.h"
 #include "StateMachine.h"
 #include "Projectile.h"
+#include <MyAudio.h>
 
 #pragma region Struct
 
@@ -46,6 +47,22 @@ struct TowerInGameProp
 class Tower : public LivingEntity
 {
 public:
+
+	enum
+	{
+		AUDIO_MYPAWN_ATTACK,
+		AUDIO_MYPAWN_DEATH,
+		AUDIO_ENEMYPAWN_ATTACK,
+		AUDIO_ENEMYPAWN_DEATH,
+		AUDIO_MYIFV_ATTACK,
+		AUDIO_ENEMYIFV_ATTACK,
+		AUDIO_IFV_DEATH,
+		AUDIO_MYTOWER_ATTACK,
+		AUDIO_ENEMYTOWER_ATTACK,
+		AUDIO_TOWER_DEATH,
+		NUM_AUDIOS,
+	};;
+
 	Tower();
 	virtual ~Tower();
 
@@ -56,6 +73,7 @@ public:
 		Billboard& projtBillboard,
 		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		TowerProps& towerProp,
 		TowerInGameProp& towerInGameProp,
 		TEAM_TYPE team);
@@ -76,6 +94,8 @@ protected:
 
 	Billboard* m_projtBillboard;
 	ProjectilePool* m_projectilePool;
+
+	Audio* m_audios[NUM_AUDIOS];
 
 protected:
 	friend class TowerState_Idle;
@@ -144,6 +164,7 @@ public:
 		Billboard& projtBillboard,
 		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		IOnGameOverListener* gameOverListener);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);

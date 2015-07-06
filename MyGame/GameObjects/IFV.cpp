@@ -138,6 +138,7 @@ void IFV::init(
 	Billboard& projtBillboard,
 	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	IFVProps& pawnProp,
 	TEAM_TYPE team)
 {
@@ -171,6 +172,9 @@ void IFV::init(
 		lEnts,
 		pawnProp.AttackRange,
 		&selectedDecal);
+
+	for (int i = 0; i < NUM_AUDIOS; i++)
+		m_audios[i] = &lAudios[i];
 }
 
 void IFV::update(Timer& timer)
@@ -205,6 +209,7 @@ MyVec3 IFV::getPos()
 
 void IFV::dead()
 {
+	m_audios[AUDIO_IFV_DEATH]->play();
 	m_instance->Visible = false;
 	LivingEntity::dead();
 }
@@ -236,7 +241,8 @@ void IFVPool::init(
 	Quad3D& selectedDecal,
 	Billboard& projtBillboard,
 	ProjectilePool& projectilePool,
-	std::vector<LivingEntity*>& lEnts)
+	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[])
 {
 	initIFVProps();
 
@@ -305,6 +311,7 @@ void IFVPool::init(
 			projtBillboard,
 			projectilePool,
 			lEnts,
+			lAudios,
 			g_IFVProps[IFV_TANK],
 			TEAM_TYPE_MY_TEAM);
 		m_enemyIFVs[i].init(
@@ -314,6 +321,7 @@ void IFVPool::init(
 			projtBillboard,
 			projectilePool,
 			lEnts,
+			lAudios,
 			g_IFVProps[IFV_CATAPULT],
 			TEAM_TYPE_ENEMY);
 
@@ -547,6 +555,9 @@ void IFVState_Attack::OnPerformAAct(void* tag)
 			iFV,
 			iFV->m_atkTarget,
 			offSet);
+
+		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) iFV->m_audios[iFV->AUDIO_MYIFV_ATTACK]->play();
+		if (iFV->getTeamType() == TEAM_TYPE_ENEMY) iFV->m_audios[iFV->AUDIO_ENEMYIFV_ATTACK]->play();
 	}
 }
 

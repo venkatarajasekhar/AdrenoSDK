@@ -136,6 +136,7 @@ void Pawn::init(
 	BloodBar& bloodBar,
 	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	PawnProps& pawnProp,
 	TEAM_TYPE team)
 {
@@ -166,6 +167,9 @@ void Pawn::init(
 		lEnts, 
 		pawnProp.AttackRange,
 		&selectedDecal);
+
+	for (int i = 0; i < NUM_AUDIOS; i++)
+		m_audios[i] = &lAudios[i];
 }
 
 void Pawn::update(Timer& timer)
@@ -200,6 +204,8 @@ MyVec3 Pawn::getPos()
 
 void Pawn::dead()
 {
+	if (m_teamType == TEAM_TYPE_MY_TEAM) m_audios[AUDIO_MYPAWN_DEATH]->play();
+	if (m_teamType == TEAM_TYPE_ENEMY) m_audios[AUDIO_ENEMYPAWN_DEATH]->play();
 	m_instance->Visible = false;
 	LivingEntity::dead();
 }
@@ -229,7 +235,8 @@ void PawnPool::init(
 	BloodBar& myBloodBar, 
 	BloodBar& enemyBloodBar, 
 	Quad3D& selectedDecal,
-	std::vector<LivingEntity*>& lEnts)
+	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[])
 {
 	initPawnProps();
 
@@ -300,6 +307,7 @@ void PawnPool::init(
 			myBloodBar,
 			selectedDecal,
 			lEnts, 
+			lAudios,
 			g_PawnProps[PAWN_BROWNIE], 
 			TEAM_TYPE_MY_TEAM);
 		m_enemyPawns[i].init(
@@ -307,6 +315,7 @@ void PawnPool::init(
 			enemyBloodBar,
 			selectedDecal, 
 			lEnts, 
+			lAudios,
 			g_PawnProps[PAWN_SKELETON], 
 			TEAM_TYPE_ENEMY);
 
@@ -500,6 +509,8 @@ void PawnState_Attack::Enter(Pawn* pawn)
 	pawn->m_instance->setAction("attack", "", true, this, pawn->m_time_PAA_Attack_1, pawn);
 	pawn->m_movingEnt.setTarget(pawn->getPos());
 	pawn->turnToTarget();
+	//if (pawn->getTeamType() == TEAM_TYPE_MY_TEAM) pawn->m_audios[pawn->AUDIO_MYPAWN_ATTACK]->play();
+	//if (pawn->getTeamType() == TEAM_TYPE_ENEMY) pawn->m_audios[pawn->AUDIO_ENEMYPAWN_ATTACK]->play();
 }
 
 void PawnState_Attack::Execute(Pawn* pawn)
@@ -531,6 +542,8 @@ void PawnState_Attack::OnPerformAAct(void* tag)
 	{
 		Pawn* pawn = (Pawn*)tag;
 		pawn->m_atkTarget->accHealth(-pawn->m_damage);
+		if (pawn->getTeamType() == TEAM_TYPE_MY_TEAM) pawn->m_audios[pawn->AUDIO_MYPAWN_ATTACK]->play();
+		if (pawn->getTeamType() == TEAM_TYPE_ENEMY) pawn->m_audios[pawn->AUDIO_ENEMYPAWN_ATTACK]->play();
 	}
 }
 

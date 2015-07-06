@@ -24,6 +24,7 @@ void Hero_AI::init(
 	Quad3D& selectedDecal,
 	const std::vector<MyVec3>& path,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	HeroProps& heroProp,
 	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
@@ -42,7 +43,7 @@ void Hero_AI::init(
 
 	m_isEmptyHealth = false;
 
-	Hero::init(mesh, bloodBar, selectedDecal, lEnts, heroProp, heroInGameProp, team);
+	Hero::init(mesh, bloodBar, selectedDecal, lEnts, lAudios, heroProp, heroInGameProp, team);
 }
 
 void Hero_AI::update(Timer& timer)

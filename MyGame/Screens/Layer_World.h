@@ -17,6 +17,7 @@
 #include <MyBox.h>
 #include <MySphere.h>
 #include <MyCylinder.h>
+#include <MyAudio.h>
 
 class Layer_World
 {
@@ -96,6 +97,21 @@ private:
 		NUM_BLOOD_BARS,
 	};
 
+	enum
+	{
+		AUDIO_MYPAWN_ATTACK,
+		AUDIO_MYPAWN_DEATH,
+		AUDIO_ENEMYPAWN_ATTACK,
+		AUDIO_ENEMYPAWN_DEATH,
+		AUDIO_MYIFV_ATTACK,
+		AUDIO_ENEMYIFV_ATTACK,
+		AUDIO_IFV_DEATH,
+		AUDIO_MYTOWER_ATTACK,
+		AUDIO_ENEMYTOWER_ATTACK,
+		AUDIO_TOWER_DEATH,
+		NUM_AUDIOS,
+	};
+
 public:
 	Layer_World();
 	~Layer_World();
@@ -142,4 +158,6 @@ private:
 	// Graphics objects
 	Billboard m_billboards[NUM_BILLBOARDS];
 	BloodBar m_bloodBar[NUM_BLOOD_BARS];
+
+	Audio m_audios[NUM_AUDIOS];
 };

@@ -9,6 +9,7 @@
 #include "MovingEntity.h"
 #include "EventListener.h"
 #include "HeroSkill.h"
+#include <MyAudio.h>
 
 #pragma region Structs
 
@@ -92,6 +93,22 @@ public:
 	static const int MAX_NUM_ITEMS = 6;
 
 public:
+
+	enum
+	{
+		AUDIO_MYPAWN_ATTACK,
+		AUDIO_MYPAWN_DEATH,
+		AUDIO_ENEMYPAWN_ATTACK,
+		AUDIO_ENEMYPAWN_DEATH,
+		AUDIO_MYIFV_ATTACK,
+		AUDIO_ENEMYIFV_ATTACK,
+		AUDIO_IFV_DEATH,
+		AUDIO_MYTOWER_ATTACK,
+		AUDIO_ENEMYTOWER_ATTACK,
+		AUDIO_TOWER_DEATH,
+		NUM_AUDIOS,
+	};
+
 	Hero();
 	virtual ~Hero();
 
@@ -101,6 +118,7 @@ public:
 		BloodBar& bloodBar,
 		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		HeroProps& heroProp,
 		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
@@ -162,6 +180,8 @@ protected:
 
 	std::vector<HeroItem*> m_itemBag;
 	std::vector<HeroSkill*> m_skillBag;
+
+	Audio* m_audios[NUM_AUDIOS];
 };
 
 #pragma region HeroPool class
@@ -246,7 +266,8 @@ public:
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
 		Quad3D& selectedDecal,
-		std::vector<LivingEntity*>& lEnts, 
+		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		OnPressListenee& map);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);

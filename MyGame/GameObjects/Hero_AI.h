@@ -22,6 +22,7 @@ public:
 		Quad3D& selectedDecal,
 		const std::vector<MyVec3>& path,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		HeroProps& heroProp,
 		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);

@@ -11,6 +11,7 @@ Sphere::~Sphere()
 
 void Sphere::init(
 	Shader& shader,
+	Texture* diffuseMap,
 	const MyVec3& pos,
 	const MyVec3& scale,
 	int sliceCount,
@@ -117,7 +118,7 @@ void Sphere::init(
 	}
 
 	// Init base
-	BasicMesh::init(vertices, indices, shader, nullptr, pos, MyVec3(0, 0, 0), scale);
+	BasicMesh::init(vertices, indices, shader, diffuseMap, pos, MyVec3(0, 0, 0), scale);
 }
 
 void Sphere::update(Timer& timer)
@@ -128,4 +129,17 @@ void Sphere::update(Timer& timer)
 	setRot(rot);
 
 	Mesh::update(timer);
+}
+
+void Sphere::render(Camera& camera, Light* light)
+{
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+
+	m_shader->apply();
+	m_shader->setUniform("u_texMat", m_diffuseMap->getTexMat());
+
+	BasicMesh::render(camera, light);
+
+	glDisable(GL_BLEND);
 }

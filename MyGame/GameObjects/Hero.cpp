@@ -490,14 +490,15 @@ void HeroPool::init(
 	}
 
 	{
-		const int numAnimFiles = 5;
+		const int numAnimFiles = 6;
 		SkinnedMesh1::AnimFile animFiles[numAnimFiles] =
 		{
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/idle.anim"), "idle"),
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/fwd.anim"), "run"),
 			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/la2.anim"), "attack_1"), // Normal attack
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/la.anim"), "attack_2"),
-			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/llla.anim"), "attack_3"),
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/llla.anim"), "attack_2"), // Skill attack 1
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/lose.anim"), "attack_3"), // Skill attack 2
+			SkinnedMesh1::AnimFile(resolveAssetsPath("Meshes/Heroes/Fighter/dan_mei/lra_power.anim"), "attack_4"), // Skill attack 3
 		};
 		m_anim1Datas[ANIM_1_DATA_FIGHTER_DAN_MEI].init(animFiles, numAnimFiles);
 	}
@@ -541,7 +542,10 @@ void HeroPool::init(
 		&g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial);
 
 	// Adjusting unaligned action
-	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200));
+	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_1", MyVec3(0, 0, -200)); // la2.anim
+	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_2", MyVec3(0, 0, -650)); // llla.anim
+	m_skinnedMeshes[SKINNED_MESH_FIGHTER_DAN_MEI].translateAction("attack_4", MyVec3(-100, 0, -100)); // lra_power.anim
+	
 	m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON].translateAction("attack_1", MyVec3(0, 0, -400));
 
 	// Heroes

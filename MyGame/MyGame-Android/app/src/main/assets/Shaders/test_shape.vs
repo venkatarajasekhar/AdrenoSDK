@@ -10,6 +10,8 @@ uniform mat4 u_world;
 uniform mat4 u_view;
 uniform mat4 u_proj;
 
+uniform mat4 u_texMat;
+
 void main()
 {
 	// Output clip-space position
@@ -21,5 +23,5 @@ void main()
 	v_norW = (u_world * vec4( a_norL, 0.0 )).xyz;
 	
 	// Pass texture coordinate
-	v_texC = a_texC;
+	v_texC = (u_texMat * vec4(a_texC, 0.0, 1.0)).xy;
 }

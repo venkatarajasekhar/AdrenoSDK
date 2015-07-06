@@ -14,9 +14,7 @@
 #include "IFV.h"
 #include "Hero.h"
 #include "EventListener.h"
-#include <MyBox.h>
 #include <MySphere.h>
-#include <MyCylinder.h>
 #include <MyAudio.h>
 
 class Layer_World
@@ -54,6 +52,7 @@ private:
 		TEXTURE_BLOODBAR_GREEN_BACK,
 		TEXTURE_BLOODBAR_RED_FORE,
 		TEXTURE_BLOODBAR_RED_BACK,
+		TEXTURE_SHAPE_SMOKE,
 		NUM_TEXTURES,
 	};
 
@@ -148,9 +147,7 @@ private:
 	FlatTerrain m_mesh_terrain;
 	Shop m_shop;
 	Quad3D m_selectedDecal;
-	Box m_dumpBox;
 	Sphere m_dumpSphere;
-	Cylinder m_dumpCylinder;
 
 	// Game objects
 	std::vector<LivingEntity*> m_livingEnts;

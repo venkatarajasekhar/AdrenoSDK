@@ -156,6 +156,7 @@ void Hero::init(
 	BloodBar& bloodBar,
 	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	HeroProps& heroProp,
 	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
@@ -453,6 +454,7 @@ void HeroPool::init(
 	BloodBar& enemyBloodBar,
 	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts, 
+	Audio lAudios[],
 	OnPressListenee& map)
 {
 	initHeroProps();
@@ -556,6 +558,7 @@ void HeroPool::init(
 			myBloodBar, 
 			selectedDecal,
 			lEnts, 
+			lAudios,
 			g_HeroProps[HERO_FIGHTER_DAN_MEI], 
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
 			TEAM_TYPE_MY_TEAM);
@@ -577,6 +580,7 @@ void HeroPool::init(
 			selectedDecal,
 			ENEMY_HERO_PATH, 
 			lEnts, 
+			lAudios,
 			g_HeroProps[HERO_BEAST_SEWON], 
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_ENEMY_HERO_1],
 			TEAM_TYPE_ENEMY);

@@ -22,6 +22,7 @@ public:
 		BloodBar& bloodBar,
 		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		HeroProps& heroProp,
 		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);

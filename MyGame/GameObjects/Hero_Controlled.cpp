@@ -23,6 +23,7 @@ void Hero_Controlled::init(
 	BloodBar& bloodBar,
 	Quad3D& selectedDecal,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	HeroProps& heroProp,
 	HeroInGameProps& heroInGameProp,
 	TEAM_TYPE team)
@@ -39,7 +40,7 @@ void Hero_Controlled::init(
 	// States manager
 	m_stateMachine->SetCurrentState(Hero_ControlledState_Idle::instance());
 
-	Hero::init(mesh, bloodBar, selectedDecal, lEnts, heroProp, heroInGameProp, team);
+	Hero::init(mesh, bloodBar, selectedDecal, lEnts, lAudios, heroProp, heroInGameProp, team);
 
 	m_notifyPool.init();
 }

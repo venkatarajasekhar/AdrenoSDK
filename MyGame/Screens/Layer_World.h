@@ -14,7 +14,10 @@
 #include "IFV.h"
 #include "Hero.h"
 #include "EventListener.h"
+#include <MyBox.h>
 #include <MySphere.h>
+#include <MyCylinder.h>
+#include <MyAudio.h>
 
 class Layer_World
 {
@@ -51,7 +54,6 @@ private:
 		TEXTURE_BLOODBAR_GREEN_BACK,
 		TEXTURE_BLOODBAR_RED_FORE,
 		TEXTURE_BLOODBAR_RED_BACK,
-		TEXTURE_SHAPE_SMOKE,
 		NUM_TEXTURES,
 	};
 
@@ -95,6 +97,21 @@ private:
 		NUM_BLOOD_BARS,
 	};
 
+	enum
+	{
+		AUDIO_MYPAWN_ATTACK,
+		AUDIO_MYPAWN_DEATH,
+		AUDIO_ENEMYPAWN_ATTACK,
+		AUDIO_ENEMYPAWN_DEATH,
+		AUDIO_MYIFV_ATTACK,
+		AUDIO_ENEMYIFV_ATTACK,
+		AUDIO_IFV_DEATH,
+		AUDIO_MYTOWER_ATTACK,
+		AUDIO_ENEMYTOWER_ATTACK,
+		AUDIO_TOWER_DEATH,
+		NUM_AUDIOS,
+	};
+
 public:
 	Layer_World();
 	~Layer_World();
@@ -124,7 +141,9 @@ private:
 	FlatTerrain m_mesh_terrain;
 	Shop m_shop;
 	Quad3D m_selectedDecal;
+	Box m_dumpBox;
 	Sphere m_dumpSphere;
+	Cylinder m_dumpCylinder;
 
 	// Game objects
 	std::vector<LivingEntity*> m_livingEnts;
@@ -139,4 +158,6 @@ private:
 	// Graphics objects
 	Billboard m_billboards[NUM_BILLBOARDS];
 	BloodBar m_bloodBar[NUM_BLOOD_BARS];
+
+	Audio m_audios[NUM_AUDIOS];
 };

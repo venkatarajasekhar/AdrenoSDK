@@ -6,6 +6,7 @@
 #include "MovingEntity.h"
 #include "StateMachine.h"
 #include "Projectile.h"
+#include <MyAudio.h>
 
 #pragma region Structs
 
@@ -44,6 +45,22 @@ struct IFVProps
 class IFV : public LivingEntity
 {
 public:
+
+	enum
+	{
+		AUDIO_MYPAWN_ATTACK,
+		AUDIO_MYPAWN_DEATH,
+		AUDIO_ENEMYPAWN_ATTACK,
+		AUDIO_ENEMYPAWN_DEATH,
+		AUDIO_MYIFV_ATTACK,
+		AUDIO_ENEMYIFV_ATTACK,
+		AUDIO_IFV_DEATH,
+		AUDIO_MYTOWER_ATTACK,
+		AUDIO_ENEMYTOWER_ATTACK,
+		AUDIO_TOWER_DEATH,
+		NUM_AUDIOS,
+	};
+
 	IFV();
 	~IFV();
 
@@ -54,6 +71,7 @@ public:
 		Billboard& projtBillboard,
 		ProjectilePool& projectilePool,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		IFVProps& pawnProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
@@ -82,6 +100,8 @@ private:
 
 	Billboard* m_projtBillboard;
 	ProjectilePool* m_projectilePool;
+
+	Audio* m_audios[NUM_AUDIOS];
 
 private:
 	friend class IFVState_Idle;
@@ -143,7 +163,8 @@ public:
 		Quad3D& selectedDecal,
 		Billboard& projtBillboard,
 		ProjectilePool& projectilePool,
-		std::vector<LivingEntity*>& lEnts);
+		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[]);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

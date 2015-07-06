@@ -5,6 +5,7 @@
 #include "LivingEntity.h"
 #include "MovingEntity.h"
 #include "StateMachine.h"
+#include <MyAudio.h>
 
 #pragma region Structs
 
@@ -43,6 +44,22 @@ struct PawnProps
 class Pawn : public LivingEntity
 {
 public:
+
+	enum
+	{
+		AUDIO_MYPAWN_ATTACK,
+		AUDIO_MYPAWN_DEATH,
+		AUDIO_ENEMYPAWN_ATTACK,
+		AUDIO_ENEMYPAWN_DEATH,
+		AUDIO_MYIFV_ATTACK,
+		AUDIO_ENEMYIFV_ATTACK,
+		AUDIO_IFV_DEATH,
+		AUDIO_MYTOWER_ATTACK,
+		AUDIO_ENEMYTOWER_ATTACK,
+		AUDIO_TOWER_DEATH,
+		NUM_AUDIOS,
+	};
+
 	Pawn();
 	~Pawn();
 
@@ -51,6 +68,7 @@ public:
 		BloodBar& bloodBar, 
 		Quad3D& selectedDecal,
 		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[],
 		PawnProps& pawnProp,
 		TEAM_TYPE team);
 	void update(Timer& timer);
@@ -76,6 +94,8 @@ private:
 
 	float m_chasingRange;
 	float m_time_PAA_Attack_1;
+
+	Audio* m_audios[NUM_AUDIOS];
 
 private:
 	friend class PawnState_Idle;
@@ -135,7 +155,8 @@ public:
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
 		Quad3D& selectedDecal,
-		std::vector<LivingEntity*>& lEnts);
+		std::vector<LivingEntity*>& lEnts,
+		Audio lAudios[]);
 	void update(Timer& timer);
 	void render(Camera& camera, Light& light);
 

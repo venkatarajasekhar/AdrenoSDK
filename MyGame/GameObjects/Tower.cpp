@@ -176,6 +176,7 @@ void Tower::init(
 	Billboard& projtBillboard,
 	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	TowerProps& towerProp,
 	TowerInGameProp& towerInGameProp,
 	TEAM_TYPE team)
@@ -203,6 +204,9 @@ void Tower::init(
 		lEnts, 
 		towerProp.AttackRange,
 		&selectedDecal);
+
+	for (int i = 0; i < NUM_AUDIOS; i++)
+		m_audios[i] = &lAudios[i];
 }
 
 void Tower::update(Timer& timer)
@@ -220,6 +224,7 @@ MyVec3 Tower::getPos()
 
 void Tower::dead()
 {
+	m_audios[AUDIO_TOWER_DEATH]->play();
 	m_instance->Visible = false;
 	LivingEntity::dead();
 }
@@ -257,6 +262,7 @@ void TowerPool::init(
 	Billboard& projtBillboard,
 	ProjectilePool& projectilePool,
 	std::vector<LivingEntity*>& lEnts,
+	Audio lAudios[],
 	IOnGameOverListener* gameOverListener)
 {
 	initTowerProps();
@@ -320,6 +326,7 @@ void TowerPool::init(
 		projtBillboard,
 		projectilePool,
 		lEnts, 
+		lAudios,
 		g_TowerProps[TOWER_WHITE_PAGODA], 
 		g_TowerInGameProps[TOWER_IN_GAME_MY_MAIN_TOWER], 
 		TEAM_TYPE_MY_TEAM);
@@ -330,6 +337,7 @@ void TowerPool::init(
 		projtBillboard,
 		projectilePool,
 		lEnts, 
+		lAudios,
 		g_TowerProps[TOWER_OUTPOST], 
 		g_TowerInGameProps[TOWER_IN_GAME_MY_TOWER_1], 
 		TEAM_TYPE_MY_TEAM);
@@ -340,6 +348,7 @@ void TowerPool::init(
 		projtBillboard,
 		projectilePool,
 		lEnts, 
+		lAudios,
 		g_TowerProps[TOWER_OUTPOST], 
 		g_TowerInGameProps[TOWER_IN_GAME_MY_TOWER_2], 
 		TEAM_TYPE_MY_TEAM);
@@ -351,6 +360,7 @@ void TowerPool::init(
 		projtBillboard,
 		projectilePool,
 		lEnts, 
+		lAudios,
 		g_TowerProps[TOWER_HOUSE_WIND], 
 		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_MAIN_TOWER], 
 		TEAM_TYPE_ENEMY);
@@ -361,6 +371,7 @@ void TowerPool::init(
 		projtBillboard,
 		projectilePool,
 		lEnts, 
+		lAudios,
 		g_TowerProps[TOWER_TOWER_OF_VICTORY], 
 		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_TOWER_1], 
 		TEAM_TYPE_ENEMY);
@@ -371,6 +382,7 @@ void TowerPool::init(
 		projtBillboard,
 		projectilePool,
 		lEnts, 
+		lAudios,
 		g_TowerProps[TOWER_TOWER_OF_VICTORY], 
 		g_TowerInGameProps[TOWER_IN_GAME_ENEMY_TOWER_2], 
 		TEAM_TYPE_ENEMY);
@@ -458,6 +470,9 @@ void TowerState_Attack::Execute(Tower* tower)
 		{
 			if (tower->m_timeElapsed > TOWER_ATTACK_TIME_PERIOD)
 			{
+				if (tower->getTeamType() == TEAM_TYPE_MY_TEAM) tower->m_audios[tower->AUDIO_MYTOWER_ATTACK]->play();
+				if (tower->getTeamType() == TEAM_TYPE_ENEMY) tower->m_audios[tower->AUDIO_ENEMYTOWER_ATTACK]->play();
+				
 				tower->m_projectilePool->spawnProjectile(
 					*tower->m_projtBillboard,
 					tower,

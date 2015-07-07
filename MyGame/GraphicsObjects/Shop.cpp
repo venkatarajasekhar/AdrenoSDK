@@ -20,7 +20,8 @@ void Shop::init(
 	const MyVec3& pos,
 	const MyVec3& rot,
 	const MyVec3& scale,
-	Quad3D& selectedDecal)
+	Quad3D& selectedDecal,
+	Audio lAudios[])
 {
 	m_selectedDecal = &selectedDecal;
 
@@ -36,6 +37,9 @@ void Shop::init(
 
 	m_mesh.addInstance(Mesh::buildMeshInstance(pos, rot, scale));
 	m_isPressed = false;
+
+	for (int i = 0; i < NUM_AUDIOS; i++)
+		m_audios[i] = &lAudios[i];
 }
 
 void Shop::update(Timer& timer, bool& isPressed, MyVec3& pressedPoint)
@@ -44,6 +48,8 @@ void Shop::update(Timer& timer, bool& isPressed, MyVec3& pressedPoint)
 	MyVec3 pos = m_mesh.getInstance(0)->Position;
 	if (isPressed && (distance_optimized(pos + MODEL_OFFSET, pressedPoint) <= SELECTED_RADIUS))
 	{
+		m_audios[AUDIO_SHOP_OPEN]->play();
+
 		IOnPressListener::Data data("shop", 0, 0);
 		throwPressEvent(data);
 

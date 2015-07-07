@@ -300,6 +300,8 @@ void ShopScreen::init()
 	}
 
 	m_list[LIST_SELECTED_ITEM].init("selected_item_list", MyVec2(), m_textures[TEXTURE_LIST_SELECTED_ITEM_BACKGROUND], UIList::HORIZONTAL);
+
+	m_audios[AUDIO_ITEM_BUY].init(resolveAssetsPath("Audios/BuyItem.wav"));
 }
 
 void ShopScreen::resize(int width, int height)
@@ -417,6 +419,8 @@ void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
 	if (m_numBoughtItems < Hero::MAX_NUM_ITEMS)
 	{
+		m_audios[AUDIO_ITEM_BUY].play();
+
 		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
 		
 		IOnBuyItemListener::Data data1("", data.BoughtItem->clone());

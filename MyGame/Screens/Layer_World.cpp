@@ -174,16 +174,6 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		MyVec3(),
 		MyVec2(3.0f));
 
-	m_shop.init(
-		m_mesh1Datas[MESH_1_DATA_SHOP],
-		m_meshTextures[TEXTURES_MESH_SHOP],
-		m_shaders[SHADER_MESH],
-		MyVec3(-39.195f, 0, -14.0f),
-		MyVec3(0, -45, 0),
-		MyVec3(1.5f),
-		m_selectedDecal);
-	m_shop.addPressListener(bundle.ShopListener);
-
 	m_dumpSphere.init(m_shaders[SHADER_TEST_SHAPE], &m_textures[TEXTURE_SHAPE_SMOKE], MyVec3(8, 4, 0), MyVec3(3), 30, 30);
 
 	// Graphics objects
@@ -236,6 +226,21 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 
 	m_audios[AUDIO_HEALTH_SKILL].init(resolveAssetsPath("Audios/HealthSkill.wav"));
 	m_audios[AUDIO_UPGRADE_SKILL].init(resolveAssetsPath("Audios/UpgradeSkill.wav"));
+	m_audios[AUDIO_SHOP_OPEN].init(resolveAssetsPath("Audios/OpenShop.wav"));
+	m_audios[AUDIO_BACKGROUND].init(resolveAssetsPath("Audios/Background.wav"), true);
+	m_audios[AUDIO_BACKGROUND].setVolume(0.2f);
+	m_audios[AUDIO_BACKGROUND].play();
+
+	m_shop.init(
+		m_mesh1Datas[MESH_1_DATA_SHOP],
+		m_meshTextures[TEXTURES_MESH_SHOP],
+		m_shaders[SHADER_MESH],
+		MyVec3(-39.195f, 0, -14.0f),
+		MyVec3(0, -45, 0),
+		MyVec3(1.5f),
+		m_selectedDecal,
+		m_audios);
+	m_shop.addPressListener(bundle.ShopListener);
 
 	// Game objects
 	m_towerPool.init(

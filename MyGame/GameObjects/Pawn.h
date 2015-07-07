@@ -64,6 +64,8 @@ public:
 		AUDIO_ENEMYHERO_DEATH,
 		AUDIO_HEALTH_SKILL,
 		AUDIO_UPGRADE_SKILL,
+		AUDIO_SHOP_OPEN,
+		AUDIO_BACKGROUND,
 		NUM_AUDIOS,
 	};
 
@@ -102,7 +104,7 @@ private:
 	float m_chasingRange;
 	float m_time_PAA_Attack_1;
 
-	Audio* m_audios[NUM_AUDIOS];
+	Audio* m_audios;
 
 private:
 	friend class PawnState_Idle;

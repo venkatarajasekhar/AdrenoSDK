@@ -95,7 +95,7 @@ void Hero_Controlled::useSkill()
 
 void Hero_Controlled::dead()
 {
-	m_audios[AUDIO_MYHERO_DEATH]->play();
+	m_audios[AUDIO_MYHERO_DEATH].play();
 	Hero::dead();
 }
 
@@ -227,7 +227,7 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 			}
 		}
 
-		hero->m_audios[hero->AUDIO_MYHERO_ATTACK]->play();
+		hero->m_audios[hero->AUDIO_MYHERO_ATTACK].play();
 
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 		hero->accHealth(hero->m_healthPerAttack);

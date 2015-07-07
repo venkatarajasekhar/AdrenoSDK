@@ -65,6 +65,8 @@ public:
 		AUDIO_ENEMYHERO_DEATH,
 		AUDIO_HEALTH_SKILL,
 		AUDIO_UPGRADE_SKILL,
+		AUDIO_SHOP_OPEN,
+		AUDIO_BACKGROUND,
 		NUM_AUDIOS,
 	};
 
@@ -108,7 +110,7 @@ private:
 	Billboard* m_projtBillboard;
 	ProjectilePool* m_projectilePool;
 
-	Audio* m_audios[NUM_AUDIOS];
+	Audio* m_audios;
 
 private:
 	friend class IFVState_Idle;

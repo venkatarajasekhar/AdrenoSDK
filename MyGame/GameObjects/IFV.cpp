@@ -173,8 +173,7 @@ void IFV::init(
 		pawnProp.AttackRange,
 		&selectedDecal);
 
-	for (int i = 0; i < NUM_AUDIOS; i++)
-		m_audios[i] = &lAudios[i];
+	m_audios = lAudios;
 }
 
 void IFV::update(Timer& timer)
@@ -209,7 +208,7 @@ MyVec3 IFV::getPos()
 
 void IFV::dead()
 {
-	m_audios[AUDIO_IFV_DEATH]->play();
+	m_audios[AUDIO_IFV_DEATH].play();
 	m_instance->Visible = false;
 	LivingEntity::dead();
 }
@@ -556,8 +555,8 @@ void IFVState_Attack::OnPerformAAct(void* tag)
 			iFV->m_atkTarget,
 			offSet);
 
-		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) iFV->m_audios[iFV->AUDIO_MYIFV_ATTACK]->play();
-		if (iFV->getTeamType() == TEAM_TYPE_ENEMY) iFV->m_audios[iFV->AUDIO_ENEMYIFV_ATTACK]->play();
+		if (iFV->getTeamType() == TEAM_TYPE_MY_TEAM) iFV->m_audios[iFV->AUDIO_MYIFV_ATTACK].play();
+		if (iFV->getTeamType() == TEAM_TYPE_ENEMY) iFV->m_audios[iFV->AUDIO_ENEMYIFV_ATTACK].play();
 	}
 }
 

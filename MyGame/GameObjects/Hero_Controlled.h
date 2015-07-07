@@ -31,7 +31,7 @@ public:
 
 	void OnPress(const IOnPressListener::Data& data);
 
-	void useSkill();
+	void useSkill(int skillID);
 
 protected:
 	virtual void dead();
@@ -40,6 +40,7 @@ private:
 	// States manager
 	StateMachine<Hero_Controlled>* m_stateMachine;
 	NotifyPool m_notifyPool;
+	int m_usingSkill;
 
 private:
 	friend class Hero_ControlledState_Idle;

@@ -9,6 +9,7 @@
 //===================================================================================================================
 
 Hero_Controlled::Hero_Controlled()
+	: m_usingSkill(-1)
 {
 	m_stateMachine = new StateMachine<Hero_Controlled>(this);
 }
@@ -88,8 +89,9 @@ void Hero_Controlled::OnPress(const IOnPressListener::Data& data)
 	}
 }
 
-void Hero_Controlled::useSkill()
+void Hero_Controlled::useSkill(int skillID)
 {
+	m_usingSkill = skillID;
 	m_stateMachine->ChangeState(Hero_ControlledState_SkillAttack::instance());
 }
 
@@ -242,7 +244,22 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 
 void Hero_ControlledState_SkillAttack::Enter(Hero_Controlled* hero)
 {
-	hero->m_instance->setAction("attack_2", "idle", false, this, 0.95f, hero);
+	switch (hero->m_usingSkill)
+	{
+	case 1:
+		hero->m_instance->setAction("attack_2", "idle", false, this, 0.95f, hero);
+		break;
+	case 2:
+		hero->m_instance->setAction("attack_3", "idle", false, this, 0.95f, hero);
+		break;
+	case 3:
+		hero->m_instance->setAction("attack_4", "idle", false, this, 0.95f, hero);
+		break;
+	default:
+		break;
+	}
+
+	
 }
 
 void Hero_ControlledState_SkillAttack::Execute(Hero_Controlled* hero)

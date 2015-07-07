@@ -120,13 +120,6 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_textures[TEXTURE_BLOODBAR_RED_BACK].init(resource.GetTexture("bloodbar_enemy_background"));
 	}
 
-	{
-		CFrmPackedResourceGLES resource;
-		resource.LoadFromFile(resolveAssetsPath("Textures/shape_skin.pak").c_str());
-
-		m_textures[TEXTURE_SHAPE_SMOKE].init(resource.GetTexture("smoke"));
-	}
-
 	// Assets sprite sheets
 	{
 		CFrmPackedResourceGLES resource;
@@ -183,8 +176,6 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		MyVec3(1.5f),
 		m_selectedDecal);
 	m_shop.addPressListener(bundle.ShopListener);
-
-	m_dumpSphere.init(m_shaders[SHADER_TEST_SHAPE], &m_textures[TEXTURE_SHAPE_SMOKE], MyVec3(8, 4, 0), MyVec3(3), 30, 30);
 
 	// Graphics objects
 	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
@@ -270,6 +261,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	m_heroPool.init(
 		m_shaders[SHADER_SKINNED_MESH_1], 
 		m_shaders[SHADER_BILLBOARD],
+		m_shaders[SHADER_TEST_SHAPE],
 		m_bloodBar[BLOOD_BAR_MY_TEAM], 
 		m_bloodBar[BLOOD_BAR_ENEMY], 
 		m_selectedDecal,
@@ -339,7 +331,6 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 	}
 
 	m_selectedDecal.update(timer);
-	m_dumpSphere.update(timer);
 	
 	// Game objects
 	m_towerPool.update(timer);
@@ -380,9 +371,6 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 			(*i)->render(spriteBatch, m_camera_main, light);
 		}
 	}
-
-	// Mesh objects
-	m_dumpSphere.render(m_camera_main);
 }
 
 Hero* Layer_World::getPlayer()

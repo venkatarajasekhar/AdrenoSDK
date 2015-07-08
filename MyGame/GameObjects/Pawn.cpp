@@ -168,8 +168,7 @@ void Pawn::init(
 		pawnProp.AttackRange,
 		&selectedDecal);
 
-	for (int i = 0; i < NUM_AUDIOS; i++)
-		m_audios[i] = &lAudios[i];
+	m_audios = lAudios;
 }
 
 void Pawn::update(Timer& timer)
@@ -204,8 +203,8 @@ MyVec3 Pawn::getPos()
 
 void Pawn::dead()
 {
-	if (m_teamType == TEAM_TYPE_MY_TEAM) m_audios[AUDIO_MYPAWN_DEATH]->play();
-	if (m_teamType == TEAM_TYPE_ENEMY) m_audios[AUDIO_ENEMYPAWN_DEATH]->play();
+	if (m_teamType == TEAM_TYPE_MY_TEAM) m_audios[AUDIO_MYPAWN_DEATH].play();
+	if (m_teamType == TEAM_TYPE_ENEMY) m_audios[AUDIO_ENEMYPAWN_DEATH].play();
 	m_instance->Visible = false;
 	LivingEntity::dead();
 }
@@ -542,8 +541,8 @@ void PawnState_Attack::OnPerformAAct(void* tag)
 	{
 		Pawn* pawn = (Pawn*)tag;
 		pawn->m_atkTarget->accHealth(-pawn->m_damage);
-		if (pawn->getTeamType() == TEAM_TYPE_MY_TEAM) pawn->m_audios[pawn->AUDIO_MYPAWN_ATTACK]->play();
-		if (pawn->getTeamType() == TEAM_TYPE_ENEMY) pawn->m_audios[pawn->AUDIO_ENEMYPAWN_ATTACK]->play();
+		if (pawn->getTeamType() == TEAM_TYPE_MY_TEAM) pawn->m_audios[pawn->AUDIO_MYPAWN_ATTACK].play();
+		if (pawn->getTeamType() == TEAM_TYPE_ENEMY) pawn->m_audios[pawn->AUDIO_ENEMYPAWN_ATTACK].play();
 	}
 }
 

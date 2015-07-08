@@ -195,8 +195,7 @@ void Hero::init(
 		heroProp.AttackRange,
 		&selectedDecal);
 
-	for (int i = 0; i < NUM_AUDIOS; i++)
-		m_audios[i] = &lAudios[i];
+	m_audios = lAudios;
 }
 
 void Hero::update(Timer& timer)
@@ -357,12 +356,12 @@ int Hero::getLevel()
 
 Audio* Hero::getAudio(int id)
 {
-	return m_audios[id];
+	return &m_audios[id];
 }
 
 void Hero::levelUp(int newLevel)
 {
-	m_audios[AUDIO_UPGRADE_SKILL]->play();
+	m_audios[AUDIO_UPGRADE_SKILL].play();
 	m_level = newLevel;
 }
 

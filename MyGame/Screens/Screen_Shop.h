@@ -81,6 +81,12 @@ private:
 		NUM_LISTS,
 	};
 
+	enum
+	{
+		AUDIO_ITEM_BUY,
+		NUM_AUDIOS,
+	};
+
 public:
 	ShopScreen(ScreenManager* screenManager);
 	~ShopScreen();
@@ -113,4 +119,6 @@ private:
 
 	HeroItem* m_totalItems[TOTAL_HERO_ITEMS];
 	int m_numBoughtItems;
+
+	Audio m_audios[NUM_AUDIOS];
 };

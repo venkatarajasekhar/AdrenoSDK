@@ -74,7 +74,7 @@ void Hero_AI::update(Timer& timer)
 
 void Hero_AI::dead()
 {
-	m_audios[AUDIO_ENEMYHERO_DEATH]->play();
+	m_audios[AUDIO_ENEMYHERO_DEATH].play();
 	Hero::dead();
 }
 
@@ -248,8 +248,8 @@ void Hero_AIState_Attack::OnPerformAAct(void* tag)
 			}
 		}
 
-		//hero->m_audios[hero->AUDIO_ENEMYHERO_ATTACK]->play();
-		hero->m_audios[hero->AUDIO_ENEMYHERO_ATTACK2]->play();
+		//hero->m_audios[hero->AUDIO_ENEMYHERO_ATTACK].play();
+		hero->m_audios[hero->AUDIO_ENEMYHERO_ATTACK2].play();
 
 		hero->m_atkTarget->accHealth(-hero->m_damage);
 		hero->accHealth(hero->m_healthPerAttack);

@@ -205,8 +205,7 @@ void Tower::init(
 		towerProp.AttackRange,
 		&selectedDecal);
 
-	for (int i = 0; i < NUM_AUDIOS; i++)
-		m_audios[i] = &lAudios[i];
+	m_audios = lAudios;
 }
 
 void Tower::update(Timer& timer)
@@ -224,7 +223,7 @@ MyVec3 Tower::getPos()
 
 void Tower::dead()
 {
-	m_audios[AUDIO_TOWER_DEATH]->play();
+	m_audios[AUDIO_TOWER_DEATH].play();
 	m_instance->Visible = false;
 	LivingEntity::dead();
 }
@@ -470,8 +469,8 @@ void TowerState_Attack::Execute(Tower* tower)
 		{
 			if (tower->m_timeElapsed > TOWER_ATTACK_TIME_PERIOD)
 			{
-				if (tower->getTeamType() == TEAM_TYPE_MY_TEAM) tower->m_audios[tower->AUDIO_MYTOWER_ATTACK]->play();
-				if (tower->getTeamType() == TEAM_TYPE_ENEMY) tower->m_audios[tower->AUDIO_ENEMYTOWER_ATTACK]->play();
+				if (tower->getTeamType() == TEAM_TYPE_MY_TEAM) tower->m_audios[tower->AUDIO_MYTOWER_ATTACK].play();
+				if (tower->getTeamType() == TEAM_TYPE_ENEMY) tower->m_audios[tower->AUDIO_ENEMYTOWER_ATTACK].play();
 				
 				tower->m_projectilePool->spawnProjectile(
 					*tower->m_projtBillboard,

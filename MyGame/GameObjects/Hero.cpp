@@ -460,6 +460,7 @@ HeroPool::~HeroPool()
 void HeroPool::init(
 	Shader& skinnedShader, 
 	Shader& billboardShader,
+	Shader& shapeShader,
 	BloodBar& myBloodBar, 
 	BloodBar& enemyBloodBar,
 	Quad3D& selectedDecal,
@@ -480,7 +481,9 @@ void HeroPool::init(
 		m_textures[TEXTURE_SKILL_DECIMATION_DAY].init(resource.GetTexture("Decimation_Day"));
 		m_textures[TEXTURE_SKILL_JUST_DESSERTS].init(resource.GetTexture("Just_Desserts"));
 
-		m_spriteSheets[SPRITE_SHEET_SKILL_BATTLE_BORN].init(resource.GetTexture("Battle_Born_Effect"), 8, MyIVec2(5, 3), MyIVec2(139, 153));
+		m_textures[TEXTURE_SKILL_EFFECT_BATTLE_BORN].init(resource.GetTexture("Battle_Born_Effect"));
+		m_textures[TEXTURE_SKILL_EFFECT_BLADEFALL].init(resource.GetTexture("Bladefall_Effect"));
+		m_textures[TEXTURE_SKILL_EFFECT_DECIMATION_DAY].init(resource.GetTexture("Decimation_Day_Effect"));
 	}
 
 	// Assets mesh data
@@ -527,17 +530,6 @@ void HeroPool::init(
 		m_meshTextures[TEXTURES_MESH_FIGHTER_DAN_MEI].init(m_mesh1Datas[MESH_1_DATA_FIGHTER_DAN_MEI], resource);
 	}
 
-	// Graphics objects
-	{
-		float width = 5.0f;
-		m_billboards[BILLBOARD_SKILL_BATTLE_BORN].init(
-			&m_spriteSheets[SPRITE_SHEET_SKILL_BATTLE_BORN],
-			billboardShader,
-			MyVec3(0),
-			MyVec2(width, width * (153.0f / 139.0f)),
-			0);
-	}
-	
 	// Skinned meshes
 	m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON].init(
 		m_mesh1Datas[MESH_1_DATA_BEAST_SEWON], 
@@ -560,6 +552,11 @@ void HeroPool::init(
 	
 	m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON].translateAction("attack_1", MyVec3(0, 0, -400));
 
+	// Effects objects
+	m_skillEffect[SPHERE_BATTLE_BORN].init(shapeShader, &m_textures[TEXTURE_SKILL_EFFECT_BATTLE_BORN], MyVec3(0), MyVec3(0), MyVec3(3), 20, 20, MyVec3(100, 100, 200));
+	m_skillEffect[SPHERE_BLADE_FALL].init(shapeShader, &m_textures[TEXTURE_SKILL_EFFECT_BLADEFALL], MyVec3(0), MyVec3(0, 0, -90), MyVec3(3), 20, 20);
+	m_skillEffect[SPHERE_DECIMATION_DAY].init(shapeShader, &m_textures[TEXTURE_SKILL_EFFECT_DECIMATION_DAY], MyVec3(0), MyVec3(0, 0, -20), MyVec3(3), 20, 20);
+
 	// Heroes
 	{
 		Hero_Controlled* hero = new Hero_Controlled;
@@ -573,9 +570,9 @@ void HeroPool::init(
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
 			TEAM_TYPE_MY_TEAM);
 
-		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 0, 10, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_billboards[BILLBOARD_SKILL_BATTLE_BORN]));
-		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 0, 10, &m_textures[TEXTURE_SKILL_BLADEFALL]));
-		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 0, 10, &m_textures[TEXTURE_SKILL_DECIMATION_DAY]));
+		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 0, 3, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_skillEffect[SPHERE_BATTLE_BORN]));
+		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 0, 3, &m_textures[TEXTURE_SKILL_BLADEFALL], &m_skillEffect[SPHERE_BLADE_FALL]));
+		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 0, 10, &m_textures[TEXTURE_SKILL_DECIMATION_DAY], &m_skillEffect[SPHERE_DECIMATION_DAY]));
 		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 0, 10, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
@@ -612,16 +609,9 @@ void HeroPool::update(Timer& timer)
 		m_skinnedMeshes[i].update(timer);
 	}
 
-	// Assets
-	for (int i = 0; i < NUM_SPRITE_SHEETS; i++)
+	for (int i = 0; i < NUM_SPHERES; i++)
 	{
-		m_spriteSheets[i].update(timer);
-	}
-
-	// Graphics objects
-	for (int i = 0; i < NUM_BILLBOARDS; i++)
-	{
-		m_billboards[i].update(timer);
+		m_skillEffect[i].update(timer);
 	}
 }
 

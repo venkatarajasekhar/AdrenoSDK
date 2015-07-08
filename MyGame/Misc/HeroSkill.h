@@ -1,7 +1,8 @@
 
 #pragma once
 
-#include <MyBillboard.h>
+#include <MyTexture.h>
+#include <MySphere.h>
 
 //==================================================================================================================
 //
@@ -20,7 +21,7 @@ public:
 		int _cost,
 		float _coolDownTime,
 		Texture* _avatar,
-		Billboard* effect = nullptr);
+		Sphere* effect = nullptr);
 	virtual ~HeroSkill();
 
 	virtual void use(Hero* hero);
@@ -30,6 +31,10 @@ public:
 	virtual bool isUsable();
 	virtual float getCoolDownTimeRemain();
 
+protected:
+	virtual void doUse(Hero* hero) = 0;
+	virtual void doUpdate(Timer& timer) = 0;
+
 public:
 	MyString Name;
 	int      Damage;
@@ -37,14 +42,15 @@ public:
 	float    CoolDownTime;
 	Texture* Avatar;
 
-private:
-	Billboard* m_effect;
+protected:
+	Sphere* m_effect;
 	float m_coolDownTimeRemain;
+	Hero* m_hero;
 };
 
 //==================================================================================================================
 //
-// Skills
+// Skills for Dan Mei hero
 //
 //==================================================================================================================
 
@@ -57,13 +63,14 @@ public:
 		int _cost,
 		float _coolDownTime,
 		Texture* _avatar,
-		Billboard* effect)
+		Sphere* effect)
 		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
 	{}
 	~HeroSkill_BattleBorn(){}
 
 private:
-
+	void doUse(Hero* hero);
+	void doUpdate(Timer& timer);
 };
 
 class HeroSkill_Bladefall : public HeroSkill
@@ -74,13 +81,15 @@ public:
 		int _damage,
 		int _cost,
 		float _coolDownTime,
-		Texture* _avatar)
-		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar)
+		Texture* _avatar,
+		Sphere* effect)
+		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
 	{}
 	~HeroSkill_Bladefall(){}
 
 private:
-
+	void doUse(Hero* hero);
+	void doUpdate(Timer& timer);
 };
 
 class HeroSkill_DecimationDay : public HeroSkill
@@ -91,13 +100,15 @@ public:
 		int _damage,
 		int _cost,
 		float _coolDownTime,
-		Texture* _avatar)
-		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar)
+		Texture* _avatar,
+		Sphere* effect)
+		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
 	{}
 	~HeroSkill_DecimationDay(){}
 
 private:
-
+	void doUse(Hero* hero);
+	void doUpdate(Timer& timer);
 };
 
 class HeroSkill_JustDesserts : public HeroSkill
@@ -114,5 +125,6 @@ public:
 	~HeroSkill_JustDesserts(){}
 
 private:
-
+	void doUse(Hero* hero);
+	void doUpdate(Timer& timer);
 };

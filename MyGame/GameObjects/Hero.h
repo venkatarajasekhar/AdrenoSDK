@@ -153,7 +153,7 @@ public:
 	void addItem(HeroItem* item);
 	void addSkill(HeroSkill* skill);
 
-	virtual void useSkill(){}
+	virtual void useSkill(int skillID){}
 
 	std::vector<HeroSkill*>& getSkillBag(){ return m_skillBag; }
 
@@ -221,13 +221,10 @@ private:
 		TEXTURE_SKILL_BLADEFALL,
 		TEXTURE_SKILL_DECIMATION_DAY,
 		TEXTURE_SKILL_JUST_DESSERTS,
+		TEXTURE_SKILL_EFFECT_BATTLE_BORN,
+		TEXTURE_SKILL_EFFECT_BLADEFALL,
+		TEXTURE_SKILL_EFFECT_DECIMATION_DAY,
 		NUM_TEXTURES,
-	};
-
-	enum
-	{
-		SPRITE_SHEET_SKILL_BATTLE_BORN,
-		NUM_SPRITE_SHEETS,
 	};
 
 	enum
@@ -251,19 +248,21 @@ private:
 		NUM_TEXTURES_MESHES,
 	};
 
-	// Graphics objects
-	enum
-	{
-		BILLBOARD_SKILL_BATTLE_BORN,
-		NUM_BILLBOARDS,
-	};
-
 	// Meshes
 	enum
 	{
 		SKINNED_MESH_BEAST_SEWON,
 		SKINNED_MESH_FIGHTER_DAN_MEI,
 		NUM_SKINNED_MESHES,
+	};
+
+	// Effects object
+	enum
+	{
+		SPHERE_BATTLE_BORN,
+		SPHERE_BLADE_FALL,
+		SPHERE_DECIMATION_DAY,
+		NUM_SPHERES,
 	};
 
 public:
@@ -273,6 +272,7 @@ public:
 	void init(
 		Shader& skinnedShader, 
 		Shader& billboardShader,
+		Shader& shapeShader,
 		BloodBar& myBloodBar, 
 		BloodBar& enemyBloodBar, 
 		Quad3D& selectedDecal,
@@ -287,17 +287,16 @@ public:
 private:
 	// Assets
 	Texture                 m_textures[NUM_TEXTURES];
-	SpriteSheet             m_spriteSheets[NUM_SPRITE_SHEETS];
 	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
 	SkinnedMesh1::AnimData  m_anim1Datas[NUM_ANIM_1_DATAS];
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
 
-	// Graphics objects
-	Billboard m_billboards[NUM_BILLBOARDS];
-
 	// Meshes
 	SkinnedMesh1 m_skinnedMeshes[NUM_SKINNED_MESHES];
 	Hero*        m_heroes[MAX_NUM_HEROES_IN_GAME];
+
+	// Effects objects
+	Sphere m_skillEffect[NUM_SPHERES];
 };
 
 #pragma endregion

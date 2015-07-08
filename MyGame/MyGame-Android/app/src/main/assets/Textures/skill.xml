@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
+<!-- Skill avatar -->
+
 <Texture 
 	ResourceID = "Battle_Born" 
 	SrcFileName   = "Battle_Born.png"
-/>
-
-<Texture 
-	ResourceID = "Battle_Born_Effect" 
-	SrcFileName   = "Battle_Born_Effect.png"
 />
 
 <Texture 
@@ -23,4 +20,21 @@
 <Texture 
 	ResourceID = "Just_Desserts" 
 	SrcFileName   = "Just_Desserts.png"
+/>
+
+<!-- Skill effect -->
+
+<Texture 
+	ResourceID = "Battle_Born_Effect" 
+	SrcFileName   = "smoke.png"
+/>
+
+<Texture 
+	ResourceID = "Bladefall_Effect" 
+	SrcFileName   = "fire_burst_png_by_dbszabo1-d515tgo.png"
+/>
+
+<Texture 
+	ResourceID = "Decimation_Day_Effect" 
+	SrcFileName   = "misc_bg_element_png_by_dbszabo1-d54ixi2.png"
 />

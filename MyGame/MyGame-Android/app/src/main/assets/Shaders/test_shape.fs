@@ -10,19 +10,18 @@ uniform sampler2D u_diffuseSampler;
 
 void main()
 {
-	vec3 norW = normalize(v_norW);
-	vec3 lightDir = -normalize(LIGHT_DIR);
+	//vec3 norW = normalize(v_norW);
+	//vec3 lightDir = -normalize(LIGHT_DIR);
 	
 	// Compute diffuse color
 	vec4 diffColor = texture2D( u_diffuseSampler, v_texC );
-	vec3 tintColor = vec3(v_texC.x, v_texC.y, v_texC.x * v_texC.y);
-	diffColor.rbg *= tintColor;
 	
 	// Compute lighting
-	float diffFactor = max( 0.0, dot( norW, lightDir ) );
+	//float diffFactor = max( 0.0, dot( norW, lightDir ) );
 	
 	// Output color
-	gl_FragColor.rgba = AMBIENT_COLOR;
-	gl_FragColor.rgba += diffColor * diffFactor;
-	gl_FragColor.a = diffColor.a;
+	//gl_FragColor.rgba = AMBIENT_COLOR;
+	//gl_FragColor.rgba += diffColor * diffFactor;
+	//gl_FragColor.a = diffColor.a;
+	gl_FragColor = diffColor;
 }

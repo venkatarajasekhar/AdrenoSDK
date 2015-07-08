@@ -13,10 +13,13 @@ void Sphere::init(
 	Shader& shader,
 	Texture* diffuseMap,
 	const MyVec3& pos,
+	const MyVec3& rot,
 	const MyVec3& scale,
 	int sliceCount,
-	int stackCount)
+	int stackCount,
+	MyVec3 distortMod)
 {
+	m_distortMod = distortMod;
 	std::vector<PosNorTexVertex> vertices;
 	UIntArray indices;
 
@@ -118,15 +121,21 @@ void Sphere::init(
 	}
 
 	// Init base
-	BasicMesh::init(vertices, indices, shader, diffuseMap, pos, MyVec3(0, 0, 0), scale);
+	BasicMesh::init(vertices, indices, shader, diffuseMap, pos, rot, scale);
 }
 
 void Sphere::update(Timer& timer)
 {
+	/*
 	MyVec3 rot = getRot();
 	rot.y += timer.getElapsedTime() * 50;
 	rot.x += timer.getElapsedTime() * 30;
 	setRot(rot);
+	/**/
+
+	m_shader->apply();
+	m_shader->setUniform("u_timer", timer.getTotalTime());
+	m_shader->setUniform("u_distortModifier", m_distortMod);
 
 	Mesh::update(timer);
 }
@@ -135,9 +144,6 @@ void Sphere::render(Camera& camera, Light* light)
 {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-
-	m_shader->apply();
-	m_shader->setUniform("u_texMat", m_diffuseMap->getTexMat());
 
 	BasicMesh::render(camera, light);
 

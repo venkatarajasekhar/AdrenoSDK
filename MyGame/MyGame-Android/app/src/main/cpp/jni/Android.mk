@@ -80,6 +80,8 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_ANDROID_PATH)/MyUtils_Platform.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBasicMesh.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyBillboard.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MyBox.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MyCylinder.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFileMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyFont.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyInputLayout.cpp \
@@ -88,6 +90,7 @@ LOCAL_SRC_FILES := $(SDK_FRM_PATH)/FrmApplication.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyShader.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh1.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySkinnedMesh2.cpp \
+				   $(SDK_MY_FRM_OPENGL_PATH)/MySphere.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySpriteBatch.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MySpriteSheet.cpp \
 				   $(SDK_MY_FRM_OPENGL_PATH)/MyTexture.cpp \

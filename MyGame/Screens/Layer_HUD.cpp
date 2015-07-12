@@ -171,16 +171,10 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 		m_textures[TEXTURE_MINIMAP_BACKGROUND].init(resource.GetTexture("minimap_background"));
 		m_textures[TEXTURE_MINIMAP_BTN_CLOSE].init(resource.GetTexture("minimap_btn_close"));
 		m_textures[TEXTURE_MINIMAP_PLAYER].init(resource.GetTexture("minimap_player"));
-
-		m_textures[TEXTURE_BTN_FIGHTING].init(resource.GetTexture("btn_fighting"));
 	}
 
 	// Assets fonts
 	m_fonts[FONT_CONSOLAS_12].init(resolveAssetsPath("Fonts/Consolas12.pak"));
-
-	// Button widgets
-	m_btns[BTN_FIGHTING].init("hud_btn_fighting", MyVec2(), m_textures[TEXTURE_BTN_FIGHTING]);
-	m_btns[BTN_FIGHTING].addPressListener(this);
 
 	// List widgets
 	m_list[LIST_ITEM].init("hud_list_item", MyVec2(), 400, 60, UIList::HORIZONTAL);
@@ -211,12 +205,6 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 
 void Layer_HUD::resize(int width, int height)
 {
-	// Button widgets
-	{
-		MyVec2 pos = MyVec2(width, height) - m_btns[BTN_FIGHTING].getSize() - BTN_FIGHTING_MARGIN;
-		m_btns[BTN_FIGHTING].setPos(pos);
-	}
-
 	// List widgets
 	{
 		MyVec2 pos = MyVec2(LIST_ITEM_MARGIN.x, height - LIST_ITEM_MARGIN.y - m_list[LIST_ITEM].getSize().y);
@@ -234,12 +222,6 @@ void Layer_HUD::resize(int width, int height)
 
 void Layer_HUD::update(Timer& timer, UserInput& userInput)
 {
-	// Button widgets
-	for (int i = 0; i < NUM_BTNS; i++)
-	{
-		m_btns[i].update(userInput);
-	}
-
 	// List widgets
 	for (size_t i = 0; i < NUM_LISTS; i++)
 	{
@@ -257,12 +239,6 @@ void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle
 {
 	int sWidth, sHeight;
 	getWindowDimension(sWidth, sHeight);
-
-	// Button widgets
-	for (int i = 0; i < NUM_BTNS; i++)
-	{
-		m_btns[i].render(spriteBatch);
-	}
 
 	// List widgets
 	for (size_t i = 0; i < NUM_LISTS; i++)

@@ -27,7 +27,6 @@ private:
 		TEXTURE_MINIMAP_BACKGROUND,
 		TEXTURE_MINIMAP_BTN_CLOSE,
 		TEXTURE_MINIMAP_PLAYER,
-		TEXTURE_BTN_FIGHTING,
 		NUM_TEXTURES,
 	};
 
@@ -38,12 +37,6 @@ private:
 	};
 
 	// UI Widgets
-	enum
-	{
-		BTN_FIGHTING,
-		NUM_BTNS,
-	};
-
 	enum
 	{
 		LIST_ITEM,
@@ -74,7 +67,6 @@ private:
 	Font    m_fonts[NUM_FONTS];
 
 	// UI Widgets
-	UIImageButton m_btns[NUM_BTNS];
 	UIList m_list[NUM_LISTS];
 
 	// Other HUD-components

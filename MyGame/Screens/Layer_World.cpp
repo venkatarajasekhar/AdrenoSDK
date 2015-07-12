@@ -169,7 +169,6 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	m_audios[AUDIO_ENEMYHERO_ATTACK2].init(resolveAssetsPath("Audios/EnemyHeroAttack2.wav"));
 	m_audios[AUDIO_ENEMYHERO_DEATH].init(resolveAssetsPath("Audios/EnemyHeroDeath.wav"));
 
-
 	m_audios[AUDIO_HEALTH_SKILL].init(resolveAssetsPath("Audios/HealthSkill.wav"));
 	m_audios[AUDIO_UPGRADE_SKILL].init(resolveAssetsPath("Audios/UpgradeSkill.wav"));
 	m_audios[AUDIO_SHOP_OPEN].init(resolveAssetsPath("Audios/OpenShop.wav"));

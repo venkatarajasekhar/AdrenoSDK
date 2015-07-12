@@ -11,9 +11,8 @@
 //==========================================================================================================
 
 static const bool   SHOW_FPS            = true;
-static const MyVec2 BTN_FIGHTING_MARGIN = MyVec2(30, 20);
-static const MyVec2 LIST_ITEM_MARGIN    = MyVec2(100, 20);
-static const MyVec2 LIST_SKILL_MARGIN = MyVec2(20, 250);
+static const MyVec2 LIST_ITEM_MARGIN    = MyVec2(20, 20);
+static const float LIST_SKILL_HMARGIN = 20;
 
 #pragma endregion
 
@@ -148,8 +147,7 @@ private:
 //==========================================================================================================
 
 Layer_HUD::Layer_HUD()
-	: m_fps(0.0f),
-	m_player(nullptr)
+	: m_player(nullptr)
 {
 }
 
@@ -181,7 +179,7 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 	m_list[LIST_ITEM].addPressListItemListener(this);
 
 	{
-		m_list[LIST_SKILL].init("hud_list_skill", MyVec2(0), 60, 400);
+		m_list[LIST_SKILL].init("hud_list_skill", MyVec2(0), 63, 276);
 		m_list[LIST_SKILL].addPressListItemListener(this);
 
 		auto& skillBag = m_player->getSkillBag();
@@ -189,6 +187,13 @@ void Layer_HUD::init(Layer_HUD::InitBundle& bundle)
 		{
 			m_list[LIST_SKILL].addItem(new UIListItem_Skill(&m_list[LIST_SKILL], *i, m_fonts[FONT_CONSOLAS_12]));
 		}
+	}
+
+	// Labels widgets
+	m_labels[LABEL_FPS].init("", MyVec2(), m_fonts[FONT_CONSOLAS_12], "");
+	if (!SHOW_FPS)
+	{
+		m_labels[LABEL_FPS].setStatus(UIWidget::HIDDEN);
 	}
 	
 	// Other HUD-components
@@ -212,8 +217,18 @@ void Layer_HUD::resize(int width, int height)
 	}
 
 	{
-		MyVec2 pos = MyVec2(width - LIST_SKILL_MARGIN.x - m_list[LIST_SKILL].getSize().x, LIST_SKILL_MARGIN.y);
+		float yOffset = 0.5f * (height - m_miniMap.getPos().y - m_miniMap.getSmallSize().y - m_list[LIST_SKILL].getSize().y);
+		MyVec2 pos = MyVec2(
+			width - LIST_SKILL_HMARGIN - m_list[LIST_SKILL].getSize().x, 
+			m_miniMap.getPos().y + m_miniMap.getSmallSize().y + yOffset);
 		m_list[LIST_SKILL].setPos(pos);
+	}
+
+	// Label widgets
+	{
+		MyVec2 pos = m_list[LIST_ITEM].getPos();
+		pos.y -= 5 + m_labels[LABEL_FPS].getSize().y;
+		m_labels[LABEL_FPS].setPos(pos);
 	}
 
 	// Other HUD-components
@@ -227,34 +242,36 @@ void Layer_HUD::update(Timer& timer, UserInput& userInput)
 	{
 		m_list[i].update(userInput);
 	}
+
+	// Label widgets
+	for (int i = 0; i < NUM_LABELS; i++)
+	{
+		m_labels[i].update(userInput);
+	}
 	
+	m_labels[LABEL_FPS].setText(toString(timer.getFPS()));
+
 	// Other HUD-components
 	m_miniMap.update(userInput);
 	m_playerInfo.update(timer, userInput);
-
-	m_fps = timer.getFPS();
 }
 
 void Layer_HUD::render(SpriteBatch& spriteBatch, Layer_HUD::RenderBundle& bundle)
 {
-	int sWidth, sHeight;
-	getWindowDimension(sWidth, sHeight);
-
 	// List widgets
 	for (size_t i = 0; i < NUM_LISTS; i++)
 	{
 		m_list[i].render(spriteBatch);
 	}
 
+	for (int i = 0; i < NUM_LABELS; i++)
+	{
+		m_labels[i].render(spriteBatch);
+	}
+
 	// Other HUD-components
 	m_miniMap.render(spriteBatch, m_player->getPos());
 	m_playerInfo.render(spriteBatch, *m_player);
-
-	if (SHOW_FPS)
-	{
-		MyVec2 pos(10, sHeight - 10 - m_fonts[FONT_CONSOLAS_12].getTextHeight());
-		spriteBatch.renderText2D(m_fonts[FONT_CONSOLAS_12], toString(m_fps), pos);
-	}
 }
 
 // Event handling

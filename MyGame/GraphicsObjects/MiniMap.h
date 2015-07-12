@@ -29,6 +29,9 @@ public:
 
 	void OnPress(const IOnPressListener::Data& data);
 
+	MyVec2 getSmallSize();
+	MyVec2 getPos();
+
 private:
 	void setStatus(Status status);
 	void updateBounding();

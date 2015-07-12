@@ -44,6 +44,12 @@ private:
 		NUM_LISTS,
 	};
 
+	enum
+	{
+		LABEL_FPS,
+		NUM_LABELS,
+	};
+
 public:
 	Layer_HUD();
 	~Layer_HUD();
@@ -67,12 +73,12 @@ private:
 	Font    m_fonts[NUM_FONTS];
 
 	// UI Widgets
-	UIList m_list[NUM_LISTS];
+	UIList  m_list[NUM_LISTS];
+	UILabel m_labels[NUM_LABELS];
 
 	// Other HUD-components
 	MiniMap m_miniMap;
 	PlayerInfo m_playerInfo;
 
-	float m_fps;
 	Hero* m_player;
 };

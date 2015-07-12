@@ -128,6 +128,8 @@ public:
 	void resize(int width, int height);
 	void update(Timer& timer, UserInput& userInput);
 	void render(SpriteBatch& spriteBatch);
+	void beginActive();
+	void onGameOver();
 
 	Hero* getPlayer();
 
@@ -139,6 +141,7 @@ private:
 	FileMesh1::MeshData     m_mesh1Datas[NUM_MESH_1_DATAS];
 	SkinnedMesh1::AnimData  m_anim1Datas[NUM_ANIM_1_DATAS];
 	FileMesh1::MeshTextures m_meshTextures[NUM_TEXTURES_MESHES];
+	Audio                   m_audios[NUM_AUDIOS];
 
 	// Core objects
 	TPSCamera m_camera_main;
@@ -161,6 +164,4 @@ private:
 	// Graphics objects
 	Billboard m_billboards[NUM_BILLBOARDS];
 	BloodBar m_bloodBar[NUM_BLOOD_BARS];
-
-	Audio m_audios[NUM_AUDIOS];
 };

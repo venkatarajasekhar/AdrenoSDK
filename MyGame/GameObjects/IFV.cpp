@@ -188,6 +188,11 @@ void IFV::update(Timer& timer)
 	m_stateMachine->Update();
 }
 
+void IFV::beginMatch()
+{
+
+}
+
 void IFV::respawn(const std::vector<MyVec3>& path)
 {
 	// Moving elements

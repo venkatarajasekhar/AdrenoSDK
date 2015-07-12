@@ -28,6 +28,7 @@ public:
 		TEAM_TYPE team);
 
 	void update(Timer& timer);
+	void beginMatch();
 
 protected:
 	virtual void dead();

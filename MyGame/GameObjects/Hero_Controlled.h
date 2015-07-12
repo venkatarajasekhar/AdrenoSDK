@@ -29,6 +29,8 @@ public:
 	void update(Timer& timer);
 	void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
+	void beginMatch();
+
 	void OnPress(const IOnPressListener::Data& data);
 
 	void useSkill(int skillID);

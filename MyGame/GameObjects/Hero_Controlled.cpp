@@ -77,6 +77,15 @@ void Hero_Controlled::render(SpriteBatch& spriteBatch, Camera& camera, Light& li
 	m_notifyPool.render(camera, spriteBatch);
 }
 
+void Hero_Controlled::beginMatch()
+{
+	m_movingEnt.setTarget(m_positionStart);
+	m_movingEnt.setPos(m_positionStart);
+	m_movingEnt.setRot(m_rotationStart);
+
+	Hero::beginMatch();
+}
+
 void Hero_Controlled::OnPress(const IOnPressListener::Data& data)
 {
 	if (data.Id == "map")
@@ -98,6 +107,14 @@ void Hero_Controlled::useSkill(int skillID)
 void Hero_Controlled::dead()
 {
 	m_audios[AUDIO_MYHERO_DEATH].play();
+
+	for (auto i = m_lEnts->begin(); i != m_lEnts->end(); ++i)
+		(*i)->deselect();
+
+	m_movingEnt.setTarget(m_positionStart);
+	m_movingEnt.setPos(m_positionStart);
+	m_movingEnt.setRot(m_rotationStart);
+
 	Hero::dead();
 }
 

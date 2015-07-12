@@ -1,6 +1,18 @@
 
 #include "Hero_AI.h"
 
+static const std::vector<MyVec3> ENEMY_HERO_PATH =
+{
+	MyVec3(34.0f, 0, 0.0f),
+	MyVec3(30.6013f, 0, 2.89223f),
+	MyVec3(14.6958f, 0, -3.19085f),
+	MyVec3(0.451345f, 0, -1.58377f),
+	MyVec3(-12.2037f, 0, 3.04689f),
+	MyVec3(-23.3116f, 0, -4.71635f),
+	MyVec3(-30.7036f, 0, -4.28849f),
+	MyVec3(-37.9492f, 0, -0.463198f),
+};
+
 //===================================================================================================================
 //
 // Hero_AI class
@@ -72,9 +84,19 @@ void Hero_AI::update(Timer& timer)
 	m_stateMachine->Update();
 }
 
+void Hero_AI::beginMatch()
+{
+	m_movingEnt.setPath(ENEMY_HERO_PATH);
+	Hero::beginMatch();
+}
+
 void Hero_AI::dead()
 {
 	m_audios[AUDIO_ENEMYHERO_DEATH].play();
+
+	deselect();
+	m_movingEnt.setPath(ENEMY_HERO_PATH);
+
 	Hero::dead();
 }
 

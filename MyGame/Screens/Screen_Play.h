@@ -15,6 +15,7 @@ public:
 	void resize(int width, int height);
 	void update(void* utilObjs);
 	void render(void* utilObjs);
+	void beginActive();
 
 	void lockUserInput(void* utilObjs);
 	void unlockUserInput(void* utilObjs);

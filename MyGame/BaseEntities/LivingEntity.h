@@ -25,6 +25,8 @@ public:
 	virtual void update(Timer& timer) = 0;
 	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
+	virtual void beginMatch() = 0;
+
 	// Getter
 
 	int getMaxHealth()const;

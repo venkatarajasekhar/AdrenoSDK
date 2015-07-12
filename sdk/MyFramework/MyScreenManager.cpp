@@ -93,17 +93,26 @@ void ScreenManager::render(void* utilObjs)
 //
 //===========================================================================================================
 
+static void activeScr(Screen* scr, void* tag)
+{
+	if (scr != nullptr)
+	{
+		int width, height;
+		getWindowDimension(width, height);
+
+		scr->beginActive();
+		scr->resize(width, height);
+		scr->setTag(tag);
+	}
+}
+
 void ScreenManager::activeScreen(const MyString& id, void* tag)
 {
 	m_activeScreen = getScreen(id);
 
 	if (m_activeScreen != nullptr)
 	{
-		int width, height;
-		getWindowDimension(width, height);
-
-		m_activeScreen->resize(width, height);
-		m_activeScreen->setTag(tag);
+		activeScr(m_activeScreen, tag);
 
 		m_justActiveScreen = true;
 	}
@@ -115,11 +124,7 @@ void ScreenManager::activePopupScreen(const MyString& id, void* tag)
 
 	if (m_popupScreen != nullptr)
 	{
-		int width, height;
-		getWindowDimension(width, height);
-
-		m_popupScreen->resize(width, height);
-		m_popupScreen->setTag(tag);
+		activeScr(m_popupScreen, tag);
 
 		m_justActiveScreen = true;
 	}

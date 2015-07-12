@@ -183,6 +183,11 @@ void Pawn::update(Timer& timer)
 	m_stateMachine->Update();
 }
 
+void Pawn::beginMatch()
+{
+
+}
+
 void Pawn::respawn(const std::vector<MyVec3>& path)
 {
 	// Moving elements

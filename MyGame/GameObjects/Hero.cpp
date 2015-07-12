@@ -46,7 +46,8 @@ static void initHeroProps()
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 200;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxMana = 100;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
+	//g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 500;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 7;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
@@ -298,6 +299,23 @@ void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 	}
 }
 
+void Hero::beginMatch()
+{
+	m_health = m_maxHealth;
+	m_selected = false;
+	m_inUse = true;
+	m_instance->Visible = true;
+
+	m_exp = 0;
+	m_gold = 600;
+	m_mana = m_maxMana;
+	m_level = 1;
+	m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
+	m_healthPerAttack = 0;
+	m_countTime = 0;
+	m_revivalTime = 0;
+}
+
 MyVec3 Hero::getPos()
 {
 	return m_movingEnt.getPos();
@@ -407,18 +425,6 @@ void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 void Hero::dead()
 {
 	m_instance->Visible = false;
-	
-	if (getTeamType() == TEAM_TYPE_ENEMY)
-		m_movingEnt.setPath(ENEMY_HERO_PATH);
-	else
-	{
-		for (auto i = m_lEnts->begin(); i != m_lEnts->end(); ++i)
-			(*i)->deselect();
-		//m_atkTarget = nullptr;
-		m_movingEnt.setTarget(m_positionStart);
-		m_movingEnt.setPos(m_positionStart);
-		m_movingEnt.setRot(m_rotationStart);
-	}
 }
 
 void Hero::revival()

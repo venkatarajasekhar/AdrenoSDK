@@ -89,6 +89,11 @@ void PlayScreen::render(void* utilObjs)
 	}
 }
 
+void PlayScreen::beginActive()
+{
+	m_layer_World.beginActive();
+}
+
 void PlayScreen::lockUserInput(void* utilObjs)
 {
 	GLOBAL_UTIL_OBJS* globalUtilObjs = (GLOBAL_UTIL_OBJS*)utilObjs;
@@ -122,5 +127,7 @@ void PlayScreen::OnPress(const IOnPressListener::Data& data)
 void PlayScreen::OnGameOver(const IOnGameOverListener::Data& data)
 {
 	TEAM_TYPE winner = data.WinnerTeam;
+
+	m_layer_World.onGameOver();
 	m_screenManager->activeScreen("GameOverScreen", &winner);
 }

@@ -10,7 +10,7 @@
 //========================================================================================================
 
 static const float  MAIN_CAM_FAR       = 100.0f;
-static const MyVec3 INITIAL_PLAYER_POS = MyVec3(0);
+static const MyVec3 INITIAL_PLAYER_POS = MyVec3(-40.0f, 0, 0.0f);
 
 #pragma endregion
 
@@ -139,53 +139,7 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_meshTextures[TEXTURES_MESH_SHOP].init(m_mesh1Datas[MESH_1_DATA_SHOP], resource);
 	}
 
-	// Core objects
-	m_camera_main.init(INITIAL_PLAYER_POS, 45.0f, 0.1f, MAIN_CAM_FAR);
-
-	// Mesh objects
-	{
-		FlatTerrainProperties properties =
-		{
-			MyVec3(6.0f, 32.0f, 1.0f),
-			MyVec2(0.0f, 1.0f),
-		};
-
-		m_mesh_terrain.init(
-			m_shaders[SHADER_TERRAIN],
-			m_textures[TEXTURE_TERRAIN_DIFF_1],
-			m_textures[TEXTURE_TERRAIN_DIFF_2],
-			m_textures[TEXTURE_TERRAIN_BLEND],
-			bundle.MapCenter,
-			bundle.MapSize,
-			properties);
-	}
-
-	m_selectedDecal.init(
-		&m_textures[TEXTURE_TERRAIN_DECAL_SELECTED],
-		m_shaders[SHADER_TEXTURED_MESH],
-		MyVec3(0, 0.5f, 0),
-		MyVec3(),
-		MyVec2(3.0f));
-
-	// Graphics objects
-	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
-	m_bloodBar[BLOOD_BAR_ENEMY].init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
-
-	m_billboards[BILLBOARD_ENERGY_BALL].init(
-		&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL],
-		m_shaders[SHADER_BILLBOARD],
-		MyVec3(0),
-		MyVec2(1.5f),
-		0);
-
-	m_billboards[BILLBOARD_BULLET].init(
-		&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL],
-		m_shaders[SHADER_BILLBOARD],
-		MyVec3(0),
-		MyVec2(0.5f),
-		0);
-
-	// Audio assets
+	// Assets audio
 	m_audios[AUDIO_MYPAWN_ATTACK].init(resolveAssetsPath("Audios/MyPawnAttack.wav"));
 	m_audios[AUDIO_MYPAWN_ATTACK].setVolume(0.1f);
 	m_audios[AUDIO_MYPAWN_DEATH].init(resolveAssetsPath("Audios/MyPawnDeath.wav"));
@@ -221,7 +175,27 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	m_audios[AUDIO_SHOP_OPEN].init(resolveAssetsPath("Audios/OpenShop.wav"));
 	m_audios[AUDIO_BACKGROUND].init(resolveAssetsPath("Audios/Background.wav"), true);
 	m_audios[AUDIO_BACKGROUND].setVolume(0.2f);
-	m_audios[AUDIO_BACKGROUND].play();
+	
+	// Core objects
+	m_camera_main.init(INITIAL_PLAYER_POS, bundle.MapCenter, bundle.MapSize, 45.0f, 0.1f, MAIN_CAM_FAR);
+
+	// Mesh objects
+	{
+		FlatTerrainProperties properties =
+		{
+			MyVec3(6.0f, 32.0f, 1.0f),
+			MyVec2(0.0f, 1.0f),
+		};
+
+		m_mesh_terrain.init(
+			m_shaders[SHADER_TERRAIN],
+			m_textures[TEXTURE_TERRAIN_DIFF_1],
+			m_textures[TEXTURE_TERRAIN_DIFF_2],
+			m_textures[TEXTURE_TERRAIN_BLEND],
+			bundle.MapCenter,
+			bundle.MapSize,
+			properties);
+	}
 
 	m_shop.init(
 		m_mesh1Datas[MESH_1_DATA_SHOP],
@@ -233,6 +207,31 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 		m_selectedDecal,
 		m_audios);
 	m_shop.addPressListener(bundle.ShopListener);
+
+	m_selectedDecal.init(
+		&m_textures[TEXTURE_TERRAIN_DECAL_SELECTED],
+		m_shaders[SHADER_TEXTURED_MESH],
+		MyVec3(0, 0.5f, 0),
+		MyVec3(),
+		MyVec2(3.0f));
+
+	// Graphics objects
+	m_bloodBar[BLOOD_BAR_MY_TEAM].init(m_textures[TEXTURE_BLOODBAR_GREEN_FORE], m_textures[TEXTURE_BLOODBAR_GREEN_BACK]);
+	m_bloodBar[BLOOD_BAR_ENEMY].init(m_textures[TEXTURE_BLOODBAR_RED_FORE], m_textures[TEXTURE_BLOODBAR_RED_BACK]);
+
+	m_billboards[BILLBOARD_ENERGY_BALL].init(
+		&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL],
+		m_shaders[SHADER_BILLBOARD],
+		MyVec3(0),
+		MyVec2(1.5f),
+		0);
+
+	m_billboards[BILLBOARD_BULLET].init(
+		&m_spriteSheets[SPRITE_SHEET_ENERGY_BALL],
+		m_shaders[SHADER_BILLBOARD],
+		MyVec3(0),
+		MyVec2(0.5f),
+		0);
 
 	// Game objects
 	m_towerPool.init(
@@ -377,6 +376,26 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 			(*i)->render(spriteBatch, m_camera_main, light);
 		}
 	}
+}
+
+void Layer_World::beginActive()
+{
+	// Reset camera
+	m_camera_main.setPlayerPos(INITIAL_PLAYER_POS);
+
+	// Reset game object
+	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
+	{
+		(*i)->beginMatch();
+	}
+
+	// Re-play audio
+	m_audios[AUDIO_BACKGROUND].play();
+}
+
+void Layer_World::onGameOver()
+{
+	m_audios[AUDIO_BACKGROUND].stop();
 }
 
 Hero* Layer_World::getPlayer()

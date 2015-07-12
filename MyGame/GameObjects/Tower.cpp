@@ -216,6 +216,15 @@ void Tower::update(Timer& timer)
 	m_stateMachine->Update();
 }
 
+void Tower::beginMatch()
+{
+	m_health = m_maxHealth;
+	m_selected = false;
+	m_timeElapsed = TOWER_ATTACK_TIME_PERIOD;
+	m_inUse = true;
+	m_instance->Visible = true;
+}
+
 MyVec3 Tower::getPos()
 {
 	return m_instance->Position;

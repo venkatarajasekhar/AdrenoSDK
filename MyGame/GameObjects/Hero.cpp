@@ -414,7 +414,7 @@ void Hero::dead()
 	{
 		for (auto i = m_lEnts->begin(); i != m_lEnts->end(); ++i)
 			(*i)->deselect();
-		m_atkTarget = nullptr;
+		//m_atkTarget = nullptr;
 		m_movingEnt.setTarget(m_positionStart);
 		m_movingEnt.setPos(m_positionStart);
 		m_movingEnt.setRot(m_rotationStart);

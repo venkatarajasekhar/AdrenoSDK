@@ -57,7 +57,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_WHITE_PAGODA].BloodbarOffset = MyVec3(-2.0f, 9.5f, 0);
 
 	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_TowerProps[TOWER_WHITE_PAGODA].MeshMaterial.Shininess = 16.0f;
 
@@ -70,11 +70,18 @@ static void initTowerProps()
 	g_TowerProps[TOWER_HOUSE_WIND].BloodbarScale = MAIN_TOWER_BLOOD_BAR_SCALE;
 	g_TowerProps[TOWER_HOUSE_WIND].BloodbarOffset = MyVec3(-2.0f, 9, 0);
 
+#ifdef WIN32
 	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Diffuse = MyVec4(0.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Specular = MyVec4(0.0f, 0.0f, 0.0f, 1.0f);
+	g_TowerProps[TOWER_HOUSE_WIND].MeshMaterial.Shininess = 16.0f;
+#endif
+	
 	// Outpost
 	g_TowerProps[TOWER_OUTPOST].InitialMaxHealth = TOWER_INITIAL_MAX_HEALTH;
 	g_TowerProps[TOWER_OUTPOST].InitialDamage = TOWER_INITIAL_DAMAGE;
@@ -85,7 +92,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_OUTPOST].BloodbarOffset = MyVec3(-2.0f, 8, 0);
 
 	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_TowerProps[TOWER_OUTPOST].MeshMaterial.Shininess = 16.0f;
 
@@ -99,7 +106,7 @@ static void initTowerProps()
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].BloodbarOffset = MyVec3(-2.0f, 8, 0);
 
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_TowerProps[TOWER_TOWER_OF_VICTORY].MeshMaterial.Shininess = 16.0f;
 }

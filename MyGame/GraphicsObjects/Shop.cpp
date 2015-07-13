@@ -28,7 +28,7 @@ void Shop::init(
 	{
 		Material material;
 		material.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-		material.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		material.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 		material.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 		material.Shininess = 16.0f;
 

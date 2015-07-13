@@ -36,11 +36,18 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_BEAST_SEWON].BloodbarOffset = MyVec3(-2, 5, 0);
 
+#ifdef WIN32
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(0.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Specular = MyVec4(0.0f, 0.0f, 0.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Shininess = 1.0f;
+#endif
+	
 	g_HeroProps[HERO_BEAST_SEWON].Time_PAA_Attack_1 = 0.63768f;
 
 	// Fighter dan mei
@@ -58,11 +65,18 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].BloodbarOffset = MyVec3(-1, 5, 0);
 
+#ifdef WIN32
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Specular = MyVec4(0.001f, 0.001f, 0.001f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Shininess = 2.0f;
+#endif
+	
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].Time_PAA_Attack_1 = 0.3636f;
 }
 

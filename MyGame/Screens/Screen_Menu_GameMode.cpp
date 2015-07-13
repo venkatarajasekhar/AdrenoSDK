@@ -13,8 +13,6 @@
 //=================================================================================================================================
 
 static const float BTN_HDIST = 10.0f;
-static const float SCREEN_TITLE_MARGIN = 15.0f;
-static const float BTN_BACK_MARGIN = 10.0f;
 
 //=================================================================================================================================
 //
@@ -95,20 +93,21 @@ void GameModeMenuScreen::resize(int width, int height)
 
 	// Back button
 	{
+		float yOffset = 0.5f * (m_btnContainerDest.Pos.y - m_textBtns[TEXT_BTN_BACK].getSize().y);
 		MyVec2 pos = m_btnContainerDest.Pos + 
 			MyVec2(
 			0.5f * (m_btnContainerDest.Size.x - m_textBtns[TEXT_BTN_BACK].getSize().x),
-			m_btnContainerDest.Size.y + BTN_BACK_MARGIN);
+			m_btnContainerDest.Size.y + yOffset);
 
 		m_textBtns[TEXT_BTN_BACK].setPos(pos);
 	}
 
 	// Title
 	{
-		MyVec2 pos = m_btnContainerDest.Pos +
-			MyVec2(
-			0.5f * (m_btnContainerDest.Size.x - m_labels[LABEL_SCREEN_TITLE].getSize().x),
-			-(SCREEN_TITLE_MARGIN + m_labels[LABEL_SCREEN_TITLE].getSize().y));
+		float yOffset = 0.5f * (m_btnContainerDest.Pos.y - m_labels[LABEL_SCREEN_TITLE].getSize().y);
+		MyVec2 pos = MyVec2(
+			m_btnContainerDest.Pos.x + 0.5f * (m_btnContainerDest.Size.x - m_labels[LABEL_SCREEN_TITLE].getSize().x),
+			yOffset);
 
 		m_labels[LABEL_SCREEN_TITLE].setPos(pos);
 	}
@@ -169,7 +168,7 @@ void GameModeMenuScreen::OnPress(const IOnPressListener::Data& data)
 	}
 	else if (data.Id == "btn_play_solo")
 	{
-		m_screenManager->addScreen("PlayScreen", new PlayScreen(m_screenManager), true);
+		//m_screenManager->addScreen("PlayScreen", new PlayScreen(m_screenManager), true);
 		m_screenManager->activeScreen("PlayScreen");
 	}
 	else if (data.Id == "btn_back")

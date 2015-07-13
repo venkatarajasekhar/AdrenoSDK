@@ -85,6 +85,8 @@ public:
 		TEAM_TYPE team);
 	void update(Timer& timer);
 
+	void beginMatch();
+
 	void respawn(const std::vector<MyVec3>& path);
 
 	MyVec3 getPos();
@@ -198,7 +200,7 @@ private:
 	float m_spawnTime;
 };
 
-#pragma region Pawn state
+#pragma region IFV state
 
 //=========================================================================================================
 //

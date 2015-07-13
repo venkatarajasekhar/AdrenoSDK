@@ -134,6 +134,8 @@ public:
 	virtual void update(Timer& timer);
 	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
+	virtual void beginMatch();
+
 	MyVec3 getPos();
 	MyVec3 getRot();
 	void setHealthPerAttack(int health);

@@ -13,7 +13,6 @@
 //
 //=================================================================================================================================
 
-static const float BTN_BACK_MARGIN = 10.0f;
 static const MyVec2 DIAMOND_BAR_POS = MyVec2(50, 25);
 static const float BTN_BUY_MARGIN = 10.0f;
 
@@ -195,10 +194,11 @@ void BuyHeroMenuScreen::resize(int width, int height)
 
 	// Button
 	{
+		float yOffset = 0.5f * (m_list[LIST_HERO_ON_SALE].getPos().y - m_btns[BTN_BACK].getSize().y);
 		MyVec2 pos = m_list[LIST_HERO_ON_SALE].getPos() +
 			MyVec2(
 			0.5f * (m_list[LIST_HERO_ON_SALE].getSize().x - m_btns[BTN_BACK].getSize().x),
-			m_list[LIST_HERO_ON_SALE].getSize().y + BTN_BACK_MARGIN);
+			m_list[LIST_HERO_ON_SALE].getSize().y + yOffset);
 
 		m_btns[BTN_BACK].setPos(pos);
 	}

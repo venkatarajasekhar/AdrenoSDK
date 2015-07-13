@@ -13,6 +13,7 @@ public:
 	virtual void resize(int width, int height) = 0;
 	virtual void update(void* utilObjs) = 0;
 	virtual void render(void* utilObjs) = 0;
+	virtual void beginActive(){}
 
 	virtual void setTag(void* tag);
 

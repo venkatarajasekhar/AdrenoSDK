@@ -136,6 +136,16 @@ void MiniMap::render(SpriteBatch& spriteBatch, const MyVec3& playerPos)
 	m_closeButton.render(spriteBatch);
 }
 
+MyVec2 MiniMap::getSmallSize()
+{
+	return SIZE_WHEN_SMALL * MyVec2(m_background->getWidth(), m_background->getHeight());
+}
+
+MyVec2 MiniMap::getPos()
+{
+	return m_bounding.Pos;
+}
+
 void MiniMap::OnPress(const IOnPressListener::Data& data)
 {
 	if (data.Id == "hud_minimap_btn_close")

@@ -33,7 +33,7 @@ static void initPawnProps()
 	g_PawnProps[PAWN_BROWNIE].BloodbarOffset = MyVec3(0, 3, 0);
 
 	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_PawnProps[PAWN_BROWNIE].MeshMaterial.Shininess = 16.0f;
 
@@ -51,11 +51,18 @@ static void initPawnProps()
 
 	g_PawnProps[PAWN_SKELETON].BloodbarOffset = MyVec3(-1.5f, 4.3f, 0);
 
+#ifdef WIN32
 	g_PawnProps[PAWN_SKELETON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_PawnProps[PAWN_SKELETON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_PawnProps[PAWN_SKELETON].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_PawnProps[PAWN_SKELETON].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Specular = MyVec4(0.001f, 0.001f, 0.001f, 1.0f);
+	g_PawnProps[PAWN_SKELETON].MeshMaterial.Shininess = 1.0f;
+#endif
+	
 	g_PawnProps[PAWN_SKELETON].Time_PAA_Attack_1 = 0.392f;
 }
 
@@ -181,6 +188,11 @@ void Pawn::update(Timer& timer)
 
 	// States manager
 	m_stateMachine->Update();
+}
+
+void Pawn::beginMatch()
+{
+
 }
 
 void Pawn::respawn(const std::vector<MyVec3>& path)

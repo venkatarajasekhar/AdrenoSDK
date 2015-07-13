@@ -27,7 +27,6 @@ private:
 		TEXTURE_MINIMAP_BACKGROUND,
 		TEXTURE_MINIMAP_BTN_CLOSE,
 		TEXTURE_MINIMAP_PLAYER,
-		TEXTURE_BTN_FIGHTING,
 		NUM_TEXTURES,
 	};
 
@@ -40,15 +39,15 @@ private:
 	// UI Widgets
 	enum
 	{
-		BTN_FIGHTING,
-		NUM_BTNS,
+		LIST_ITEM,
+		LIST_SKILL,
+		NUM_LISTS,
 	};
 
 	enum
 	{
-		LIST_ITEM,
-		LIST_SKILL,
-		NUM_LISTS,
+		LABEL_FPS,
+		NUM_LABELS,
 	};
 
 public:
@@ -74,13 +73,12 @@ private:
 	Font    m_fonts[NUM_FONTS];
 
 	// UI Widgets
-	UIImageButton m_btns[NUM_BTNS];
-	UIList m_list[NUM_LISTS];
+	UIList  m_list[NUM_LISTS];
+	UILabel m_labels[NUM_LABELS];
 
 	// Other HUD-components
 	MiniMap m_miniMap;
 	PlayerInfo m_playerInfo;
 
-	float m_fps;
 	Hero* m_player;
 };

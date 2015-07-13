@@ -11,6 +11,8 @@ public:
 
 	void init(
 		const MyVec3& playerPos,
+		const MyVec3& mapCenter,
+		const MyVec2& mapSize,
 		float fovInDeg,
 		float n,
 		float f);
@@ -19,5 +21,6 @@ public:
 	void setPlayerPos(const MyVec3& playerPos);
 
 private:
-
+	MyVec3 m_mapCenter;
+	MyVec2 m_mapSize;
 };

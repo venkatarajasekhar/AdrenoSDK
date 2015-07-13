@@ -33,7 +33,7 @@ static void initIFVProps()
 	g_IFVProps[IFV_CATAPULT].BloodbarOffset = MyVec3(0, 3, 0);
 
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_IFVProps[IFV_CATAPULT].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_IFVProps[IFV_CATAPULT].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_IFVProps[IFV_CATAPULT].MeshMaterial.Shininess = 16.0f;
 
@@ -51,11 +51,18 @@ static void initIFVProps()
 
 	g_IFVProps[IFV_TANK].BloodbarOffset = MyVec3(-1.5f, 4.3f, 0);
 
+#ifdef WIN32
 	g_IFVProps[IFV_TANK].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_IFVProps[IFV_TANK].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_IFVProps[IFV_TANK].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_IFVProps[IFV_TANK].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_IFVProps[IFV_TANK].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_IFVProps[IFV_TANK].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_IFVProps[IFV_TANK].MeshMaterial.Diffuse = MyVec4(0.0f, 1.0f, 1.0f, 1.0f);
+	g_IFVProps[IFV_TANK].MeshMaterial.Specular = MyVec4(0.0f, 0.0f, 0.0f, 1.0f);
+	g_IFVProps[IFV_TANK].MeshMaterial.Shininess = 16.0f;
+#endif
+	
 	g_IFVProps[IFV_TANK].Time_PAA_Attack_1 = 0.15f;
 }
 
@@ -186,6 +193,11 @@ void IFV::update(Timer& timer)
 
 	// States manager
 	m_stateMachine->Update();
+}
+
+void IFV::beginMatch()
+{
+
 }
 
 void IFV::respawn(const std::vector<MyVec3>& path)

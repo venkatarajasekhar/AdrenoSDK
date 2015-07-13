@@ -88,6 +88,8 @@ public:
 		TEAM_TYPE team);
 	virtual void update(Timer& timer);
 
+	void beginMatch();
+
 	MyVec3 getPos();
 
 protected:

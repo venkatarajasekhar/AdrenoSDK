@@ -36,17 +36,25 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_BEAST_SEWON].BloodbarOffset = MyVec3(-2, 5, 0);
 
+#ifdef WIN32
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Diffuse = MyVec4(0.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Specular = MyVec4(0.0f, 0.0f, 0.0f, 1.0f);
+	g_HeroProps[HERO_BEAST_SEWON].MeshMaterial.Shininess = 1.0f;
+#endif
+	
 	g_HeroProps[HERO_BEAST_SEWON].Time_PAA_Attack_1 = 0.63768f;
 
 	// Fighter dan mei
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 200;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxMana = 100;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
+	//g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 500;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 7;
 	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
@@ -57,11 +65,18 @@ static void initHeroProps()
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].BloodbarOffset = MyVec3(-1, 5, 0);
 
+#ifdef WIN32
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Specular = MyVec4(0.5f, 0.5f, 0.5f, 1.0f);
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Shininess = 16.0f;
-
+#elif defined __ANDROID__
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Ambient = MyVec3(0.05f, 0.05f, 0.05f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Diffuse = MyVec4(1.0f, 0.0f, 1.0f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Specular = MyVec4(0.001f, 0.001f, 0.001f, 1.0f);
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].MeshMaterial.Shininess = 2.0f;
+#endif
+	
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].Time_PAA_Attack_1 = 0.3636f;
 }
 
@@ -298,6 +313,23 @@ void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 	}
 }
 
+void Hero::beginMatch()
+{
+	m_health = m_maxHealth;
+	m_selected = false;
+	m_inUse = true;
+	m_instance->Visible = true;
+
+	m_exp = 0;
+	m_gold = 600;
+	m_mana = m_maxMana;
+	m_level = 1;
+	m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
+	m_healthPerAttack = 0;
+	m_countTime = 0;
+	m_revivalTime = 0;
+}
+
 MyVec3 Hero::getPos()
 {
 	return m_movingEnt.getPos();
@@ -407,18 +439,6 @@ void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 void Hero::dead()
 {
 	m_instance->Visible = false;
-	
-	if (getTeamType() == TEAM_TYPE_ENEMY)
-		m_movingEnt.setPath(ENEMY_HERO_PATH);
-	else
-	{
-		for (auto i = m_lEnts->begin(); i != m_lEnts->end(); ++i)
-			(*i)->deselect();
-		//m_atkTarget = nullptr;
-		m_movingEnt.setTarget(m_positionStart);
-		m_movingEnt.setPos(m_positionStart);
-		m_movingEnt.setRot(m_rotationStart);
-	}
 }
 
 void Hero::revival()

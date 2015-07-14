@@ -75,6 +75,7 @@ public:
 	Tower();
 	virtual ~Tower();
 
+
 	virtual void init(
 		FileMesh1& mesh,
 		BloodBar& bloodBar,

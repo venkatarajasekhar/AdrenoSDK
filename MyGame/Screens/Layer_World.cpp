@@ -150,16 +150,16 @@ void Layer_World::init(Layer_World::InitBundle& bundle)
 	m_audios[AUDIO_ENEMYPAWN_DEATH].setVolume(0.3f);
 
 	m_audios[AUDIO_MYIFV_ATTACK].init(resolveAssetsPath("Audios/MyTankAttack.wav"));
-	m_audios[AUDIO_MYIFV_ATTACK].setVolume(0.2f);
+	m_audios[AUDIO_MYIFV_ATTACK].setVolume(0.25f);
 	m_audios[AUDIO_ENEMYIFV_ATTACK].init(resolveAssetsPath("Audios/EnemyTankAttack.wav"));
-	m_audios[AUDIO_ENEMYIFV_ATTACK].setVolume(0.2f);
+	m_audios[AUDIO_ENEMYIFV_ATTACK].setVolume(0.25f);
 	m_audios[AUDIO_IFV_DEATH].init(resolveAssetsPath("Audios/TankDeath.wav"));
 	m_audios[AUDIO_IFV_DEATH].setVolume(0.3f);
 
 	m_audios[AUDIO_MYTOWER_ATTACK].init(resolveAssetsPath("Audios/MyTowerAttack.wav"));
-	m_audios[AUDIO_MYTOWER_ATTACK].setVolume(0.5f);
+	m_audios[AUDIO_MYTOWER_ATTACK].setVolume(0.2f);
 	m_audios[AUDIO_ENEMYTOWER_ATTACK].init(resolveAssetsPath("Audios/EnemyTowerAttack.wav"));
-	m_audios[AUDIO_ENEMYTOWER_ATTACK].setVolume(0.5f);
+	m_audios[AUDIO_ENEMYTOWER_ATTACK].setVolume(0.2f);
 	m_audios[AUDIO_TOWER_DEATH].init(resolveAssetsPath("Audios/TowerDeath.wav"));
 	m_audios[AUDIO_TOWER_DEATH].setVolume(0.5f);
 

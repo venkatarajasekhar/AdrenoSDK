@@ -76,8 +76,8 @@ static void initPawnProps()
 //
 //=========================================================================================================
 
-static const int    PAWN_INITIAL_MAX_HEALTH = 60;
-static const int    PAWN_INITIAL_DAMAGE = 10;
+static const int    PAWN_INITIAL_MAX_HEALTH = 300;
+static const int    PAWN_INITIAL_DAMAGE = 20;
 static const MyVec2 PAWN_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
 static const float  PAWN_TIME_TO_SPAWN = 35.0f;
 

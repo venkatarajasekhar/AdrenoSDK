@@ -76,10 +76,10 @@ static void initIFVProps()
 //
 //=========================================================================================================
 
-static const int    IFV_INITIAL_MAX_HEALTH = 60;
-static const int    IFV_INITIAL_DAMAGE = 10;
+static const int    IFV_INITIAL_MAX_HEALTH = 600;
+static const int    IFV_INITIAL_DAMAGE = 40;
 static const MyVec2 IFV_BLOOD_BAR_SCALE = MyVec2(0.7f, 0.6f);
-static const float  IFV_TIME_TO_SPAWN = 35.0f;
+static const float  IFV_TIME_TO_SPAWN = 140.0f;
 
 static const std::vector<MyVec3> MY_IFV_PATH =
 {

@@ -10,14 +10,14 @@
 //
 //=========================================================================================================
 
-static const int    TOWER_INITIAL_MAX_HEALTH = 1000;
-static const int    TOWER_INITIAL_DAMAGE = 25;
+static const int    TOWER_INITIAL_MAX_HEALTH = 2500;
+static const int    TOWER_INITIAL_DAMAGE = 100;
 static const float  TOWER_ATTACK_RANGE = 10;
-static const float  TOWER_ATTACK_TIME_PERIOD = 4;
+static const float  TOWER_ATTACK_TIME_PERIOD = 2;
 static const MyVec2 TOWER_BLOOD_BAR_SCALE = MyVec2(3.0f, 1.0f);
 
-static const int    MAIN_TOWER_INITIAL_MAX_HEALTH = 2000;
-static const int    MAIN_TOWER_INITIAL_DAMAGE = 40;
+static const int    MAIN_TOWER_INITIAL_MAX_HEALTH = 3000;
+static const int    MAIN_TOWER_INITIAL_DAMAGE = 200;
 static const float  MAIN_TOWER_ATTACK_RANGE = 10;
 static const MyVec2 MAIN_TOWER_BLOOD_BAR_SCALE = MyVec2(4.0f, 1.0f);
 

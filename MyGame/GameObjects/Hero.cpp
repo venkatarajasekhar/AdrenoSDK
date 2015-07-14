@@ -23,12 +23,12 @@ static HeroProps g_HeroProps[NUM_HEROES];
 static void initHeroProps()
 {
 	// Beast sewon
-	g_HeroProps[HERO_BEAST_SEWON].InitialMaxHealth = 200;
-	g_HeroProps[HERO_BEAST_SEWON].InitialMaxMana = 100;
-	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 20;
+	g_HeroProps[HERO_BEAST_SEWON].InitialMaxHealth = 550;
+	g_HeroProps[HERO_BEAST_SEWON].InitialMaxMana = 250;
+	g_HeroProps[HERO_BEAST_SEWON].InitialDamage = 60;
 
-	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 7;
-	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
+	g_HeroProps[HERO_BEAST_SEWON].AttackRange = 5;
+	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 15;
 
 	g_HeroProps[HERO_BEAST_SEWON].MovingSpeed = 5.0f;
 	g_HeroProps[HERO_BEAST_SEWON].MovingRotYOffset = 0;
@@ -51,13 +51,13 @@ static void initHeroProps()
 	g_HeroProps[HERO_BEAST_SEWON].Time_PAA_Attack_1 = 0.63768f;
 
 	// Fighter dan mei
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 200;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxMana = 100;
-	//g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 20;
-	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 500;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxHealth = 600;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialMaxMana = 250;
+	g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 50;
+	//g_HeroProps[HERO_FIGHTER_DAN_MEI].InitialDamage = 500;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].AttackRange = 7;
-	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 10;
+	g_HeroProps[HERO_BEAST_SEWON].ChasingRange = 15;
 
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingSpeed = 5.0f;
 	g_HeroProps[HERO_FIGHTER_DAN_MEI].MovingRotYOffset = 0;
@@ -261,7 +261,7 @@ void Hero::update(Timer& timer)
 
 	if (!m_instance->Visible)
 		m_revivalTime += timer.getElapsedTime();
-	if ((!m_instance->Visible) && (m_revivalTime >= 5))
+	if ((!m_instance->Visible) && (m_revivalTime >= m_level*4))
 	{
 		m_revivalTime = 0;
 		revival();
@@ -394,6 +394,12 @@ Audio* Hero::getAudio(int id)
 void Hero::levelUp(int newLevel)
 {
 	m_audios[AUDIO_UPGRADE_SKILL].play();
+	int nLevel = newLevel - m_level;
+	m_health += nLevel * 100;
+	m_maxHealth += nLevel * 100;
+	m_damage += nLevel * 5;
+	m_mana += nLevel * 20;
+	m_maxMana += nLevel * 20;
 	m_level = newLevel;
 }
 

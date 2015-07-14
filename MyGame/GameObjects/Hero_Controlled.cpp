@@ -61,7 +61,7 @@ void Hero_Controlled::update(Timer& timer)
 			{
 				MyVec3 u = (*i)->getPos() - getPos();
 				u = normalize_optimized(u);
-				m_movingEnt.setTarget((*i)->getPos() - MyVec3(2)*u);
+				m_movingEnt.setTarget((*i)->getPos() - MyVec3(5)*u);
 			}
 		}
 	}

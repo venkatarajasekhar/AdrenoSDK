@@ -46,7 +46,7 @@ public:
 		const MyVec3& scale,
 		Quad3D& selectedDecal,
 		Audio lAudios[]);
-	void update(Timer& timer, bool& isPressed, MyVec3& pressedPoint);
+	void update(Timer& timer, bool& isPressed, MyVec3& pressedPoint, MyVec3& playerPoint);
 	void render(Camera& camera, Light& light);
 
 private:

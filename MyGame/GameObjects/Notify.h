@@ -5,7 +5,7 @@
 
 //==============================================================================================================
 //
-// Projectile class
+// Notify class
 //
 //==============================================================================================================
 
@@ -66,4 +66,36 @@ private:
 private:
 	Notify m_notifies[MAX_NUM_NOTIFIES];
 	Font m_font;
+};
+
+//==============================================================================================================
+//
+// Notify2D class
+//
+//==============================================================================================================
+
+
+class Notify2D : public BaseEntity
+{
+public:
+	Notify2D();
+	~Notify2D();
+
+	void init();
+	void update(Timer& timer);
+	void render(SpriteBatch& spriteBatch);
+	void respawn(const MyString& content,
+		const MyVec2& position,
+		float nTime);
+	bool inUse()const;
+
+private:
+	UILabel m_label;
+	Font m_font;
+
+	MyVec2 m_position;
+	MyString m_content;
+	bool m_inUse;
+	float m_nTime;
+	float m_countTime;
 };

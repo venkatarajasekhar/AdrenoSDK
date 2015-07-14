@@ -308,7 +308,7 @@ void Layer_World::update(Timer& timer, UserInput& userInput)
 		//smartLog("Pressed at: " + toString(pressedPoint.x) + " " + toString(pressedPoint.y) + " " + toString(pressedPoint.z));
 		//---------------- Test ------------------------------------------------------------------------------------------
 
-		m_shop.update(timer, isPressed, pressedPoint);
+		m_shop.update(timer, isPressed, pressedPoint, getPlayer()->getPos());
 
 		for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)
 		{

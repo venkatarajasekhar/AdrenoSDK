@@ -138,3 +138,57 @@ Notify* NotifyPool::getFreeSlot()
 
 	return nullptr;
 }
+
+//==============================================================================================================
+//
+// Notify2D class
+//
+//==============================================================================================================
+
+Notify2D::Notify2D()
+{
+}
+
+Notify2D::~Notify2D()
+{
+}
+
+void Notify2D::init()
+{
+	m_inUse = false;
+	m_font.init(resolveAssetsPath("Fonts/Consolas12.pak"));
+	m_label.init("", MyVec2(-1, -1), m_font, "", MyColor(1, 0, 0), 1.5f);
+}
+
+void Notify2D::update(Timer& timer)
+{
+	m_countTime += timer.getElapsedTime();
+	if (m_countTime >= m_nTime) m_inUse = false;
+}
+
+void Notify2D::render(SpriteBatch& spriteBatch)
+{
+	if (m_inUse)
+	{
+		m_label.render(spriteBatch);
+	}
+}
+
+void Notify2D::respawn(const MyString& content,
+	const MyVec2& position,
+	float nTime)
+{
+	m_content = content;
+	m_position = position;
+	m_nTime = nTime;
+	m_inUse = true;
+
+	m_label.setPos(m_position);
+	m_label.setText(content);
+	m_countTime = 0;
+}
+
+bool Notify2D::inUse()const
+{
+	return m_inUse;
+}

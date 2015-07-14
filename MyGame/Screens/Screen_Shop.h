@@ -6,6 +6,7 @@
 #include <MyUIList.h>
 #include "Hero.h"
 #include "EventListener.h"
+#include "Notify.h"
 
 //===================================================================================================================
 //
@@ -21,7 +22,7 @@ class ShopScreen :
 	public IOnBuyItemListener
 {
 private:
-	static const int TOTAL_HERO_ITEMS = 6;
+	static const int TOTAL_HERO_ITEMS = 4;
 
 private:
 	// Assets
@@ -84,6 +85,7 @@ private:
 	enum
 	{
 		AUDIO_ITEM_BUY,
+		AUDIO_NOT_ENOUGH_MONEY,
 		NUM_AUDIOS,
 	};
 
@@ -119,6 +121,10 @@ private:
 
 	HeroItem* m_totalItems[TOTAL_HERO_ITEMS];
 	int m_numBoughtItems;
+
+	Hero* m_player;
+
+	Notify2D m_notify;
 
 	Audio m_audios[NUM_AUDIOS];
 };

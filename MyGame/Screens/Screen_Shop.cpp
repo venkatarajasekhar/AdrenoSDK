@@ -217,7 +217,7 @@ void ShopScreen::initItems()
 		HeroItem::PASSIVE,
 		5.5, 0, 1);
 
-	m_totalItems[4] = new HeroItem_StaffOfTheSathlenar(
+	/*m_totalItems[4] = new HeroItem_StaffOfTheSathlenar(
 		"Staff of Sathlenar",
 		"A staff stolen from the mighty Sathlenar long ago, It still retains remnants of his power.",
 		675,
@@ -233,7 +233,7 @@ void ShopScreen::initItems()
 		"+ 150 HP",
 		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
 		HeroItem::ACTIVE,
-		5.5, 0, 1);
+		5.5, 0, 1);*/
 }
 
 #pragma endregion
@@ -302,6 +302,9 @@ void ShopScreen::init()
 	m_list[LIST_SELECTED_ITEM].init("selected_item_list", MyVec2(), m_textures[TEXTURE_LIST_SELECTED_ITEM_BACKGROUND], UIList::HORIZONTAL);
 
 	m_audios[AUDIO_ITEM_BUY].init(resolveAssetsPath("Audios/BuyItem.wav"));
+	m_audios[AUDIO_NOT_ENOUGH_MONEY].init(resolveAssetsPath("Audios/NotEnoughMoney.wav"));
+
+	m_notify.init();
 }
 
 void ShopScreen::resize(int width, int height)
@@ -331,6 +334,8 @@ void ShopScreen::update(void* utilObjs)
 	{
 		m_list[i].update(*globalUtilObjs->userInput);
 	}
+
+	m_notify.update(*globalUtilObjs->timer);
 }
 
 void ShopScreen::render(void* utilObjs)
@@ -387,6 +392,8 @@ void ShopScreen::render(void* utilObjs)
 	{
 		m_list[i].render(*globalUtilObjs->spriteBatch);
 	}
+
+	m_notify.render(*globalUtilObjs->spriteBatch);
 }
 
 void ShopScreen::OnPress(const IOnPressListener::Data& data)
@@ -417,16 +424,32 @@ void ShopScreen::OnPressListItem(const IOnPressListItemListener::Data& data)
 
 void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 {
-	if (m_numBoughtItems < Hero::MAX_NUM_ITEMS)
+	int w, h;
+	getWindowDimension(w, h);
+
+	if (m_player->getGold() >= data.BoughtItem->getPrice())
 	{
-		m_audios[AUDIO_ITEM_BUY].play();
+		if (m_numBoughtItems < Hero::MAX_NUM_ITEMS)
+		{
+			m_audios[AUDIO_ITEM_BUY].play();
 
-		m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
-		
-		IOnBuyItemListener::Data data1("", data.BoughtItem->clone());
-		throwBuyItemEvent(data1);
+			m_list[LIST_SELECTED_ITEM].addItem(new UIListItem_SelectedItem(&m_list[LIST_SELECTED_ITEM], *data.BoughtItem->Avatar));
 
-		m_numBoughtItems++;
+			IOnBuyItemListener::Data data1("", data.BoughtItem->clone());
+			throwBuyItemEvent(data1);
+
+			m_numBoughtItems++;
+		}
+		else
+		{
+			m_audios[AUDIO_NOT_ENOUGH_MONEY].play();
+			m_notify.respawn("Not enough space !", MyVec2((w - 36)/2.0f, 20), 1.5f);	//36 = string length * 2
+		}
+	}
+	else
+	{
+		m_audios[AUDIO_NOT_ENOUGH_MONEY].play();
+		m_notify.respawn("Not enough money !", MyVec2((w - 36) / 2.0f, 20), 1.5f);
 	}
 }
 
@@ -435,6 +458,8 @@ void ShopScreen::setTag(void* tag)
 	if (tag != nullptr)
 	{
 		std::vector<IOnBuyItemListener* >* listener = (std::vector<IOnBuyItemListener* >*)tag;
+
+		m_player = (Hero*)(*listener)[0];
 
 		for (auto i = listener->begin(); i != listener->end(); ++i)
 		{

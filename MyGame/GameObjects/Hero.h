@@ -143,6 +143,7 @@ public:
 	void accPos(MyVec3 dPos);
 	void accMana(int mana);
 	void accGold(int gold);
+	void accSpeed(float speed);
 	int getGold();
 	int getMana();
 	int getMaxMana();

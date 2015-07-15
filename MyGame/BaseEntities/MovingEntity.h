@@ -32,6 +32,7 @@ public:
 
 	MyVec3 getPos();
 	MyVec3 getRot();
+	float getSpeed();
 	float getRotYOffset();
 	bool isMoving();
 
@@ -39,8 +40,8 @@ public:
 
 	void setPos(const MyVec3& pos);
 	void setRot(const MyVec3& rot);
-	void setTarget(const MyVec3& target);
 	void setSpeed(float speed);
+	void setTarget(const MyVec3& target);
 
 	void setPath(const std::vector<MyVec3>& path);
 	void setDeltaPathPivot(int delta);

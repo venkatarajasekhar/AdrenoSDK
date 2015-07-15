@@ -59,6 +59,7 @@ public:
 protected:
 	ITEM_TYPE m_type;
 	bool m_isUsing;
+	bool m_isUsed = false;
 	float m_timeUse;
 	float m_timeWait;
 	float m_countTimeUsed;
@@ -205,6 +206,30 @@ public:
 		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
 	{}
 	~HeroItem_LightCalvaryHat(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_BootsOfSpeed : public HeroItem
+{
+public:
+	HeroItem_BootsOfSpeed(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_BootsOfSpeed(){}
 
 	HeroItem* clone();
 	void execute(Hero* hero, float elapsedTime);

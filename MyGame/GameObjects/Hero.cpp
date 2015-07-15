@@ -188,7 +188,7 @@ void Hero::init(
 	m_inUse = true;
 
 	m_exp = 0;
-	m_gold = 600;
+	m_gold = 1000;
 	m_maxMana = heroProp.InitialMaxMana;
 	m_mana = m_maxMana;
 	m_level = 1;
@@ -321,7 +321,7 @@ void Hero::beginMatch()
 	m_instance->Visible = true;
 
 	m_exp = 0;
-	m_gold = 600;
+	m_gold = 1000;
 	m_mana = m_maxMana;
 	m_level = 1;
 	m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
@@ -349,6 +349,11 @@ void Hero::accMana(int mana)
 void Hero::accGold(int gold)
 {
 	m_gold += gold;
+}
+
+void Hero::accSpeed(float speed)
+{
+	m_movingEnt.setSpeed(m_movingEnt.getSpeed() + speed);
 }
 
 MyVec3 Hero::getRot()

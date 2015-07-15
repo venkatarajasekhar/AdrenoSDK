@@ -215,18 +215,18 @@ void ShopScreen::initItems()
 		"Lifesteal: Gives 15 % Lifesteal on attacks",
 		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
 		HeroItem::PASSIVE,
-		5.5, 0, 1);
+		0, 0, -1);
 
-	/*m_totalItems[4] = new HeroItem_StaffOfTheSathlenar(
-		"Staff of Sathlenar",
-		"A staff stolen from the mighty Sathlenar long ago, It still retains remnants of his power.",
-		675,
-		"+ 270 MP",
+	m_totalItems[4] = new HeroItem_BootsOfSpeed(
+		"Boots Of Speed",
+		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
+		450,
+		"+ 1 Movement Speed",
 		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
-		HeroItem::ACTIVE,
-		5.5, 0, 1);
+		HeroItem::PASSIVE,
+		0, 0, -1);
 
-	m_totalItems[5] = new HeroItem_BloodPouch(
+	/*m_totalItems[5] = new HeroItem_BloodPouch(
 		"Blood Pouch",
 		"A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.",
 		450,

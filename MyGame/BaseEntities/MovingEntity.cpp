@@ -140,6 +140,11 @@ MyVec3 MovingEntity::getRot()
 	return m_rotation;
 }
 
+float MovingEntity::getSpeed()
+{
+	return m_speed;
+}
+
 float MovingEntity::getRotYOffset()
 {
 	return m_rotYOffset;

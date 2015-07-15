@@ -262,3 +262,29 @@ void HeroItem_LightCalvaryHat::execute(Hero* hero, float elapsedTime)
 {
 	hero->setHealthPerAttack(hero->getDamage()/4);
 }
+
+//==================================================================================================================
+//
+// HeroItem_BootsOfSpeed class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_BootsOfSpeed::clone()
+{
+	return new HeroItem_BootsOfSpeed(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_BootsOfSpeed::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed) hero->accSpeed(1.0f);
+	m_isUsed = true;
+}

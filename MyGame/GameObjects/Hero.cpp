@@ -321,7 +321,7 @@ void Hero::beginMatch()
 	m_instance->Visible = true;
 
 	m_exp = 0;
-	m_gold = 1000;
+	m_gold = 5000;
 	m_mana = m_maxMana;
 	m_level = 1;
 	m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
@@ -345,6 +345,13 @@ void Hero::accMana(int mana)
 	m_mana += mana;
 	if (m_mana > m_maxMana) m_mana = m_maxMana;
 }
+
+void Hero::accMaxMana(int mana)
+{
+	m_maxMana += mana;
+	if (m_maxMana < 0) m_maxMana = 0;
+}
+
 
 void Hero::accGold(int gold)
 {

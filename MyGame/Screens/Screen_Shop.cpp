@@ -194,7 +194,7 @@ void ShopScreen::initItems()
 		"Acolyte Staff",
 		"Rumor has it that the soul of an ancient mage is imprisoned in the glass ball atop this staff.",
 		1500,
-		"Pushes yourself 600 units in the direction you are facing over a 0.4s duration.Does not interrupt the target's actions. Costs 25 mana, has a 20 second cooldown.",
+		"Pushes yourself 600 units in the direction you are facing over a 0.4s duration.",
 		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
 		HeroItem::ACTIVE,
 		0.3, 10, -1);
@@ -212,7 +212,7 @@ void ShopScreen::initItems()
 		"Light Calvary Hat",
 		"A cavalry hat woven from threads of tempered steel, perfected by a skilled seamstress from the East.",
 		700,
-		"Lifesteal: Gives 15 % Lifesteal on attacks",
+		"Lifesteal, gives 15 % Lifesteal on attacks",
 		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT],
 		HeroItem::PASSIVE,
 		0, 0, -1);
@@ -226,14 +226,87 @@ void ShopScreen::initItems()
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
-	/*m_totalItems[5] = new HeroItem_BloodPouch(
-		"Blood Pouch",
-		"A trick from the playbook of traveling magicians, this pouch deceives enemies into thinking the holder is gravely injured.",
-		450,
-		"+ 150 HP",
-		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
-		HeroItem::ACTIVE,
-		5.5, 0, 1);*/
+	m_totalItems[5] = new HeroItem_PhaseBoots(
+		"Phase Boots",
+		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
+		1000,
+		"+ 1 Movement Speed\n+ 24 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[6] = new HeroItem_PowerTreads(
+		"Power Treads",
+		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
+		1200,
+		"+ 1 Movement Speed\n+ 200 Health",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[7] = new HeroItem_ArcaneBoots(
+		"Arcane Boots",
+		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
+		1000,
+		"+ 1 Movement Speed\n+ 200 Mana",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[8] = new HeroItem_DemonEdge(
+		"Demon Edge",
+		"One of the oldest weapons forged by the Demon-Smith Abzidian, it killed its maker when he tested its edge.",
+		2400,
+		"+ 46 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[9] = new HeroItem_SacredRelic(
+		"Sacred Relic",
+		"An ancient weapon that often turns the tides of war.",
+		3000,
+		"+ 60 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[10] = new HeroItem_Quarterstaff(
+		"Quarterstaff",
+		"A basic staff that allows you to strike quickly.",
+		500,
+		"+ 10 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[11] = new HeroItem_Broadsword(
+		"Broadsword",
+		"The classic weapon of choice for knights, this blade is sturdy and reliable for slaying enemies.",
+		800,
+		"+ 18 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[12] = new HeroItem_Claymore(
+		"Claymore",
+		"A sword that can cut through armor, it's a commonly chosen first weapon for budding swordsmen.",
+		1000,
+		"+ 21 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
+	m_totalItems[13] = new HeroItem_DivineRapier(
+		"Divine Rapier",
+		"Forged in the fires of the Great Desert, this weapon will cut through almost any obstacle.",
+		7000,
+		"+ 300 Damage",
+		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		HeroItem::PASSIVE,
+		0, 0, -1);
+
 }
 
 #pragma endregion

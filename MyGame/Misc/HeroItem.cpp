@@ -260,7 +260,7 @@ HeroItem* HeroItem_LightCalvaryHat::clone()
 
 void HeroItem_LightCalvaryHat::execute(Hero* hero, float elapsedTime)
 {
-	hero->setHealthPerAttack(hero->getDamage()/4);
+	hero->setHealthPerAttack(3*hero->getDamage()/20);
 }
 
 //==================================================================================================================
@@ -286,5 +286,271 @@ HeroItem* HeroItem_BootsOfSpeed::clone()
 void HeroItem_BootsOfSpeed::execute(Hero* hero, float elapsedTime)
 {
 	if (!m_isUsed) hero->accSpeed(1.0f);
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_PhaseBoots class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_PhaseBoots::clone()
+{
+	return new HeroItem_PhaseBoots(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_PhaseBoots::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accSpeed(1.0f);
+		hero->accDamage(24);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_PowerTreads class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_PowerTreads::clone()
+{
+	return new HeroItem_PowerTreads(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_PowerTreads::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accSpeed(1.0f);
+		hero->accMaxHealth(200);
+		hero->accHealth(200);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_ArcaneBoots class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_ArcaneBoots::clone()
+{
+	return new HeroItem_ArcaneBoots(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_ArcaneBoots::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accSpeed(1.0f);
+		hero->accMaxMana(200);
+		hero->accMana(200);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_DemonEdge class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_DemonEdge::clone()
+{
+	return new HeroItem_DemonEdge(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_DemonEdge::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accDamage(46);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_SacredRelic class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_SacredRelic::clone()
+{
+	return new HeroItem_SacredRelic(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_SacredRelic::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accDamage(60);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_Quarterstaff class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_Quarterstaff::clone()
+{
+	return new HeroItem_Quarterstaff(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_Quarterstaff::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accDamage(10);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_Broadsword class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_Broadsword::clone()
+{
+	return new HeroItem_Broadsword(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_Broadsword::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accDamage(18);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_Claymore class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_Claymore::clone()
+{
+	return new HeroItem_Claymore(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_Claymore::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accDamage(21);
+	}
+	m_isUsed = true;
+}
+
+//==================================================================================================================
+//
+// HeroItem_DivineRapier class
+//
+//==================================================================================================================
+
+HeroItem* HeroItem_DivineRapier::clone()
+{
+	return new HeroItem_DivineRapier(
+		this->Name,
+		this->Desc,
+		this->Price,
+		this->Benefit,
+		*(this->Avatar),
+		this->m_type,
+		this->m_timeUse,
+		this->m_timeWait,
+		this->m_nTime);
+}
+
+void HeroItem_DivineRapier::execute(Hero* hero, float elapsedTime)
+{
+	if (!m_isUsed)
+	{
+		hero->accDamage(300);
+	}
 	m_isUsed = true;
 }

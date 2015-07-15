@@ -237,3 +237,219 @@ public:
 private:
 
 };
+
+class HeroItem_PhaseBoots : public HeroItem
+{
+public:
+	HeroItem_PhaseBoots(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_PhaseBoots(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_PowerTreads : public HeroItem
+{
+public:
+	HeroItem_PowerTreads(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_PowerTreads(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_ArcaneBoots : public HeroItem
+{
+public:
+	HeroItem_ArcaneBoots(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_ArcaneBoots(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_DemonEdge : public HeroItem
+{
+public:
+	HeroItem_DemonEdge(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_DemonEdge(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_SacredRelic : public HeroItem
+{
+public:
+	HeroItem_SacredRelic(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_SacredRelic(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_Quarterstaff : public HeroItem
+{
+public:
+	HeroItem_Quarterstaff(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_Quarterstaff(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_Broadsword : public HeroItem
+{
+public:
+	HeroItem_Broadsword(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_Broadsword(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_Claymore : public HeroItem
+{
+public:
+	HeroItem_Claymore(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_Claymore(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};
+
+class HeroItem_DivineRapier : public HeroItem
+{
+public:
+	HeroItem_DivineRapier(
+		const MyString& _name,
+		const MyString& _desc,
+		int _price,
+		const MyString& _benefit,
+		Texture& _avatar,
+		ITEM_TYPE _type,
+		float _timeUse,
+		float _timeWait,
+		int _nTime)
+		: HeroItem(_name, _desc, _price, _benefit, _avatar, _type, _timeUse, _timeWait, _nTime)
+	{}
+	~HeroItem_DivineRapier(){}
+
+	HeroItem* clone();
+	void execute(Hero* hero, float elapsedTime);
+
+private:
+
+};

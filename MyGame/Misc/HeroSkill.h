@@ -29,6 +29,7 @@ public:
 	virtual void render(Camera& camera);
 
 	virtual bool isUsable();
+	virtual bool outOfMana();
 	virtual float getCoolDownTimeRemain();
 
 protected:

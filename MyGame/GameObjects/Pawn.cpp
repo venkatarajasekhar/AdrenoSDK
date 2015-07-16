@@ -213,6 +213,16 @@ MyVec3 Pawn::getPos()
 	return m_movingEnt.getPos();
 }
 
+int Pawn::getGoldLost()
+{
+	return 50;
+}
+
+int Pawn::getExpLost()
+{
+	return 100;
+}
+
 void Pawn::dead()
 {
 	if (m_teamType == TEAM_TYPE_MY_TEAM) m_audios[AUDIO_MYPAWN_DEATH].play();

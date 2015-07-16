@@ -237,6 +237,16 @@ MyVec3 Tower::getPos()
 	return m_instance->Position;
 }
 
+int Tower::getGoldLost()
+{
+	return 500;
+}
+
+int Tower::getExpLost()
+{
+	return 1000;
+}
+
 void Tower::dead()
 {
 	m_audios[AUDIO_TOWER_DEATH].play();

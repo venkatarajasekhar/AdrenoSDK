@@ -33,6 +33,8 @@ public:
 	int getHealth()const;
 	int getDamage()const;
 	bool getSelected() const;
+	virtual int getGoldLost() = 0;
+	virtual int getExpLost() = 0;
 	virtual MyVec3 getPos() = 0;
 
 	bool inUse()const;

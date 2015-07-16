@@ -130,9 +130,9 @@ static const std::vector<MyVec3> ENEMY_HERO_PATH =
 };
 
 static const float RANGE_OF_MAIN_TOWER = 10.0f;
-static const int HEALTH_PER_SECOND_IN_RANGE_MAINTOWER = 20;
+static const int HEALTH_PER_SECOND_IN_RANGE_MAINTOWER = 200;
 static const int HEALTH_PER_SECOND_OUT_RANGE_MAINTOWER = 1;
-static const int MANA_PER_SECOND_IN_RANGE_MAINTOWER = 20;
+static const int MANA_PER_SECOND_IN_RANGE_MAINTOWER = 100;
 static const int MANA_PER_SECOND_OUT_RANGE_MAINTOWER = 1;
 static const MyVec3 POSITION_MY_MAIN_TOWER = MyVec3(-43.0f, 0, 0.39f);
 static const MyVec3 POSITION_ENEMY_MAIN_TOWER = MyVec3(39.0f, 0, -1.5f);
@@ -188,7 +188,7 @@ void Hero::init(
 	m_inUse = true;
 
 	m_exp = 0;
-	m_gold = 1000;
+	m_gold = 10000;
 	m_maxMana = heroProp.InitialMaxMana;
 	m_mana = m_maxMana;
 	m_level = 1;
@@ -214,6 +214,10 @@ void Hero::init(
 }
 
 void Hero::update(Timer& timer)
+{
+}
+
+void Hero::update2(Timer& timer)
 {
 	m_movingEnt.update(timer);
 
@@ -321,7 +325,7 @@ void Hero::beginMatch()
 	m_instance->Visible = true;
 
 	m_exp = 0;
-	m_gold = 5000;
+	m_gold = 10000;
 	m_mana = m_maxMana;
 	m_level = 1;
 	m_healthPerSecond = HEALTH_PER_SECOND_IN_RANGE_MAINTOWER;
@@ -403,6 +407,27 @@ Audio* Hero::getAudio(int id)
 	return &m_audios[id];
 }
 
+bool Hero::getVisible()
+{
+	return m_instance->Visible;
+}
+
+int Hero::getGoldLost()
+{
+	int gold = m_gold / 10;
+	if (gold < 200) gold = 200;
+
+	m_gold -= gold;
+	if (m_gold < 0) m_gold = 0;
+
+	return gold;
+}
+
+int Hero::getExpLost()
+{
+	return m_level * 100;
+}
+
 void Hero::levelUp(int newLevel)
 {
 	m_audios[AUDIO_UPGRADE_SKILL].play();
@@ -457,11 +482,13 @@ void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 void Hero::dead()
 {
 	m_instance->Visible = false;
+	LivingEntity::dead();
 }
 
 void Hero::revival()
 {	
 	m_health = m_maxHealth;
+	m_mana = m_maxMana;
 	m_instance->Visible = true;
 	m_inUse = true;
 }
@@ -650,6 +677,11 @@ void HeroPool::update(Timer& timer)
 	for (int i = 0; i < NUM_SPHERES; i++)
 	{
 		m_skillEffect[i].update(timer);
+	}
+
+	for (int i = 0; i < MAX_NUM_HEROES_IN_GAME; i++)
+	{
+		m_heroes[i]->update2(timer);
 	}
 }
 

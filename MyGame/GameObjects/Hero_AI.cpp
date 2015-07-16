@@ -258,16 +258,10 @@ void Hero_AIState_Attack::OnPerformAAct(void* tag)
 
 		if (hero->m_atkTarget->getHealth() - hero->m_damage <= 0)
 		{
-			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_PAWN)
-			{
-				hero->m_gold += MONEY_PAWN;
-				hero->m_exp += EXP_PAWN;
-			}
-			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_TOWER)
-			{
-				hero->m_gold += MONEY_TOWER;
-				hero->m_exp += EXP_TOWER;
-			}
+			int gold = hero->m_atkTarget->getGoldLost();
+			int exp = hero->m_atkTarget->getExpLost();
+			hero->m_gold += gold;
+			hero->m_exp += exp;
 		}
 
 		//hero->m_audios[hero->AUDIO_ENEMYHERO_ATTACK].play();

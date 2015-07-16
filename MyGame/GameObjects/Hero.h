@@ -72,11 +72,6 @@ const std::vector<float> EXP_LEVEL =
 	9000,
 };
 
-const float MONEY_PAWN = 50;
-const float MONEY_TOWER = 400;
-const float EXP_PAWN = 100;
-const float EXP_TOWER = 500;
-
 #pragma endregion
 
 class HeroItem;
@@ -132,6 +127,7 @@ public:
 		HeroInGameProps& heroInGameProp,
 		TEAM_TYPE team);
 	virtual void update(Timer& timer);
+	void update2(Timer& timer);
 	virtual void render(SpriteBatch& spriteBatch, Camera& camera, Light& light);
 
 	virtual void beginMatch();
@@ -152,6 +148,9 @@ public:
 	int getMaxExp();
 	int getLevel();
 	Audio* getAudio(int id);
+	bool getVisible();
+	int getGoldLost();
+	int getExpLost();
 
 	void levelUp(int newLevel);
 	void addItem(HeroItem* item);

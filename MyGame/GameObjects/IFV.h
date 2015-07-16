@@ -90,6 +90,8 @@ public:
 	void respawn(const std::vector<MyVec3>& path);
 
 	MyVec3 getPos();
+	int getGoldLost();
+	int getExpLost();
 
 	void turnToTarget();
 

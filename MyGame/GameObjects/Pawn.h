@@ -88,6 +88,9 @@ public:
 
 	MyVec3 getPos();
 
+	int getGoldLost();
+	int getExpLost();
+
 	void turnToTarget();
 
 private:

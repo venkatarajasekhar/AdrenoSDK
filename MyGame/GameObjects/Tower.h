@@ -92,6 +92,8 @@ public:
 	void beginMatch();
 
 	MyVec3 getPos();
+	int getGoldLost();
+	int getExpLost();
 
 protected:
 	virtual void dead();

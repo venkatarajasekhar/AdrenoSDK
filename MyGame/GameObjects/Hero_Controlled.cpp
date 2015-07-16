@@ -231,19 +231,12 @@ void Hero_ControlledState_Attack::OnPerformAAct(void* tag)
 		{
 			MyVec3 pos = hero->m_atkTarget->getPos();
 			MyVec3 offset = MyVec3(-1, 3, 0);
-
-			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_PAWN)
-			{
-				hero->m_gold += MONEY_PAWN;
-				hero->m_exp += EXP_PAWN;
-				hero->m_notifyPool.spawnNotify("+" + toString(MONEY_PAWN), pos + offset, MyVec2(0, -0.5f), 1.5f);
-			}
-			if (hero->m_atkTarget->getEntityType() == ENTITY_TYPE_TOWER)
-			{
-				hero->m_gold += MONEY_TOWER;
-				hero->m_exp += EXP_TOWER;
-				hero->m_notifyPool.spawnNotify("+" + toString(MONEY_PAWN), pos + offset, MyVec2(0, -0.5f), 1.5f);
-			}
+			
+			int gold = hero->m_atkTarget->getGoldLost();
+			int exp = hero->m_atkTarget->getExpLost();
+			hero->m_gold += gold;
+			hero->m_exp += exp;
+			hero->m_notifyPool.spawnNotify("+" + toString(gold), pos + offset, MyVec2(0, -0.5f), 1.5f);
 		}
 
 		hero->m_audios[hero->AUDIO_MYHERO_ATTACK].play();

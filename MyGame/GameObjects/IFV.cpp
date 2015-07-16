@@ -218,6 +218,16 @@ MyVec3 IFV::getPos()
 	return m_movingEnt.getPos();
 }
 
+int IFV::getGoldLost()
+{
+	return 100;
+}
+
+int IFV::getExpLost()
+{
+	return 200;
+}
+
 void IFV::dead()
 {
 	m_audios[AUDIO_IFV_DEATH].play();

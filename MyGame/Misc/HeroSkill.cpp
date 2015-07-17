@@ -33,10 +33,12 @@ void HeroSkill::use(Hero* hero)
 {
 	if (isUsable() && (hero->getMana() >= Cost))
 	{
-		hero->accMana(-Cost);
 		m_hero = hero;
-		doUse(hero);
-		m_coolDownTimeRemain = CoolDownTime;
+		if (doUse(hero))
+		{
+			hero->accMana(-Cost);
+			m_coolDownTimeRemain = CoolDownTime;
+		}
 	}
 }
 
@@ -51,7 +53,7 @@ void HeroSkill::update(Timer& timer)
 
 void HeroSkill::render(Camera& camera)
 {
-	if ((!isUsable()) && (m_effect != nullptr))
+	if ((!isUsable()) && (m_effect != nullptr) && (CoolDownTime - m_coolDownTimeRemain <= 2.0f))
 	{
 		m_effect->setPos(m_hero->getPos());
 		m_effect->render(camera);
@@ -87,24 +89,26 @@ float HeroSkill::getCoolDownTimeRemain()
 //==================================================================================================================
 
 // HeroSkill_BattleBorn
-void HeroSkill_BattleBorn::doUse(Hero* hero)
+bool HeroSkill_BattleBorn::doUse(Hero* hero)
 {
-	hero->useSkill(1);
-
 	auto target = hero->getTarget();
 
 	if (target == nullptr)
 	{
-		return;
+		return false;
 	}
 
 	if ((hero != target) &&
 		(target->inUse()) &&
 		(hero->getTeamType() != target->getTeamType()) &&
-		(distance_optimized(hero->getPos(), target->getPos()) <= 7.0f))
+		(distance_optimized(hero->getPos(), target->getPos()) <= 10.0f))
 	{
-		target->accHealth(-10);
+		target->accHealth(-300);
+		hero->useSkill(1);
+		return true;
 	}
+
+	return false;
 }
 
 void HeroSkill_BattleBorn::doUpdate(Timer& timer)
@@ -116,9 +120,10 @@ void HeroSkill_BattleBorn::doUpdate(Timer& timer)
 }
 
 // HeroSkill_Bladefall
-void HeroSkill_Bladefall::doUse(Hero* hero)
+bool HeroSkill_Bladefall::doUse(Hero* hero)
 {
 	hero->useSkill(2);
+	return true;
 }
 
 void HeroSkill_Bladefall::doUpdate(Timer& timer)
@@ -129,7 +134,7 @@ void HeroSkill_Bladefall::doUpdate(Timer& timer)
 }
 
 // HeroSkill_DecimationDay
-void HeroSkill_DecimationDay::doUse(Hero* hero)
+bool HeroSkill_DecimationDay::doUse(Hero* hero)
 {
 	hero->useSkill(3);
 
@@ -142,9 +147,11 @@ void HeroSkill_DecimationDay::doUse(Hero* hero)
 			(hero->getTeamType() != (*i)->getTeamType()) &&
 			(distance_optimized(hero->getPos(), (*i)->getPos()) <= 10.0f))
 		{
-			(*i)->accHealth(-100);
+			(*i)->accHealth(-200);
 		}
 	}
+
+	return true;
 }
 
 void HeroSkill_DecimationDay::doUpdate(Timer& timer)
@@ -155,9 +162,9 @@ void HeroSkill_DecimationDay::doUpdate(Timer& timer)
 }
 
 // HeroSkill_JustDesserts
-void HeroSkill_JustDesserts::doUse(Hero* hero)
+bool HeroSkill_JustDesserts::doUse(Hero* hero)
 {
-
+	return true;
 }
 
 void HeroSkill_JustDesserts::doUpdate(Timer& timer)

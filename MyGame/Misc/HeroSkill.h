@@ -33,7 +33,7 @@ public:
 	virtual float getCoolDownTimeRemain();
 
 protected:
-	virtual void doUse(Hero* hero) = 0;
+	virtual bool doUse(Hero* hero) = 0;
 	virtual void doUpdate(Timer& timer) = 0;
 
 public:
@@ -70,7 +70,7 @@ public:
 	~HeroSkill_BattleBorn(){}
 
 private:
-	void doUse(Hero* hero);
+	bool doUse(Hero* hero);
 	void doUpdate(Timer& timer);
 };
 
@@ -89,7 +89,7 @@ public:
 	~HeroSkill_Bladefall(){}
 
 private:
-	void doUse(Hero* hero);
+	bool doUse(Hero* hero);
 	void doUpdate(Timer& timer);
 };
 
@@ -108,7 +108,7 @@ public:
 	~HeroSkill_DecimationDay(){}
 
 private:
-	void doUse(Hero* hero);
+	bool doUse(Hero* hero);
 	void doUpdate(Timer& timer);
 };
 
@@ -126,6 +126,6 @@ public:
 	~HeroSkill_JustDesserts(){}
 
 private:
-	void doUse(Hero* hero);
+	bool doUse(Hero* hero);
 	void doUpdate(Timer& timer);
 };

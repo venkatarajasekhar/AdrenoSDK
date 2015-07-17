@@ -635,10 +635,10 @@ void HeroPool::init(
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
 			TEAM_TYPE_MY_TEAM);
 
-		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 20, 3, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_skillEffect[SPHERE_BATTLE_BORN]));
-		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 30, 3, &m_textures[TEXTURE_SKILL_BLADEFALL], &m_skillEffect[SPHERE_BLADE_FALL]));
-		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 100, 10, &m_textures[TEXTURE_SKILL_DECIMATION_DAY], &m_skillEffect[SPHERE_DECIMATION_DAY]));
-		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 50, 10, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
+		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 100, 40, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_skillEffect[SPHERE_BATTLE_BORN]));
+		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 30, 30, &m_textures[TEXTURE_SKILL_BLADEFALL], &m_skillEffect[SPHERE_BLADE_FALL]));
+		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 50, 30, &m_textures[TEXTURE_SKILL_DECIMATION_DAY], &m_skillEffect[SPHERE_DECIMATION_DAY]));
+		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 0, 0, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
 

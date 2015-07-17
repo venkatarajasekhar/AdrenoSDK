@@ -3,6 +3,8 @@
 
 #include <MyTexture.h>
 #include <MySphere.h>
+#include "Notify.h"
+#include <MyAudio.h>
 
 //==================================================================================================================
 //
@@ -21,12 +23,14 @@ public:
 		int _cost,
 		float _coolDownTime,
 		Texture* _avatar,
-		Sphere* effect = nullptr);
+		Sphere* effect = nullptr,
+		Audio* audio = nullptr,
+		NotifyPool* notifyPool = nullptr);
 	virtual ~HeroSkill();
 
 	virtual void use(Hero* hero);
 	virtual void update(Timer& timer);
-	virtual void render(Camera& camera);
+	virtual void render(Camera& camera, SpriteBatch& spriteBatch);
 
 	virtual bool isUsable();
 	virtual bool outOfMana();
@@ -42,6 +46,10 @@ public:
 	int      Cost;
 	float    CoolDownTime;
 	Texture* Avatar;
+
+	Notify2D m_notify;
+	Audio* m_audio;
+	NotifyPool* m_notifyPool;
 
 protected:
 	Sphere* m_effect;
@@ -64,8 +72,10 @@ public:
 		int _cost,
 		float _coolDownTime,
 		Texture* _avatar,
-		Sphere* effect)
-		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
+		Sphere* effect,
+		Audio* audio,
+		NotifyPool* notifyPool)
+		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect, audio, notifyPool)
 	{}
 	~HeroSkill_BattleBorn(){}
 
@@ -83,8 +93,10 @@ public:
 		int _cost,
 		float _coolDownTime,
 		Texture* _avatar,
-		Sphere* effect)
-		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
+		Sphere* effect,
+		Audio* audio,
+		NotifyPool* notifyPool)
+		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect, audio, notifyPool)
 	{}
 	~HeroSkill_Bladefall(){}
 
@@ -102,8 +114,10 @@ public:
 		int _cost,
 		float _coolDownTime,
 		Texture* _avatar,
-		Sphere* effect)
-		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect)
+		Sphere* effect,
+		Audio* audio,
+		NotifyPool* notifyPool)
+		: HeroSkill(_name, _damage, _cost, _coolDownTime, _avatar, effect, audio, notifyPool)
 	{}
 	~HeroSkill_DecimationDay(){}
 

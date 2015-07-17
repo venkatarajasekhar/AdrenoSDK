@@ -140,6 +140,7 @@ public:
 	void accMana(int mana);
 	void accMaxMana(int mana);
 	void accGold(int gold);
+	void accExp(int exp);
 	void accSpeed(float speed);
 	int getGold();
 	int getMana();
@@ -208,6 +209,15 @@ protected:
 class HeroPool
 {
 public:
+
+	enum
+	{
+		AUDIO_SKILL_BATTLE_BORN,
+		AUDIO_SKILL_BLADE_FALL,
+		AUDIO_SKILL_DECIMATION_DAY,
+		NUM_AUDIOS_SKILL,
+	};
+
 	// Heroes in-game
 	enum
 	{
@@ -283,7 +293,7 @@ public:
 		Audio lAudios[],
 		OnPressListenee& map);
 	void update(Timer& timer);
-	void render(Camera& camera, Light& light);
+	void render(Camera& camera, Light& light, SpriteBatch& spriteBatch);
 
 	Hero* getPlayer();
 
@@ -300,6 +310,10 @@ private:
 
 	// Effects objects
 	Sphere m_skillEffect[NUM_SPHERES];
+
+	Audio m_audios[NUM_AUDIOS_SKILL];
+	
+	NotifyPool m_notifyPool;
 };
 
 #pragma endregion

@@ -84,9 +84,7 @@ public:
 	void init();
 	void update(Timer& timer);
 	void render(SpriteBatch& spriteBatch);
-	void respawn(const MyString& content,
-		const MyVec2& position,
-		float nTime);
+	void respawn(const MyString& content, float nTime);
 	bool inUse()const;
 
 private:

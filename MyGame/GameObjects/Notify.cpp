@@ -174,12 +174,13 @@ void Notify2D::render(SpriteBatch& spriteBatch)
 	}
 }
 
-void Notify2D::respawn(const MyString& content,
-	const MyVec2& position,
-	float nTime)
+void Notify2D::respawn(const MyString& content, float nTime)
 {
+	int w, h;
+	getWindowDimension(w, h);
+
 	m_content = content;
-	m_position = position;
+	m_position = MyVec2((w - m_content.length() * 2) / 2.0f, 20);
 	m_nTime = nTime;
 	m_inUse = true;
 

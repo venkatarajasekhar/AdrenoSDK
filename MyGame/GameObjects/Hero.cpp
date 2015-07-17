@@ -312,7 +312,7 @@ void Hero::render(SpriteBatch& spriteBatch, Camera& camera, Light& light)
 
 		for (auto i = m_skillBag.begin(); i != m_skillBag.end(); ++i)
 		{
-			(*i)->render(camera);
+			(*i)->render(camera, spriteBatch);
 		}
 	}
 }
@@ -360,6 +360,11 @@ void Hero::accMaxMana(int mana)
 void Hero::accGold(int gold)
 {
 	m_gold += gold;
+}
+
+void Hero::accExp(int exp)
+{
+	m_exp += exp;
 }
 
 void Hero::accSpeed(float speed)
@@ -617,6 +622,8 @@ void HeroPool::init(
 	
 	m_skinnedMeshes[SKINNED_MESH_BEAST_SEWON].translateAction("attack_1", MyVec3(0, 0, -400));
 
+	m_notifyPool.init();
+
 	// Effects objects
 	m_skillEffect[SPHERE_BATTLE_BORN].init(shapeShader, &m_textures[TEXTURE_SKILL_EFFECT_BATTLE_BORN], MyVec3(0), MyVec3(0), MyVec3(3), 20, 20, MyVec3(100, 100, 200));
 	m_skillEffect[SPHERE_BLADE_FALL].init(shapeShader, &m_textures[TEXTURE_SKILL_EFFECT_BLADEFALL], MyVec3(0), MyVec3(0, 0, -90), MyVec3(3), 20, 20);
@@ -635,9 +642,13 @@ void HeroPool::init(
 			g_HeroInGameProps[HeroPool::HERO_IN_GAME_MY_HERO_1],
 			TEAM_TYPE_MY_TEAM);
 
-		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 0, 100, 40, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_skillEffect[SPHERE_BATTLE_BORN]));
-		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 30, 30, &m_textures[TEXTURE_SKILL_BLADEFALL], &m_skillEffect[SPHERE_BLADE_FALL]));
-		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 0, 50, 30, &m_textures[TEXTURE_SKILL_DECIMATION_DAY], &m_skillEffect[SPHERE_DECIMATION_DAY]));
+		m_audios[AUDIO_SKILL_BATTLE_BORN].init(resolveAssetsPath("Audios/Skill1.wav"));
+		m_audios[AUDIO_SKILL_BLADE_FALL].init(resolveAssetsPath("Audios/Skill2.wav"));
+		m_audios[AUDIO_SKILL_DECIMATION_DAY].init(resolveAssetsPath("Audios/Skill3.wav"));
+
+		hero->addSkill(new HeroSkill_BattleBorn("Battle Born", 200, 100, 40, &m_textures[TEXTURE_SKILL_BATTLE_BORN], &m_skillEffect[SPHERE_BATTLE_BORN], &m_audios[AUDIO_SKILL_BATTLE_BORN], &m_notifyPool));
+		hero->addSkill(new HeroSkill_Bladefall("Bladefall", 0, 30, 30, &m_textures[TEXTURE_SKILL_BLADEFALL], &m_skillEffect[SPHERE_BLADE_FALL], &m_audios[AUDIO_SKILL_BLADE_FALL], &m_notifyPool));
+		hero->addSkill(new HeroSkill_DecimationDay("Decimation Day", 300, 50, 30, &m_textures[TEXTURE_SKILL_DECIMATION_DAY], &m_skillEffect[SPHERE_DECIMATION_DAY], &m_audios[AUDIO_SKILL_DECIMATION_DAY], &m_notifyPool));
 		hero->addSkill(new HeroSkill_JustDesserts("Just Desserts", 0, 0, 0, &m_textures[TEXTURE_SKILL_JUST_DESSERTS]));
 
 		m_heroes[HERO_IN_GAME_MY_HERO_1] = hero;
@@ -683,14 +694,18 @@ void HeroPool::update(Timer& timer)
 	{
 		m_heroes[i]->update2(timer);
 	}
+
+	m_notifyPool.update(timer);
 }
 
-void HeroPool::render(Camera& camera, Light& light)
+void HeroPool::render(Camera& camera, Light& light, SpriteBatch& spriteBatch)
 {
 	for (int i = 0; i < NUM_SKINNED_MESHES; i++)
 	{
 		m_skinnedMeshes[i].render(camera, &light);
 	}
+
+	m_notifyPool.render(camera, spriteBatch);
 }
 
 Hero* HeroPool::getPlayer()

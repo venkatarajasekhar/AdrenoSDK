@@ -365,7 +365,7 @@ void Layer_World::render(SpriteBatch& spriteBatch)
 	m_towerPool.render(m_camera_main, light);
 	m_pawnPool.render(m_camera_main, light);
 	m_iFVPool.render(m_camera_main, light);
-	m_heroPool.render(m_camera_main, light);
+	m_heroPool.render(m_camera_main, light, spriteBatch);
 	m_projectilePool.render(m_camera_main);
 
 	for (auto i = m_livingEnts.begin(); i != m_livingEnts.end(); ++i)

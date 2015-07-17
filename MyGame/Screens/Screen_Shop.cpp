@@ -374,6 +374,7 @@ void ShopScreen::init()
 
 	m_list[LIST_SELECTED_ITEM].init("selected_item_list", MyVec2(), m_textures[TEXTURE_LIST_SELECTED_ITEM_BACKGROUND], UIList::HORIZONTAL);
 
+	smartLog("load audio shop");
 	m_audios[AUDIO_ITEM_BUY].init(resolveAssetsPath("Audios/BuyItem.wav"));
 	m_audios[AUDIO_NOT_ENOUGH_MONEY].init(resolveAssetsPath("Audios/NotEnoughMoney.wav"));
 
@@ -516,13 +517,13 @@ void ShopScreen::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 		else
 		{
 			m_audios[AUDIO_NOT_ENOUGH_MONEY].play();
-			m_notify.respawn("Not enough space !", MyVec2((w - 36)/2.0f, 20), 1.5f);	//36 = string length * 2
+			m_notify.respawn("Not enough space !", 1.5f);	
 		}
 	}
 	else
 	{
 		m_audios[AUDIO_NOT_ENOUGH_MONEY].play();
-		m_notify.respawn("Not enough money !", MyVec2((w - 36) / 2.0f, 20), 1.5f);
+		m_notify.respawn("Not enough money !", 1.5f);
 	}
 }
 

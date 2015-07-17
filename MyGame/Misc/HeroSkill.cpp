@@ -14,7 +14,9 @@ HeroSkill::HeroSkill(
 	int _cost,
 	float _coolDownTime,
 	Texture* _avatar,
-	Sphere* effect)
+	Sphere* effect,
+	Audio* audio,
+	NotifyPool* notifyPool)
 	: Name(_name),
 	Damage(_damage),
 	Cost(_cost),
@@ -23,6 +25,9 @@ HeroSkill::HeroSkill(
 	m_effect(effect),
 	m_coolDownTimeRemain(-1.0f)
 {
+	m_audio = audio;
+	m_notifyPool = notifyPool;
+	m_notify.init();
 }
 
 HeroSkill::~HeroSkill()
@@ -36,6 +41,7 @@ void HeroSkill::use(Hero* hero)
 		m_hero = hero;
 		if (doUse(hero))
 		{
+			if (m_audio != nullptr) m_audio->play();
 			hero->accMana(-Cost);
 			m_coolDownTimeRemain = CoolDownTime;
 		}
@@ -49,15 +55,17 @@ void HeroSkill::update(Timer& timer)
 	{
 		doUpdate(timer);
 	}
+	m_notify.update(timer);
 }
 
-void HeroSkill::render(Camera& camera)
+void HeroSkill::render(Camera& camera, SpriteBatch& spriteBatch)
 {
 	if ((!isUsable()) && (m_effect != nullptr) && (CoolDownTime - m_coolDownTimeRemain <= 2.0f))
 	{
 		m_effect->setPos(m_hero->getPos());
 		m_effect->render(camera);
 	}
+	m_notify.render(spriteBatch);
 }
 
 bool HeroSkill::isUsable()
@@ -95,6 +103,7 @@ bool HeroSkill_BattleBorn::doUse(Hero* hero)
 
 	if (target == nullptr)
 	{
+		m_notify.respawn("Select a target !", 1.5f);
 		return false;
 	}
 
@@ -103,11 +112,24 @@ bool HeroSkill_BattleBorn::doUse(Hero* hero)
 		(hero->getTeamType() != target->getTeamType()) &&
 		(distance_optimized(hero->getPos(), target->getPos()) <= 10.0f))
 	{
-		target->accHealth(-300);
+		if (target->getHealth() - Damage <= 0)
+		{
+			MyVec3 pos = target->getPos();
+			MyVec3 offset = MyVec3(-1, 3, 0);
+
+			int gold = target->getGoldLost();
+			int exp = target->getExpLost();
+			hero->accGold(gold);
+			hero->accExp(exp);
+			m_notifyPool->spawnNotify("+" + toString(gold), pos + offset, MyVec2(0, -0.5f), 1.5f);
+		}
+
+		target->accHealth(-Damage);
 		hero->useSkill(1);
 		return true;
 	}
 
+	m_notify.respawn("Out of range !", 1.5f);
 	return false;
 }
 
@@ -147,7 +169,20 @@ bool HeroSkill_DecimationDay::doUse(Hero* hero)
 			(hero->getTeamType() != (*i)->getTeamType()) &&
 			(distance_optimized(hero->getPos(), (*i)->getPos()) <= 10.0f))
 		{
-			(*i)->accHealth(-200);
+			auto target = (*i);
+			if (target->getHealth() - Damage <= 0)
+			{
+				MyVec3 pos = target->getPos();
+				MyVec3 offset = MyVec3(-1, 3, 0);
+
+				int gold = target->getGoldLost();
+				int exp = target->getExpLost();
+				hero->accGold(gold);
+				hero->accExp(exp);
+				m_notifyPool->spawnNotify("+" + toString(gold), pos + offset, MyVec2(0, -0.5f), 1.5f);
+			}
+
+			(*i)->accHealth(-Damage);
 		}
 	}
 

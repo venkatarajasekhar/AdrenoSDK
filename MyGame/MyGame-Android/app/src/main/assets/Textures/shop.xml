@@ -49,18 +49,43 @@
 <!-- Item avatar -->
 
 <Texture 
-    ResourceID  = "item_blood_pouch"
-    SrcFileName = "item_blood_pouch.png"
+    ResourceID  = "item_acolyte_staff"
+    SrcFileName = "item_acolyte_staff.png"
 />
 
 <Texture 
-    ResourceID  = "item_chain_mail"
-    SrcFileName = "item_chain_mail.png"
+    ResourceID  = "item_arcane_boots"
+    SrcFileName = "item_arcane_boots.png"
 />
 
 <Texture 
-    ResourceID  = "item_cloak_of_the_resistant"
-    SrcFileName = "item_cloak_of_the_resistant.png"
+    ResourceID  = "item_boots_of_speed"
+    SrcFileName = "item_boots_of_speed.png"
+/>
+
+<Texture 
+    ResourceID  = "item_broad_sword"
+    SrcFileName = "item_broad_sword.png"
+/>
+
+<Texture 
+    ResourceID  = "item_claymore"
+    SrcFileName = "item_claymore.png"
+/>
+
+<Texture 
+    ResourceID  = "item_demon_edge"
+    SrcFileName = "item_demon_edge.png"
+/>
+
+<Texture 
+    ResourceID  = "item_divine_rapier"
+    SrcFileName = "item_divine_rapier.png"
+/>
+
+<Texture 
+    ResourceID  = "item_healing_potion"
+    SrcFileName = "item_healing_potion.png"
 />
 
 <Texture 
@@ -74,8 +99,23 @@
 />
 
 <Texture 
-    ResourceID  = "item_staff_of_sathlenar"
-    SrcFileName = "item_staff_of_sathlenar.png"
+    ResourceID  = "item_phase_boots"
+    SrcFileName = "item_phase_boots.png"
+/>
+
+<Texture 
+    ResourceID  = "item_power_treads"
+    SrcFileName = "item_power_treads.png"
+/>
+
+<Texture 
+    ResourceID  = "item_quarter_staff"
+    SrcFileName = "item_quarter_staff.png"
+/>
+
+<Texture 
+    ResourceID  = "item_sacred_relic"
+    SrcFileName = "item_sacred_relic.png"
 />
 
 <!-- Misc -->

@@ -487,6 +487,8 @@ void Hero::OnBuyItemItem(const IOnBuyItemListener::Data& data)
 void Hero::dead()
 {
 	m_instance->Visible = false;
+	m_health = 0;
+	m_mana = 0;
 	LivingEntity::dead();
 }
 

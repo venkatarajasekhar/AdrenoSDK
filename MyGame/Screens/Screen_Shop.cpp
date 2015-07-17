@@ -186,7 +186,7 @@ void ShopScreen::initItems()
 		"An alchemical concoction crafted with curative herbs grown deep within the Arcadian Forest.",
 		100,
 		"Regenerate 400 HP in 10 seconds. Regeneration stops whn attacked.",
-		m_textures[TEXTURE_ITEM_BLOOD_POUCH],
+		m_textures[TEXTURE_ITEM_HEALING_POTION],
 		HeroItem::ACTIVE,
 		5.1, 0, 1);
 
@@ -195,7 +195,7 @@ void ShopScreen::initItems()
 		"Rumor has it that the soul of an ancient mage is imprisoned in the glass ball atop this staff.",
 		1500,
 		"Pushes yourself 600 units in the direction you are facing over a 0.4s duration.",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_ACOLYTE_STAFF],
 		HeroItem::ACTIVE,
 		0.3, 10, -1);
 
@@ -222,7 +222,7 @@ void ShopScreen::initItems()
 		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
 		450,
 		"+ 1 Movement Speed",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_BOOTS_OF_SPEED],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -231,7 +231,7 @@ void ShopScreen::initItems()
 		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
 		1000,
 		"+ 1 Movement Speed\n+ 24 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_PHASE_BOOTS],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -240,7 +240,7 @@ void ShopScreen::initItems()
 		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
 		1200,
 		"+ 1 Movement Speed\n+ 200 Health",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_POWER_TREADS],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -249,7 +249,7 @@ void ShopScreen::initItems()
 		"Flat movement speed bonuses from multiple pairs of boots do not stack.",
 		1000,
 		"+ 1 Movement Speed\n+ 200 Mana",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_ARCANE_BOOTS],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -258,7 +258,7 @@ void ShopScreen::initItems()
 		"One of the oldest weapons forged by the Demon-Smith Abzidian, it killed its maker when he tested its edge.",
 		2400,
 		"+ 46 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_DEMON_EDGE],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -267,7 +267,7 @@ void ShopScreen::initItems()
 		"An ancient weapon that often turns the tides of war.",
 		3000,
 		"+ 60 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_SACRED_RELIC],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -276,7 +276,7 @@ void ShopScreen::initItems()
 		"A basic staff that allows you to strike quickly.",
 		500,
 		"+ 10 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_QUARTER_STAFF],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -285,7 +285,7 @@ void ShopScreen::initItems()
 		"The classic weapon of choice for knights, this blade is sturdy and reliable for slaying enemies.",
 		800,
 		"+ 18 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_BROAD_SWORD],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -294,7 +294,7 @@ void ShopScreen::initItems()
 		"A sword that can cut through armor, it's a commonly chosen first weapon for budding swordsmen.",
 		1000,
 		"+ 21 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_CLAYMORE],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -303,7 +303,7 @@ void ShopScreen::initItems()
 		"Forged in the fires of the Great Desert, this weapon will cut through almost any obstacle.",
 		7000,
 		"+ 300 Damage",
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR],
+		m_textures[TEXTURE_ITEM_DIVINE_RAPIER],
 		HeroItem::PASSIVE,
 		0, 0, -1);
 
@@ -333,12 +333,21 @@ void ShopScreen::init()
 		m_textures[TEXTURE_GOLD_ICON].init(resource.GetTexture("gold_icon"));
 		
 		// Item avatar
-		m_textures[TEXTURE_ITEM_BLOOD_POUCH].init(resource.GetTexture("item_blood_pouch"));
-		m_textures[TEXTURE_ITEM_CHAIN_MAIL].init(resource.GetTexture("item_chain_mail"));
-		m_textures[TEXTURE_ITEM_CLOAK_OF_THE_RESISTANT].init(resource.GetTexture("item_cloak_of_the_resistant"));
+
+		m_textures[TEXTURE_ITEM_ACOLYTE_STAFF].init(resource.GetTexture("item_acolyte_staff"));
+		m_textures[TEXTURE_ITEM_ARCANE_BOOTS].init(resource.GetTexture("item_arcane_boots"));
+		m_textures[TEXTURE_ITEM_BOOTS_OF_SPEED].init(resource.GetTexture("item_boots_of_speed"));
+		m_textures[TEXTURE_ITEM_BROAD_SWORD].init(resource.GetTexture("item_broad_sword"));
+		m_textures[TEXTURE_ITEM_CLAYMORE].init(resource.GetTexture("item_claymore"));
+		m_textures[TEXTURE_ITEM_DEMON_EDGE].init(resource.GetTexture("item_demon_edge"));
+		m_textures[TEXTURE_ITEM_DIVINE_RAPIER].init(resource.GetTexture("item_divine_rapier"));
+		m_textures[TEXTURE_ITEM_HEALING_POTION].init(resource.GetTexture("item_healing_potion"));
 		m_textures[TEXTURE_ITEM_LIFE_WARD].init(resource.GetTexture("item_life_ward"));
 		m_textures[TEXTURE_ITEM_LIGHT_CALVARY_HAT].init(resource.GetTexture("item_light_calvary_hat"));
-		m_textures[TEXTURE_ITEM_STAFF_OF_SATHLENAR].init(resource.GetTexture("item_staff_of_sathlenar"));
+		m_textures[TEXTURE_ITEM_PHASE_BOOTS].init(resource.GetTexture("item_phase_boots"));
+		m_textures[TEXTURE_ITEM_POWER_TREADS].init(resource.GetTexture("item_power_treads"));
+		m_textures[TEXTURE_ITEM_QUARTER_STAFF].init(resource.GetTexture("item_quarter_staff"));
+		m_textures[TEXTURE_ITEM_SACRED_RELIC].init(resource.GetTexture("item_sacred_relic"));
 
 		// Misc
 		m_textures[TEXTURE_EMPTY].init(resource.GetTexture("empty"));

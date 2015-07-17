@@ -112,9 +112,9 @@ public:
 			nullptr,
 			0.0f,
 			&listViewport,
-			(m_heroSkill->isUsable() ? MyColor(1) : MyColor(0.5f)));
+			((m_heroSkill->isUsable() && !m_heroSkill->outOfMana()) ? MyColor(1) : MyColor(0.5f)));
 
-		if (!m_heroSkill->isUsable())
+		if (!m_heroSkill->isUsable() && !m_heroSkill->outOfMana())
 		{
 			m_font->setScale(MyVec2(1.5f));
 

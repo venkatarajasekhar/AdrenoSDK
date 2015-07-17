@@ -40,6 +40,9 @@ public:
 	bool inUse()const;
 	bool isSelect(bool isPressed, MyVec3& pressedPoint);
 
+	std::vector<LivingEntity*>* getLivingEnts(){ return m_lEnts; }
+	LivingEntity* getTarget(){ return m_atkTarget; }
+
 	// Setter
 
 	void accMaxHealth(int delta);

@@ -31,8 +31,9 @@ HeroSkill::~HeroSkill()
 
 void HeroSkill::use(Hero* hero)
 {
-	if (isUsable())
+	if (isUsable() && (hero->getMana() >= Cost))
 	{
+		hero->accMana(-Cost);
 		m_hero = hero;
 		doUse(hero);
 		m_coolDownTimeRemain = CoolDownTime;
@@ -62,6 +63,18 @@ bool HeroSkill::isUsable()
 	return (m_coolDownTimeRemain < 0);
 }
 
+bool HeroSkill::outOfMana()
+{
+	if (m_hero == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		return (m_hero->getMana() < Cost);
+	}
+}
+
 float HeroSkill::getCoolDownTimeRemain()
 {
 	return m_coolDownTimeRemain;
@@ -77,6 +90,21 @@ float HeroSkill::getCoolDownTimeRemain()
 void HeroSkill_BattleBorn::doUse(Hero* hero)
 {
 	hero->useSkill(1);
+
+	auto target = hero->getTarget();
+
+	if (target == nullptr)
+	{
+		return;
+	}
+
+	if ((hero != target) &&
+		(target->inUse()) &&
+		(hero->getTeamType() != target->getTeamType()) &&
+		(distance_optimized(hero->getPos(), target->getPos()) <= 7.0f))
+	{
+		target->accHealth(-10);
+	}
 }
 
 void HeroSkill_BattleBorn::doUpdate(Timer& timer)
@@ -104,6 +132,19 @@ void HeroSkill_Bladefall::doUpdate(Timer& timer)
 void HeroSkill_DecimationDay::doUse(Hero* hero)
 {
 	hero->useSkill(3);
+
+	auto list = hero->getLivingEnts();
+
+	for (auto i = list->begin(); i != list->end(); ++i)
+	{
+		if ((hero != (*i)) &&
+			((*i)->inUse()) &&
+			(hero->getTeamType() != (*i)->getTeamType()) &&
+			(distance_optimized(hero->getPos(), (*i)->getPos()) <= 10.0f))
+		{
+			(*i)->accHealth(-100);
+		}
+	}
 }
 
 void HeroSkill_DecimationDay::doUpdate(Timer& timer)
